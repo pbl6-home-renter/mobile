@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="rentify_loading">Đang tải...</string>
+    <string name="rentify_retry">Thử lại</string>
+    <string name="rentify_error_network">Không có kết nối mạng</string>
+    <string name="rentify_error_unknown">Đã có lỗi xảy ra, vui lòng thử lại</string>
+    <string name="rentify_empty_data">Chưa có dữ liệu</string>
+    <string name="rentify_ok">OK</string>
+    <string name="rentify_cancel">Hủy</string>
+    <string name="rentify_confirm">Xác nhận</string>
+    <string name="rentify_save">Lưu</string>
+    <string name="rentify_delete">Xóa</string>
+    <string name="rentify_logout">Đăng xuất</string>
+</resources>
