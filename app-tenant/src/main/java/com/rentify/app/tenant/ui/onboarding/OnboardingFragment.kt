@@ -1,4 +1,4 @@
-package com.rentify.app.landlord.ui.onboarding
+package com.rentify.app.tenant.ui.onboarding
 
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -6,8 +6,8 @@ import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
 import com.rentify.app.core.ui.extension.showIf
 import com.rentify.app.core.ui.extension.toast
-import com.rentify.app.landlord.R
-import com.rentify.app.landlord.databinding.FragmentOnboardingBinding
+import com.rentify.app.tenant.R
+import com.rentify.app.tenant.databinding.FragmentOnboardingBinding
 
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     FragmentOnboardingBinding::inflate,

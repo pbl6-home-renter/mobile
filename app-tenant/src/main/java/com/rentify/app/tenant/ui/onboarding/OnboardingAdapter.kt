@@ -1,8 +1,8 @@
-package com.rentify.app.landlord.ui.onboarding
+package com.rentify.app.tenant.ui.onboarding
 
 import com.rentify.app.core.ui.base.BaseListAdapter
 import com.rentify.app.core.ui.base.simpleDiff
-import com.rentify.app.landlord.databinding.ItemOnboardingPageBinding
+import com.rentify.app.tenant.databinding.ItemOnboardingPageBinding
 
 class OnboardingAdapter : BaseListAdapter<OnboardingPage, ItemOnboardingPageBinding>(
     inflate = ItemOnboardingPageBinding::inflate,
