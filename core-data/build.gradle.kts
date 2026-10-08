@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
 }
 
 android {
-    namespace = "com.rentify.app.landlord"
+    namespace = "com.rentify.app.core.data"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -11,13 +11,14 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.rentify.app.landlord"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -29,9 +30,6 @@ android {
             )
         }
     }
-    buildFeatures {
-        viewBinding = true
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,14 +37,12 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-ui"))
-    implementation(project(":core-network"))
-    implementation(project(":core-data"))
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
+    api(project(":core-network"))
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.datastore.preferences)
+
+    implementation(libs.kotlinx.coroutines.android)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
