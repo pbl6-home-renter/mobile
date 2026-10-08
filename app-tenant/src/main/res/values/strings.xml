@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Rentify Tenant</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_skip">Bỏ qua</string>
+    <string name="onboarding_continue">Tiếp tục</string>
+    <string name="onboarding_start">Bắt đầu</string>
+    <string name="onboarding_toast_login">Đi tới đăng nhập</string>
+
+    <!-- Slide 1 -->
+    <string name="onboarding_title_1">Tìm phòng dễ dàng</string>
+    <string name="onboarding_desc_1">Khám phá hàng ngàn phòng trọ phù hợp với nhu cầu của bạn — lọc theo khu vực, giá cả và tiện nghi.</string>
+
+    <!-- Slide 2 -->
+    <string name="onboarding_title_2">Ghép bạn ở ghép</string>
+    <string name="onboarding_desc_2">Tìm bạn cùng phòng phù hợp về lối sống và ngân sách, kết nối an toàn ngay trong ứng dụng.</string>
+
+    <!-- Slide 3 -->
+    <string name="onboarding_title_3">Quản lý hóa đơn &amp; hợp đồng</string>
+    <string name="onboarding_desc_3">Xem hợp đồng, thanh toán hóa đơn và trò chuyện với chủ trọ mọi lúc, mọi nơi.</string>
 </resources>
