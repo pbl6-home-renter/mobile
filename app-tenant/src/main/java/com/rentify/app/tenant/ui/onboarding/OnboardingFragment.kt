@@ -4,7 +4,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.showIf
 import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.transformer.ParallaxDepthPageTransformer
 import com.rentify.app.tenant.R
@@ -51,7 +50,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val isLastPage = position == (pages.size - 1)
-                binding.btnSkip.showIf(false)
                 binding.btnNext.setText(
                     if (isLastPage) R.string.onboarding_start else R.string.onboarding_continue,
                 )
@@ -65,10 +63,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     }
 
     private fun setupListeners() {
-        binding.btnSkip.setOnSingleClickListener {
-            navigateToLogin()
-        }
-
         binding.btnNext.setOnSingleClickListener {
             val currentItem = binding.vpOnboarding.currentItem
             if (currentItem < (pages.size - 1)) {
