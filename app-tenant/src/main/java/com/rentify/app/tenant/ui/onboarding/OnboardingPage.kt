@@ -1,11 +1,9 @@
 package com.rentify.app.tenant.ui.onboarding
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
 data class OnboardingPage(
-    @DrawableRes val imageRes: Int,
+    val animationAsset: String,
     @StringRes val titleRes: Int,
     @StringRes val descriptionRes: Int
 )
-

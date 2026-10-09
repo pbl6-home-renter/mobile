@@ -17,17 +17,17 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
 
     private val pages = listOf(
         OnboardingPage(
-            imageRes = R.drawable.img_onboarding_1,
+            animationAsset = "onboarding_1.json",
             titleRes = R.string.onboarding_title_1,
             descriptionRes = R.string.onboarding_desc_1,
         ),
         OnboardingPage(
-            imageRes = R.drawable.img_onboarding_2,
+            animationAsset = "onboarding_2.json",
             titleRes = R.string.onboarding_title_2,
             descriptionRes = R.string.onboarding_desc_2,
         ),
         OnboardingPage(
-            imageRes = R.drawable.img_onboarding_3,
+            animationAsset = "onboarding_3.json",
             titleRes = R.string.onboarding_title_3,
             descriptionRes = R.string.onboarding_desc_3,
         ),

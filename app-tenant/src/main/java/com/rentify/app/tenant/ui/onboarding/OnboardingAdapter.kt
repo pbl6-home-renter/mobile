@@ -11,7 +11,8 @@ class OnboardingAdapter : BaseListAdapter<OnboardingPage, ItemOnboardingPageBind
     }
 ) {
     override fun bind(binding: ItemOnboardingPageBinding, item: OnboardingPage, position: Int) {
-        binding.ivImage.setImageResource(item.imageRes)
+        binding.animationView.setAnimation(item.animationAsset)
+        binding.animationView.playAnimation()
         binding.tvTitle.setText(item.titleRes)
         binding.tvDescription.setText(item.descriptionRes)
     }
