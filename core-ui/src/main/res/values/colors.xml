@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="rentify_primary">#2563EB</color>
-    <color name="rentify_primary_gradient_start">#1D4ED8</color>
-    <color name="rentify_primary_gradient_end">#3B82F6</color>
+    <color name="rentify_primary">#4F46E5</color>
+    <color name="rentify_primary_gradient_start">#2563EB</color>
+    <color name="rentify_primary_gradient_end">#7C3AED</color>
     <color name="rentify_on_primary">#FFFFFF</color>
-    <color name="rentify_primary_container">#E8F1FC</color>
-    <color name="rentify_on_primary_container">#142A4C</color>
-    <color name="rentify_background">#F8FBFE</color>
+    <color name="rentify_primary_container">#EEF2FF</color>
+    <color name="rentify_on_primary_container">#1E1B4B</color>
+    <color name="rentify_background">#F8FAFC</color>
     <color name="rentify_surface">#FFFFFF</color>
     <color name="rentify_text_primary">#0F172A</color>
     <color name="rentify_text_secondary">#475569</color>
@@ -15,6 +15,6 @@
     <color name="rentify_warning">#F59E0B</color>
     <color name="rentify_error">#DC2626</color>
     <color name="rentify_neutral">#94A3B8</color>
-    <color name="rentify_button_border_start">#93C5FD</color>
-    <color name="rentify_button_border_end">#BFDBFE</color>
+    <color name="rentify_button_border_start">#A5B4FC</color>
+    <color name="rentify_button_border_end">#C084FC</color>
 </resources>
