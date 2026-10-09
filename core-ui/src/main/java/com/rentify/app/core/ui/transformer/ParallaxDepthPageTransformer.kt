@@ -5,13 +5,12 @@ import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
 
 /**
- * Hiệu ứng chuyển trang 3D Parallax & Depth cho ViewPager2.
- * Dùng chung được cho Onboarding hoặc bất kỳ ViewPager2 nào trong ứng dụng.
+ * Hiệu ứng chuyển trang 3D Parallax & Depth mượt mà cho ViewPager2.
+ * Đảm bảo trang tiếp theo hoàn toàn mờ (alpha = 0) khi ở ranh giới trang để không bị chờm chữ.
  */
 class ParallaxDepthPageTransformer(
     private val minScale: Float = 0.85f,
-    private val minAlpha: Float = 0.4f,
-    private val parallaxFactor: Float = 0.4f
+    private val parallaxFactor: Float = 0.3f
 ) : ViewPager2.PageTransformer {
 
     override fun transformPage(page: View, position: Float) {
@@ -22,7 +21,9 @@ class ParallaxDepthPageTransformer(
                 page.alpha = 0f
             }
             position <= 0f -> {
-                page.alpha = 1f + position
+                // Trang hiện tại trượt ra bên trái
+                val factor = 1f + position
+                page.alpha = factor
                 page.translationX = 0f
                 page.scaleX = 1f
                 page.scaleY = 1f
@@ -31,10 +32,12 @@ class ParallaxDepthPageTransformer(
                 animationView?.translationX = position * (pageWidth * parallaxFactor)
             }
             position <= 1f -> {
+                // Trang tiếp theo đi vào từ bên phải
                 val factor = 1f - abs(position)
-                page.alpha = minAlpha + factor * (1f - minAlpha)
 
-                page.translationX = pageWidth * -position * 0.25f
+                // Alpha = 0 khi ở ranh giới (position = 1), tăng dần lên 1 khi vào chính giữa
+                page.alpha = factor
+                page.translationX = 0f
 
                 val scaleFactor = minScale + (1f - minScale) * factor
                 page.scaleX = scaleFactor
