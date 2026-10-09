@@ -45,6 +45,7 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.ktx)
     api(libs.material)
     api(libs.androidx.recyclerview)
+    api(libs.androidx.viewpager2)
 
     implementation(libs.kotlinx.coroutines.android)
 

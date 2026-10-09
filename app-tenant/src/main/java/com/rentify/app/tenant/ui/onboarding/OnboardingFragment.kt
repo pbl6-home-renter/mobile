@@ -6,6 +6,7 @@ import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
 import com.rentify.app.core.ui.extension.showIf
 import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.transformer.ParallaxDepthPageTransformer
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentOnboardingBinding
 
@@ -43,6 +44,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
 
     private fun setupViewPager() {
         binding.vpOnboarding.adapter = onboardingAdapter
+        binding.vpOnboarding.setPageTransformer(ParallaxDepthPageTransformer())
         onboardingAdapter.submitList(pages)
 
         pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
