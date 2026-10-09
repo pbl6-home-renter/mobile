@@ -51,7 +51,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val isLastPage = position == (pages.size - 1)
-                binding.btnSkip.showIf(!isLastPage)
+                binding.btnSkip.showIf(false)
                 binding.btnNext.setText(
                     if (isLastPage) R.string.onboarding_start else R.string.onboarding_continue,
                 )

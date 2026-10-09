@@ -9,6 +9,7 @@
     <dimen name="radius_sm">8dp</dimen>
     <dimen name="radius_md">12dp</dimen>
     <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_button">26dp</dimen>
 
     <dimen name="text_caption">12sp</dimen>
     <dimen name="text_body">14sp</dimen>
