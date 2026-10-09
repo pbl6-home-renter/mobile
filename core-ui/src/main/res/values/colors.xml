@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="rentify_primary">#1E6FD9</color>
+    <color name="rentify_primary">#2563EB</color>
+    <color name="rentify_primary_gradient_start">#1D4ED8</color>
+    <color name="rentify_primary_gradient_end">#3B82F6</color>
     <color name="rentify_on_primary">#FFFFFF</color>
     <color name="rentify_primary_container">#E8F1FC</color>
     <color name="rentify_on_primary_container">#142A4C</color>
     <color name="rentify_background">#F8FBFE</color>
     <color name="rentify_surface">#FFFFFF</color>
-    <color name="rentify_text_primary">#142A4C</color>
-    <color name="rentify_text_secondary">#5C7290</color>
-    <color name="rentify_divider">#D7E3F2</color>
+    <color name="rentify_text_primary">#0F172A</color>
+    <color name="rentify_text_secondary">#475569</color>
+    <color name="rentify_divider">#E2E8F0</color>
     <color name="rentify_success">#16A34A</color>
     <color name="rentify_warning">#F59E0B</color>
     <color name="rentify_error">#DC2626</color>
     <color name="rentify_neutral">#94A3B8</color>
+    <color name="rentify_button_border_start">#93C5FD</color>
+    <color name="rentify_button_border_end">#BFDBFE</color>
 </resources>
