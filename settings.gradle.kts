@@ -26,3 +26,6 @@ rootProject.name = "Rentify"
 include(":app-landlord")
 include(":app-tenant")
 include(":core-ui")
+include(":core-network")
+include(":core-data")
+
