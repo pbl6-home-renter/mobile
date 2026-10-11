@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    api(project(":core-data"))
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.androidx.activity.ktx)

@@ -12,7 +12,8 @@ data class FieldErrorDetail(
 
 @JsonClass(generateAdapter = true)
 data class ApiErrorResponse(
+    @field:Json(name = "statusCode") val statusCode: Int? = null,
     @field:Json(name = "code") val code: String,
-    @field:Json(name = "message") val message: String,
+    @field:Json(name = "message") val message: String? = null,
     @field:Json(name = "errors") val errors: List<FieldErrorDetail>? = null
 )

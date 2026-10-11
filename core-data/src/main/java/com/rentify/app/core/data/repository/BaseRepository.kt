@@ -16,6 +16,9 @@ abstract class BaseRepository {
                 val body = response.body()
                 if (body != null) {
                     NetworkResult.Success(body)
+                } else if (response.code() == 204) {
+                    @Suppress("UNCHECKED_CAST")
+                    NetworkResult.Success(Unit as T)
                 } else {
                     NetworkResult.ApiError(response.code(), null)
                 }

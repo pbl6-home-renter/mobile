@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clMainContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/spacing_xl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="600dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFormContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/spacing_lg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- OTP Icon Badge -->
+                <FrameLayout
+                    android:id="@+id/flIconBadge"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg_circle_icon_badge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/auth_verify_otp_title"
+                        android:src="@drawable/ic_otp_verify" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:fontFamily="@font/plus_jakarta_sans_bold"
+                    android:gravity="center"
+                    android:text="@string/auth_verify_otp_title"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/flIconBadge" />
+
+                <TextView
+                    android:id="@+id/tvSubtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:fontFamily="@font/plus_jakarta_sans_regular"
+                    android:gravity="center"
+                    android:lineSpacingExtra="3dp"
+                    android:text="@string/auth_verify_otp_subtitle"
+                    android:textColor="@color/rentify_text_secondary"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+                <!-- OTP / Token Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilOtp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:hint="@string/auth_verify_otp_label"
+                    app:boxCornerRadiusBottomEnd="@dimen/radius_md"
+                    app:boxCornerRadiusBottomStart="@dimen/radius_md"
+                    app:boxCornerRadiusTopEnd="@dimen/radius_md"
+                    app:boxCornerRadiusTopStart="@dimen/radius_md"
+                    app:boxStrokeColor="@color/rentify_divider"
+                    app:cursorColor="@color/rentify_text_primary"
+                    app:hintTextColor="@color/rentify_text_primary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etOtp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/plus_jakarta_sans_regular"
+                        android:inputType="textCapCharacters"
+                        android:textColor="@color/rentify_text_primary"
+                        android:textColorHint="@color/rentify_neutral"
+                        android:textCursorDrawable="@drawable/bg_cursor_primary"
+                        android:textSize="15sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tvError"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:textColor="@color/rentify_error"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tilOtp"
+                    tools:text="Mã xác thực không hợp lệ"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVerify"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:background="@drawable/bg_button_gradient"
+                    android:fontFamily="@font/plus_jakarta_sans_semibold"
+                    android:text="@string/auth_verify_otp_button"
+                    android:textColor="@color/rentify_on_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null"
+                    app:cornerRadius="@dimen/radius_button"
+                    app:elevation="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvError"
+                    app:rippleColor="#30FFFFFF" />
+
+                <ProgressBar
+                    android:id="@+id/pbLoading"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:elevation="4dp"
+                    android:indeterminateTint="@color/rentify_on_primary"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/btnVerify"
+                    app:layout_constraintEnd_toEndOf="@id/btnVerify"
+                    app:layout_constraintStart_toStartOf="@id/btnVerify"
+                    app:layout_constraintTop_toTopOf="@id/btnVerify" />
+
+                <LinearLayout
+                    android:id="@+id/llResendContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:paddingVertical="@dimen/spacing_sm"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnVerify">
+
+                    <TextView
+                        android:id="@+id/tvResendPrompt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/plus_jakarta_sans_regular"
+                        android:text="@string/auth_verify_otp_resend_prompt"
+                        android:textColor="@color/rentify_text_secondary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvResendAction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/plus_jakarta_sans_bold"
+                        android:padding="@dimen/spacing_xs"
+                        android:text="@string/auth_verify_otp_resend_action"
+                        android:textColor="@color/rentify_primary_gradient_start"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

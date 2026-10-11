@@ -10,6 +10,10 @@ class SessionManager(private val tokenDataStore: TokenDataStore) {
         !token.isNullOrBlank()
     }
 
+    val userId: Flow<String?> = tokenDataStore.userId
+
+    val userRole: Flow<String?> = tokenDataStore.userRole
+
     suspend fun logout() {
         tokenDataStore.clearTokens()
     }

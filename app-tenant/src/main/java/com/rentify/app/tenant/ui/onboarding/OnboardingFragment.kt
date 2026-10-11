@@ -1,10 +1,10 @@
 package com.rentify.app.tenant.ui.onboarding
 
+import android.content.Context
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.transformer.ParallaxDepthPageTransformer
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentOnboardingBinding
@@ -12,6 +12,22 @@ import com.rentify.app.tenant.databinding.FragmentOnboardingBinding
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     FragmentOnboardingBinding::inflate,
 ) {
+
+    interface OnboardingListener {
+        fun onNavigateToLogin()
+    }
+
+    private var listener: OnboardingListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? OnboardingListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
 
     private val onboardingAdapter = OnboardingAdapter()
 
@@ -74,7 +90,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     }
 
     private fun navigateToLogin() {
-        toast(R.string.onboarding_toast_login)
+        listener?.onNavigateToLogin()
     }
 
     override fun onDestroyView() {
