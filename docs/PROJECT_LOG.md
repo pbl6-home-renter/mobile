@@ -5,13 +5,17 @@
 | Module | Trạng thái | Người phụ trách | Ghi chú |
 |---|---|---|---|
 | Core Network | Hoàn thành | AI & Dev | Đã dựng Retrofit, OkHttp, Moshi DTO wrappers, Auth DTOs & AuthApiService |
-| Core Data | Hoàn thành | AI & Dev | Đã dựng Jetpack DataStore, SessionManager, BaseRepository & AuthRepository |
+| Core Data | Hoàn thành | AI & Dev | Đã dựng Jetpack DataStore (TokenDataStore & AppDataStore), SessionManager, BaseRepository & AuthRepository |
 | Core UI | Hoàn thành | AI & Dev | Đã hoàn thiện toàn bộ luồng Auth (Login, Register, Forgot Password, Verify OTP, Reset Password) |
-| App Tenant | Hoàn thành Auth Flow | AI & Dev | Điều hướng trọn vẹn Onboarding -> Auth Flow |
-| App Landlord | Hoàn thành Auth Flow | AI & Dev | Điều hướng trọn vẹn Onboarding -> Auth Flow |
+| App Tenant | Hoàn thành Auto-login | AI & Dev | Tự động đăng nhập, Onboarding mở 1 lần duy nhất |
+| App Landlord | Hoàn thành Auto-login | AI & Dev | Tự động đăng nhập, Onboarding mở 1 lần duy nhất |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-10-11 – Tách AppDataStore riêng biệt với TokenDataStore để lưu cờ Onboarding
+- **Lý do:** Tránh việc khi người dùng đăng xuất (`clearTokens()`) làm xóa nhầm cờ `onboarding_completed`.
+- **Ảnh hưởng:** Đảm bảo Onboarding chỉ xuất hiện 1 lần duy nhất trong toàn bộ vòng đời ứng dụng sau khi cài đặt.
+
 ### 2026-10-11 – Đồng bộ toàn bộ luồng Auth qua Interface Callbacks và chuẩn hóa schema API
 - **Lý do:** Khắc phục lỗi mất callback khi xoay màn hình/recreate Activity và đảm bảo `role` gửi lên backend luôn khớp enum chữ thường (`tenant`/`landlord`) theo spec Apidog.
 - **Ảnh hưởng:** Các màn hình Onboarding, Login, Register, ForgotPassword, VerifyOtp, ResetPassword bảo toàn 100% vòng đời và kết nối thông suốt với ViewModel.
@@ -42,6 +46,7 @@
 
 ## 4. Nhật ký thay đổi lớn
 <!-- Chỉ thay đổi đáng kể, kèm link PR -->
+- 2026-10-11 – Triển khai Auto-login check và cơ chế ghi nhận Onboarding chỉ mở 1 lần qua DataStore.
 - 2026-10-11 – Hoàn thiện trọn vẹn UI/UX và logic 6 màn hình thuộc luồng xác thực Auth (Login, Register, Forgot Password, Verify OTP, Reset Password).
 - 2026-10-10 – Hoàn thiện UI Auth (`LoginFragment`, `RegisterFragment`, `LoginViewModel`, `RegisterViewModel` & layouts).
 - 2026-10-10 – Xây dựng Auth Data Layer (Auth DTOs, AuthApiService, AuthRepository & AuthRepositoryImpl).

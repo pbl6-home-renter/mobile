@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/rentify_background">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/rentify_primary_gradient_start"
+        app:strokeWidth="1.5dp"
+        app:cardBackgroundColor="#102563EB">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_otp_verify"
+            app:tint="@color/rentify_primary_gradient_start" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvWelcomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Chào mừng trở lại!"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tvWelcomeSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Bạn đã đăng nhập thành công. Khung giao diện chính và Bottom Navigation đang được thiết lập."
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="14sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FEE2E2"
+        android:fontFamily="sans-serif-medium"
+        android:text="Đăng xuất (Test phiên)"
+        android:textColor="#DC2626"
+        android:textSize="15sp"
+        app:cornerRadius="12dp"
+        app:strokeColor="#FCA5A5"
+        app:strokeWidth="1dp" />
+
+</LinearLayout>
