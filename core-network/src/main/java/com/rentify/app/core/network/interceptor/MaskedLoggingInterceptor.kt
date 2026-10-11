@@ -6,7 +6,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 
-class MaskedLoggingInterceptor : Interceptor {
+class MaskedLoggingInterceptor(
+    private val isDebug: Boolean = true
+) : Interceptor {
 
     private val delegate = HttpLoggingInterceptor { message ->
         val sanitizedMessage = maskSensitiveInformation(message)
@@ -16,7 +18,7 @@ class MaskedLoggingInterceptor : Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        if (!BuildConfig.DEBUG) {
+        if (!isDebug) {
             return chain.proceed(chain.request())
         }
         return delegate.intercept(chain)

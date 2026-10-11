@@ -5,10 +5,12 @@
     <dimen name="spacing_md">16dp</dimen>
     <dimen name="spacing_lg">24dp</dimen>
     <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_2xl">44dp</dimen>
 
     <dimen name="radius_sm">8dp</dimen>
     <dimen name="radius_md">12dp</dimen>
     <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_button">26dp</dimen>
 
     <dimen name="text_caption">12sp</dimen>
     <dimen name="text_body">14sp</dimen>

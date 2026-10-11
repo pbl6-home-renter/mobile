@@ -42,6 +42,7 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-network"))
     implementation(project(":core-data"))
+    implementation(libs.lottie)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

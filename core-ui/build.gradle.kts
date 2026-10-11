@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    api(project(":core-data"))
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.androidx.activity.ktx)
@@ -45,6 +46,7 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.ktx)
     api(libs.material)
     api(libs.androidx.recyclerview)
+    api(libs.androidx.viewpager2)
 
     implementation(libs.kotlinx.coroutines.android)
 

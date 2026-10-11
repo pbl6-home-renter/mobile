@@ -11,4 +11,78 @@
     <string name="rentify_save">Lưu</string>
     <string name="rentify_delete">Xóa</string>
     <string name="rentify_logout">Đăng xuất</string>
+
+    <!-- Auth Strings -->
+    <string name="auth_login_title">Đăng nhập</string>
+    <string name="auth_login_subtitle">Chào mừng bạn quay trở lại!</string>
+    <string name="auth_login_identifier_label">Email hoặc Số điện thoại</string>
+    <string name="auth_login_identifier_hint">nguyenvana@rentify.vn</string>
+    <string name="auth_login_password_label">Mật khẩu</string>
+    <string name="auth_login_password_hint">••••••••••</string>
+    <string name="auth_login_forgot_password">Quên mật khẩu?</string>
+    <string name="auth_login_button">Đăng nhập</string>
+    <string name="auth_login_no_account">Chưa có tài khoản?</string>
+    <string name="auth_login_register_now">Đăng ký</string>
+    <string name="auth_login_error_invalid">Email hoặc mật khẩu không chính xác</string>
+    <string name="auth_login_error_locked">Tài khoản của bạn đã bị khóa</string>
+    <string name="auth_login_error_empty_identifier">Vui lòng nhập Email hoặc Số điện thoại</string>
+    <string name="auth_login_error_empty_password">Vui lòng nhập Mật khẩu</string>
+
+    <!-- Register Strings -->
+    <string name="auth_register_title">Đăng ký tài khoản</string>
+    <string name="auth_register_subtitle">Tạo tài khoản mới để trải nghiệm dịch vụ</string>
+    <string name="auth_register_tenant_title">Tạo tài khoản khách thuê</string>
+    <string name="auth_register_tenant_subtitle">Tìm chỗ ở ưng ý, kết nối bạn ở ghép hợp gu, và quản lý hợp đồng, hoá đơn dễ dàng.</string>
+    <string name="auth_register_landlord_title">Tạo tài khoản chủ nhà</string>
+    <string name="auth_register_landlord_subtitle">Quản lý nhà cho thuê, đưa phòng trống đến đúng người cần thuê, và lập hợp đồng, hoá đơn dễ dàng.</string>
+    <string name="auth_register_name_label">Họ và tên</string>
+    <string name="auth_register_email_label">Địa chỉ Email</string>
+    <string name="auth_register_phone_label">Số điện thoại</string>
+    <string name="auth_register_password_label">Mật khẩu</string>
+    <string name="auth_register_confirm_password_label">Xác nhận mật khẩu</string>
+    <string name="auth_register_button">Tạo tài khoản</string>
+    <string name="auth_register_already_have_account">Đã có tài khoản?</string>
+    <string name="auth_register_login_now">Đăng nhập ngay</string>
+    <string name="auth_register_error_empty_name">Vui lòng nhập Họ và tên</string>
+    <string name="auth_register_error_empty_email">Vui lòng nhập Email</string>
+    <string name="auth_register_error_invalid_email">Email không đúng định dạng</string>
+    <string name="auth_register_error_empty_phone">Vui lòng nhập Số điện thoại</string>
+    <string name="auth_register_error_invalid_phone">Số điện thoại không đúng định dạng</string>
+    <string name="auth_register_error_empty_password">Vui lòng nhập Mật khẩu</string>
+    <string name="auth_register_error_password_length">Mật khẩu phải chứa ít nhất 6 ký tự</string>
+    <string name="auth_register_error_password_mismatch">Mật khẩu xác nhận không trùng khớp</string>
+    <string name="auth_register_error_terms">Bạn cần đồng ý với Điều khoản dịch vụ &amp; Chính sách bảo mật để tiếp tục</string>
+
+    <!-- Forgot Password Strings -->
+    <string name="auth_forgot_password_title">Quên mật khẩu?</string>
+    <string name="auth_forgot_password_subtitle">Nhập địa chỉ email đã đăng ký để đặt lại mật khẩu.</string>
+    <string name="auth_forgot_password_identifier_label">Địa chỉ Email</string>
+    <string name="auth_forgot_password_button">Gửi yêu cầu</string>
+    <string name="auth_forgot_password_remember">Nhớ mật khẩu?</string>
+    <string name="auth_forgot_password_login_now">Đăng nhập ngay</string>
+    <string name="auth_forgot_password_error_empty">Vui lòng nhập Địa chỉ Email</string>
+    <string name="auth_forgot_password_error_invalid_email">Email không đúng định dạng</string>
+
+    <!-- Verify OTP & Resend Strings -->
+    <string name="auth_verify_otp_title">Nhập mã xác thực</string>
+    <string name="auth_verify_otp_subtitle">Mã xác thực đã được gửi tới email %1$s. Vui lòng kiểm tra hộp thư.</string>
+    <string name="auth_verify_otp_label">Mã xác thực (Token / OTP)</string>
+    <string name="auth_verify_otp_button">Xác nhận</string>
+    <string name="auth_verify_otp_resend_prompt">Chưa nhận được mã?</string>
+    <string name="auth_verify_otp_resend_action">Gửi lại mã</string>
+    <string name="auth_verify_otp_resend_timer">Gửi lại mã (%1$ds)</string>
+    <string name="auth_verify_otp_resend_success">Đã gửi lại mã xác thực mới tới email của bạn</string>
+    <string name="auth_verify_otp_error_empty">Vui lòng nhập Mã xác thực</string>
+
+    <!-- Reset Password Strings -->
+    <string name="auth_reset_password_title">Đặt lại mật khẩu</string>
+    <string name="auth_reset_password_subtitle">Tạo mật khẩu mới cho tài khoản của bạn để tiếp tục đăng nhập.</string>
+    <string name="auth_reset_password_new_label">Mật khẩu mới</string>
+    <string name="auth_reset_password_confirm_label">Xác nhận mật khẩu mới</string>
+    <string name="auth_reset_password_button">Đổi mật khẩu</string>
+    <string name="auth_reset_password_success">Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại.</string>
+    <string name="auth_reset_password_back_to_login">Quay lại đăng nhập</string>
+    <string name="auth_reset_password_error_empty">Vui lòng nhập mật khẩu mới</string>
+    <string name="auth_reset_password_error_length">Mật khẩu phải có ít nhất 6 ký tự</string>
+    <string name="auth_reset_password_error_mismatch">Mật khẩu xác nhận không khớp</string>
 </resources>

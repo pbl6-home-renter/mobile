@@ -1,11 +1,11 @@
 package com.rentify.app.tenant.ui.onboarding
 
+import android.content.Context
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.showIf
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.transformer.ParallaxDepthPageTransformer
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentOnboardingBinding
 
@@ -13,21 +13,37 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     FragmentOnboardingBinding::inflate,
 ) {
 
+    interface OnboardingListener {
+        fun onNavigateToLogin()
+    }
+
+    private var listener: OnboardingListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? OnboardingListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
     private val onboardingAdapter = OnboardingAdapter()
 
     private val pages = listOf(
         OnboardingPage(
-            imageRes = R.drawable.img_onboarding_1,
+            animationAsset = "onboarding_1.json",
             titleRes = R.string.onboarding_title_1,
             descriptionRes = R.string.onboarding_desc_1,
         ),
         OnboardingPage(
-            imageRes = R.drawable.img_onboarding_2,
+            animationAsset = "onboarding_2.json",
             titleRes = R.string.onboarding_title_2,
             descriptionRes = R.string.onboarding_desc_2,
         ),
         OnboardingPage(
-            imageRes = R.drawable.img_onboarding_3,
+            animationAsset = "onboarding_3.json",
             titleRes = R.string.onboarding_title_3,
             descriptionRes = R.string.onboarding_desc_3,
         ),
@@ -43,13 +59,13 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
 
     private fun setupViewPager() {
         binding.vpOnboarding.adapter = onboardingAdapter
+        binding.vpOnboarding.setPageTransformer(ParallaxDepthPageTransformer())
         onboardingAdapter.submitList(pages)
 
         pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val isLastPage = position == (pages.size - 1)
-                binding.btnSkip.showIf(!isLastPage)
                 binding.btnNext.setText(
                     if (isLastPage) R.string.onboarding_start else R.string.onboarding_continue,
                 )
@@ -63,10 +79,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     }
 
     private fun setupListeners() {
-        binding.btnSkip.setOnSingleClickListener {
-            navigateToLogin()
-        }
-
         binding.btnNext.setOnSingleClickListener {
             val currentItem = binding.vpOnboarding.currentItem
             if (currentItem < (pages.size - 1)) {
@@ -78,7 +90,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>(
     }
 
     private fun navigateToLogin() {
-        toast(R.string.onboarding_toast_login)
+        listener?.onNavigateToLogin()
     }
 
     override fun onDestroyView() {
