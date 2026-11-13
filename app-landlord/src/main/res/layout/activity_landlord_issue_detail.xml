@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Chi tiết sự cố"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:titleTextColor="@color/rentify_text_primary" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="76dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Header Info Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvUrgencyBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:paddingHorizontal="8dp"
+                                android:paddingVertical="3dp"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                tools:text="● Khẩn cấp" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/tvStatusBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="4dp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="Đang xử lý" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvIssueTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            tools:text="Vòi xịt bồn cầu bị rò rỉ nước liên tục" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/ivCategoryIcon"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_issue_plumbing"
+                                app:tint="@color/rentify_primary" />
+
+                            <TextView
+                                android:id="@+id/tvCategoryLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="13sp"
+                                tools:text="Đường nước" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="6dp"
+                                android:text="•"
+                                android:textColor="@color/rentify_text_secondary" />
+
+                            <TextView
+                                android:id="@+id/tvCreatedAt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="13sp"
+                                tools:text="23/09/2026 11:55" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Location & Reporter Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Vị trí &amp; Người báo cáo"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:text="Tòa nhà &amp; Phòng"
+                                    android:textColor="@color/rentify_text_secondary"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvLocationDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textColor="@color/rentify_text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    tools:text="Phòng 101 • Tòa nhà Sunflower" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="10dp"
+                            android:background="@color/rentify_divider" />
+
+                        <!-- Reporter Info with Call Button -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:text="Khách thuê báo cáo"
+                                    android:textColor="@color/rentify_text_secondary"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvReporterDetail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textColor="@color/rentify_text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    tools:text="Nguyễn Văn A • 0912345678" />
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/btnCallReporter"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/bg_pill_badge_role"
+                                android:src="@drawable/ic_phone"
+                                app:tint="@color/rentify_primary" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Description Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Mô tả sự cố"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:lineSpacingExtra="4dp"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="14sp"
+                            tools:text="Vòi xịt bồn cầu bị nứt ở đoạn nối ren, nước rỉ nhỏ giọt liên tục xuống sàn vệ sinh từ tối qua." />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Maintenance Progress Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Tiến độ xử lý &amp; Nghiệm thu"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <!-- Assigned To -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Đơn vị / Thợ phụ trách:"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tvAssignedTo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="Thợ điện nước anh Hùng" />
+                        </LinearLayout>
+
+                        <!-- Repair Cost -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Chi phí bảo trì / sửa chữa:"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tvRepairCost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:text="150.000 ₫" />
+                        </LinearLayout>
+
+                        <!-- Resolution Note -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Ghi chú kết quả nghiệm thu:"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tvResolutionNote"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="13sp"
+                                tools:text="Đã thay dây vòi xịt inox mới và quấn lại băng tan chống rò." />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Bottom Actions Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBottomActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:cardBackgroundColor="@color/rentify_surface"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/rentify_divider"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSecondaryAction"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Hủy sự cố"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPrimaryAction"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Tiếp nhận"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

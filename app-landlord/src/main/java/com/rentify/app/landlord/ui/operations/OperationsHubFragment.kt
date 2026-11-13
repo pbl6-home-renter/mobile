@@ -24,6 +24,10 @@ class OperationsHubFragment : BaseFragment<FragmentOperationsHubBinding>(Fragmen
         binding.cardHubInvoices.setOnClickListener {
             startActivity(Intent(requireContext(), LandlordInvoicesActivity::class.java))
         }
+
+        binding.cardHubIssues.setOnClickListener {
+            startActivity(Intent(requireContext(), LandlordIssuesActivity::class.java))
+        }
     }
 
     companion object {

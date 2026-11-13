@@ -63,6 +63,15 @@
         <activity
             android:name=".ui.billing.LandlordInvoiceDetailActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.operations.LandlordIssuesActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.operations.LandlordIssueDetailActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

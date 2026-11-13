@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Cập nhật tiến độ xử lý"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDialogSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Nhập thông tin thợ phụ trách, chi phí và ghi chú xử lý."
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="13sp" />
+
+    <!-- Assigned To Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAssignedTo"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Thợ / Đơn vị sửa chữa"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/rentify_primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAssignedTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Repair Cost Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilRepairCost"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Chi phí sửa chữa (₫, tùy chọn)"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/rentify_primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etRepairCost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:inputType="number"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Resolution Note Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilResolutionNote"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Ghi chú kết quả xử lý"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxStrokeColor="@color/rentify_primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etResolutionNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:gravity="top"
+            android:lines="3"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
+
