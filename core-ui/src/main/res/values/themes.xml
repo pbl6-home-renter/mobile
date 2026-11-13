@@ -21,6 +21,7 @@
         <item name="colorOutline">@color/rentify_neutral</item>
         <item name="colorOutlineVariant">@color/rentify_divider</item>
         <item name="colorError">@color/rentify_error</item>
+        <item name="elevationOverlayEnabled">false</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -89,6 +90,35 @@
         <item name="android:fontFamily">@font/plus_jakarta_sans</item>
         <item name="android:textSize">@dimen/text_caption</item>
         <item name="android:textColor">@color/rentify_text_secondary</item>
+    </style>
+
+    <style name="RentifyBottomNavActive" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RentifyBottomNavInactive" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+    </style>
+
+    <style name="RentifyTabTextAppearance" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="RentifyToolbarTitleText" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/rentify_text_primary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

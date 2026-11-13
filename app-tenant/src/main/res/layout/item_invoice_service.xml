@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Service Name -->
+        <TextView
+            android:id="@+id/tvServiceName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/tvServiceAmount"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Tiền điện" />
+
+        <!-- Service Amount -->
+        <TextView
+            android:id="@+id/tvServiceAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="258.000 đ" />
+    </RelativeLayout>
+
+    <!-- Sub detail: Readings / Formula -->
+    <TextView
+        android:id="@+id/tvServiceDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="12sp"
+        tools:text="Chỉ số: 102 → 145 (43 kWh x 6.000 đ)" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/rentify_divider" />
+</LinearLayout>
+

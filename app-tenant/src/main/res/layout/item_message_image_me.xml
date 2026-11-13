@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="4dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardImage"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="#102563EB"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/rentify_primary_gradient_start"
+        app:strokeWidth="1dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivMessageImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_image_placeholder" />
+
+            <ProgressBar
+                android:id="@+id/pbUploadProgress"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <!-- Time Overlay at bottom right -->
+            <TextView
+                android:id="@+id/txtImageTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:background="#80000000"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                tools:text="14:32" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
+

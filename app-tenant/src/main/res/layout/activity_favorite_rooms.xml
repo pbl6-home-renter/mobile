@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background"
+    android:orientation="vertical">
+
+    <!-- Top App Bar / Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/rentify_surface"
+        android:elevation="2dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Phòng trọ đã lưu"
+        app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
+        app:titleTextColor="@color/rentify_text_primary" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Main Content: Swipe to Refresh & List -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvFavoriteRooms"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="24dp"
+                tools:listitem="@layout/item_favorite_room" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!-- Loading Indicator -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <!-- Empty State Container -->
+        <LinearLayout
+            android:id="@+id/layoutEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/bg_circle_icon_button"
+                android:padding="18dp"
+                android:src="@drawable/ic_heart_outline"
+                app:tint="@color/rentify_text_secondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Chưa có phòng trọ nào được lưu"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:text="Nhấn biểu tượng trái tim khi xem danh sách phòng để lưu lại và xem lại bất cứ lúc nào."
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnExploreNow"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/rentify_primary_gradient_start"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="24dp"
+                android:text="Khám phá phòng trọ"
+                android:textColor="@color/rentify_on_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

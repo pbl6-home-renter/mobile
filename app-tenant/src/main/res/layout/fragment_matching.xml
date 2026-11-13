@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background"
+    android:orientation="vertical">
+
+    <!-- Top Header Bar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/btnMyProfile"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Ghép bạn ở cùng"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Khám phá bạn cùng phòng tương thích AI"
+                android:textColor="@color/rentify_neutral"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnMyProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="#102563EB"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:rippleColor="#202563EB"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_user_circle"
+                    app:tint="@color/rentify_primary_gradient_start" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:includeFontPadding="false"
+                    android:text="Hồ sơ của tôi"
+                    android:textColor="@color/rentify_primary_gradient_start"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+    <!-- TabLayout for Switching between Feed and Requests -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutMatching"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/rentify_background"
+        app:tabIndicatorColor="@color/rentify_primary_gradient_start"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/rentify_primary_gradient_start"
+        app:tabTextAppearance="@style/RentifyTabTextAppearance"
+        app:tabTextColor="@color/rentify_neutral">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Khám phá bạn ở" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lời mời ghép đôi" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- Main Content Container -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 1. Explore Tab View -->
+        <LinearLayout
+            android:id="@+id/layoutExploreTab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Area Search Filter -->
+            <LinearLayout
+                android:id="@+id/layoutSearchArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_search_bar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_search"
+                        app:tint="@color/rentify_neutral" />
+
+                    <EditText
+                        android:id="@+id/edtSearchArea"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:hint="Tìm theo khu vực (ví dụ: Liên Chiểu, Ngũ Hành Sơn...)"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/rentify_text_primary"
+                        android:textColorHint="@color/rentify_neutral"
+                        android:textSize="13sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnClearSearch"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_close"
+                        android:visibility="gone"
+                        app:tint="@color/rentify_neutral" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Profile Status Banner (Hidden or No Profile) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardProfileBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#FCD34D"
+                app:cardBackgroundColor="@color/profile_icon_amber_bg">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/ivBannerIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_icon_squircle"
+                        android:backgroundTint="#FEF3C7"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_visibility_off"
+                        app:tint="@color/profile_icon_amber_tint" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvBannerTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Hồ sơ ghép bạn đang tạm ẩn"
+                            android:textColor="@color/profile_icon_amber_tint"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvBannerDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Người khác sẽ không nhìn thấy bạn trên bảng tin tìm bạn ở."
+                            android:textColor="@color/rentify_text_secondary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnBannerAction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="8dp"
+                        android:paddingHorizontal="12dp"
+                        android:backgroundTint="@color/profile_icon_amber_tint"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:text="Bật lại"
+                        android:textColor="@color/rentify_on_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="8dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Dedicated Full/Centered Hidden Profile State View (No Card Container) -->
+            <LinearLayout
+                android:id="@+id/layoutProfileHidden"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="24dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_circle_icon_button"
+                    android:backgroundTint="#FEF3C7"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_visibility_off"
+                    app:tint="@color/profile_icon_amber_tint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="Hồ sơ ghép bạn đang tạm ẩn"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:lineSpacingExtra="3dp"
+                    android:text="Người khác sẽ không nhìn thấy bạn trên bảng tin. Bật lại hồ sơ để khám phá và kết nối với các bạn cùng phòng tiềm năng."
+                    android:textColor="@color/rentify_neutral"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEnableProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/rentify_primary_gradient_start"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:paddingHorizontal="24dp"
+                    android:text="Bật lại hồ sơ"
+                    android:textColor="@color/rentify_on_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshFeed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRoommatesFeed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="24dp" />
+
+                    <!-- Empty Feed Layout -->
+                    <LinearLayout
+                        android:id="@+id/layoutEmptyFeed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="32dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_empty_state"
+                            app:tint="@color/rentify_neutral" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Chưa tìm thấy bạn ở ghép phù hợp"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Hãy thử tìm khu vực khác hoặc hoàn thiện hồ sơ của bạn để tăng độ tương thích AI."
+                            android:textColor="@color/rentify_neutral"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Feed Loading -->
+                    <ProgressBar
+                        android:id="@+id/pbFeedLoading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+        <!-- 2. Match Requests Tab View -->
+        <LinearLayout
+            android:id="@+id/layoutRequestsTab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Direction Filter Chips (Incoming / Outgoing) -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupDirection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipIncoming"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Đã nhận"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipOutgoing"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Đã gửi"
+                    android:textSize="13sp" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshRequests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMatchRequests"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="24dp" />
+
+                    <!-- Empty Requests Layout -->
+                    <LinearLayout
+                        android:id="@+id/layoutEmptyRequests"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="32dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@drawable/ic_nav_chat"
+                            app:tint="@color/rentify_neutral" />
+
+                        <TextView
+                            android:id="@+id/tvEmptyRequestsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Chưa có lời mời ghép đôi nào"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvEmptyRequestsDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:gravity="center"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Khi có người gửi lời mời ghép đôi tới bạn, danh sách sẽ hiển thị tại đây."
+                            android:textColor="@color/rentify_neutral"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Requests Loading -->
+                    <ProgressBar
+                        android:id="@+id/pbRequestsLoading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+        <!-- 3. Guest Layout (Chưa đăng nhập) -->
+        <LinearLayout
+            android:id="@+id/layoutGuest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:cardBackgroundColor="#102563EB"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/rentify_primary_gradient_start"
+                app:strokeWidth="1.5dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_nav_matching"
+                    app:tint="@color/rentify_primary_gradient_start" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Chưa đăng nhập"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Đăng nhập để xem danh sách bạn ở ghép tương thích và gửi lời mời kết nối."
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGuestLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/rentify_primary_gradient_start"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="28dp"
+                android:text="Đăng nhập ngay"
+                android:textColor="@color/rentify_on_primary"
+                android:textSize="14sp"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

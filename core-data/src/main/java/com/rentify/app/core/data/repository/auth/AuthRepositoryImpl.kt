@@ -10,9 +10,12 @@ import com.rentify.app.core.network.dto.auth.AuthLoginResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRefreshResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterRequestDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterResponseDto
+import com.rentify.app.core.network.dto.auth.AuthRequestEmailVerificationRequestDto
+import com.rentify.app.core.network.dto.auth.AuthRequestEmailVerificationResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRequestPasswordResetRequestDto
 import com.rentify.app.core.network.dto.auth.AuthRequestPasswordResetResponseDto
 import com.rentify.app.core.network.dto.auth.AuthResetPasswordRequestDto
+import com.rentify.app.core.network.dto.auth.AuthVerifyEmailRequestDto
 
 class AuthRepositoryImpl(
     private val authApiService: AuthApiService,
@@ -65,5 +68,17 @@ class AuthRepositoryImpl(
 
     override suspend fun resetPassword(request: AuthResetPasswordRequestDto): NetworkResult<Unit> {
         return safeApiCall { authApiService.resetPassword(request) }
+    }
+
+    override suspend fun requestEmailVerification(email: String): NetworkResult<ApiSingleResponse<AuthRequestEmailVerificationResponseDto>> {
+        return safeApiCall {
+            authApiService.requestEmailVerification(AuthRequestEmailVerificationRequestDto(email))
+        }
+    }
+
+    override suspend fun verifyEmail(token: String): NetworkResult<Unit> {
+        return safeApiCall {
+            authApiService.verifyEmail(AuthVerifyEmailRequestDto(token))
+        }
     }
 }

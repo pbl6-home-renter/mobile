@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/ic_nav_explore"
+        android:title="@string/nav_tenant_explore" />
+
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/ic_nav_chat"
+        android:title="@string/nav_tenant_chat" />
+
+    <item
+        android:id="@+id/nav_my_room"
+        android:icon="@drawable/ic_nav_my_room"
+        android:title="@string/nav_tenant_my_room" />
+
+    <item
+        android:id="@+id/nav_matching"
+        android:icon="@drawable/ic_nav_matching"
+        android:title="@string/nav_tenant_matching" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_nav_profile"
+        android:title="@string/nav_tenant_profile" />
+</menu>

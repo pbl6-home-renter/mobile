@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background"
+    android:orientation="vertical">
+
+    <!-- Top App Bar -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/rentify_surface"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Quay lại"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/rentify_text_primary" />
+
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp">
+
+            <TextView
+                android:id="@+id/txtHeaderAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar_gradient"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="H" />
+
+            <ImageView
+                android:id="@+id/imgHeaderGroupIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_avatar_gradient"
+                android:contentDescription="Ảnh nhóm"
+                android:padding="9dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_group"
+                android:visibility="gone"
+                app:tint="@android:color/white" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgHeaderAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+                tools:src="@tools:sample/avatars" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Nhà trọ Thanh Xuân" />
+
+            <TextView
+                android:id="@+id/txtHeaderSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:maxLines="1"
+                android:textColor="@color/rentify_neutral"
+                android:textSize="11sp"
+                tools:text="Trò chuyện trực tiếp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnGroupInfo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Thông tin nhóm"
+            android:src="@drawable/ic_more_vert"
+            android:visibility="gone"
+            app:tint="@color/rentify_text_primary"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <!-- Message List Area -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMessages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            tools:listitem="@layout/item_message_me" />
+
+        <!-- Load more indicator (at top) -->
+        <ProgressBar
+            android:id="@+id/pbLoadMore"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <!-- Initial loading indicator -->
+        <ProgressBar
+            android:id="@+id/pbInitialLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+    <!-- Reply Target Bar (Hidden by default) -->
+    <LinearLayout
+        android:id="@+id/layoutReplyBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_primary_container"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:background="@color/rentify_primary" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvReplySenderName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Trả lời Nguyễn Văn A" />
+
+            <TextView
+                android:id="@+id/tvReplyPreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="12sp"
+                tools:text="Dạ thợ mấy giờ qua kiểm được ạ" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnCancelReply"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Hủy trả lời"
+            android:src="@drawable/ic_close"
+            app:tint="@color/rentify_neutral" />
+    </LinearLayout>
+
+    <!-- Input Bar -->
+    <LinearLayout
+        android:id="@+id/layoutInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp">
+
+        <ImageButton
+            android:id="@+id/btnAttachImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="6dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Đính kèm ảnh"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_image_outline"
+            app:tint="@color/rentify_primary_gradient_start" />
+
+        <EditText
+            android:id="@+id/edtMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_search_bar"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:hint="Nhập tin nhắn..."
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine|textCapSentences"
+            android:maxLines="4"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/rentify_text_primary"
+            android:textColorHint="@color/rentify_neutral"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_send_button"
+            android:contentDescription="Gửi tin nhắn"
+            android:elevation="2dp"
+            android:padding="9dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_send_white" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

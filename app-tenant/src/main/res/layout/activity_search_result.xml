@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background"
+    android:orientation="vertical">
+
+    <!-- Top Search Bar Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Quay lại"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/rentify_text_primary" />
+
+        <!-- Search Input Container -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_search_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_search"
+                app:tint="@color/rentify_text_secondary" />
+
+            <EditText
+                android:id="@+id/etSearchKeyword"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center_vertical"
+                android:hint="Tìm theo tên phòng, khu vực..."
+                android:imeOptions="actionSearch"
+                android:includeFontPadding="false"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text_primary"
+                android:textColorHint="@color/rentify_text_secondary"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/btnClearKeyword"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Xóa từ khóa"
+                android:padding="2dp"
+                android:src="@drawable/ic_close"
+                android:visibility="gone"
+                app:tint="@color/rentify_text_secondary"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <!-- Top Filter Button with Badge -->
+        <FrameLayout
+            android:id="@+id/btnTopFilter"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_filter"
+                app:tint="@color/rentify_text_primary" />
+
+            <!-- Active Filter Badge Dot -->
+            <TextView
+                android:id="@+id/tvTopFilterBadge"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/bg_circle_icon_badge"
+                android:backgroundTint="#F97316"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="1"
+                tools:visibility="visible" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Quick Filter Chip Bar (Horizontal Scroll) -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        android:elevation="1dp"
+        android:overScrollMode="never"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Filter Chip with Counter Badge -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFilter"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Lọc"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="12sp"
+                app:chipIcon="@drawable/ic_filter"
+                app:chipIconSize="16dp" />
+
+            <!-- Price Chip -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPrice"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Chọn giá ▾"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="12sp" />
+
+            <!-- Gender Chip -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGender"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Giới tính ▾"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="12sp" />
+
+            <!-- Sort Chip -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSort"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Xếp giá ⇅"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="12sp" />
+
+            <!-- Clear All Filters Chip -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipClearAll"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xóa bộ lọc"
+                android:textColor="#DC2626"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:chipStrokeColor="#FCA5A5"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Main Content Container -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Results List with Swipe Refresh -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSearchResults"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="24dp"
+                tools:listitem="@layout/item_room_search_result" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!-- Loading Indicator -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <!-- Empty State Container -->
+        <LinearLayout
+            android:id="@+id/layoutEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/bg_circle_icon_button"
+                android:padding="18dp"
+                android:src="@drawable/ic_search"
+                app:tint="@color/rentify_text_secondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Không tìm thấy phòng trọ phù hợp"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:text="Thử điều chỉnh lại khoảng giá, khu vực hoặc tìm kiếm với từ khóa khác."
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClearAllFilters"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/rentify_primary_gradient_start"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="24dp"
+                android:text="Xóa tất cả bộ lọc"
+                android:textColor="@color/rentify_on_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -27,8 +27,10 @@ abstract class BaseRepository {
                 val apiError = parseErrorBody(errorBodyString)
                 NetworkResult.ApiError(response.code(), apiError)
             }
-        } catch (e: Exception) {
+        } catch (e: java.io.IOException) {
             NetworkResult.NetworkError(e)
+        } catch (e: Exception) {
+            NetworkResult.UnknownError(e)
         }
     }
 

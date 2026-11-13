@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_background"
+    android:orientation="vertical">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/rentify_surface"
+        android:elevation="2dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/rentify_text_primary"
+        app:title="Chi tiết hóa đơn"
+        app:titleTextColor="@color/rentify_text_primary" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/layoutContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <!-- Header Status Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/tvPeriod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="Kỳ tháng 10/2026" />
+
+                            <TextView
+                                android:id="@+id/tvStatusBadge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bg_pill_badge_role"
+                                android:backgroundTint="#1510B981"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="4dp"
+                                android:textColor="@color/rentify_success"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                tools:text="Đã thanh toán" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/tvInvoiceCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:textColor="@color/rentify_neutral"
+                            android:textSize="13sp"
+                            tools:text="Mã hóa đơn: INV-2026-10-001" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="12dp"
+                            android:background="@color/rentify_divider" />
+
+                        <!-- Room and Tenant info -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:text="Phòng thuê"
+                                    android:textColor="@color/rentify_neutral"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/tvRoomName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textColor="@color/rentify_text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    tools:text="P.305" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:text="Người đại diện"
+                                    android:textColor="@color/rentify_neutral"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/tvTenantName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textColor="@color/rentify_text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    tools:text="Nguyễn Văn A" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Due date -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Hạn chót thanh toán"
+                                android:textColor="@color/rentify_neutral"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvDueDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="05/11/2026" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Detailed Fees Breakdown Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:text="Bảng kê chi tiết chi phí"
+                            android:textColor="@color/rentify_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <!-- 1. Rent Amount -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Tiền thuê phòng"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvRentAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:text="3.500.000 đ" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/rentify_divider" />
+
+                        <!-- 2. Services Breakdown List -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvServices"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false" />
+
+                        <!-- 3. Other Fees (Optional) -->
+                        <LinearLayout
+                            android:id="@+id/layoutOtherFees"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Phụ phí / Giảm trừ khác"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:id="@+id/layoutOtherFeesContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Financial Summary Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="1dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Tổng cộng hóa đơn"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvTotalAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:text="3.850.000 đ" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Đã thanh toán"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvPaidAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_success"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:text="0 đ" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="10dp"
+                            android:background="@color/rentify_divider" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Còn nợ lại"
+                                android:textColor="@color/rentify_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvRemainingAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:textColor="@color/rentify_primary_gradient_start"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                tools:text="3.850.000 đ" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Payments History of this invoice -->
+                <LinearLayout
+                    android:id="@+id/layoutInvoicePayments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:text="Lịch sử các đợt thanh toán"
+                        android:textColor="@color/rentify_text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutInvoicePaymentsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!-- Bottom Pay Bar (Visible when remainingAmount > 0) -->
+    <LinearLayout
+        android:id="@+id/layoutBottomPayBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPayVietQr"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:backgroundTint="@color/rentify_primary_gradient_start"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Thanh toán ngay bằng VietQR"
+            android:textColor="@color/rentify_on_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_qr_code"
+            app:iconGravity="textStart"
+            app:iconTint="@color/rentify_on_primary" />
+    </LinearLayout>
+
+</LinearLayout>
+

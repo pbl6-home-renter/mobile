@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_surface"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="24dp">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_circle_icon_button"
+        android:backgroundTint="@color/rentify_divider" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Thanh toán VietQR"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnCloseQr"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_circle_icon_button"
+            android:contentDescription="Đóng"
+            android:padding="6dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/rentify_neutral" />
+    </RelativeLayout>
+
+    <!-- Invoice Summary Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@color/rentify_sub_card_invoice_bg"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvQrInvoiceCode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_text_secondary"
+                    android:textSize="12sp"
+                    tools:text="Hóa đơn: INV-2026-10-001" />
+
+                <TextView
+                    android:id="@+id/tvQrInvoicePeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_sub_card_invoice_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="Kỳ: 2026-10" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvQrInvoiceAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="3.850.000 đ" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- QR Code Image Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeColor="@color/rentify_divider"
+        app:strokeWidth="1dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/ivQrCodeImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Mã QR thanh toán"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_image_placeholder" />
+
+            <ProgressBar
+                android:id="@+id/pbQrLoading"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Mở ứng dụng Mobile Banking của ngân hàng bất kỳ để quét mã QR và thanh toán tự động."
+        android:textColor="@color/rentify_neutral"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenQrUrl"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Mở liên kết"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/rentify_divider" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDonePayment"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/rentify_primary_gradient_start"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Xong"
+            android:textColor="@color/rentify_on_primary"
+            android:textSize="14sp"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
+
+</LinearLayout>
+

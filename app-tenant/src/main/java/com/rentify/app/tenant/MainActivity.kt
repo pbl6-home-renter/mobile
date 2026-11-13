@@ -12,8 +12,8 @@ import com.rentify.app.core.ui.auth.ResetPasswordFragment
 import com.rentify.app.core.ui.auth.VerifyOtpFragment
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.toast
-import com.rentify.app.core.ui.home.HomePlaceholderFragment
 import com.rentify.app.tenant.databinding.ActivityMainBinding
+import com.rentify.app.tenant.ui.main.TenantMainFragment
 import com.rentify.app.tenant.ui.onboarding.OnboardingFragment
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -26,32 +26,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     ForgotPasswordFragment.ForgotPasswordListener,
     VerifyOtpFragment.VerifyOtpListener,
     ResetPasswordFragment.ResetPasswordListener,
-    HomePlaceholderFragment.HomePlaceholderListener {
+    TenantMainFragment.TenantMainListener {
 
     private val tokenDataStore by lazy { TokenDataStore(applicationContext) }
     private val appDataStore by lazy { AppDataStore(applicationContext) }
 
     override fun initView() {
+        if (intent.getBooleanExtra(EXTRA_NAVIGATE_LOGIN, false)) {
+            showLoginScreen()
+            return
+        }
+
         if (supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
             checkAppStartDestination()
         }
     }
 
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        if (intent.getBooleanExtra(EXTRA_NAVIGATE_LOGIN, false)) {
+            showLoginScreen()
+        }
+    }
+
     private fun checkAppStartDestination() {
         lifecycleScope.launch {
-            val token = tokenDataStore.accessToken.first()
             val isOnboardingCompleted = appDataStore.isOnboardingCompleted.first()
 
-            when {
-                !token.isNullOrBlank() -> {
-                    showHomeScreen()
-                }
-                isOnboardingCompleted -> {
-                    showLoginScreen()
-                }
-                else -> {
-                    showOnboardingScreen()
-                }
+            if (isOnboardingCompleted) {
+                showHomeScreen()
+            } else {
+                showOnboardingScreen()
             }
         }
     }
@@ -60,7 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         lifecycleScope.launch {
             appDataStore.setOnboardingCompleted(true)
         }
-        showLoginScreen()
+        showHomeScreen()
     }
 
     override fun onLoginSuccess(response: AuthLoginResponseDto) {
@@ -68,12 +74,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         showHomeScreen()
     }
 
-    override fun onLogoutClicked() {
+    override fun onTenantLogoutRequested() {
         lifecycleScope.launch {
             tokenDataStore.clearTokens()
             toast("Đã đăng xuất thành công")
             showLoginScreen()
         }
+    }
+
+    override fun onTenantLoginRequested() {
+        showLoginScreen()
     }
 
     override fun onNavigateToRegister() {
@@ -85,7 +95,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onRegisterSuccess(response: AuthRegisterResponseDto) {
-        toast("Đăng ký thành công! Vui lòng đăng nhập")
+        if (response.verificationRequired) {
+            toast("Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản.")
+        } else {
+            toast("Đăng ký thành công! Vui lòng đăng nhập")
+        }
         showLoginScreen()
     }
 
@@ -119,7 +133,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     private fun showHomeScreen() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, HomePlaceholderFragment.newInstance())
+            .replace(R.id.fragmentContainer, TenantMainFragment.newInstance())
             .commit()
     }
 
@@ -147,5 +161,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             .replace(R.id.fragmentContainer, ResetPasswordFragment.newInstance(token))
             .addToBackStack(null)
             .commit()
+    }
+
+    companion object {
+        const val EXTRA_NAVIGATE_LOGIN = "extra_navigate_login"
+
+        fun createLoginIntent(context: android.content.Context): android.content.Intent {
+            return android.content.Intent(context, MainActivity::class.java).apply {
+                putExtra(EXTRA_NAVIGATE_LOGIN, true)
+                flags = android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+        }
     }
 }

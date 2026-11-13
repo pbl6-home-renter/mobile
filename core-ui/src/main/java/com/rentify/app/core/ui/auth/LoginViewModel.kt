@@ -43,8 +43,9 @@ class LoginViewModel(
                 is NetworkResult.ApiError -> {
                     val errorCode = result.error?.code ?: result.code.toString()
                     val errorMessage = when (errorCode) {
-                        "INVALID_CREDENTIALS" -> "Email hoặc mật khẩu không chính xác"
+                        "AUTH_LOGIN_INVALID_CREDENTIALS", "INVALID_CREDENTIALS" -> "Email hoặc mật khẩu không chính xác"
                         "ACCOUNT_LOCKED" -> "Tài khoản của bạn đã bị khóa"
+                        "EMAIL_NOT_VERIFIED" -> "Email chưa được xác minh. Vui lòng kiểm tra hộp thư email để kích hoạt tài khoản."
                         else -> result.error?.message ?: "Đăng nhập thất bại (Mã $errorCode)"
                     }
                     _loginState.value = UiState.Error(errorMessage)

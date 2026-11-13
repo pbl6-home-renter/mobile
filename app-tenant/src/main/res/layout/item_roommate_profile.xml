@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardBackgroundColor="@color/rentify_surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/rentify_divider"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Header: Avatar + Info + AI Match Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="#E2E8F0"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user_circle"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNameAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:maxLines="1"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Nguyễn Thu Hà, 22 tuổi" />
+
+                <TextView
+                    android:id="@+id/tvOccupation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:maxLines="1"
+                    android:textColor="@color/rentify_neutral"
+                    android:textSize="12sp"
+                    tools:text="Sinh viên ĐH Bách Khoa" />
+            </LinearLayout>
+
+            <!-- AI Match Badge -->
+            <LinearLayout
+                android:id="@+id/layoutAiMatchBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_badge_role"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_ai_sparkle"
+                    app:tint="@color/rentify_primary_gradient_start" />
+
+                <TextView
+                    android:id="@+id/tvMatchScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_primary_gradient_start"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="88% Hợp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="@color/rentify_divider" />
+
+        <!-- Preferred Info: Budget & Area -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Ngân sách tìm phòng"
+                    android:textColor="@color/rentify_neutral"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvBudget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_primary_gradient_start"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="1.500.000 - 2.500.000 đ" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Khu vực mong muốn"
+                    android:textColor="@color/rentify_neutral"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:maxLines="1"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="Liên Chiểu · ĐH Bách Khoa" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Lifestyle Tags -->
+        <LinearLayout
+            android:id="@+id/layoutTags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_pill_badge_role"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="11sp"
+                android:visibility="gone"
+                tools:text="Sạch sẽ"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvTag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="@drawable/bg_pill_badge_role"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="11sp"
+                android:visibility="gone"
+                tools:text="Không hút thuốc"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvTag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_badge_role"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="11sp"
+                android:visibility="gone"
+                tools:text="Ngủ sớm"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <!-- Bio text -->
+        <TextView
+            android:id="@+id/tvBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:maxLines="2"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="12sp"
+            tools:text="Mình hòa đồng, sạch sẽ, không hút thuốc. Cần tìm bạn ở ghép share tiền phòng." />
+
+        <!-- Buttons Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewDetail"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Xem chi tiết"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="13sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/rentify_divider" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSendRequest"
+                android:layout_width="0dp"
+                android:layout_height="42dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/rentify_primary_gradient_start"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Mời ghép đôi"
+                android:textColor="@color/rentify_on_primary"
+                android:textSize="13sp"
+                app:cornerRadius="10dp"
+                app:iconGravity="textStart"
+                app:iconSize="14dp"
+                app:iconTint="@color/rentify_on_primary" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+

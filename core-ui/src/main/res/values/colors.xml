@@ -18,4 +18,41 @@
     <color name="black">#000000</color>
     <color name="rentify_button_border_start">#A5B4FC</color>
     <color name="rentify_button_border_end">#C084FC</color>
+    <color name="rentify_header_blue">#2563EB</color>
+    <color name="rentify_badge_red">#EF4444</color>
+    <color name="rentify_card_near_bg">#EFF6FF</color>
+    <color name="rentify_card_saved_bg">#FFF1F2</color>
+    <color name="rentify_card_saved_icon">#E11D48</color>
+    <color name="rentify_card_match_bg">#FFF7ED</color>
+    <color name="rentify_card_match_icon">#EA580C</color>
+    <color name="rentify_card_invoice_bg">#F0FDF4</color>
+    <color name="rentify_card_invoice_icon">#16A34A</color>
+    <color name="rentify_area_blue">#EBF2FD</color>
+    <color name="rentify_area_purple">#F1EDF9</color>
+    <color name="rentify_area_green">#EDF7F1</color>
+    <color name="rentify_area_orange">#FEF3E8</color>
+    <color name="rentify_sub_card_invoice_bg">#FFF7ED</color>
+    <color name="rentify_sub_card_invoice_text">#C2410C</color>
+    <color name="rentify_sub_card_contract_bg">#F0FDF4</color>
+    <color name="rentify_sub_card_contract_text">#15803D</color>
+    <color name="rentify_white_translucent">#33FFFFFF</color>
+
+    <!-- Profile Icon Badges Pastel Colors -->
+    <color name="profile_icon_blue_bg">#EFF6FF</color>
+    <color name="profile_icon_blue_tint">#2563EB</color>
+    <color name="profile_icon_indigo_bg">#EEF2FF</color>
+    <color name="profile_icon_indigo_tint">#4F46E5</color>
+    <color name="profile_icon_rose_bg">#FFF1F2</color>
+    <color name="profile_icon_rose_tint">#E11D48</color>
+    <color name="profile_icon_amber_bg">#FFFBEB</color>
+    <color name="profile_icon_amber_tint">#D97706</color>
+    <color name="profile_icon_teal_bg">#F0FDFA</color>
+    <color name="profile_icon_teal_tint">#0D9488</color>
+    <color name="profile_icon_emerald_bg">#ECFDF5</color>
+    <color name="profile_icon_emerald_tint">#059669</color>
+    <color name="profile_icon_neutral_bg">#F1F5F9</color>
+    <color name="profile_icon_neutral_tint">#475569</color>
+    <color name="profile_logout_bg">#FEF2F2</color>
+    <color name="profile_logout_stroke">#FECDD3</color>
+    <color name="profile_logout_text">#DC2626</color>
 </resources>

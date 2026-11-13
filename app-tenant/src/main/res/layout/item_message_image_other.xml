@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="4dp">
+
+    <!-- Small Avatar -->
+    <FrameLayout
+        android:id="@+id/layoutAvatar"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="bottom"
+        android:layout_marginEnd="8dp">
+
+        <TextView
+            android:id="@+id/txtAvatarSmall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_avatar_gradient"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="N" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Sender name if group -->
+        <TextView
+            android:id="@+id/txtSenderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="11sp"
+            android:visibility="gone"
+            tools:text="Nguyễn Văn A"
+            tools:visibility="visible" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardImage"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/rentify_surface"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/rentify_divider"
+            app:strokeWidth="1dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivMessageImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_image_placeholder" />
+
+                <!-- Time Overlay at bottom right -->
+                <TextView
+                    android:id="@+id/txtImageTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="8dp"
+                    android:background="#80000000"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    tools:text="14:32" />
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</LinearLayout>
+

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp">
+
+    <!-- Avatar container (52dp x 52dp) -->
+    <FrameLayout
+        android:id="@+id/avatarContainer"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtAvatarInitial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_avatar_gradient"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="H" />
+
+        <ImageView
+            android:id="@+id/imgGroupIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_avatar_gradient"
+            android:contentDescription="Ảnh nhóm"
+            android:padding="13dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_group"
+            android:visibility="gone"
+            app:tint="@android:color/white" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:src="@tools:sample/avatars" />
+    </FrameLayout>
+
+    <!-- Time at top right -->
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:includeFontPadding="false"
+        android:textColor="@color/rentify_neutral"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/avatarContainer"
+        tools:text="18 giờ" />
+
+    <!-- Group indicator icon right before Title -->
+    <ImageView
+        android:id="@+id/ivGroupIndicator"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="14dp"
+        android:contentDescription="Nhóm"
+        android:src="@drawable/ic_group"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
+        app:layout_constraintStart_toEndOf="@+id/avatarContainer"
+        app:layout_constraintTop_toTopOf="@+id/txtTitle"
+        app:tint="@color/rentify_text_secondary"
+        tools:visibility="visible" />
+
+    <!-- Title (Name / Group Name) -->
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="15.5sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/txtTime"
+        app:layout_constraintStart_toEndOf="@+id/ivGroupIndicator"
+        app:layout_constraintTop_toTopOf="@+id/avatarContainer"
+        app:layout_goneMarginStart="14dp"
+        tools:text="Google Developer Group Đà Nẵng" />
+
+    <!-- Unread badge count at bottom right -->
+    <TextView
+        android:id="@+id/txtUnreadBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/bg_unread_badge"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:minWidth="18dp"
+        android:paddingHorizontal="6dp"
+        android:textColor="@android:color/white"
+        android:textSize="10.5sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="99+"
+        tools:visibility="visible" />
+
+    <!-- Last message preview at bottom left -->
+    <TextView
+        android:id="@+id/txtLastMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="13.5sp"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarContainer"
+        app:layout_constraintEnd_toStartOf="@+id/txtUnreadBadge"
+        app:layout_constraintStart_toEndOf="@+id/avatarContainer"
+        tools:text="Tường Vi: @All Chỉ còn 24h nữa để..." />
+
+    <!-- Subtle divider indented like Zalo/iOS -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:background="#F1F5F9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtLastMessage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
