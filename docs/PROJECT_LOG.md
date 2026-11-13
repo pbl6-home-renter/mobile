@@ -5,13 +5,16 @@
 | Module | Trạng thái | Người phụ trách | Ghi chú |
 |---|---|---|---|
 | Core Network | Hoàn thành | AI & Dev | Đã dựng Retrofit, OkHttp, Moshi DTO wrappers, Auth DTOs (Email Verification), Room DTOs, User DTOs (avatarUrl), Chat DTOs v2 (Reply quotes, maxSequence, Search), Matching DTOs, Issue DTOs, Contract DTOs, Invoice DTOs (/me/invoices, String amounts & breakdown), Media DTOs (Download URL) & Chat Group DTOs |
-| Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
+| Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore, SessionManager, BaseRepository, AuthRepository, UserRepository, AdministrativeUnitsRepository (In-Memory Cache & Snapshot Fallback) |
 | Core UI | Hoàn thành | AI & Dev | Đã chuẩn hóa thang đo Spacing 4dp, nâng cấp 100% icon (50 icon) sang Lucide Icons, chuẩn hóa Card style (viền #E2E8F0, ripple foreground) và Empty/Error State huy hiệu tròn pastel |
-| App Tenant | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn diện 51 layout: Spacing 4dp, Card surface & ripple, Empty state và độ tương phản Typography WCAG AA |
-| App Landlord | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn diện 39 layout: Spacing 4dp, Card surface & ripple, Empty state và độ tương phản Typography WCAG AA |
+| App Tenant | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn diện 51 layout, nâng cấp bộ lọc tìm kiếm phòng trọ (Tỉnh/Thành & Phường/Xã) kết nối API thật & fallback snapshot |
+| App Landlord | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn bộ 39 layout, dùng chung AdministrativeUnitsRepository từ :core-data |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Nâng cấp Bộ lọc Tìm kiếm Phòng trọ (FilterBottomSheetDialogFragment) sang API Đơn vị Hành chính thật và Đưa Repository lên :core-data
+- **Lý do:** Loại bỏ hoàn toàn danh sách tĩnh hardcode (6 tỉnh và 7 phường mẫu), đảm bảo khách thuê lọc phòng theo đúng 63 Tỉnh/Thành và Phường/Xã chuẩn backend hỗ trợ; đồng thời chuyển AdministrativeUnitsRepository lên :core-data với In-memory Cache để cả Tenant và Landlord dùng chung một nguồn dữ liệu tối ưu.
+- **Ảnh hưởng:** :core-data bổ sung AdministrativeUnitsRepository & AdministrativeUnitsRepositoryImpl (cache static concurrent và snapshot fallback khi APIDog trả 404); :app-landlord cập nhật import; :app-tenant chuyển bố cục Tỉnh/Phường sang dọc thoáng đãng, chống tràn chữ và tự động nạp Phường/Xã theo thời gian thực khi chọn tỉnh.
 ### 2026-11-13 – Chuẩn hóa Trạng thái Trống (Empty/Error States) huy hiệu tròn pastel và Độ tương phản Typography WCAG AA
 - **Lý do:** Khắc phục tình trạng các màn hình danh sách trống dùng icon xám mờ rời rạc thiếu hướng dẫn hành động; nâng cấp độ tương phản chữ từ `#94A3B8` (< 3:1) lên `@color/rentify_text_muted` (`#64748B`, > 4.5:1) đạt chuẩn tiếp cận WCAG AA.
 - **Ảnh hưởng:** `:core-ui` cập nhật `view_empty_state.xml` và `view_error_state.xml` với container tròn pastel 72x72dp và icon Lucide; chuẩn hóa hơn 14 màn hình trống trên cả `:app-tenant` và `:app-landlord` (Hợp đồng, Hóa đơn, Sự cố, Yêu thích, Tìm kiếm, Matching, Chat, Tòa nhà, Điện nước).
@@ -172,6 +175,7 @@
 
 ## 4. Nhật ký thay đổi lớn
 <!-- Chỉ thay đổi đáng kể, kèm link PR -->
+- 2026-11-13 – Tích hợp API Đơn vị Hành chính thực tế (Tỉnh/Thành & Phường/Xã) vào bộ lọc tìm kiếm phòng trọ Tenant, đưa AdministrativeUnitsRepository lên :core-data kèm Fallback snapshot và chuẩn hóa bố cục chống tràn chữ trên nhánh feature/tenant-administrative-units (commits 1d9314c, a8d9942, f99b186).
 - 2026-11-13 – Chuẩn hóa bề mặt thẻ, viền mảnh `#E2E8F0`, hiệu ứng ripple foreground và thang bo góc radius trên toàn bộ 44 layout `:app-tenant` và `:app-landlord` trên nhánh `feature/ui-card-surface-polish` (commit `716eeaa`).
 - 2026-11-13 – Nâng cấp toàn diện Empty/Error states với huy hiệu tròn pastel 72x72dp & icon Lucide, chuẩn hóa độ tương phản văn bản phụ đạt chuẩn WCAG AA trên `:core-ui`, `:app-tenant` và `:app-landlord` trên nhánh `feature/ui-empty-states-typography` (commit `16b3b52`).
 - 2026-11-13 – Nâng cấp toàn diện 50 icon vector sang Lucide Icons chính thức trên nhánh `feature/ui-lucide-icons` (commit `d5a0225`), cả 2 ứng dụng `:app-tenant` và `:app-landlord` đều biên dịch thành công.
@@ -258,3 +262,8 @@
     - **Vị trí:** `mobile/app-tenant/src/main/java/com/rentify/app/tenant/ui/myroom/MyRoomViewModel.kt`, `MyRoomFragment.kt`.
     - **Nguyên nhân:** Đang gọi tuần tự 2 API (`getMyContracts` rồi mới đến `getMyRoomHub`), bị kích hoạt gọi trùng lặp giữa `init` và `onResume()`, và luôn reset về `MyRoomUiState.Loading` khiến người dùng phải chờ xoay vòng mỗi khi chuyển tab.
     - **Kế hoạch cập nhật tương lai:** Chuyển sang gọi song song 2 API bằng Coroutine `async`/`await`, áp dụng cơ chế Instant Display / Stale-While-Revalidate (giữ dữ liệu cũ hiển thị ngay lập tức, chỉ cập nhật ngầm), khử trùng lặp request giữa vòng đời Fragment và ViewModel, tối ưu fallback ảnh bìa phòng Unsplash.
+
+12. **[CHỜ DỌN DẸP] Fallback Local Snapshot cho Danh mục Đơn vị Hành chính (`AdministrativeUnitsRepositoryImpl`)**:
+    - **Vị trí:** `mobile/core-data/src/main/java/com/rentify/app/core/data/repository/administrative/AdministrativeUnitsRepositoryImpl.kt` (`FALLBACK_PROVINCES`, `FALLBACK_WARDS`).
+    - **Nguyên nhân:** Mock server APIDog hiện tại chưa cấu hình mock 2 endpoint `/administrative-units/provinces` và `/administrative-units/provinces/{provinceCode}/wards` (trả về lỗi HTTP 404 Not Found), khiến bộ lọc tìm kiếm phòng trọ và màn hình tạo tòa nhà không tải được danh sách Phường/Xã. Client cấu hình fallback tự động sang snapshot danh mục chuẩn gồm 12 Tỉnh/Thành phố lớn và đầy đủ Phường/Xã tương ứng để phục vụ kiểm thử và đảm bảo trải nghiệm người dùng không bị gián đoạn.
+    - **Điều kiện dọn dẹp:** Khi APIDog Cloud Mock hoặc Backend Production kích hoạt 2 endpoint này theo đúng spec `rentify.json`, client sẽ tự động nhận dữ liệu từ server mà không kích hoạt nhánh fallback; sau đó có thể loại bỏ `FALLBACK_PROVINCES` và `FALLBACK_WARDS` khỏi Repository.
