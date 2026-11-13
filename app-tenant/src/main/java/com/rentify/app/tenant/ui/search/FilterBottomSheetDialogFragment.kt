@@ -5,9 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.rentify.app.core.data.repository.administrative.AdministrativeUnitsRepository
+import com.rentify.app.core.data.repository.administrative.AdministrativeUnitsRepositoryImpl
+import com.rentify.app.core.network.adapter.NetworkResult
+import com.rentify.app.core.network.api.AdministrativeUnitsApiService
+import com.rentify.app.core.network.client.NetworkClient
+import com.rentify.app.core.network.dto.administrative.AdministrativeProvinceDto
+import com.rentify.app.core.network.dto.administrative.AdministrativeWardDto
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.BottomSheetRoomFilterBinding
+import kotlinx.coroutines.launch
 
 class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
@@ -18,8 +27,14 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     private var currentFilter: RoomFilter = RoomFilter.default()
 
-    private val provinces = listOf("Tất cả", "Thành phố Hồ Chí Minh", "Thành phố Hà Nội", "Thành phố Đà Nẵng", "Cần Thơ", "Hải Phòng")
-    private val wards = listOf("Tất cả phường/xã", "Bách Khoa", "Đồng Tâm", "Láng Thượng", "Dịch Vọng", "Bến Nghé", "Thảo Điền")
+    private val administrativeUnitsRepository: AdministrativeUnitsRepository by lazy {
+        val apiService = NetworkClient.createService<AdministrativeUnitsApiService>()
+        AdministrativeUnitsRepositoryImpl(apiService)
+    }
+
+    private var provincesList: List<AdministrativeProvinceDto> = emptyList()
+    private var wardsList: List<AdministrativeWardDto> = emptyList()
+    private var selectedProvinceCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +64,119 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setupSpinners() {
-        val provinceAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, provinces)
-        binding.actvProvince.setAdapter(provinceAdapter)
+        val ctx = context ?: return
+        binding.actvProvince.setAdapter(ArrayAdapter(ctx, android.R.layout.simple_dropdown_item_1line, listOf("Đang tải danh sách...")))
+        setupWardEmpty()
 
-        val wardAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, wards)
-        binding.actvWard.setAdapter(wardAdapter)
+        binding.actvProvince.setOnItemClickListener { _, _, position, _ ->
+            if (position <= 0) {
+                selectedProvinceCode = null
+                binding.actvProvince.setText("Tất cả", false)
+                setupWardEmpty()
+            } else {
+                val province = provincesList.getOrNull(position - 1) ?: return@setOnItemClickListener
+                selectedProvinceCode = province.code
+                binding.actvWard.isEnabled = true
+                loadWards(province.code, restoreWard = null)
+            }
+        }
+
+        binding.actvWard.setOnItemClickListener { _, _, position, _ ->
+            if (position <= 0) {
+                binding.actvWard.setText("Tất cả phường/xã", false)
+            } else {
+                val ward = wardsList.getOrNull(position - 1) ?: return@setOnItemClickListener
+                binding.actvWard.setText(ward.name, false)
+            }
+        }
+
+        loadProvinces()
+    }
+
+    private fun loadProvinces() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            when (val result = administrativeUnitsRepository.getProvinces()) {
+                is NetworkResult.Success -> {
+                    val b = _binding ?: return@launch
+                    val ctx = context ?: return@launch
+                    val list = result.data.data ?: emptyList()
+                    provincesList = list
+                    val provinceNames = mutableListOf("Tất cả")
+                    provinceNames.addAll(list.map { it.name })
+
+                    val adapter = ArrayAdapter(ctx, android.R.layout.simple_dropdown_item_1line, provinceNames)
+                    b.actvProvince.setAdapter(adapter)
+
+                    val initialProvince = currentFilter.province
+                    if (!initialProvince.isNullOrBlank() && initialProvince != "Tất cả") {
+                        b.actvProvince.setText(initialProvince, false)
+                        val matched = provincesList.find { it.name.equals(initialProvince, ignoreCase = true) }
+                        if (matched != null) {
+                            selectedProvinceCode = matched.code
+                            b.actvWard.isEnabled = true
+                            loadWards(matched.code, restoreWard = currentFilter.ward)
+                        } else {
+                            setupWardEmpty()
+                        }
+                    } else {
+                        b.actvProvince.setText("Tất cả", false)
+                        setupWardEmpty()
+                    }
+                }
+                is NetworkResult.ApiError, is NetworkResult.NetworkError, is NetworkResult.UnknownError -> {
+                    val b = _binding ?: return@launch
+                    val ctx = context ?: return@launch
+                    val fallback = listOf("Tất cả", "Thành phố Hồ Chí Minh", "Thành phố Hà Nội", "Thành phố Đà Nẵng", "Thành phố Cần Thơ", "Thành phố Hải Phòng")
+                    b.actvProvince.setAdapter(ArrayAdapter(ctx, android.R.layout.simple_dropdown_item_1line, fallback))
+                    setupWardEmpty()
+                }
+            }
+        }
+    }
+
+    private fun loadWards(provinceCode: String, restoreWard: String?) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val b = _binding ?: return@launch
+            val ctx = context ?: return@launch
+            b.actvWard.setAdapter(ArrayAdapter(ctx, android.R.layout.simple_dropdown_item_1line, listOf("Đang tải phường/xã...")))
+
+            when (val result = administrativeUnitsRepository.getWards(provinceCode)) {
+                is NetworkResult.Success -> {
+                    val currentBinding = _binding ?: return@launch
+                    val currentCtx = context ?: return@launch
+                    val list = result.data.data ?: emptyList()
+                    wardsList = list
+                    val wardNames = mutableListOf("Tất cả phường/xã")
+                    wardNames.addAll(list.map { it.name })
+
+                    val adapter = ArrayAdapter(currentCtx, android.R.layout.simple_dropdown_item_1line, wardNames)
+                    currentBinding.actvWard.setAdapter(adapter)
+
+                    if (!restoreWard.isNullOrBlank() && restoreWard != "Tất cả phường/xã") {
+                        val matchedWard = wardsList.find { it.name.equals(restoreWard, ignoreCase = true) }
+                        if (matchedWard != null) {
+                            currentBinding.actvWard.setText(matchedWard.name, false)
+                        } else {
+                            currentBinding.actvWard.setText("Tất cả phường/xã", false)
+                        }
+                    } else {
+                        currentBinding.actvWard.setText("Tất cả phường/xã", false)
+                    }
+                }
+                is NetworkResult.ApiError, is NetworkResult.NetworkError, is NetworkResult.UnknownError -> {
+                    setupWardEmpty()
+                }
+            }
+        }
+    }
+
+    private fun setupWardEmpty() {
+        val b = _binding ?: return
+        val ctx = context ?: return
+        wardsList = emptyList()
+        b.actvWard.setText("Tất cả phường/xã", false)
+        b.actvWard.isEnabled = false
+        b.actvWard.setAdapter(ArrayAdapter(ctx, android.R.layout.simple_dropdown_item_1line, listOf("Tất cả phường/xã")))
     }
 
     private fun setupPriceRange() {
@@ -124,23 +247,34 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun applyFilterToUi(filter: RoomFilter) {
-        // Province & Ward
-        binding.actvProvince.setText(filter.province ?: "Tất cả", false)
-        binding.actvWard.setText(filter.ward ?: "Tất cả phường/xã", false)
+        val b = _binding ?: return
+        if (provincesList.isNotEmpty()) {
+            if (!filter.province.isNullOrBlank() && filter.province != "Tất cả") {
+                b.actvProvince.setText(filter.province, false)
+                val matched = provincesList.find { it.name.equals(filter.province, ignoreCase = true) }
+                if (matched != null) {
+                    selectedProvinceCode = matched.code
+                    b.actvWard.isEnabled = true
+                    loadWards(matched.code, restoreWard = filter.ward)
+                } else {
+                    setupWardEmpty()
+                }
+            } else {
+                b.actvProvince.setText("Tất cả", false)
+                setupWardEmpty()
+            }
+        }
 
-        // Price
         val minM = if (filter.minPrice != null) (filter.minPrice / 1_000_000f).coerceIn(0f, 15f) else 0f
         val maxM = if (filter.maxPrice != null) (filter.maxPrice / 1_000_000f).coerceIn(0f, 15f) else 15f
         setSliderRange(minM, maxM)
 
-        // Gender
         when (filter.genderPolicy) {
             "male" -> binding.toggleGender.check(R.id.btnGenderMale)
             "female" -> binding.toggleGender.check(R.id.btnGenderFemale)
             else -> binding.toggleGender.check(R.id.btnGenderAll)
         }
 
-        // Sort
         if (filter.sort == "rentPrice" && filter.order == "asc") {
             binding.toggleSort.check(R.id.btnSortPriceAsc)
         } else if (filter.sort == "rentPrice" && filter.order == "desc") {
@@ -151,15 +285,19 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun resetFiltersToDefault() {
+        selectedProvinceCode = null
+        currentFilter = RoomFilter.default()
         applyFilterToUi(RoomFilter.default())
+        binding.actvProvince.setText("Tất cả", false)
+        setupWardEmpty()
     }
 
     private fun collectFilterFromUi(): RoomFilter {
         val provinceText = binding.actvProvince.text?.toString()?.trim()
         val wardText = binding.actvWard.text?.toString()?.trim()
 
-        val selectedProvince = if (provinceText.isNullOrBlank() || provinceText == "Tất cả") null else provinceText
-        val selectedWard = if (wardText.isNullOrBlank() || wardText.contains("Tất cả")) null else wardText
+        val selectedProvince = if (provinceText.isNullOrBlank() || provinceText == "Tất cả" || provinceText.contains("Đang tải")) null else provinceText
+        val selectedWard = if (wardText.isNullOrBlank() || wardText.contains("Tất cả") || wardText.contains("Đang tải")) null else wardText
 
         val priceValues = binding.sliderPriceRange.values
         val minPrice = if (priceValues[0] > 0f) (priceValues[0] * 1_000_000).toLong() else null
