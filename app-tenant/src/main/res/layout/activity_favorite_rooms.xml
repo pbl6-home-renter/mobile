@@ -61,13 +61,21 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <ImageView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="72dp"
                 android:layout_height="72dp"
-                android:background="@drawable/bg_circle_icon_button"
-                android:padding="@dimen/spacing_md"
-                android:src="@drawable/ic_heart_outline"
-                app:tint="@color/rentify_text_secondary" />
+                app:cardBackgroundColor="@color/rentify_card_saved_bg"
+                app:cardCornerRadius="36dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_heart_filled"
+                    app:tint="@color/rentify_card_saved_icon" />
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"

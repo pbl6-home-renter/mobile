@@ -92,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
                             android:fontFamily="@font/plus_jakarta_sans"
-                            android:textColor="@color/rentify_neutral"
+                            android:textColor="@color/rentify_text_muted"
                             android:textSize="13sp"
                             tools:text="Mã hóa đơn: INV-2026-10-001" />
 
@@ -119,7 +119,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Phòng thuê"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="11sp" />
 
                                 <TextView
@@ -145,7 +145,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Người đại diện"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="11sp" />
 
                                 <TextView
@@ -173,7 +173,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Hạn chót thanh toán"
-                                android:textColor="@color/rentify_neutral"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="11sp" />
 
                             <TextView

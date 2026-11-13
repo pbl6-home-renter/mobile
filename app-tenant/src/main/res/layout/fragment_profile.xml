@@ -793,7 +793,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="v1.0.0 (Tenant)"
-                                android:textColor="@color/rentify_neutral"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="12sp" />
                         </LinearLayout>
 

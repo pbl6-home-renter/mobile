@@ -78,7 +78,7 @@
                                 android:layout_marginTop="@dimen/spacing_2xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Cho phép hồ sơ xuất hiện trên feed tìm bạn ở ghép"
-                                android:textColor="@color/rentify_neutral"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -123,7 +123,7 @@
                             android:layout_marginTop="@dimen/spacing_smd"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Giới tính"
-                            android:textColor="@color/rentify_neutral"
+                            android:textColor="@color/rentify_text_muted"
                             android:textSize="12sp" />
 
                         <RadioGroup

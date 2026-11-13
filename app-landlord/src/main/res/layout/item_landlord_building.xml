@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="11sp"
                 tools:text="23/09/2026" />
         </LinearLayout>

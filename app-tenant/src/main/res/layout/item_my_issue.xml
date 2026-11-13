@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacing_sm"
                 android:text="•"
-                android:textColor="@color/rentify_neutral" />
+                android:textColor="@color/rentify_text_muted" />
 
             <TextView
                 android:id="@+id/tvRoomName"

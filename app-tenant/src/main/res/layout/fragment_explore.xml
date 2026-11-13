@@ -260,7 +260,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="Tìm phòng trọ, khu vực..."
-                    android:textColor="#64748B"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="14sp" />
 
                 <View

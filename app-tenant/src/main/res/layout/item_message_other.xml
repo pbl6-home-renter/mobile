@@ -117,7 +117,7 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/spacing_xs"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="10sp"
                 tools:text="11:32" />
         </LinearLayout>

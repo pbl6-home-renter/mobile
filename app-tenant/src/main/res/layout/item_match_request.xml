@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp"
                     tools:text="14:30 04/11/2026" />
             </LinearLayout>
@@ -142,7 +142,7 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="Rút lời mời"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="13sp"
                 android:visibility="gone"
                 app:cornerRadius="8dp"

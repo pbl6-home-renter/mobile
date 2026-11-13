@@ -93,7 +93,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:maxLines="1"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="11sp"
                 tools:text="Trò chuyện trực tiếp" />
         </LinearLayout>

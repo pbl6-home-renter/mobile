@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="12sp"
                 tools:text="Mã GD: TXN-202610-098" />
         </LinearLayout>

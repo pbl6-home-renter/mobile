@@ -124,12 +124,22 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/ic_wrench_tool"
-                    app:tint="@color/rentify_text_secondary"
-                    android:contentDescription="Không có sự cố" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    app:cardBackgroundColor="@color/rentify_card_match_bg"
+                    app:cardCornerRadius="36dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_wrench_tool"
+                        app:tint="@color/rentify_card_match_icon"
+                        android:contentDescription="Không có sự cố" />
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:id="@+id/tvEmptyTitle"
@@ -148,7 +158,7 @@
                     android:layout_marginTop="@dimen/spacing_sm"
                     android:gravity="center"
                     android:text="Mọi yêu cầu sửa chữa, hư hỏng trong phòng sẽ được theo dõi và xử lý tại đây."
-                    android:textColor="@color/rentify_text_secondary"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="14sp" />
             </LinearLayout>
 

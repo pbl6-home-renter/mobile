@@ -63,7 +63,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="12sp"
                     tools:text="Sinh viên ĐH Bách Khoa" />
             </LinearLayout>
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Ngân sách tìm phòng"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp" />
 
                 <TextView
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Khu vực mong muốn"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp" />
 
                 <TextView

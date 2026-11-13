@@ -84,7 +84,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
                             android:fontFamily="@font/plus_jakarta_sans"
-                            android:textColor="@color/rentify_neutral"
+                            android:textColor="@color/rentify_text_muted"
                             android:textSize="13sp"
                             tools:text="Nữ · 22 tuổi · Sinh viên ĐH Bách Khoa" />
                     </LinearLayout>
@@ -195,7 +195,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Ngân sách dự kiến: "
-                                android:textColor="@color/rentify_neutral"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -220,7 +220,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Khu vực mong muốn: "
-                                android:textColor="@color/rentify_neutral"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -271,7 +271,7 @@
                                 <TextView
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Ngăn nắp, gọn gàng:"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitClean"
@@ -286,7 +286,7 @@
                                 <TextView
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Giờ giấc sinh hoạt:"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitSleep"
@@ -301,7 +301,7 @@
                                 <TextView
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Nấu ăn tại phòng:"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitCooking"
@@ -316,7 +316,7 @@
                                 <TextView
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Thú cưng:"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitPet"
@@ -331,7 +331,7 @@
                                 <TextView
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Hút thuốc:"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitSmoking"
@@ -346,7 +346,7 @@
                                 <TextView
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Dẫn bạn bè về phòng:"
-                                    android:textColor="@color/rentify_neutral"
+                                    android:textColor="@color/rentify_text_muted"
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitGuests"
