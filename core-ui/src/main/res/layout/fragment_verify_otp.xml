@@ -188,7 +188,7 @@
                         android:id="@+id/tvResendAction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="@dimen/spacing_xs"
                         android:fontFamily="@font/plus_jakarta_sans_bold"
                         android:padding="@dimen/spacing_xs"
                         android:text="@string/auth_verify_otp_resend_action"
