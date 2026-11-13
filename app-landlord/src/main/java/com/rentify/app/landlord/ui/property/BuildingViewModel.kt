@@ -10,7 +10,7 @@ import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.building.BuildingUpdateRequestDto
 import com.rentify.app.core.network.dto.building.BuildingVietQrConfigRequestDto
 import com.rentify.app.core.ui.base.BaseViewModel
-import com.rentify.app.landlord.data.repository.AdministrativeUnitsRepository
+import com.rentify.app.core.data.repository.administrative.AdministrativeUnitsRepository
 import com.rentify.app.landlord.data.repository.LandlordBuildingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
