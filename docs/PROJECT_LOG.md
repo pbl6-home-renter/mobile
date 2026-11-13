@@ -8,10 +8,16 @@
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
 | Core UI | Hoàn thành | AI & Dev | Hoàn thiện toàn bộ luồng Auth, base components, vector icons & dialogs dùng chung |
 | App Tenant | Hoàn thành | AI & Dev | Hoàn thiện Explore, Profile, FavoriteRooms, MyRoom Hub, Ghép bạn ở cùng, Chi tiết xem trọ, Quản lý Sự cố, Quản lý Hợp đồng, Quản lý Hóa đơn (/me/invoices), và Nâng cấp Chat v2 (Gửi ảnh R2, Photo Viewer, Quản lý nhóm, Nhấn giữ để trả lời tin nhắn - Reply quote) |
-| App Landlord | Hoàn thành Giai đoạn 1 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng 5 Tab, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Tích hợp Đơn vị Hành chính & Cấu hình VietQR |
+| App Landlord | Hoàn thành Giai đoạn 2 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Quản lý Hợp đồng, Thành viên ở ghép, Trả phòng & Quyết toán cọc |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Triển khai Phân hệ Quản lý Hợp đồng, Khách thuê & Quyết toán cọc cho Landlord (Giai đoạn 2)
+- **Lý do:** Hoàn thiện giai đoạn 2 ứng dụng Chủ trọ (`:app-landlord`) theo API spec (tag Contract, ContractMember): Cho phép chủ trọ tạo hợp đồng mới cho phòng trống, lọc danh sách hợp đồng đa trạng thái (`active`, `signed`, `draft`, `terminated`), quản lý danh sách thành viên ở ghép (`contract-members`), kích hoạt hợp đồng (`activate-contract`), và thực hiện quy trình trả phòng kèm quyết toán tiền cọc (`complete-checkout` & `deposit-settlement`).
+- **Ảnh hưởng:** 
+  - `:core-network` mở rộng `ContractApiService` và bổ sung đầy đủ DTOs (`ContractListResponseDto`, `ContractCreateRequestDto`, `ContractActivateRequestDto`, `ContractCompleteCheckoutRequestDto`, `DepositSettlementRequestDto`, `ContractMemberListResponseDto`, `ContractMemberAddRequestDto`, `ContractMemberLeaveRequestDto`).
+  - `:app-landlord` xây dựng `LandlordContractRepository`, `ContractViewModel`, `LandlordContractsActivity`, `CreateContractActivity`, `LandlordContractDetailActivity`, BottomSheet thêm thành viên & quyết toán cọc, kết nối trực tiếp từ Khối 1 của Tab Vận hành (`OperationsHubFragment`).
+
 ### 2026-11-13 – Triển khai Phân hệ Nền tảng Điều hướng, Dashboard & Quản lý Tài sản (Buildings & Rooms) cho Landlord (Giai đoạn 1)
 - **Lý do:** Hoàn thiện nền tảng ứng dụng Chủ trọ (`:app-landlord`) chuẩn theo API spec: Xây dựng BottomNavigation 5 tab chuyên biệt, Dashboard KPI tổng hợp, quản lý danh sách & tạo tòa nhà mới gửi yêu cầu phê duyệt tới Admin kèm dữ liệu đơn vị hành chính chuẩn (Tỉnh/Thành, Phường/Xã), cấu hình tài khoản nhận tiền VietQR cho từng tòa nhà, và quản lý danh sách phòng trọ kèm thao tác tạo phòng & đánh dấu sẵn sàng cho thuê (`mark-ready`).
 - **Ảnh hưởng:** 
@@ -113,6 +119,7 @@
 
 ## 3. Vấn đề & lưu ý
 <!-- [MỞ] / [ĐÃ XỬ LÝ] -->
+- [MỞ] 2026-11-13 – Ghi nhận thành viên rời phòng (`leave-contract`): Endpoint `/contract-members/{tenantId}/leave-contract` yêu cầu thành viên phải có tài khoản hệ thống (`tenantId` khác null); thành viên không có tài khoản chỉ cập nhật qua ghi chú hợp đồng.
 - [MỞ] 2026-11-13 – Quy trình kiểm duyệt Tòa nhà: Chủ trọ chỉ gửi yêu cầu phê duyệt (`POST /buildings` -> `status = pending`), quyền phê duyệt hoặc từ chối thuộc về Admin. Khi bị từ chối (`rejected`), app hiển thị trực quan hộp cảnh báo kèm lý do (`rejectionReason`/`reviewNote`) để chủ trọ chỉnh sửa nộp lại.
 - [ĐÃ XỬ LÝ] 2026-11-13 – Chuyển đổi toàn bộ trường số tiền trong phân hệ Hóa đơn sang `String` kèm getter `Long`, xử lý triệt để nguy cơ crash Moshi JSON khi server trả số thực hoặc chuỗi số lớn.
 - [ĐÃ XỬ LÝ] 2026-11-13 – Nâng cấp tính năng Trả lời tin nhắn (Chat Reply): Bổ sung cử chỉ nhấn giữ (Long press) trên tin nhắn văn bản và ảnh, thanh xem trước trích dẫn phía trên ô nhập liệu và khung quote trong bong bóng chat.
@@ -135,6 +142,7 @@
 
 ## 4. Nhật ký thay đổi lớn
 <!-- Chỉ thay đổi đáng kể, kèm link PR -->
+- 2026-11-13 – Hoàn thành triển khai Giai đoạn 2 cho `:app-landlord` trên nhánh `feature/landlord-contracts` (commit `765847b`), biên dịch và đóng gói thành công APK debug.
 - 2026-11-13 – Hoàn thành triển khai Giai đoạn 1 cho `:app-landlord` trên nhánh `feature/landlord-properties` gồm 5 commit chuẩn Conventional Commits, biên dịch thành công toàn bộ APK debug.
 - 2026-11-13 – Đồng bộ mã nguồn theo API Spec Rentify mới nhất (PR #50 - PR #56): Thay thế endpoint `/invoices/tenant` bằng `/me/invoices`, hỗ trợ `breakdown` dịch vụ hóa đơn, bổ sung luồng email verification, signed download URL cho media, và tính năng trả lời tin nhắn (Message Reply Quotes) trong phân hệ Chat.
 - 2026-11-05 – Tái cấu trúc toàn diện giao diện Tab "Phòng của tôi" (MyRoom Hub) trên Tenant theo mô hình 3 Smart Widgets: gộp Nơi ở & Chủ trọ, Hóa đơn tài chính và List Group Vận hành & Cộng đồng.
