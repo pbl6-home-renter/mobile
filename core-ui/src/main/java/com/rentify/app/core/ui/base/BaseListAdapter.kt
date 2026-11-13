@@ -31,8 +31,10 @@ abstract class BaseListAdapter<T : Any, VB : ViewBinding>(
         if (safePosition in 0 until itemCount) {
             val item = getItem(safePosition)
             bind(holder.binding, item, safePosition)
-            holder.itemView.setOnSingleClickListener {
-                onItemClick?.invoke(getItem(holder.bindingAdapterPosition.takeIf { it != RecyclerView.NO_POSITION } ?: safePosition))
+            if (onItemClick != null) {
+                holder.itemView.setOnSingleClickListener {
+                    onItemClick?.invoke(getItem(holder.bindingAdapterPosition.takeIf { it != RecyclerView.NO_POSITION } ?: safePosition))
+                }
             }
         }
     }

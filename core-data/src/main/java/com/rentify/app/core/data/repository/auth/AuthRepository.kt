@@ -7,6 +7,7 @@ import com.rentify.app.core.network.dto.auth.AuthLoginResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRefreshResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterRequestDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterResponseDto
+import com.rentify.app.core.network.dto.auth.AuthRequestEmailVerificationResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRequestPasswordResetRequestDto
 import com.rentify.app.core.network.dto.auth.AuthRequestPasswordResetResponseDto
 import com.rentify.app.core.network.dto.auth.AuthResetPasswordRequestDto
@@ -18,4 +19,6 @@ interface AuthRepository {
     suspend fun logout(): NetworkResult<Unit>
     suspend fun requestPasswordReset(request: AuthRequestPasswordResetRequestDto): NetworkResult<ApiSingleResponse<AuthRequestPasswordResetResponseDto>>
     suspend fun resetPassword(request: AuthResetPasswordRequestDto): NetworkResult<Unit>
+    suspend fun requestEmailVerification(email: String): NetworkResult<ApiSingleResponse<AuthRequestEmailVerificationResponseDto>>
+    suspend fun verifyEmail(token: String): NetworkResult<Unit>
 }

@@ -6,9 +6,12 @@ import com.rentify.app.core.network.dto.auth.AuthLoginResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRefreshResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterRequestDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterResponseDto
+import com.rentify.app.core.network.dto.auth.AuthRequestEmailVerificationRequestDto
+import com.rentify.app.core.network.dto.auth.AuthRequestEmailVerificationResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRequestPasswordResetRequestDto
 import com.rentify.app.core.network.dto.auth.AuthRequestPasswordResetResponseDto
 import com.rentify.app.core.network.dto.auth.AuthResetPasswordRequestDto
+import com.rentify.app.core.network.dto.auth.AuthVerifyEmailRequestDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -39,5 +42,15 @@ interface AuthApiService {
     @POST("auth/password-resets")
     suspend fun resetPassword(
         @Body request: AuthResetPasswordRequestDto
+    ): Response<Unit>
+
+    @POST("auth/email-verification-requests")
+    suspend fun requestEmailVerification(
+        @Body request: AuthRequestEmailVerificationRequestDto
+    ): Response<ApiSingleResponse<AuthRequestEmailVerificationResponseDto>>
+
+    @POST("auth/email-verifications")
+    suspend fun verifyEmail(
+        @Body request: AuthVerifyEmailRequestDto
     ): Response<Unit>
 }

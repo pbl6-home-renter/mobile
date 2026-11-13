@@ -47,6 +47,8 @@ dependencies {
     api(libs.material)
     api(libs.androidx.recyclerview)
     api(libs.androidx.viewpager2)
+    api(libs.coil)
+    api(libs.androidx.swiperefreshlayout)
 
     implementation(libs.kotlinx.coroutines.android)
 

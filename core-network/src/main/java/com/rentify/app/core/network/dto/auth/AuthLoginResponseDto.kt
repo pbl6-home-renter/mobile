@@ -8,5 +8,9 @@ import com.squareup.moshi.JsonClass
 data class AuthLoginResponseDto(
     @field:Json(name = "accessToken") val accessToken: String,
     @field:Json(name = "refreshToken") val refreshToken: String,
-    @field:Json(name = "profile") val profile: UserCurrentResponseDto
-)
+    @field:Json(name = "user") val user: UserCurrentResponseDto? = null,
+    @field:Json(name = "profile") val userProfile: UserCurrentResponseDto? = null
+) {
+    val profile: UserCurrentResponseDto
+        get() = user ?: userProfile ?: UserCurrentResponseDto()
+}
