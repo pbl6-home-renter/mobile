@@ -8,10 +8,14 @@
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
 | Core UI | Hoàn thành | AI & Dev | Hoàn thiện toàn bộ luồng Auth, base components, vector icons & dialogs dùng chung |
 | App Tenant | Hoàn thành | AI & Dev | Hoàn thiện Explore, Profile, FavoriteRooms, MyRoom Hub, Ghép bạn ở cùng, Chi tiết xem trọ, Quản lý Sự cố, Quản lý Hợp đồng, Quản lý Hóa đơn (/me/invoices), và Nâng cấp Chat v2 (Gửi ảnh R2, Photo Viewer, Quản lý nhóm, Nhấn giữ để trả lời tin nhắn - Reply quote) |
-| App Landlord | Hoàn thành Giai đoạn 4 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Hợp đồng & Khách thuê, Ghi chỉ số Điện Nước, Hóa đơn & Thu tiền mặt, và Quản lý Sự cố & Bảo trì |
+| App Landlord | Hoàn thành toàn diện (100%) | AI & Dev | Đã hoàn thành toàn bộ 5 Giai đoạn: Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Hợp đồng & Khách thuê, Ghi chỉ số Điện Nước, Hóa đơn & Thu tiền mặt, Quản lý Sự cố & Bảo trì, và Chat v2 kèm Bot Reminders & Hồ sơ cá nhân |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Triển khai Phân hệ Chat v2, Lời nhắc tự động Bot Reminders và Hồ sơ Chủ trọ (Giai đoạn 5)
+- **Lý do:** Hoàn thành giai đoạn cuối cùng trong kế hoạch xây dựng ứng dụng Chủ trọ (`:app-landlord`): Xây dựng giao diện danh sách hội thoại đa luồng (trực tiếp 1:1 và nhóm tòa nhà/cư dân), màn hình nhắn tin chi tiết thời gian thực hỗ trợ gửi tin nhắn và tính năng đặc thù cho Chủ trọ là gửi lời nhắc tự động Rentify Bot (`POST /conversations/{id}/bot-reminders` theo mẫu hóa đơn/hợp đồng/điện nước), đồng thời hoàn thiện màn hình Hồ sơ cá nhân (`LandlordProfileFragment`) với hiển thị thông tin người dùng, đổi mật khẩu bảo mật (`POST /auth/change-password`) và quy trình đăng xuất an toàn.
+- **Ảnh hưởng:** 
+  - `:app-landlord` xây dựng `LandlordChatRepository`, `LandlordChatViewModel`, `LandlordConversationAdapter`, `LandlordChatFragment`, `LandlordChatDetailActivity`, `LandlordChatDetailViewModel`, `LandlordMessageAdapter` (hỗ trợ hiển thị 3 loại tin nhắn: gửi đi, nhận về, và card bot reminder), dialog gửi bot reminder, cập nhật `LandlordProfileFragment` kết nối `UserRepositoryImpl` và hoàn thiện luồng đăng xuất.
 ### 2026-11-13 – Triển khai Phân hệ Quản lý Sự cố & Bảo trì Vận hành cho Landlord (Giai đoạn 4)
 - **Lý do:** Hoàn thiện luồng tiếp nhận và xử lý sự cố thiết bị/hạ tầng từ khách thuê (tag Operation) cho ứng dụng Chủ trọ (`:app-landlord`) chuẩn theo API spec: Hỗ trợ duyệt hàng đợi sự cố đa trạng thái (`open`, `in_progress`, `resolved`, `cancelled`), xem chi tiết báo cáo kèm thông tin người gửi & vị trí phòng trọ, quay số gọi nhanh cho khách thuê, phân công thợ/đơn vị sửa chữa, nghiệm thu kết quả có ghi nhận chi phí sửa chữa (`repairCost`) & ghi chú nguyên nhân/khắc phục (`resolutionNote`), và hủy báo cáo sự cố khi không hợp lệ.
 - **Ảnh hưởng:** 
