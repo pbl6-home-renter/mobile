@@ -6,15 +6,15 @@
     android:layout_height="wrap_content"
     android:gravity="start"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="4dp">
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_xs">
 
     <TextView
         android:id="@+id/tvSenderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_2xs"
         android:fontFamily="@font/plus_jakarta_sans"
         android:textColor="@color/rentify_text_secondary"
         android:textSize="11sp"
@@ -24,7 +24,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="@dimen/spacing_4xl"
         app:cardBackgroundColor="@color/rentify_surface"
         app:cardCornerRadius="16dp"
         app:cardElevation="1dp"
@@ -35,8 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="@dimen/spacing_smd">
 
             <TextView
                 android:id="@+id/tvMessageContent"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/spacing_xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="10sp"

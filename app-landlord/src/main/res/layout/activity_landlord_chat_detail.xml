@@ -16,8 +16,8 @@
         android:elevation="2dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_smd">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -30,7 +30,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="@dimen/spacing_smd"
             android:text="Bot nhắc nhở"
             android:textSize="11sp"
             android:textStyle="bold"
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingVertical="8dp" />
+            android:paddingVertical="@dimen/spacing_sm" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -101,8 +101,8 @@
         android:elevation="4dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp">
+        android:paddingHorizontal="@dimen/spacing_smd"
+        android:paddingVertical="@dimen/spacing_sm">
 
         <EditText
             android:id="@+id/etMessage"
@@ -113,8 +113,8 @@
             android:fontFamily="@font/plus_jakarta_sans"
             android:hint="Nhập tin nhắn..."
             android:maxLines="4"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="10dp"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="@dimen/spacing_smd"
             android:textColor="@color/rentify_text_primary"
             android:textSize="14sp" />
 
@@ -122,7 +122,7 @@
             android:id="@+id/btnSend"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:background="@drawable/bg_send_button"
             android:src="@drawable/ic_send_white"
             app:tint="@android:color/white" />

@@ -27,7 +27,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="@dimen/spacing_hero"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.core.widget.NestedScrollView
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:padding="16dp">
+            android:padding="@dimen/spacing_md">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -69,8 +69,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:paddingHorizontal="8dp"
-                                android:paddingVertical="3dp"
+                                android:paddingHorizontal="@dimen/spacing_sm"
+                                android:paddingVertical="@dimen/spacing_xs"
                                 android:textSize="11sp"
                                 android:textStyle="bold"
                                 tools:text="● Khẩn cấp" />
@@ -85,8 +85,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="4dp"
+                                android:paddingHorizontal="@dimen/spacing_smd"
+                                android:paddingVertical="@dimen/spacing_xs"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 tools:text="Đang xử lý" />
@@ -96,7 +96,7 @@
                             android:id="@+id/tvIssueTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:textColor="@color/rentify_text_primary"
                             android:textSize="18sp"
@@ -106,7 +106,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -121,7 +121,7 @@
                                 android:id="@+id/tvCategoryLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="6dp"
+                                android:layout_marginStart="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_secondary"
                                 android:textSize="13sp"
@@ -130,7 +130,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="6dp"
+                                android:layout_marginHorizontal="@dimen/spacing_sm"
                                 android:text="•"
                                 android:textColor="@color/rentify_text_secondary" />
 
@@ -151,7 +151,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:orientation="horizontal">
 
                             <LinearLayout
@@ -197,7 +197,7 @@
                                     android:id="@+id/tvLocationDetail"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="14sp"
@@ -209,7 +209,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <!-- Reporter Info with Call Button -->
@@ -237,7 +237,7 @@
                                     android:id="@+id/tvReporterDetail"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="14sp"
@@ -261,7 +261,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
@@ -272,7 +272,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -287,7 +287,7 @@
                             android:id="@+id/tvDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:lineSpacingExtra="4dp"
                             android:textColor="@color/rentify_text_primary"
@@ -300,7 +300,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="2dp"
@@ -311,7 +311,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -326,7 +326,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:orientation="horizontal">
 
                             <TextView
@@ -353,7 +353,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:orientation="horizontal">
 
                             <TextView
@@ -380,7 +380,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:orientation="vertical">
 
                             <TextView
@@ -395,7 +395,7 @@
                                 android:id="@+id/tvResolutionNote"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="@dimen/spacing_xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="13sp"
@@ -431,14 +431,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp">
+            android:padding="@dimen/spacing_md">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSecondaryAction"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Hủy sự cố"
@@ -450,7 +450,7 @@
                 android:id="@+id/btnPrimaryAction"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Tiếp nhận"

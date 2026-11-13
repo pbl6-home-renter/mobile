@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:elevation="2dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="14dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_md">
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_sm">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSearch"
@@ -55,7 +55,7 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:maxLines="1"
-                android:paddingVertical="10dp"
+                android:paddingVertical="@dimen/spacing_smd"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,8 +67,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_sm"
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingBottom="100dp"
+                android:paddingBottom="@dimen/spacing_bottom_nav"
                 tools:listitem="@layout/item_landlord_conversation" />
 
             <ProgressBar
@@ -141,7 +141,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="32dp"
+                android:padding="@dimen/spacing_xl"
                 android:visibility="gone">
 
                 <ImageView
@@ -154,7 +154,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Chưa có cuộc trò chuyện nào"
                     android:textColor="@color/rentify_text_primary"
@@ -164,7 +164,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Các cuộc trò chuyện với khách thuê và nhóm cư dân sẽ xuất hiện tại đây"
                     android:textAlignment="center"

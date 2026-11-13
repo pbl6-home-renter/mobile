@@ -14,8 +14,8 @@
         android:elevation="2dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="14dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_md">
 
         <TextView
             android:layout_width="0dp"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="38dp"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:paddingHorizontal="12dp"
+            android:paddingHorizontal="@dimen/spacing_smd"
             android:text="+ Thêm mới"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -82,8 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingTop="12dp"
-                android:paddingBottom="100dp" />
+                android:paddingTop="@dimen/spacing_smd"
+                android:paddingBottom="@dimen/spacing_bottom_nav" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -100,7 +100,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="32dp"
+                android:padding="@dimen/spacing_xl"
                 android:visibility="gone">
 
                 <ImageView
@@ -114,7 +114,7 @@
                     android:id="@+id/tvEmptyTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Chưa có tòa nhà nào"
                     android:textColor="@color/rentify_text_primary"
@@ -125,7 +125,7 @@
                     android:id="@+id/tvEmptySubtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Nhấn '+ Thêm mới' để gửi yêu cầu phê duyệt tòa nhà"
                     android:textColor="@color/rentify_text_muted"

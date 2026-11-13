@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_bottom_sheet_rounded"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/spacing_ml">
 
     <!-- Drag Handle -->
     <View
         android:layout_width="40dp"
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/spacing_md"
         android:background="@color/rentify_divider" />
 
     <TextView
@@ -27,8 +27,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_md"
         android:fontFamily="@font/plus_jakarta_sans"
         android:text="Thông tin tài khoản nhận tiền chuyển khoản tự động từ khách thuê."
         android:textColor="@color/rentify_text_secondary"
@@ -39,7 +39,7 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/spacing_smd"
         android:hint="Mã ngân hàng (VD: MB, VCB, TCB) *"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -60,7 +60,7 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/spacing_smd"
         android:hint="Tên ngân hàng *"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -81,7 +81,7 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/spacing_smd"
         android:hint="Số tài khoản thụ hưởng *"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -102,7 +102,7 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/spacing_smd"
         android:hint="Tên chủ tài khoản (viết hoa không dấu) *"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -123,7 +123,7 @@
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/spacing_ml"
         android:hint="Chi nhánh (tùy chọn)"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
@@ -155,7 +155,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/spacing_smd"
         android:visibility="gone" />
 
 </LinearLayout>

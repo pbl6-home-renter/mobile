@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:elevation="2dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="14dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_md">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:padding="16dp"
-        android:paddingBottom="100dp">
+        android:padding="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_bottom_nav">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,20 +54,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="@dimen/spacing_md">
 
                     <ImageView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/bg_icon_squircle"
-                        android:padding="10dp"
+                        android:padding="@dimen/spacing_smd"
                         android:src="@drawable/ic_nav_my_room"
                         app:tint="@color/rentify_primary" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_marginStart="@dimen/spacing_md"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -83,7 +83,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Quản lý thời hạn, kích hoạt, trả phòng &amp; cọc"
                             android:textColor="@color/rentify_text_secondary"
@@ -103,7 +103,7 @@
                 android:id="@+id/cardHubMeters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/spacing_smd"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/rentify_surface"
@@ -117,20 +117,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="@dimen/spacing_md">
 
                     <ImageView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/bg_icon_squircle"
-                        android:padding="10dp"
+                        android:padding="@dimen/spacing_smd"
                         android:src="@drawable/ic_amenity_water_heater"
                         app:tint="@color/rentify_primary" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_marginStart="@dimen/spacing_md"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -146,7 +146,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Ghi nhanh công tơ hàng loạt theo tòa nhà"
                             android:textColor="@color/rentify_text_secondary"
@@ -166,7 +166,7 @@
                 android:id="@+id/cardHubInvoices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/spacing_smd"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/rentify_surface"
@@ -180,20 +180,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="@dimen/spacing_md">
 
                     <ImageView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/bg_icon_squircle"
-                        android:padding="10dp"
+                        android:padding="@dimen/spacing_smd"
                         android:src="@drawable/ic_invoice_doc"
                         app:tint="@color/rentify_primary" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_marginStart="@dimen/spacing_md"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -209,7 +209,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Tính toán, phát hành hóa đơn &amp; nhận tiền mặt"
                             android:textColor="@color/rentify_text_secondary"
@@ -229,7 +229,7 @@
                 android:id="@+id/cardHubIssues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/spacing_smd"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/rentify_surface"
@@ -243,20 +243,20 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="@dimen/spacing_md">
 
                     <ImageView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
                         android:background="@drawable/bg_icon_squircle"
-                        android:padding="10dp"
+                        android:padding="@dimen/spacing_smd"
                         android:src="@drawable/ic_wrench_tool"
                         app:tint="@color/rentify_primary" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_marginStart="@dimen/spacing_md"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -272,7 +272,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Tiếp nhận phản ánh, giao việc thợ &amp; nghiệm thu"
                             android:textColor="@color/rentify_text_secondary"

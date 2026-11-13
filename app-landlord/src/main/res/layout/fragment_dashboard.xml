@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="100dp">
+            android:paddingBottom="@dimen/spacing_bottom_nav">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,9 +28,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_header_gradient"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="24dp"
-                    android:paddingBottom="24dp">
+                    android:paddingHorizontal="@dimen/spacing_ml"
+                    android:paddingTop="@dimen/spacing_lg"
+                    android:paddingBottom="@dimen/spacing_lg">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                         android:id="@+id/tvWelcomeTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/spacing_xs"
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:text="Tổng quan vận hành"
                         android:textColor="@android:color/white"
@@ -55,7 +55,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/spacing_xs"
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:text="Theo dõi tài sản, phòng trống và dòng tiền"
                         android:textColor="#C7D2FE"
@@ -66,7 +66,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="@dimen/spacing_md"
                     android:layout_marginTop="-16dp"
                     android:orientation="vertical">
 
@@ -80,7 +80,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
+                            android:layout_marginEnd="@dimen/spacing_sm"
                             android:layout_weight="1"
                             app:cardBackgroundColor="@color/rentify_surface"
                             app:cardCornerRadius="16dp"
@@ -92,7 +92,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="@dimen/spacing_md">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                                     android:id="@+id/tvOccupancyRate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="6dp"
+                                    android:layout_marginTop="@dimen/spacing_sm"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_primary"
                                     android:textSize="24sp"
@@ -117,7 +117,7 @@
                                     android:id="@+id/tvOccupiedRoomsSubtitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_muted"
                                     android:textSize="11sp"
@@ -129,7 +129,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="@dimen/spacing_sm"
                             android:layout_weight="1"
                             app:cardBackgroundColor="@color/rentify_surface"
                             app:cardCornerRadius="16dp"
@@ -141,7 +141,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="@dimen/spacing_md">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                                     android:id="@+id/tvTotalBuildings"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="6dp"
+                                    android:layout_marginTop="@dimen/spacing_sm"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="24sp"
@@ -166,7 +166,7 @@
                                     android:id="@+id/tvPendingBuildingsSubtitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_warning"
                                     android:textSize="11sp"
@@ -179,14 +179,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="@dimen/spacing_smd"
                         android:orientation="horizontal">
 
                         <!-- Total Rooms KPI Card -->
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="6dp"
+                            android:layout_marginEnd="@dimen/spacing_sm"
                             android:layout_weight="1"
                             app:cardBackgroundColor="@color/rentify_surface"
                             app:cardCornerRadius="16dp"
@@ -198,7 +198,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="@dimen/spacing_md">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -212,7 +212,7 @@
                                     android:id="@+id/tvTotalRooms"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="6dp"
+                                    android:layout_marginTop="@dimen/spacing_sm"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="24sp"
@@ -222,7 +222,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Quản lý toàn bộ"
                                     android:textColor="@color/rentify_text_muted"
@@ -234,7 +234,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
+                            android:layout_marginStart="@dimen/spacing_sm"
                             android:layout_weight="1"
                             app:cardBackgroundColor="@color/rentify_surface"
                             app:cardCornerRadius="16dp"
@@ -246,7 +246,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:padding="16dp">
+                                android:padding="@dimen/spacing_md">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -260,7 +260,7 @@
                                     android:id="@+id/tvTotalTenants"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="6dp"
+                                    android:layout_marginTop="@dimen/spacing_sm"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_success"
                                     android:textSize="24sp"
@@ -270,7 +270,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:text="Người dùng đang hoạt động"
                                     android:textColor="@color/rentify_text_muted"
@@ -284,8 +284,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginHorizontal="@dimen/spacing_ml"
+                    android:layout_marginTop="@dimen/spacing_lg"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Thao tác nhanh"
                     android:textColor="@color/rentify_text_primary"
@@ -295,8 +295,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="@dimen/spacing_md"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:orientation="horizontal">
 
                     <!-- Button Add Building -->
@@ -304,7 +304,7 @@
                         android:id="@+id/btnQuickAddBuilding"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="@dimen/spacing_sm"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
@@ -319,7 +319,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="16dp">
+                            android:padding="@dimen/spacing_md">
 
                             <ImageView
                                 android:layout_width="32dp"
@@ -330,7 +330,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Thêm tòa nhà"
                                 android:textColor="@color/rentify_text_primary"
@@ -344,7 +344,7 @@
                         android:id="@+id/btnQuickAddRoom"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="@dimen/spacing_sm"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
@@ -359,7 +359,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="16dp">
+                            android:padding="@dimen/spacing_md">
 
                             <ImageView
                                 android:layout_width="32dp"
@@ -370,7 +370,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Thêm phòng trọ"
                                 android:textColor="@color/rentify_text_primary"
@@ -383,8 +383,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginHorizontal="@dimen/spacing_md"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:orientation="horizontal">
 
                     <!-- Button Meter Reading -->
@@ -392,7 +392,7 @@
                         android:id="@+id/btnQuickMeters"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="@dimen/spacing_sm"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
@@ -407,7 +407,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="16dp">
+                            android:padding="@dimen/spacing_md">
 
                             <ImageView
                                 android:layout_width="32dp"
@@ -418,7 +418,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Ghi điện nước"
                                 android:textColor="@color/rentify_text_primary"
@@ -432,7 +432,7 @@
                         android:id="@+id/btnQuickIssues"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="@dimen/spacing_sm"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
@@ -447,7 +447,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="vertical"
-                            android:padding="16dp">
+                            android:padding="@dimen/spacing_md">
 
                             <ImageView
                                 android:layout_width="32dp"
@@ -458,7 +458,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Xem sự cố"
                                 android:textColor="@color/rentify_text_primary"

@@ -28,8 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="12dp">
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingBottom="@dimen/spacing_smd">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilBuilding"
@@ -56,7 +56,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -72,11 +72,11 @@
                     android:id="@+id/tvPeriod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/spacing_sm"
                     android:background="@drawable/bg_pill_badge_role"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="4dp"
+                    android:paddingHorizontal="@dimen/spacing_smd"
+                    android:paddingVertical="@dimen/spacing_xs"
                     android:textColor="@color/rentify_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -88,7 +88,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="@dimen/spacing_hero"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -96,8 +96,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="@dimen/spacing_sm"
+            android:paddingBottom="@dimen/spacing_md"
             tools:listitem="@layout/item_landlord_meter_entry" />
 
         <ProgressBar
@@ -114,7 +114,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:padding="@dimen/spacing_xl"
             android:visibility="gone">
 
             <ImageView
@@ -127,7 +127,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Vui lòng chọn tòa nhà để ghi chỉ số"
                 android:textColor="@color/rentify_text_secondary"
@@ -149,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/spacing_md">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSubmitBulkMeters"

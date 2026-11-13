@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:elevation="2dp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="14dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_md">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:padding="16dp"
-        android:paddingBottom="100dp">
+        android:padding="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_bottom_nav">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:padding="@dimen/spacing_md">
 
                     <TextView
                         android:id="@+id/tvAvatarInitial"
@@ -66,7 +66,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
+                        android:layout_marginStart="@dimen/spacing_md"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -84,7 +84,7 @@
                             android:id="@+id/tvLandlordEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:textColor="@color/rentify_text_secondary"
                             android:textSize="13sp" />
@@ -92,10 +92,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="@dimen/spacing_xs"
                             android:background="@drawable/bg_pill_badge_role"
-                            android:paddingHorizontal="8dp"
-                            android:paddingVertical="2dp"
+                            android:paddingHorizontal="@dimen/spacing_sm"
+                            android:paddingVertical="@dimen/spacing_2xs"
                             android:text="Chủ trọ"
                             android:textColor="@color/rentify_primary"
                             android:textSize="11sp"
@@ -108,7 +108,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_md"
                 app:cardBackgroundColor="@color/rentify_surface"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
@@ -130,8 +130,8 @@
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="14dp">
+                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:paddingVertical="@dimen/spacing_md">
 
                         <ImageView
                             android:layout_width="22dp"
@@ -142,7 +142,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Đổi mật khẩu"
@@ -171,8 +171,8 @@
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="14dp">
+                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:paddingVertical="@dimen/spacing_md">
 
                         <ImageView
                             android:layout_width="22dp"
@@ -183,7 +183,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Đăng xuất"

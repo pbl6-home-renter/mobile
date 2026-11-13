@@ -16,8 +16,8 @@
         android:elevation="2dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_smd">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:layout_weight="1"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Sự cố &amp; Bảo trì"
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_sm"
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
@@ -120,8 +120,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingTop="8dp"
-                android:paddingBottom="16dp"
+                android:paddingTop="@dimen/spacing_sm"
+                android:paddingBottom="@dimen/spacing_md"
                 tools:listitem="@layout/item_landlord_issue" />
 
             <ProgressBar
@@ -138,7 +138,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="32dp"
+                android:padding="@dimen/spacing_xl"
                 android:visibility="gone">
 
                 <ImageView
@@ -152,7 +152,7 @@
                     android:id="@+id/tvEmptyMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_md"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Không có sự cố nào cần xử lý"
                     android:textColor="@color/rentify_text_secondary"
