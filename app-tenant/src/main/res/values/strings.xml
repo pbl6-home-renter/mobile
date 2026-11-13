@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rentify Tenant</string>
+    <string name="app_name">Rentify</string>
 
     <!-- Onboarding -->
     <string name="onboarding_skip">Bỏ qua</string>
@@ -20,4 +20,11 @@
 
     <!-- Auth -->
     <string name="auth_login_subtitle">Chào mừng khách hàng đã quay trở lại!</string>
+
+    <!-- Tenant Navigation -->
+    <string name="nav_tenant_explore">Khám phá</string>
+    <string name="nav_tenant_chat">Tin nhắn</string>
+    <string name="nav_tenant_my_room">Phòng tôi</string>
+    <string name="nav_tenant_matching">Ghép bạn</string>
+    <string name="nav_tenant_profile">Cá nhân</string>
 </resources>

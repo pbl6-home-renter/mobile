@@ -85,7 +85,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onRegisterSuccess(response: AuthRegisterResponseDto) {
-        toast("Đăng ký thành công! Vui lòng đăng nhập")
+        if (response.verificationRequired) {
+            toast("Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản.")
+        } else {
+            toast("Đăng ký thành công! Vui lòng đăng nhập")
+        }
         showLoginScreen()
     }
 

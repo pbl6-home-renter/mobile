@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="28dp"
+    app:cardBackgroundColor="@color/rentify_surface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="6dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="20dp">
+
+        <!-- Icon Indicator -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_circle_icon_button"
+            android:padding="16dp"
+            android:src="@drawable/ic_user_circle"
+            app:tint="@color/rentify_primary_gradient_start" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:gravity="center"
+            android:text="Yêu cầu đăng nhập"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Message -->
+        <TextView
+            android:id="@+id/tvDialogMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:gravity="center"
+            android:lineSpacingExtra="3dp"
+            android:text="Vui lòng đăng nhập tài khoản Rentify để sử dụng tính năng này và lưu lại thông tin của bạn."
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="13sp"
+            tools:text="Vui lòng đăng nhập để lưu phòng trọ yêu thích." />
+
+        <!-- Action: Login Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogLogin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_button_gradient"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Đăng nhập ngay"
+            android:textColor="@color/rentify_on_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null"
+            app:cornerRadius="14dp"
+            app:elevation="4dp"
+            app:rippleColor="#30FFFFFF" />
+
+        <!-- Action: Dismiss Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDialogCancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Để sau"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

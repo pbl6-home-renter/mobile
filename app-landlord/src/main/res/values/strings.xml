@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rentify</string>
+    <string name="app_name">Rentify Host</string>
 
     <!-- Onboarding -->
     <string name="onboarding_skip">Bỏ qua</string>
