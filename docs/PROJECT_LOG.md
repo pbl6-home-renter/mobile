@@ -8,10 +8,17 @@
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
 | Core UI | Hoàn thành | AI & Dev | Hoàn thiện toàn bộ luồng Auth, base components, vector icons & dialogs dùng chung |
 | App Tenant | Hoàn thành | AI & Dev | Hoàn thiện Explore, Profile, FavoriteRooms, MyRoom Hub, Ghép bạn ở cùng, Chi tiết xem trọ, Quản lý Sự cố, Quản lý Hợp đồng, Quản lý Hóa đơn (/me/invoices), và Nâng cấp Chat v2 (Gửi ảnh R2, Photo Viewer, Quản lý nhóm, Nhấn giữ để trả lời tin nhắn - Reply quote) |
-| App Landlord | Hoàn thành Auto-login | AI & Dev | Tự động đăng nhập, Onboarding mở 1 lần duy nhất |
+| App Landlord | Hoàn thành Giai đoạn 1 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng 5 Tab, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Tích hợp Đơn vị Hành chính & Cấu hình VietQR |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Triển khai Phân hệ Nền tảng Điều hướng, Dashboard & Quản lý Tài sản (Buildings & Rooms) cho Landlord (Giai đoạn 1)
+- **Lý do:** Hoàn thiện nền tảng ứng dụng Chủ trọ (`:app-landlord`) chuẩn theo API spec: Xây dựng BottomNavigation 5 tab chuyên biệt, Dashboard KPI tổng hợp, quản lý danh sách & tạo tòa nhà mới gửi yêu cầu phê duyệt tới Admin kèm dữ liệu đơn vị hành chính chuẩn (Tỉnh/Thành, Phường/Xã), cấu hình tài khoản nhận tiền VietQR cho từng tòa nhà, và quản lý danh sách phòng trọ kèm thao tác tạo phòng & đánh dấu sẵn sàng cho thuê (`mark-ready`).
+- **Ảnh hưởng:** 
+  - `:core-network` bổ sung `AdministrativeUnitsApiService`, `AdministrativeUnitsDtos`, `BuildingApiService`, `BuildingDtos`, mở rộng `RoomApiService` và `LandlordRoomDtos`.
+  - `:core-ui` bổ sung các icon điều hướng Landlord (`ic_nav_dashboard`, `ic_nav_properties`, `ic_nav_operations`), drawable `bg_bottom_sheet_rounded`, và token màu `rentify_text_muted`.
+  - `:app-landlord` xây dựng `LandlordMainFragment`, `DashboardFragment`, `PropertiesFragment` (2 tab Tòa nhà & Phòng trọ), `CreateBuildingActivity`, `BuildingDetailActivity` (kèm BottomSheet VietQR), `CreateRoomActivity`, cùng toàn bộ Repositories, ViewModels, Adapters liên quan.
+
 ### 2026-11-13 – Đồng bộ toàn diện API Spec (api-doc PR #50 - #56): Hóa đơn /me/invoices, Chuỗi hóa Tiền tệ & Chat v2 Reply Quotes
 - **Lý do:** Đáp ứng các thay đổi phá vỡ (breaking changes) từ phía backend: đường dẫn `GET /invoices/tenant` bị xóa và thay bằng `GET /me/invoices`; toàn bộ trường số tiền trong hóa đơn được quy chuẩn về String định dạng regex `^(0|[1-9]\d*)(\.\d{1,4})?$`; backend chính thức hỗ trợ quy trình xác thực email (Email verification), Signed Download URL cho Media và tính năng trích dẫn phản hồi tin nhắn (Reply) trong Chat v2.
 - **Ảnh hưởng:** `:core-network` cập nhật `InvoiceDtos`, `InvoiceApiService`, `UserCurrentResponseDto`, `AuthEmailVerificationDtos`, `MediaApiService`, `ChatApiService`; `:core-ui` cập nhật `LoginViewModel` bắt lỗi `EMAIL_NOT_VERIFIED`; `:app-tenant` cập nhật `TenantInvoiceRepositoryImpl`, `MyInvoicesAdapter`, `InvoiceDetailActivity`, và hoàn thiện trải nghiệm Chat Reply (nhấn giữ tin nhắn để trích dẫn, preview bar, optimistic quote box).
@@ -106,6 +113,7 @@
 
 ## 3. Vấn đề & lưu ý
 <!-- [MỞ] / [ĐÃ XỬ LÝ] -->
+- [MỞ] 2026-11-13 – Quy trình kiểm duyệt Tòa nhà: Chủ trọ chỉ gửi yêu cầu phê duyệt (`POST /buildings` -> `status = pending`), quyền phê duyệt hoặc từ chối thuộc về Admin. Khi bị từ chối (`rejected`), app hiển thị trực quan hộp cảnh báo kèm lý do (`rejectionReason`/`reviewNote`) để chủ trọ chỉnh sửa nộp lại.
 - [ĐÃ XỬ LÝ] 2026-11-13 – Chuyển đổi toàn bộ trường số tiền trong phân hệ Hóa đơn sang `String` kèm getter `Long`, xử lý triệt để nguy cơ crash Moshi JSON khi server trả số thực hoặc chuỗi số lớn.
 - [ĐÃ XỬ LÝ] 2026-11-13 – Nâng cấp tính năng Trả lời tin nhắn (Chat Reply): Bổ sung cử chỉ nhấn giữ (Long press) trên tin nhắn văn bản và ảnh, thanh xem trước trích dẫn phía trên ô nhập liệu và khung quote trong bong bóng chat.
 - [MỞ] 2026-11-05 – Hiệu năng tải tab "Phòng tôi" (MyRoom): Hiện tại MyRoomViewModel đang gọi tuần tự 2 API (getMyContracts và getMyRoomHub) và bị duplicate call giữa init và onResume(), dẫn đến độ trễ 3–5 giây trên môi trường APIDog Mock Server.
@@ -127,6 +135,7 @@
 
 ## 4. Nhật ký thay đổi lớn
 <!-- Chỉ thay đổi đáng kể, kèm link PR -->
+- 2026-11-13 – Hoàn thành triển khai Giai đoạn 1 cho `:app-landlord` trên nhánh `feature/landlord-properties` gồm 5 commit chuẩn Conventional Commits, biên dịch thành công toàn bộ APK debug.
 - 2026-11-13 – Đồng bộ mã nguồn theo API Spec Rentify mới nhất (PR #50 - PR #56): Thay thế endpoint `/invoices/tenant` bằng `/me/invoices`, hỗ trợ `breakdown` dịch vụ hóa đơn, bổ sung luồng email verification, signed download URL cho media, và tính năng trả lời tin nhắn (Message Reply Quotes) trong phân hệ Chat.
 - 2026-11-05 – Tái cấu trúc toàn diện giao diện Tab "Phòng của tôi" (MyRoom Hub) trên Tenant theo mô hình 3 Smart Widgets: gộp Nơi ở & Chủ trọ, Hóa đơn tài chính và List Group Vận hành & Cộng đồng.
 - 2026-11-05 – Nâng cấp Avatar phân hệ Chat: Tích hợp tải ảnh đại diện bo tròn bằng Coil, cơ chế fallback ảnh chân dung mẫu chất lượng cao, icon nhóm đặc trưng cho group chat và bảng màu Gradient chữ cái đầu sinh động.
