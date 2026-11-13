@@ -77,6 +77,7 @@ class FilterBottomSheetDialogFragment : BottomSheetDialogFragment() {
                 val province = provincesList.getOrNull(position - 1) ?: return@setOnItemClickListener
                 selectedProvinceCode = province.code
                 binding.actvWard.isEnabled = true
+                binding.actvWard.setText("Tất cả phường/xã", false)
                 loadWards(province.code, restoreWard = null)
             }
         }

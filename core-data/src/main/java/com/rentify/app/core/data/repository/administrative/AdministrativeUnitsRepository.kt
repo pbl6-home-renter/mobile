@@ -9,3 +9,4 @@ interface AdministrativeUnitsRepository {
     suspend fun getProvinces(forceRefresh: Boolean = false): NetworkResult<ApiListResponse<AdministrativeProvinceDto>>
     suspend fun getWards(provinceCode: String, forceRefresh: Boolean = false): NetworkResult<ApiListResponse<AdministrativeWardDto>>
 }
+
