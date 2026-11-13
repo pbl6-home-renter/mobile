@@ -165,3 +165,79 @@ data class PaymentCreateIntentResponseDto(
     @field:Json(name = "qrCodeUrl") val qrCodeUrl: String? = null
 )
 
+@JsonClass(generateAdapter = true)
+data class InvoiceListResponseDto(
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "code") val code: String = "",
+    @field:Json(name = "contractId") val contractId: String = "",
+    @field:Json(name = "roomId") val roomId: String = "",
+    @field:Json(name = "roomName") val roomName: String = "",
+    @field:Json(name = "tenantName") val tenantName: String? = null,
+    @field:Json(name = "tenantPhone") val tenantPhone: String? = null,
+    @field:Json(name = "period") val period: String = "",
+    @field:Json(name = "totalAmount") val totalAmount: String = "0",
+    @field:Json(name = "invoiceStatus") val invoiceStatus: String = "pending",
+    @field:Json(name = "issuedAt") val issuedAt: String? = null
+) {
+    val totalAmountLong: Long
+        get() = totalAmount.toDoubleOrNull()?.toLong() ?: 0L
+}
+
+@JsonClass(generateAdapter = true)
+data class InvoiceGenerateRequestDto(
+    @field:Json(name = "buildingId") val buildingId: String,
+    @field:Json(name = "period") val period: String
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceGeneratedItemDto(
+    @field:Json(name = "invoiceId") val invoiceId: String,
+    @field:Json(name = "code") val code: String = "",
+    @field:Json(name = "contractId") val contractId: String = "",
+    @field:Json(name = "roomId") val roomId: String = "",
+    @field:Json(name = "totalAmount") val totalAmount: String = "0"
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceGenerateResponseDto(
+    @field:Json(name = "buildingId") val buildingId: String,
+    @field:Json(name = "period") val period: String,
+    @field:Json(name = "generated") val generated: List<InvoiceGeneratedItemDto> = emptyList(),
+    @field:Json(name = "recalculated") val recalculated: List<InvoiceGeneratedItemDto> = emptyList()
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceIssueRequestDto(
+    @field:Json(name = "invoiceIds") val invoiceIds: List<String>
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceIssueSucceededDto(
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "code") val code: String = "",
+    @field:Json(name = "invoiceStatus") val invoiceStatus: String = "issued",
+    @field:Json(name = "issuedAt") val issuedAt: String? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceIssueResponseDto(
+    @field:Json(name = "requested") val requested: Int = 0,
+    @field:Json(name = "succeeded") val succeeded: List<InvoiceIssueSucceededDto> = emptyList()
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceCancelRequestDto(
+    @field:Json(name = "reason") val reason: String
+)
+
+@JsonClass(generateAdapter = true)
+data class PaymentRecordCashRequestDto(
+    @field:Json(name = "invoiceId") val invoiceId: String,
+    @field:Json(name = "amount") val amount: Long,
+    @field:Json(name = "paymentDate") val paymentDate: String,
+    @field:Json(name = "payerName") val payerName: String,
+    @field:Json(name = "transactionId") val transactionId: String,
+    @field:Json(name = "receiptMediaId") val receiptMediaId: String? = null,
+    @field:Json(name = "note") val note: String? = null
+)
+
