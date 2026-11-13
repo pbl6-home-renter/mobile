@@ -8,10 +8,15 @@
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
 | Core UI | Hoàn thành | AI & Dev | Hoàn thiện toàn bộ luồng Auth, base components, vector icons & dialogs dùng chung |
 | App Tenant | Hoàn thành | AI & Dev | Hoàn thiện Explore, Profile, FavoriteRooms, MyRoom Hub, Ghép bạn ở cùng, Chi tiết xem trọ, Quản lý Sự cố, Quản lý Hợp đồng, Quản lý Hóa đơn (/me/invoices), và Nâng cấp Chat v2 (Gửi ảnh R2, Photo Viewer, Quản lý nhóm, Nhấn giữ để trả lời tin nhắn - Reply quote) |
-| App Landlord | Hoàn thành Giai đoạn 2 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Quản lý Hợp đồng, Thành viên ở ghép, Trả phòng & Quyết toán cọc |
+| App Landlord | Hoàn thành Giai đoạn 3 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Hợp đồng & Khách thuê, Ghi chỉ số Điện nước hàng loạt, Lập & Phát hành hóa đơn, và Thu tiền mặt |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Triển khai Phân hệ Ghi chỉ số Điện Nước, Lập & Phát hành Hóa đơn và Thu tiền mặt cho Landlord (Giai đoạn 3)
+- **Lý do:** Hoàn thành toàn diện phân hệ quản lý tài chính & vận hành chỉ số cho ứng dụng Chủ trọ (`:app-landlord`) chuẩn theo API spec: Ghi nhận chỉ số điện/nước hàng loạt theo tòa nhà (`POST /meter-readings/bulk`), tự động lập/tính toán hóa đơn theo kỳ (`POST /invoices/generate`), phát hành hóa đơn hàng loạt hoặc đơn lẻ kèm Idempotency-Key (`POST /invoices/issue-invoice`), theo dõi chi tiết bóc tách chi phí dịch vụ/phí khác/lịch sử giao dịch, ghi nhận thu tiền mặt trực tiếp (`POST /payments/record-cash-payment`), và hủy hóa đơn sai sót có lý do (`POST /invoices/{id}/cancel-invoice`).
+- **Ảnh hưởng:** 
+  - `:core-network` bổ sung `MeterApiService`, `MeterDtos`, mở rộng `InvoiceApiService` và `InvoiceDtos`.
+  - `:app-landlord` xây dựng `LandlordMeterRepository`, `LandlordInvoiceRepository`, `BillingViewModel`, `LandlordMeterReadingsActivity` (chọn tòa nhà, kỳ chốt số, bảng nhập điện nước đa phòng), `LandlordInvoicesActivity` (bộ lọc ChipGroup, thanh tác vụ phát hành hàng loạt, dialog lập hóa đơn theo kỳ), `LandlordInvoiceDetailActivity` (bảng kê tài chính, BottomSheet thu tiền mặt, dialog hủy hóa đơn), kết nối trực tiếp Khối 2 & 3 trên Tab Vận hành (`OperationsHubFragment`).
 ### 2026-11-13 – Triển khai Phân hệ Quản lý Hợp đồng, Khách thuê & Quyết toán cọc cho Landlord (Giai đoạn 2)
 - **Lý do:** Hoàn thiện giai đoạn 2 ứng dụng Chủ trọ (`:app-landlord`) theo API spec (tag Contract, ContractMember): Cho phép chủ trọ tạo hợp đồng mới cho phòng trống, lọc danh sách hợp đồng đa trạng thái (`active`, `signed`, `draft`, `terminated`), quản lý danh sách thành viên ở ghép (`contract-members`), kích hoạt hợp đồng (`activate-contract`), và thực hiện quy trình trả phòng kèm quyết toán tiền cọc (`complete-checkout` & `deposit-settlement`).
 - **Ảnh hưởng:** 
