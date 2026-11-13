@@ -8,10 +8,15 @@
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
 | Core UI | Hoàn thành | AI & Dev | Hoàn thiện toàn bộ luồng Auth, base components, vector icons & dialogs dùng chung |
 | App Tenant | Hoàn thành | AI & Dev | Hoàn thiện Explore, Profile, FavoriteRooms, MyRoom Hub, Ghép bạn ở cùng, Chi tiết xem trọ, Quản lý Sự cố, Quản lý Hợp đồng, Quản lý Hóa đơn (/me/invoices), và Nâng cấp Chat v2 (Gửi ảnh R2, Photo Viewer, Quản lý nhóm, Nhấn giữ để trả lời tin nhắn - Reply quote) |
-| App Landlord | Hoàn thành Giai đoạn 3 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Hợp đồng & Khách thuê, Ghi chỉ số Điện nước hàng loạt, Lập & Phát hành hóa đơn, và Thu tiền mặt |
+| App Landlord | Hoàn thành Giai đoạn 4 | AI & Dev | Đã hoàn thành Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Hợp đồng & Khách thuê, Ghi chỉ số Điện Nước, Hóa đơn & Thu tiền mặt, và Quản lý Sự cố & Bảo trì |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Triển khai Phân hệ Quản lý Sự cố & Bảo trì Vận hành cho Landlord (Giai đoạn 4)
+- **Lý do:** Hoàn thiện luồng tiếp nhận và xử lý sự cố thiết bị/hạ tầng từ khách thuê (tag Operation) cho ứng dụng Chủ trọ (`:app-landlord`) chuẩn theo API spec: Hỗ trợ duyệt hàng đợi sự cố đa trạng thái (`open`, `in_progress`, `resolved`, `cancelled`), xem chi tiết báo cáo kèm thông tin người gửi & vị trí phòng trọ, quay số gọi nhanh cho khách thuê, phân công thợ/đơn vị sửa chữa, nghiệm thu kết quả có ghi nhận chi phí sửa chữa (`repairCost`) & ghi chú nguyên nhân/khắc phục (`resolutionNote`), và hủy báo cáo sự cố khi không hợp lệ.
+- **Ảnh hưởng:** 
+  - `:core-network` mở rộng `IssueApiService` và bổ sung `IssueReportListResponseDto`, `IssueReportUpdateRequestDto`, `IssueReportUpdateResponseDto`.
+  - `:app-landlord` xây dựng `LandlordIssueRepository`, `IssueViewModel`, `LandlordIssuesActivity` (bộ lọc ChipGroup 5 trạng thái), `LandlordIssueDetailActivity` (giao diện thẻ chi tiết, dialog tiếp nhận/phân công thợ, dialog nghiệm thu chi phí), kết nối trực tiếp Khối 4 trên Tab Vận hành (`OperationsHubFragment`).
 ### 2026-11-13 – Triển khai Phân hệ Ghi chỉ số Điện Nước, Lập & Phát hành Hóa đơn và Thu tiền mặt cho Landlord (Giai đoạn 3)
 - **Lý do:** Hoàn thành toàn diện phân hệ quản lý tài chính & vận hành chỉ số cho ứng dụng Chủ trọ (`:app-landlord`) chuẩn theo API spec: Ghi nhận chỉ số điện/nước hàng loạt theo tòa nhà (`POST /meter-readings/bulk`), tự động lập/tính toán hóa đơn theo kỳ (`POST /invoices/generate`), phát hành hóa đơn hàng loạt hoặc đơn lẻ kèm Idempotency-Key (`POST /invoices/issue-invoice`), theo dõi chi tiết bóc tách chi phí dịch vụ/phí khác/lịch sử giao dịch, ghi nhận thu tiền mặt trực tiếp (`POST /payments/record-cash-payment`), và hủy hóa đơn sai sót có lý do (`POST /invoices/{id}/cancel-invoice`).
 - **Ảnh hưởng:** 
