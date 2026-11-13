@@ -30,8 +30,8 @@
         app:tabMaxWidth="@dimen/spacing_xl"
         app:tabMinWidth="@dimen/spacing_lg"
         app:tabPaddingBottom="0dp"
-        app:tabPaddingEnd="3dp"
-        app:tabPaddingStart="3dp"
+        app:tabPaddingEnd="@dimen/spacing_xs"
+        app:tabPaddingStart="@dimen/spacing_xs"
         app:tabPaddingTop="0dp"
         app:tabRippleColor="@android:color/transparent" />
 

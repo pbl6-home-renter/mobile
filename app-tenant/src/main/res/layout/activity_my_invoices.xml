@@ -56,8 +56,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:overScrollMode="never"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_sm"
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
@@ -115,9 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="24dp" />
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingTop="@dimen/spacing_smd"
+                android:paddingBottom="@dimen/spacing_lg" />
 
             <!-- Tab 0 Empty State -->
             <LinearLayout
@@ -126,7 +126,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="32dp"
+                android:padding="@dimen/spacing_xl"
                 android:visibility="gone">
 
                 <ImageView
@@ -138,7 +138,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_md"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Chưa có hóa đơn nào"
                     android:textColor="@color/rentify_text_primary"
@@ -148,7 +148,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
                     android:gravity="center"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Hóa đơn tiền phòng hàng tháng sẽ xuất hiện tại đây khi chủ trọ phát hành."
@@ -162,9 +162,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="24dp"
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingTop="@dimen/spacing_smd"
+                android:paddingBottom="@dimen/spacing_lg"
                 android:visibility="gone" />
 
             <!-- Tab 1 Empty State -->
@@ -174,7 +174,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="32dp"
+                android:padding="@dimen/spacing_xl"
                 android:visibility="gone">
 
                 <ImageView
@@ -186,7 +186,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_md"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Chưa có giao dịch thanh toán"
                     android:textColor="@color/rentify_text_primary"
@@ -196,7 +196,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
                     android:gravity="center"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Lịch sử các lần bạn thanh toán tiền phòng qua VietQR, chuyển khoản hoặc tiền mặt sẽ được lưu trữ tại đây."

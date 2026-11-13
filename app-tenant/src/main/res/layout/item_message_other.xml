@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:gravity="start"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="4dp">
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_xs">
 
     <!-- Avatar small -->
     <TextView
@@ -14,7 +14,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="@dimen/spacing_xs"
         android:background="@drawable/bg_avatar_gradient"
         android:fontFamily="@font/plus_jakarta_sans"
         android:gravity="center"
@@ -27,8 +27,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:layout_marginEnd="@dimen/spacing_4xl"
         android:orientation="vertical">
 
         <!-- Sender name (for group) -->
@@ -36,8 +36,8 @@
             android:id="@+id/txtSenderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginBottom="@dimen/spacing_2xs"
             android:fontFamily="@font/plus_jakarta_sans"
             android:textColor="@color/rentify_text_secondary"
             android:textSize="11sp"
@@ -51,26 +51,26 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_message_other"
             android:orientation="vertical"
-            android:paddingHorizontal="14dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="8dp">
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingTop="@dimen/spacing_smd"
+            android:paddingBottom="@dimen/spacing_sm">
 
             <!-- Quoted message box (hidden by default) -->
             <LinearLayout
                 android:id="@+id/layoutReplyQuote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="@dimen/spacing_sm"
                 android:background="@color/rentify_primary_container"
                 android:orientation="horizontal"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:visibility="gone">
 
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginEnd="@dimen/spacing_sm"
                     android:background="@color/rentify_primary" />
 
                 <LinearLayout
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="@dimen/spacing_xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:textColor="@color/rentify_neutral"
                 android:textSize="10sp"

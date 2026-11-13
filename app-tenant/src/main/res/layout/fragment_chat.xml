@@ -15,9 +15,9 @@
         android:elevation="1dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp">
+        android:paddingHorizontal="@dimen/spacing_ml"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_smd">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Trò chuyện với chủ trọ &amp; cư dân"
                 android:textColor="@color/rentify_text_secondary"
@@ -69,8 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingTop="8dp"
-                android:paddingBottom="24dp"
+                android:paddingTop="@dimen/spacing_sm"
+                android:paddingBottom="@dimen/spacing_lg"
                 tools:listitem="@layout/item_conversation" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -92,7 +92,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="24dp"
+            android:padding="@dimen/spacing_lg"
             android:visibility="gone"
             tools:visibility="gone">
 
@@ -116,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Chưa có cuộc trò chuyện nào"
                 android:textColor="@color/rentify_text_primary"
@@ -126,7 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:gravity="center"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Khi bạn liên hệ với chủ trọ hoặc tham gia nhóm phòng, các tin nhắn sẽ xuất hiện tại đây."
@@ -142,7 +142,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="24dp"
+            android:padding="@dimen/spacing_lg"
             android:visibility="gone"
             tools:visibility="gone">
 
@@ -155,7 +155,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Đăng nhập để xem tin nhắn"
                 android:textColor="@color/rentify_text_primary"
@@ -165,7 +165,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:gravity="center"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Vui lòng đăng nhập vào tài khoản người thuê để liên hệ với chủ trọ và cập nhật thông báo trao đổi."
@@ -176,9 +176,9 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="32dp"
+                android:paddingHorizontal="@dimen/spacing_xl"
                 android:text="Đăng nhập ngay"
                 app:cornerRadius="24dp" />
         </LinearLayout>

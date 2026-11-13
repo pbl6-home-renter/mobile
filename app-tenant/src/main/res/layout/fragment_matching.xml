@@ -11,9 +11,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_smd">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Khám phá bạn cùng phòng tương thích AI"
                 android:textColor="@color/rentify_neutral"
@@ -61,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="12dp">
+                android:paddingHorizontal="@dimen/spacing_smd">
 
                 <ImageView
                     android:layout_width="16dp"
@@ -72,7 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="@dimen/spacing_sm"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:includeFontPadding="false"
                     android:text="Hồ sơ của tôi"
@@ -126,8 +126,8 @@
                 android:id="@+id/layoutSearchArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="10dp">
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingVertical="@dimen/spacing_smd">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                     android:background="@drawable/bg_search_bar"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="12dp">
+                    android:paddingHorizontal="@dimen/spacing_smd">
 
                     <ImageView
                         android:layout_width="18dp"
@@ -147,7 +147,7 @@
                         android:id="@+id/edtSearchArea"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="@dimen/spacing_sm"
                         android:layout_weight="1"
                         android:background="@null"
                         android:fontFamily="@font/plus_jakarta_sans"
@@ -175,8 +175,8 @@
                 android:id="@+id/cardProfileBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginHorizontal="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_sm"
                 android:visibility="gone"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
@@ -188,7 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="12dp"
+                    android:padding="@dimen/spacing_smd"
                     android:gravity="center_vertical">
 
                     <ImageView
@@ -197,7 +197,7 @@
                         android:layout_height="36dp"
                         android:background="@drawable/bg_icon_squircle"
                         android:backgroundTint="#FEF3C7"
-                        android:padding="8dp"
+                        android:padding="@dimen/spacing_sm"
                         android:src="@drawable/ic_visibility_off"
                         app:tint="@color/profile_icon_amber_tint" />
 
@@ -205,7 +205,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginStart="12dp"
+                        android:layout_marginStart="@dimen/spacing_smd"
                         android:orientation="vertical">
 
                         <TextView
@@ -222,7 +222,7 @@
                             android:id="@+id/tvBannerDesc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Người khác sẽ không nhìn thấy bạn trên bảng tin tìm bạn ở."
                             android:textColor="@color/rentify_text_secondary"
@@ -233,8 +233,8 @@
                         android:id="@+id/btnBannerAction"
                         android:layout_width="wrap_content"
                         android:layout_height="38dp"
-                        android:layout_marginStart="8dp"
-                        android:paddingHorizontal="12dp"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:paddingHorizontal="@dimen/spacing_smd"
                         android:backgroundTint="@color/profile_icon_amber_tint"
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:text="Bật lại"
@@ -253,8 +253,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="24dp"
+                android:paddingHorizontal="@dimen/spacing_xl"
+                android:paddingVertical="@dimen/spacing_lg"
                 android:visibility="gone">
 
                 <ImageView
@@ -262,14 +262,14 @@
                     android:layout_height="72dp"
                     android:background="@drawable/bg_circle_icon_button"
                     android:backgroundTint="#FEF3C7"
-                    android:padding="16dp"
+                    android:padding="@dimen/spacing_md"
                     android:src="@drawable/ic_visibility_off"
                     app:tint="@color/profile_icon_amber_tint" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/spacing_ml"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:gravity="center"
                     android:text="Hồ sơ ghép bạn đang tạm ẩn"
@@ -280,7 +280,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:gravity="center"
                     android:lineSpacingExtra="3dp"
@@ -292,10 +292,10 @@
                     android:id="@+id/btnEnableProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="@dimen/spacing_lg"
                     android:backgroundTint="@color/rentify_primary_gradient_start"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:paddingHorizontal="24dp"
+                    android:paddingHorizontal="@dimen/spacing_lg"
                     android:text="Bật lại hồ sơ"
                     android:textColor="@color/rentify_on_primary"
                     android:textSize="14sp"
@@ -317,9 +317,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
-                        android:paddingHorizontal="16dp"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="24dp" />
+                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:paddingTop="@dimen/spacing_sm"
+                        android:paddingBottom="@dimen/spacing_lg" />
 
                     <!-- Empty Feed Layout -->
                     <LinearLayout
@@ -328,7 +328,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="32dp"
+                        android:padding="@dimen/spacing_xl"
                         android:visibility="gone">
 
                         <ImageView
@@ -340,7 +340,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="@dimen/spacing_md"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Chưa tìm thấy bạn ở ghép phù hợp"
                             android:textColor="@color/rentify_text_primary"
@@ -350,7 +350,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Hãy thử tìm khu vực khác hoặc hoàn thiện hồ sơ của bạn để tăng độ tương thích AI."
@@ -382,8 +382,8 @@
                 android:id="@+id/chipGroupDirection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="8dp"
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingVertical="@dimen/spacing_sm"
                 app:selectionRequired="true"
                 app:singleSelection="true">
 
@@ -421,9 +421,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
-                        android:paddingHorizontal="16dp"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="24dp" />
+                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:paddingTop="@dimen/spacing_sm"
+                        android:paddingBottom="@dimen/spacing_lg" />
 
                     <!-- Empty Requests Layout -->
                     <LinearLayout
@@ -432,7 +432,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="32dp"
+                        android:padding="@dimen/spacing_xl"
                         android:visibility="gone">
 
                         <ImageView
@@ -445,7 +445,7 @@
                             android:id="@+id/tvEmptyRequestsTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="@dimen/spacing_md"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Chưa có lời mời ghép đôi nào"
                             android:textColor="@color/rentify_text_primary"
@@ -456,7 +456,7 @@
                             android:id="@+id/tvEmptyRequestsDesc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Khi có người gửi lời mời ghép đôi tới bạn, danh sách sẽ hiển thị tại đây."
@@ -482,7 +482,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:padding="@dimen/spacing_xl"
             android:visibility="gone">
 
             <com.google.android.material.card.MaterialCardView
@@ -505,7 +505,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Chưa đăng nhập"
                 android:textColor="@color/rentify_text_primary"
@@ -515,7 +515,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:gravity="center"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Đăng nhập để xem danh sách bạn ở ghép tương thích và gửi lời mời kết nối."
@@ -526,10 +526,10 @@
                 android:id="@+id/btnGuestLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/spacing_lg"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="28dp"
+                android:paddingHorizontal="@dimen/spacing_28"
                 android:text="Đăng nhập ngay"
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="14sp"

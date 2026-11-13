@@ -6,23 +6,23 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_surface"
     android:orientation="vertical"
-    android:paddingBottom="24dp">
+    android:paddingBottom="@dimen/spacing_lg">
 
     <!-- Drag handle -->
     <View
         android:layout_width="40dp"
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="@dimen/spacing_smd"
+        android:layout_marginBottom="@dimen/spacing_smd"
         android:background="#D1D5DB" />
 
     <!-- Top header with close -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingBottom="12dp">
+        android:paddingHorizontal="@dimen/spacing_ml"
+        android:paddingBottom="@dimen/spacing_smd">
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="16dp">
+        android:paddingHorizontal="@dimen/spacing_ml"
+        android:paddingVertical="@dimen/spacing_md">
 
         <FrameLayout
             android:layout_width="64dp"
@@ -81,7 +81,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -99,7 +99,7 @@
                 android:id="@+id/btnEditGroupName"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Đổi tên nhóm"
                 android:src="@drawable/ic_edit_pencil"
@@ -110,7 +110,7 @@
             android:id="@+id/txtMemberCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/spacing_2xs"
             android:fontFamily="@font/plus_jakarta_sans"
             android:textColor="@color/rentify_text_secondary"
             android:textSize="13sp"
@@ -128,9 +128,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="8dp">
+        android:paddingHorizontal="@dimen/spacing_ml"
+        android:paddingTop="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_sm">
 
         <TextView
             android:layout_width="0dp"
@@ -168,14 +168,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginVertical="16dp"
+        android:layout_marginVertical="@dimen/spacing_md"
         android:visibility="gone"
         tools:visibility="visible" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/spacing_smd"
         android:background="@color/rentify_divider" />
 
     <!-- Danger Zone: Leave Group -->
@@ -183,14 +183,14 @@
         android:id="@+id/btnLeaveGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/spacing_smd"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="12dp">
+        android:paddingHorizontal="@dimen/spacing_ml"
+        android:paddingVertical="@dimen/spacing_smd">
 
         <ImageView
             android:layout_width="22dp"
@@ -201,7 +201,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/spacing_smd"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Rời khỏi nhóm"
             android:textColor="#EF4444"

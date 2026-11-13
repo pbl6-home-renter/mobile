@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/spacing_md">
 
                 <!-- Header Card: Status & Duration -->
                 <com.google.android.material.card.MaterialCardView
@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -64,8 +64,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/bg_pill_badge_role"
-                                android:paddingHorizontal="12dp"
-                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="@dimen/spacing_smd"
+                                android:paddingVertical="@dimen/spacing_xs"
                                 android:textColor="@color/rentify_primary"
                                 android:textSize="13sp"
                                 android:textStyle="bold"
@@ -82,7 +82,7 @@
                             android:id="@+id/tvContractTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:text="Hợp đồng thuê phòng"
                             android:textColor="@color/rentify_text_primary"
                             android:textSize="18sp"
@@ -92,7 +92,7 @@
                             android:id="@+id/tvDuration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:textColor="@color/rentify_text_secondary"
                             android:textSize="13sp"
                             tools:text="Thời hạn: 01/09/2026 → 31/08/2027" />
@@ -103,7 +103,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -114,7 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -127,7 +127,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <LinearLayout
@@ -157,7 +157,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -184,7 +184,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -195,7 +195,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <LinearLayout
@@ -238,7 +238,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -266,7 +266,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -277,7 +277,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -290,7 +290,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <LinearLayout
@@ -319,7 +319,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:text="Ghi chú &amp; Thỏa thuận:"
                             android:textColor="@color/rentify_text_secondary"
                             android:textSize="13sp" />
@@ -328,10 +328,10 @@
                             android:id="@+id/tvDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:background="@drawable/bg_rounded_surface"
                             android:lineSpacingExtra="4dp"
-                            android:padding="12dp"
+                            android:padding="@dimen/spacing_smd"
                             android:textColor="@color/rentify_text_primary"
                             android:textSize="13sp"
                             tools:text="Đóng tiền phòng trước ngày 05 hàng tháng. Giữ gìn vệ sinh chung và trật tự sau 23:00." />

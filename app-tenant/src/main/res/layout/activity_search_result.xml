@@ -15,8 +15,8 @@
         android:elevation="2dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="10dp">
+        android:paddingHorizontal="@dimen/spacing_smd"
+        android:paddingVertical="@dimen/spacing_smd">
 
         <ImageView
             android:id="@+id/btnBack"
@@ -24,7 +24,7 @@
             android:layout_height="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Quay lại"
-            android:padding="8dp"
+            android:padding="@dimen/spacing_sm"
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/rentify_text_primary" />
 
@@ -32,12 +32,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="44dp"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/spacing_sm"
             android:layout_weight="1"
             android:background="@drawable/bg_search_bar"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp">
+            android:paddingHorizontal="@dimen/spacing_smd">
 
             <ImageView
                 android:layout_width="18dp"
@@ -49,7 +49,7 @@
                 android:id="@+id/etSearchKeyword"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:background="@null"
                 android:fontFamily="@font/plus_jakarta_sans"
@@ -69,7 +69,7 @@
                 android:layout_height="20dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Xóa từ khóa"
-                android:padding="2dp"
+                android:padding="@dimen/spacing_2xs"
                 android:src="@drawable/ic_close"
                 android:visibility="gone"
                 app:tint="@color/rentify_text_secondary"
@@ -98,8 +98,8 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="top|end"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
+                android:layout_marginEnd="@dimen/spacing_2xs"
                 android:background="@drawable/bg_circle_icon_badge"
                 android:backgroundTint="#F97316"
                 android:fontFamily="@font/plus_jakarta_sans"
@@ -120,8 +120,8 @@
         android:background="@color/rentify_surface"
         android:elevation="1dp"
         android:overScrollMode="never"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="8dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingBottom="@dimen/spacing_sm"
         android:scrollbars="none">
 
         <LinearLayout
@@ -136,7 +136,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:text="Lọc"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="12sp"
@@ -149,7 +149,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:text="Chọn giá ▾"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="12sp" />
@@ -160,7 +160,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:text="Giới tính ▾"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="12sp" />
@@ -171,7 +171,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:text="Xếp giá ⇅"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="12sp" />
@@ -208,9 +208,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="24dp"
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingTop="@dimen/spacing_smd"
+                android:paddingBottom="@dimen/spacing_lg"
                 tools:listitem="@layout/item_room_search_result" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -231,7 +231,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:padding="@dimen/spacing_xl"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -239,14 +239,14 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:background="@drawable/bg_circle_icon_button"
-                android:padding="18dp"
+                android:padding="@dimen/spacing_md"
                 android:src="@drawable/ic_search"
                 app:tint="@color/rentify_text_secondary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Không tìm thấy phòng trọ phù hợp"
                 android:textColor="@color/rentify_text_primary"
@@ -256,7 +256,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:gravity="center"
                 android:text="Thử điều chỉnh lại khoảng giá, khu vực hoặc tìm kiếm với từ khóa khác."
@@ -267,10 +267,10 @@
                 android:id="@+id/btnClearAllFilters"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/spacing_lg"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="24dp"
+                android:paddingHorizontal="@dimen/spacing_lg"
                 android:text="Xóa tất cả bộ lọc"
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="14sp"

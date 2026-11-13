@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="start"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="4dp">
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_xs">
 
     <!-- Small Avatar -->
     <FrameLayout
@@ -15,7 +15,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_gravity="bottom"
-        android:layout_marginEnd="8dp">
+        android:layout_marginEnd="@dimen/spacing_sm">
 
         <TextView
             android:id="@+id/txtAvatarSmall"
@@ -41,7 +41,7 @@
             android:id="@+id/txtSenderName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="@dimen/spacing_2xs"
             android:fontFamily="@font/plus_jakarta_sans"
             android:textColor="@color/rentify_text_secondary"
             android:textSize="11sp"
@@ -78,11 +78,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:layout_margin="8dp"
+                    android:layout_margin="@dimen/spacing_sm"
                     android:background="#80000000"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
+                    android:paddingHorizontal="@dimen/spacing_sm"
+                    android:paddingVertical="@dimen/spacing_2xs"
                     android:textColor="@android:color/white"
                     android:textSize="10sp"
                     tools:text="14:32" />

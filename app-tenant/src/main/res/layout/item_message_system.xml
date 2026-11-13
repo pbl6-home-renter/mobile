@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingHorizontal="24dp"
-    android:paddingVertical="8dp">
+    android:paddingHorizontal="@dimen/spacing_lg"
+    android:paddingVertical="@dimen/spacing_sm">
 
     <TextView
         android:id="@+id/txtSystemMessage"
@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_message_system"
         android:fontFamily="@font/plus_jakarta_sans"
-        android:paddingHorizontal="14dp"
-        android:paddingVertical="5dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_xs"
         android:textColor="@color/rentify_text_secondary"
         android:textSize="11sp"
         tools:text="Nguyễn Văn A đã thêm bạn vào nhóm trao đổi" />

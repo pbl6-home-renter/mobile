@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="10dp">
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingVertical="@dimen/spacing_smd">
 
     <FrameLayout
         android:layout_width="40dp"
@@ -30,7 +30,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="@dimen/spacing_smd"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -54,11 +54,11 @@
                 android:id="@+id/txtYouBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="1dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_2xs"
                 android:text="Bạn"
                 android:textColor="@color/rentify_primary_gradient_start"
                 android:textSize="10sp"
@@ -70,7 +70,7 @@
             android:id="@+id/txtMemberRole"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/spacing_2xs"
             android:fontFamily="@font/plus_jakarta_sans"
             android:textColor="@color/rentify_text_secondary"
             android:textSize="12sp"

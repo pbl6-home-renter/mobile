@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="@dimen/spacing_smd"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Top Row: Period & Status Badge -->
         <RelativeLayout
@@ -53,8 +53,8 @@
                 android:background="@drawable/bg_pill_badge_role"
                 android:backgroundTint="#1510B981"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_success"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -65,7 +65,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:orientation="horizontal">
 
             <TextView
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
+                android:layout_marginHorizontal="@dimen/spacing_sm"
                 android:text="•"
                 android:textColor="@color/rentify_neutral" />
 
@@ -98,7 +98,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="12dp"
+            android:layout_marginVertical="@dimen/spacing_smd"
             android:background="@color/rentify_divider" />
 
         <!-- Bottom Row: Due date & Amount -->
@@ -125,7 +125,7 @@
                     android:id="@+id/tvDueDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_text_primary"
                     android:textSize="13sp"
@@ -154,7 +154,7 @@
                     android:id="@+id/tvTotalAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_primary_gradient_start"
                     android:textSize="16sp"

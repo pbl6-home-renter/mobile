@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:paddingBottom="32dp">
+        android:paddingBottom="@dimen/spacing_xl">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,8 +40,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:paddingHorizontal="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:layout_marginBottom="@dimen/spacing_md">
 
                     <!-- Dot Indicators -->
                     <LinearLayout
@@ -64,7 +64,7 @@
                         android:backgroundTint="#80000000"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="10dp">
+                        android:paddingHorizontal="@dimen/spacing_smd">
 
                         <ImageView
                             android:layout_width="13dp"
@@ -76,7 +76,7 @@
                             android:id="@+id/tvImageIndicator"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="@dimen/spacing_xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:includeFontPadding="false"
                             android:textColor="@color/rentify_on_primary"
@@ -91,8 +91,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:paddingHorizontal="16dp"
-                    android:paddingTop="36dp">
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:paddingTop="@dimen/spacing_xl">
 
                     <ImageButton
                         android:id="@+id/btnBack"
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/spacing_md">
 
                 <!-- Status & Room Type -->
                 <LinearLayout
@@ -142,7 +142,7 @@
                         android:backgroundTint="#E8F5E9"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="10dp">
+                        android:paddingHorizontal="@dimen/spacing_smd">
 
                         <ImageView
                             android:id="@+id/ivStatusDot"
@@ -154,7 +154,7 @@
                             android:id="@+id/tvRoomStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
+                            android:layout_marginStart="@dimen/spacing_xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:includeFontPadding="false"
                             android:text="Còn trống"
@@ -167,7 +167,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/spacing_smd"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -182,7 +182,7 @@
                             android:id="@+id/tvBuildingNameHeader"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
+                            android:layout_marginStart="@dimen/spacing_xs"
                             android:ellipsize="end"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:maxLines="1"
@@ -197,7 +197,7 @@
                     android:id="@+id/tvRoomTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
                     android:textColor="@color/rentify_text_primary"
                     android:textSize="22sp"
                     android:textStyle="bold"
@@ -207,7 +207,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
                     android:gravity="bottom"
                     android:orientation="horizontal">
 
@@ -223,7 +223,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="@dimen/spacing_xs"
                         android:text="/ tháng"
                         android:textColor="@color/rentify_text_secondary"
                         android:textSize="14sp" />
@@ -245,7 +245,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="@dimen/spacing_md"
                     android:background="@color/rentify_divider" />
 
                 <!-- Quick Specs Grid (Area, Floor, Occupancy, Gender) -->
@@ -261,7 +261,7 @@
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:columnCount="2"
                     android:rowCount="2">
 
@@ -270,12 +270,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="@dimen/spacing_sm"
+                        android:layout_marginBottom="@dimen/spacing_sm"
                         android:background="@drawable/bg_rounded_surface"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="@dimen/spacing_smd">
 
                         <FrameLayout
                             android:layout_width="36dp"
@@ -294,7 +294,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -310,7 +310,7 @@
                                 android:id="@+id/tvSpecArea"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
+                                android:layout_marginTop="@dimen/spacing_2xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="13sp"
@@ -324,12 +324,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:layout_marginBottom="@dimen/spacing_sm"
                         android:background="@drawable/bg_rounded_surface"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="@dimen/spacing_smd">
 
                         <FrameLayout
                             android:layout_width="36dp"
@@ -348,7 +348,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -364,7 +364,7 @@
                                 android:id="@+id/tvSpecFloor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
+                                android:layout_marginTop="@dimen/spacing_2xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="13sp"
@@ -378,11 +378,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="@dimen/spacing_sm"
                         android:background="@drawable/bg_rounded_surface"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="@dimen/spacing_smd">
 
                         <FrameLayout
                             android:layout_width="36dp"
@@ -401,7 +401,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -417,7 +417,7 @@
                                 android:id="@+id/tvSpecOccupancy"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
+                                android:layout_marginTop="@dimen/spacing_2xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="13sp"
@@ -431,11 +431,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="@dimen/spacing_sm"
                         android:background="@drawable/bg_rounded_surface"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:padding="@dimen/spacing_smd">
 
                         <FrameLayout
                             android:layout_width="36dp"
@@ -454,7 +454,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -470,7 +470,7 @@
                                 android:id="@+id/tvSpecGender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
+                                android:layout_marginTop="@dimen/spacing_2xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="13sp"
@@ -483,7 +483,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="@dimen/spacing_md"
                     android:background="@color/rentify_divider" />
 
                 <!-- Amenities Section -->
@@ -500,13 +500,13 @@
                     android:id="@+id/chipGroupAmenities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:chipSpacing="8dp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="@dimen/spacing_md"
                     android:background="@color/rentify_divider" />
 
                 <!-- Rates and Utility Section -->
@@ -522,10 +522,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:background="@drawable/bg_rounded_surface"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:padding="@dimen/spacing_md">
 
                     <!-- Electricity Row -->
                     <LinearLayout
@@ -551,7 +551,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Tiền điện"
@@ -572,7 +572,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
+                        android:layout_marginVertical="@dimen/spacing_smd"
                         android:background="@color/rentify_divider" />
 
                     <!-- Water Row -->
@@ -599,7 +599,7 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/spacing_smd"
                             android:layout_weight="1"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Tiền nước"
@@ -621,7 +621,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="@dimen/spacing_md"
                     android:background="@color/rentify_divider" />
 
                 <!-- Description Section -->
@@ -637,7 +637,7 @@
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
                     android:ellipsize="end"
                     android:lineSpacingExtra="4dp"
                     android:maxLines="4"
@@ -649,8 +649,8 @@
                     android:id="@+id/btnToggleDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:paddingVertical="4dp"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:paddingVertical="@dimen/spacing_xs"
                     android:text="Xem thêm"
                     android:textColor="@color/rentify_primary"
                     android:textSize="14sp"
@@ -659,7 +659,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginVertical="@dimen/spacing_md"
                     android:background="@color/rentify_divider" />
 
                 <!-- Landlord Info Card -->
@@ -674,11 +674,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:background="@drawable/bg_rounded_surface"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:padding="@dimen/spacing_md">
 
                     <TextView
                         android:id="@+id/tvLandlordAvatar"
@@ -694,8 +694,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="@dimen/spacing_smd"
+                        android:layout_marginEnd="@dimen/spacing_smd"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -716,7 +716,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/bg_button_gradient"
                         android:fontFamily="@font/plus_jakarta_sans"
-                        android:paddingHorizontal="16dp"
+                        android:paddingHorizontal="@dimen/spacing_md"
                         android:text="Nhắn tin"
                         android:textColor="@color/rentify_on_primary"
                         android:textSize="13sp"
@@ -747,7 +747,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_lg"
         android:visibility="gone">
 
         <ImageView
@@ -760,7 +760,7 @@
             android:id="@+id/tvErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:gravity="center"
             android:textColor="@color/rentify_text_secondary"
             android:textSize="14sp"
@@ -770,7 +770,7 @@
             android:id="@+id/btnRetry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_md"
             android:text="Thử lại" />
     </LinearLayout>
 

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="6dp"
+    android:layout_marginHorizontal="@dimen/spacing_md"
+    android:layout_marginVertical="@dimen/spacing_sm"
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="16dp"
     app:cardElevation="1dp"
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Header: Status + Urgency badge -->
         <LinearLayout
@@ -30,8 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_pill_badge_role"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -57,7 +57,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:ellipsize="end"
             android:fontFamily="@font/plus_jakarta_sans"
             android:maxLines="2"
@@ -70,7 +70,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -86,7 +86,7 @@
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="@dimen/spacing_xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="13sp"
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
+                android:layout_marginHorizontal="@dimen/spacing_sm"
                 android:text="•"
                 android:textColor="@color/rentify_neutral" />
 
@@ -116,7 +116,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="@dimen/spacing_smd"
             android:background="@color/rentify_divider" />
 
         <!-- Footer: Date + Assigned Repairer + Chevron -->
@@ -139,7 +139,7 @@
                 android:id="@+id/tvAssignedTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:textColor="@color/rentify_primary"
                 android:textSize="12sp"
                 android:visibility="gone"

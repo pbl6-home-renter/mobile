@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="40dp">
+            android:paddingHorizontal="@dimen/spacing_ml"
+            android:paddingTop="@dimen/spacing_ml"
+            android:paddingBottom="@dimen/spacing_2xl">
 
             <!-- Title -->
             <TextView
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Thông tin cá nhân &amp; cài đặt ứng dụng"
                 android:textColor="@color/rentify_text_secondary"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:visibility="gone" />
 
             <!-- GUEST STATE CONTAINER -->
@@ -60,7 +60,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/spacing_ml"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -72,20 +72,20 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="@dimen/spacing_lg">
 
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="@drawable/bg_circle_icon_button"
-                            android:padding="14dp"
+                            android:padding="@dimen/spacing_md"
                             android:src="@drawable/ic_user_circle"
                             app:tint="@color/rentify_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
+                            android:layout_marginTop="@dimen/spacing_md"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Bạn chưa đăng nhập"
                             android:textColor="@color/rentify_text_primary"
@@ -95,7 +95,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Đăng nhập để xem thông tin phòng thuê, hợp đồng và hóa đơn của bạn"
@@ -106,7 +106,7 @@
                             android:id="@+id/btnGuestLogin"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="@dimen/spacing_md"
                             android:background="@drawable/bg_button_gradient"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Đăng nhập ngay"
@@ -122,7 +122,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="@dimen/spacing_lg"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Cài đặt &amp; Trợ giúp"
                     android:textColor="@color/rentify_text_primary"
@@ -132,7 +132,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -153,7 +153,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -172,7 +172,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Developer Tweaks"
@@ -190,7 +190,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="@dimen/spacing_4xl"
                             android:background="@color/rentify_divider" />
 
                         <LinearLayout
@@ -202,7 +202,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -221,7 +221,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Điều khoản &amp; Chính sách bảo mật"
@@ -252,7 +252,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/spacing_ml"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -284,7 +284,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/spacing_md"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
@@ -304,7 +304,7 @@
                             android:id="@+id/tvUserEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:ellipsize="end"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:maxLines="1"
@@ -316,7 +316,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -326,8 +326,8 @@
                                 android:background="@drawable/bg_pill_badge_role"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
-                                android:paddingHorizontal="8dp"
-                                android:paddingVertical="3dp">
+                                android:paddingHorizontal="@dimen/spacing_sm"
+                                android:paddingVertical="@dimen/spacing_xs">
 
                                 <TextView
                                     android:id="@+id/tvUserRoleBadge"
@@ -344,7 +344,7 @@
                                 android:id="@+id/btnQuickEditProfile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="26dp"
-                                android:layout_marginStart="8dp"
+                                android:layout_marginStart="@dimen/spacing_sm"
                                 android:clickable="true"
                                 android:focusable="true"
                                 app:cardBackgroundColor="#102563EB"
@@ -358,7 +358,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
-                                    android:paddingHorizontal="8dp">
+                                    android:paddingHorizontal="@dimen/spacing_sm">
 
                                     <ImageView
                                         android:layout_width="12dp"
@@ -369,7 +369,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginStart="4dp"
+                                        android:layout_marginStart="@dimen/spacing_xs"
                                         android:fontFamily="@font/plus_jakarta_sans"
                                         android:includeFontPadding="false"
                                         android:text="Chỉnh sửa"
@@ -386,7 +386,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="26dp"
+                    android:layout_marginTop="@dimen/spacing_28"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Tài khoản &amp; Tiện ích"
                     android:textColor="@color/rentify_text_primary"
@@ -396,7 +396,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -418,7 +418,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -437,7 +437,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Số điện thoại"
@@ -449,7 +449,7 @@
                                 android:id="@+id/tvUserPhone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="6dp"
+                                android:layout_marginEnd="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_secondary"
                                 android:textSize="13sp"
@@ -465,7 +465,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="@dimen/spacing_4xl"
                             android:background="@color/rentify_divider" />
 
                         <!-- Đổi mật khẩu Row -->
@@ -478,7 +478,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -497,7 +497,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Đổi mật khẩu"
@@ -515,7 +515,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="@dimen/spacing_4xl"
                             android:background="@color/rentify_divider" />
 
                         <!-- Phòng trọ đã lưu Row -->
@@ -528,7 +528,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -547,7 +547,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Phòng trọ đã lưu"
@@ -565,7 +565,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="@dimen/spacing_4xl"
                             android:background="@color/rentify_divider" />
 
                         <!-- Cài đặt thông báo Row -->
@@ -578,7 +578,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -597,7 +597,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Cài đặt thông báo"
@@ -619,7 +619,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="@dimen/spacing_lg"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Hệ thống &amp; Trợ giúp"
                     android:textColor="@color/rentify_text_primary"
@@ -629,7 +629,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="0dp"
@@ -651,7 +651,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -670,7 +670,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Developer Tweaks"
@@ -681,12 +681,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="6dp"
+                                android:layout_marginEnd="@dimen/spacing_sm"
                                 android:background="@drawable/bg_pill_badge_role"
                                 android:backgroundTint="#F1F5F9"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:paddingHorizontal="6dp"
-                                android:paddingVertical="2dp"
+                                android:paddingHorizontal="@dimen/spacing_sm"
+                                android:paddingVertical="@dimen/spacing_2xs"
                                 android:text="Dev"
                                 android:textColor="@color/rentify_text_secondary"
                                 android:textSize="10sp"
@@ -702,7 +702,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="@dimen/spacing_4xl"
                             android:background="@color/rentify_divider" />
 
                         <!-- Điều khoản & Chính sách Row -->
@@ -715,7 +715,7 @@
                             android:focusable="true"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -734,7 +734,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Điều khoản &amp; Chính sách bảo mật"
@@ -752,7 +752,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="64dp"
+                            android:layout_marginStart="@dimen/spacing_4xl"
                             android:background="@color/rentify_divider" />
 
                         <!-- App Version Row -->
@@ -761,7 +761,7 @@
                             android:layout_height="54dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
-                            android:paddingHorizontal="16dp">
+                            android:paddingHorizontal="@dimen/spacing_md">
 
                             <FrameLayout
                                 android:layout_width="34dp"
@@ -780,7 +780,7 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="14dp"
+                                android:layout_marginStart="@dimen/spacing_md"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Phiên bản ứng dụng"
@@ -806,7 +806,7 @@
                     style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="@dimen/spacing_28"
                     android:backgroundTint="@color/profile_logout_bg"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Đăng xuất"
@@ -817,7 +817,7 @@
                     app:elevation="0dp"
                     app:icon="@drawable/ic_logout"
                     app:iconGravity="textStart"
-                    app:iconPadding="8dp"
+                    app:iconPadding="@dimen/spacing_sm"
                     app:iconSize="18dp"
                     app:iconTint="@color/profile_logout_text"
                     app:strokeWidth="0dp" />

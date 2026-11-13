@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_surface"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="@dimen/spacing_lg">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/spacing_xs"
         android:fontFamily="@font/plus_jakarta_sans"
         android:text="Nhập ID người dùng bạn muốn thêm vào cuộc trò chuyện này."
         android:textColor="@color/rentify_text_secondary"
@@ -28,7 +28,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/spacing_md"
         android:hint="User ID *"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="12dp"
@@ -51,7 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/spacing_ml"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -68,7 +68,7 @@
             android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Thêm"
             app:cornerRadius="12dp" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="@dimen/spacing_smd"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="@dimen/spacing_smd">
 
         <!-- Room Image Container -->
         <com.google.android.material.card.MaterialCardView
@@ -42,7 +42,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="@dimen/spacing_md"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -62,7 +62,7 @@
                 android:id="@+id/tvRoomPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:textColor="@color/rentify_primary_gradient_start"
                 android:textSize="15sp"
@@ -72,11 +72,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:background="#1510B981"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="2dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_2xs"
                 android:text="Đã lưu"
                 android:textColor="#059669"
                 android:textSize="11sp"
@@ -88,12 +88,12 @@
             android:id="@+id/btnRemoveFavorite"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:background="@drawable/bg_circle_icon_button"
             android:clickable="true"
             android:contentDescription="Bỏ lưu phòng"
             android:focusable="true"
-            android:padding="9dp"
+            android:padding="@dimen/spacing_sm"
             android:src="@drawable/ic_heart_filled"
             app:tint="#EF4444" />
 

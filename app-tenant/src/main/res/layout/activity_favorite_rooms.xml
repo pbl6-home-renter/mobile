@@ -34,9 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="24dp"
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingTop="@dimen/spacing_md"
+                android:paddingBottom="@dimen/spacing_lg"
                 tools:listitem="@layout/item_favorite_room" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -57,7 +57,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:padding="@dimen/spacing_xl"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -65,14 +65,14 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:background="@drawable/bg_circle_icon_button"
-                android:padding="18dp"
+                android:padding="@dimen/spacing_md"
                 android:src="@drawable/ic_heart_outline"
                 app:tint="@color/rentify_text_secondary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Chưa có phòng trọ nào được lưu"
                 android:textColor="@color/rentify_text_primary"
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:gravity="center"
                 android:text="Nhấn biểu tượng trái tim khi xem danh sách phòng để lưu lại và xem lại bất cứ lúc nào."
@@ -93,10 +93,10 @@
                 android:id="@+id/btnExploreNow"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/spacing_lg"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="24dp"
+                android:paddingHorizontal="@dimen/spacing_lg"
                 android:text="Khám phá phòng trọ"
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="14sp"

@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="8dp">
+    android:paddingHorizontal="@dimen/spacing_md"
+    android:paddingTop="@dimen/spacing_md"
+    android:paddingBottom="@dimen/spacing_sm">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="@dimen/spacing_smd">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:padding="4dp"
+            android:padding="@dimen/spacing_xs"
             android:text="Chi tiết"
             android:textColor="@color/rentify_primary_gradient_start"
             android:textSize="14sp"
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:padding="@dimen/spacing_md">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="@dimen/spacing_smd"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -92,7 +92,7 @@
                         android:id="@+id/tvMyRoomAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="@dimen/spacing_2xs"
                         android:ellipsize="end"
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:maxLines="1"
@@ -104,7 +104,7 @@
                         android:id="@+id/tvMyRoomLandlord"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="@dimen/spacing_2xs"
                         android:ellipsize="end"
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:maxLines="1"
@@ -117,7 +117,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/spacing_smd"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -125,7 +125,7 @@
                     android:id="@+id/cardInvoiceSub"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginEnd="@dimen/spacing_sm"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/rentify_sub_card_invoice_bg"
                     app:cardCornerRadius="12dp"
@@ -136,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="@dimen/spacing_smd">
 
                         <TextView
                             android:id="@+id/tvInvoicePeriod"
@@ -151,7 +151,7 @@
                             android:id="@+id/tvInvoiceAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:ellipsize="end"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:maxLines="1"
@@ -164,7 +164,7 @@
                             android:id="@+id/tvInvoiceStatusNote"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:ellipsize="end"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:maxLines="1"
@@ -179,7 +179,7 @@
                     android:id="@+id/cardContractSub"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="@dimen/spacing_sm"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/rentify_sub_card_contract_bg"
                     app:cardCornerRadius="12dp"
@@ -190,7 +190,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="@dimen/spacing_smd">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                             android:id="@+id/tvContractEndDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:ellipsize="end"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:maxLines="1"
@@ -217,7 +217,7 @@
                             android:id="@+id/tvContractStatusTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginTop="@dimen/spacing_2xs"
                             android:ellipsize="end"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:maxLines="1"
@@ -232,7 +232,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/spacing_smd"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
@@ -240,7 +240,7 @@
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="44dp"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginEnd="@dimen/spacing_sm"
                     android:layout_weight="1"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:insetTop="0dp"
@@ -259,7 +259,7 @@
                     android:id="@+id/btnContactLandlord"
                     android:layout_width="0dp"
                     android:layout_height="44dp"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="@dimen/spacing_sm"
                     android:layout_weight="1"
                     android:backgroundTint="@color/rentify_primary_gradient_start"
                     android:fontFamily="@font/plus_jakarta_sans"

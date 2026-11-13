@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="@dimen/spacing_smd"
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="14dp"
     app:cardElevation="2dp"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="@dimen/spacing_md">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/spacing_smd"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -55,7 +55,7 @@
                     android:id="@+id/tvCreatedAt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_neutral"
                     android:textSize="11sp"
@@ -69,8 +69,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="Đang chờ" />
@@ -81,10 +81,10 @@
             android:id="@+id/tvMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:background="#0A2563EB"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:padding="10dp"
+            android:padding="@dimen/spacing_smd"
             android:textColor="@color/rentify_text_secondary"
             android:textSize="12sp"
             android:visibility="gone"
@@ -96,7 +96,7 @@
             android:id="@+id/layoutActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -104,7 +104,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:insetTop="0dp"
@@ -119,7 +119,7 @@
                 android:id="@+id/btnAccept"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"

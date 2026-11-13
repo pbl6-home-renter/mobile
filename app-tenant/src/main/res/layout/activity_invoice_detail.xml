@@ -34,8 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp">
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingVertical="@dimen/spacing_md">
 
                 <!-- Header Status Card -->
                 <com.google.android.material.card.MaterialCardView
@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -78,8 +78,8 @@
                                 android:background="@drawable/bg_pill_badge_role"
                                 android:backgroundTint="#1510B981"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:paddingHorizontal="10dp"
-                                android:paddingVertical="4dp"
+                                android:paddingHorizontal="@dimen/spacing_smd"
+                                android:paddingVertical="@dimen/spacing_xs"
                                 android:textColor="@color/rentify_success"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
@@ -90,7 +90,7 @@
                             android:id="@+id/tvInvoiceCode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="@dimen/spacing_xs"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:textColor="@color/rentify_neutral"
                             android:textSize="13sp"
@@ -99,7 +99,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="12dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <!-- Room and Tenant info -->
@@ -126,7 +126,7 @@
                                     android:id="@+id/tvRoomName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="14sp"
@@ -152,7 +152,7 @@
                                     android:id="@+id/tvTenantName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="14sp"
@@ -165,7 +165,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:orientation="vertical">
 
                             <TextView
@@ -180,7 +180,7 @@
                                 android:id="@+id/tvDueDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
+                                android:layout_marginTop="@dimen/spacing_2xs"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="14sp"
@@ -194,7 +194,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_md"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -205,7 +205,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp">
+                            android:layout_marginTop="@dimen/spacing_md">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -247,7 +247,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <!-- 2. Services Breakdown List -->
@@ -268,7 +268,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Phụ phí / Giảm trừ khác"
                                 android:textColor="@color/rentify_text_secondary"
@@ -288,7 +288,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_md"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -299,7 +299,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -328,7 +328,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="@dimen/spacing_sm">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -353,7 +353,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <RelativeLayout
@@ -388,7 +388,7 @@
                     android:id="@+id/layoutInvoicePayments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_md"
                     android:orientation="vertical"
                     android:visibility="gone">
 
@@ -405,7 +405,7 @@
                         android:id="@+id/layoutInvoicePaymentsList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/spacing_sm"
                         android:orientation="vertical" />
                 </LinearLayout>
 
@@ -428,9 +428,9 @@
         android:background="@color/rentify_surface"
         android:elevation="8dp"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="16dp">
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_smd"
+        android:paddingBottom="@dimen/spacing_md">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPayVietQr"

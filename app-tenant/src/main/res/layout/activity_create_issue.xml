@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/spacing_md">
 
             <!-- Room info Card -->
             <LinearLayout
@@ -38,13 +38,13 @@
                 android:background="@drawable/bg_rounded_surface"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="14dp">
+                android:padding="@dimen/spacing_md">
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:background="@drawable/bg_icon_squircle"
-                    android:padding="8dp"
+                    android:padding="@dimen/spacing_sm"
                     android:src="@drawable/ic_location_pin"
                     app:tint="@color/rentify_primary"
                     android:contentDescription="Phòng" />
@@ -52,7 +52,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="@dimen/spacing_smd"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -67,7 +67,7 @@
                         android:id="@+id/tvRoomName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="@dimen/spacing_2xs"
                         android:textColor="@color/rentify_text_primary"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -79,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:text="Tiêu đề sự cố *"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="14sp"
@@ -90,7 +90,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -114,7 +114,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:text="Nhóm sự cố *"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="14sp"
@@ -124,7 +124,7 @@
                 android:id="@+id/chipGroupCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 app:chipSpacing="8dp"
                 app:selectionRequired="true"
                 app:singleSelection="true">
@@ -195,7 +195,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:text="Mức độ khẩn cấp *"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="14sp"
@@ -205,7 +205,7 @@
                 android:id="@+id/chipGroupUrgency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 app:chipSpacing="8dp"
                 app:selectionRequired="true"
                 app:singleSelection="true">
@@ -256,7 +256,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/spacing_ml"
                 android:text="Mô tả chi tiết"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="14sp"
@@ -267,7 +267,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -299,7 +299,7 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:elevation="8dp"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitIssue"

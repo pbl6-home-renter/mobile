@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="@dimen/spacing_md">
 
                 <!-- Header Card: Status & Title -->
                 <com.google.android.material.card.MaterialCardView
@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -64,8 +64,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/bg_pill_badge_role"
-                                android:paddingHorizontal="12dp"
-                                android:paddingVertical="5dp"
+                                android:paddingHorizontal="@dimen/spacing_smd"
+                                android:paddingVertical="@dimen/spacing_xs"
                                 android:textColor="@color/rentify_primary"
                                 android:textSize="13sp"
                                 android:textStyle="bold"
@@ -90,7 +90,7 @@
                             android:id="@+id/tvTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="@dimen/spacing_smd"
                             android:textColor="@color/rentify_text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -100,7 +100,7 @@
                             android:id="@+id/tvCreatedAt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:textColor="@color/rentify_text_secondary"
                             android:textSize="12sp"
                             tools:text="Gửi lúc: 14:30 02/11/2026" />
@@ -112,7 +112,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -123,7 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <LinearLayout
@@ -166,7 +166,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -196,7 +196,7 @@
                                     android:id="@+id/tvCategory"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="6dp"
+                                    android:layout_marginStart="@dimen/spacing_sm"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:textColor="@color/rentify_text_primary"
                                     android:textSize="13sp"
@@ -209,7 +209,7 @@
                             android:id="@+id/layoutReporter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:visibility="gone"
@@ -239,7 +239,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
                     app:cardElevation="1dp"
@@ -250,7 +250,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -263,7 +263,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <TextView
@@ -282,7 +282,7 @@
                     android:id="@+id/cardResolution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/spacing_smd"
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="16dp"
@@ -295,7 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="@dimen/spacing_md">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -308,7 +308,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginVertical="10dp"
+                            android:layout_marginVertical="@dimen/spacing_smd"
                             android:background="@color/rentify_divider" />
 
                         <LinearLayout
@@ -340,7 +340,7 @@
                             android:id="@+id/layoutRepairCost"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:visibility="gone"
@@ -368,7 +368,7 @@
                             android:id="@+id/layoutResolutionNote"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:orientation="vertical"
                             android:visibility="gone"
                             tools:visibility="visible">
@@ -384,9 +384,9 @@
                                 android:id="@+id/tvResolutionNote"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="@dimen/spacing_xs"
                                 android:background="@drawable/bg_rounded_surface"
-                                android:padding="10dp"
+                                android:padding="@dimen/spacing_smd"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="13sp"
                                 tools:text="Đã thay gioăng cao su và van khóa mới cho vòi xịt." />
@@ -396,7 +396,7 @@
                             android:id="@+id/layoutClosedAt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/spacing_sm"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
                             android:visibility="gone"
@@ -442,7 +442,7 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:elevation="8dp"
-        android:padding="16dp"
+        android:padding="@dimen/spacing_md"
         android:visibility="gone"
         tools:visibility="visible">
 

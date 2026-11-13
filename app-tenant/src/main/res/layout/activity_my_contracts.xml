@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:overScrollMode="never"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_sm"
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
@@ -96,8 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingTop="8dp"
-                android:paddingBottom="24dp"
+                android:paddingTop="@dimen/spacing_sm"
+                android:paddingBottom="@dimen/spacing_lg"
                 tools:listitem="@layout/item_my_contract" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -116,7 +116,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="32dp"
+            android:padding="@dimen/spacing_xl"
             android:visibility="gone"
             tools:visibility="visible">
 
@@ -131,7 +131,7 @@
                 android:id="@+id/tvEmptyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:text="Chưa có hợp đồng nào"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="16sp"
@@ -141,7 +141,7 @@
                 android:id="@+id/tvEmptySubtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:gravity="center"
                 android:text="Toàn bộ hợp đồng thuê phòng và lịch sử thuê trọ của bạn sẽ được lưu trữ tại đây."
                 android:textColor="@color/rentify_text_secondary"

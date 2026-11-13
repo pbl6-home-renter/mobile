@@ -16,7 +16,7 @@
         android:elevation="2dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="@dimen/spacing_sm">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -30,7 +30,7 @@
         <FrameLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="4dp">
+            android:layout_marginStart="@dimen/spacing_xs">
 
             <TextView
                 android:id="@+id/txtHeaderAvatar"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_avatar_gradient"
                 android:contentDescription="Ảnh nhóm"
-                android:padding="9dp"
+                android:padding="@dimen/spacing_sm"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_group"
                 android:visibility="gone"
@@ -70,7 +70,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/spacing_smd"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -122,8 +122,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="@dimen/spacing_sm"
+            android:paddingBottom="@dimen/spacing_sm"
             tools:listitem="@layout/item_message_me" />
 
         <!-- Load more indicator (at top) -->
@@ -133,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -156,14 +156,14 @@
         android:background="@color/rentify_primary_container"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_sm"
         android:visibility="gone">
 
         <View
             android:layout_width="3dp"
             android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/spacing_sm"
             android:background="@color/rentify_primary" />
 
         <LinearLayout
@@ -213,14 +213,14 @@
         android:elevation="6dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp">
+        android:paddingHorizontal="@dimen/spacing_smd"
+        android:paddingVertical="@dimen/spacing_sm">
 
         <ImageButton
             android:id="@+id/btnAttachImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="6dp"
+            android:layout_marginEnd="@dimen/spacing_sm"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Đính kèm ảnh"
             android:scaleType="centerInside"
@@ -238,8 +238,8 @@
             android:importantForAutofill="no"
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="4"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="10dp"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="@dimen/spacing_smd"
             android:textColor="@color/rentify_text_primary"
             android:textColorHint="@color/rentify_neutral"
             android:textSize="14sp" />
@@ -248,11 +248,11 @@
             android:id="@+id/btnSend"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/spacing_sm"
             android:background="@drawable/bg_send_button"
             android:contentDescription="Gửi tin nhắn"
             android:elevation="2dp"
-            android:padding="9dp"
+            android:padding="@dimen/spacing_sm"
             android:scaleType="centerInside"
             android:src="@drawable/ic_send_white" />
 

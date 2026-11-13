@@ -11,23 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="28dp">
+        android:paddingHorizontal="@dimen/spacing_ml"
+        android:paddingTop="@dimen/spacing_smd"
+        android:paddingBottom="@dimen/spacing_28">
 
         <!-- Drag Handle Indicator -->
         <View
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="@dimen/spacing_md"
             android:background="#D1D5DB" />
 
         <!-- Header: Title & Reset/Clear Button -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/spacing_md">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
                 android:text="Đặt lại"
                 android:textColor="@color/rentify_primary_gradient_start"
                 android:textSize="14sp"
@@ -68,7 +68,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:orientation="horizontal">
 
             <!-- Province Dropdown -->
@@ -76,7 +76,7 @@
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:layout_weight="1"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
@@ -100,7 +100,7 @@
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
@@ -124,7 +124,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="@dimen/spacing_ml">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
             android:id="@+id/sliderPriceRange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:stepSize="0.5"
             android:valueFrom="0.0"
             android:valueTo="15.0"
@@ -174,7 +174,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
                 android:layout_weight="1"
                 android:text="Dưới 2tr"
                 android:textAlignment="center"
@@ -185,7 +185,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_marginHorizontal="@dimen/spacing_2xs"
                 android:layout_weight="1"
                 android:text="2 - 4tr"
                 android:textAlignment="center"
@@ -196,7 +196,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_marginHorizontal="@dimen/spacing_2xs"
                 android:layout_weight="1"
                 android:text="4 - 7tr"
                 android:textAlignment="center"
@@ -207,7 +207,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="@dimen/spacing_xs"
                 android:layout_weight="1"
                 android:text="Trên 7tr"
                 android:textAlignment="center"
@@ -218,7 +218,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/spacing_ml"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Quy định giới tính"
             android:textColor="@color/rentify_text_primary"
@@ -229,7 +229,7 @@
             android:id="@+id/toggleGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             app:checkedButton="@id/btnGenderAll"
             app:selectionRequired="true"
             app:singleSelection="true">
@@ -269,7 +269,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/spacing_ml"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Sắp xếp theo"
             android:textColor="@color/rentify_text_primary"
@@ -280,7 +280,7 @@
             android:id="@+id/toggleSort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             app:checkedButton="@id/btnSortNewest"
             app:selectionRequired="true"
             app:singleSelection="true">
@@ -321,7 +321,7 @@
             android:id="@+id/btnApplyFilter"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="@dimen/spacing_28"
             android:backgroundTint="@color/rentify_primary_gradient_start"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Áp dụng"

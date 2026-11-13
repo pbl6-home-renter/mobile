@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="14dp"
+    android:layout_marginBottom="@dimen/spacing_md"
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Top Header: Avatar + Info + AI Match Badge -->
         <LinearLayout
@@ -36,7 +36,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/spacing_smd"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -56,7 +56,7 @@
                     android:id="@+id/tvOccupation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
@@ -73,8 +73,8 @@
                 android:background="@drawable/bg_pill_badge_role"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp">
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs">
 
                 <ImageView
                     android:layout_width="14dp"
@@ -86,7 +86,7 @@
                     android:id="@+id/tvMatchScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_primary_gradient_start"
                     android:textSize="12sp"
@@ -99,7 +99,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="12dp"
+            android:layout_marginVertical="@dimen/spacing_smd"
             android:background="@color/rentify_divider" />
 
         <!-- Preferred Info: Budget & Area -->
@@ -126,7 +126,7 @@
                     android:id="@+id/tvBudget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_primary_gradient_start"
                     android:textSize="14sp"
@@ -137,7 +137,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -153,7 +153,7 @@
                     android:id="@+id/tvArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
@@ -169,18 +169,18 @@
             android:id="@+id/layoutTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvTag1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="11sp"
                 android:visibility="gone"
@@ -191,11 +191,11 @@
                 android:id="@+id/tvTag2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="11sp"
                 android:visibility="gone"
@@ -208,8 +208,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="11sp"
                 android:visibility="gone"
@@ -222,7 +222,7 @@
             android:id="@+id/tvBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:ellipsize="end"
             android:fontFamily="@font/plus_jakarta_sans"
             android:maxLines="2"
@@ -234,7 +234,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="@dimen/spacing_md"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -242,7 +242,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="42dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:insetTop="0dp"
@@ -257,7 +257,7 @@
                 android:id="@+id/btnSendRequest"
                 android:layout_width="0dp"
                 android:layout_height="42dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"

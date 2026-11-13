@@ -7,7 +7,7 @@
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingVertical="8dp">
+    android:paddingVertical="@dimen/spacing_sm">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivRoommateAvatar"
@@ -21,7 +21,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="@dimen/spacing_smd"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -47,11 +47,11 @@
                 android:id="@+id/tvRepresentativeBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="2dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_2xs"
                 android:text="Người đại diện"
                 android:textColor="@color/rentify_primary_gradient_start"
                 android:textSize="10sp"
@@ -64,7 +64,7 @@
             android:id="@+id/tvRoommatePhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="@dimen/spacing_2xs"
             android:ellipsize="end"
             android:fontFamily="@font/plus_jakarta_sans"
             android:maxLines="1"
@@ -79,7 +79,7 @@
         android:layout_height="36dp"
         android:background="@drawable/bg_circle_icon_button"
         android:contentDescription="Nhắn tin"
-        android:padding="8dp"
+        android:padding="@dimen/spacing_sm"
         android:src="@drawable/ic_nav_chat"
         app:tint="@color/rentify_primary_gradient_start" />
 

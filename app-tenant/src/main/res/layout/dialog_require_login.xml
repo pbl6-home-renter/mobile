@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="28dp"
+    android:layout_marginHorizontal="@dimen/spacing_28"
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="20dp"
     app:cardElevation="6dp"
@@ -16,16 +16,16 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="28dp"
-        android:paddingBottom="20dp">
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_28"
+        android:paddingBottom="@dimen/spacing_ml">
 
         <!-- Icon Indicator -->
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/bg_circle_icon_button"
-            android:padding="16dp"
+            android:padding="@dimen/spacing_md"
             android:src="@drawable/ic_user_circle"
             app:tint="@color/rentify_primary_gradient_start" />
 
@@ -34,7 +34,7 @@
             android:id="@+id/tvDialogTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_md"
             android:fontFamily="@font/plus_jakarta_sans"
             android:gravity="center"
             android:text="Yêu cầu đăng nhập"
@@ -47,7 +47,7 @@
             android:id="@+id/tvDialogMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:fontFamily="@font/plus_jakarta_sans"
             android:gravity="center"
             android:lineSpacingExtra="3dp"
@@ -61,7 +61,7 @@
             android:id="@+id/btnDialogLogin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/spacing_lg"
             android:background="@drawable/bg_button_gradient"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Đăng nhập ngay"
@@ -79,7 +79,7 @@
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/spacing_xs"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Để sau"
             android:textColor="@color/rentify_text_secondary"
