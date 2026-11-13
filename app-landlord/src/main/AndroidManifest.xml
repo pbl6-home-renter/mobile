@@ -37,6 +37,19 @@
         <activity
             android:name=".ui.property.BuildingDetailActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ui.contract.LandlordContractsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.contract.CreateContractActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.contract.LandlordContractDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

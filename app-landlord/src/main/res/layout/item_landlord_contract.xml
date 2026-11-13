@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/rentify_surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/rentify_divider"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header: Contract Code + Status Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvContractCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="HĐ-3fa85f" />
+
+            <TextView
+                android:id="@+id/tvContractStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Đang hiệu lực" />
+        </LinearLayout>
+
+        <!-- Room Name -->
+        <TextView
+            android:id="@+id/tvContractRoomName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Phòng P.201" />
+
+        <!-- Tenant Info -->
+        <TextView
+            android:id="@+id/tvContractTenantInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="13sp"
+            tools:text="Khách thuê: Trần Thị B • 0901 234 567" />
+
+        <!-- Price & Deposit -->
+        <TextView
+            android:id="@+id/tvContractPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            tools:text="3.500.000 đ/tháng • Cọc: 3.500.000 đ" />
+
+        <!-- Duration -->
+        <TextView
+            android:id="@+id/tvContractDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_muted"
+            android:textSize="12sp"
+            tools:text="01/10/2026 → 01/10/2027" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
