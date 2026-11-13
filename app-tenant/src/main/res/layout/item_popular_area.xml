@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardArea"
@@ -8,7 +10,7 @@
     android:layout_marginEnd="@dimen/spacing_smd"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/rentify_card_near_bg"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="0dp"
     app:strokeColor="#DBEAFE"
     app:strokeWidth="1dp">

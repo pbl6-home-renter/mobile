@@ -7,8 +7,8 @@
     android:layout_marginHorizontal="@dimen/spacing_md"
     android:layout_marginVertical="@dimen/spacing_sm"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
     app:strokeColor="@color/rentify_divider"
     app:strokeWidth="1dp">
 

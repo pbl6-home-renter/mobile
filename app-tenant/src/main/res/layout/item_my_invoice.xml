@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_smd"
-    android:background="?attr/selectableItemBackground"
+    
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="1dp"
     app:strokeColor="@color/rentify_divider"
     app:strokeWidth="1dp">

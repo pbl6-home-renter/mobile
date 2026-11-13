@@ -51,7 +51,7 @@
             android:clickable="true"
             android:focusable="true"
             app:cardBackgroundColor="#102563EB"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/radius_md"
             app:cardElevation="0dp"
             app:rippleColor="#202563EB"
             app:strokeWidth="0dp">
@@ -178,7 +178,7 @@
                 android:layout_marginHorizontal="@dimen/spacing_md"
                 android:layout_marginBottom="@dimen/spacing_sm"
                 android:visibility="gone"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="@dimen/radius_md"
                 app:cardElevation="0dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="#FCD34D"

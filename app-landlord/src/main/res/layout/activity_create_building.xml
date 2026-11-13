@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_md"
                 app:cardBackgroundColor="@color/rentify_card_near_bg"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="@dimen/radius_md"
                 app:cardElevation="0dp"
                 app:strokeColor="@color/rentify_button_border_start"
                 app:strokeWidth="1dp">

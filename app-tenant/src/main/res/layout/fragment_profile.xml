@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_ml"
                     app:cardBackgroundColor="@color/rentify_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/rentify_divider"
                     app:strokeWidth="1dp">
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/rentify_divider"
                     app:strokeWidth="1dp">
@@ -348,7 +348,7 @@
                                 android:clickable="true"
                                 android:focusable="true"
                                 app:cardBackgroundColor="#102563EB"
-                                app:cardCornerRadius="8dp"
+                                app:cardCornerRadius="@dimen/radius_sm"
                                 app:cardElevation="0dp"
                                 app:rippleColor="#202563EB"
                                 app:strokeWidth="0dp">
@@ -398,7 +398,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/rentify_divider"
                     app:strokeWidth="1dp">
@@ -631,7 +631,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
                     app:strokeColor="@color/rentify_divider"
                     app:strokeWidth="1dp">

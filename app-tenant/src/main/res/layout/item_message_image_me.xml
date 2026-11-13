@@ -16,7 +16,7 @@
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="#102563EB"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="@dimen/radius_lg"
         app:cardElevation="0dp"
         app:strokeColor="@color/rentify_primary_gradient_start"
         app:strokeWidth="1dp">

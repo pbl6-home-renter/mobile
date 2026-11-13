@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_smd"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="1dp"
     app:strokeColor="@color/rentify_divider"
     app:strokeWidth="1dp">

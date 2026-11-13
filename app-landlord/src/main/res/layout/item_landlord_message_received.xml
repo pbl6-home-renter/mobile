@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_4xl"
         app:cardBackgroundColor="@color/rentify_surface"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="@dimen/radius_lg"
         app:cardElevation="1dp"
         app:strokeColor="@color/rentify_divider"
         app:strokeWidth="1dp">
