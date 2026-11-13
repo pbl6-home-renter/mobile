@@ -14,6 +14,7 @@ import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.home.HomePlaceholderFragment
 import com.rentify.app.landlord.databinding.ActivityMainBinding
+import com.rentify.app.landlord.ui.main.LandlordMainFragment
 import com.rentify.app.landlord.ui.onboarding.OnboardingFragment
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -26,7 +27,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     ForgotPasswordFragment.ForgotPasswordListener,
     VerifyOtpFragment.VerifyOtpListener,
     ResetPasswordFragment.ResetPasswordListener,
-    HomePlaceholderFragment.HomePlaceholderListener {
+    HomePlaceholderFragment.HomePlaceholderListener,
+    LandlordMainFragment.LandlordMainListener {
 
     private val tokenDataStore by lazy { TokenDataStore(applicationContext) }
     private val appDataStore by lazy { AppDataStore(applicationContext) }
@@ -121,9 +123,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             .commit()
     }
 
+    override fun onLandlordLogoutRequested() {
+        lifecycleScope.launch {
+            tokenDataStore.clearTokens()
+            toast("Đã đăng xuất thành công")
+            showLoginScreen()
+        }
+    }
+
     private fun showHomeScreen() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, HomePlaceholderFragment.newInstance())
+            .replace(R.id.fragmentContainer, LandlordMainFragment.newInstance())
             .commit()
     }
 
