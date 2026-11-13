@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="4dp">
+
+    <!-- Avatar small -->
+    <TextView
+        android:id="@+id/txtAvatarSmall"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_avatar_gradient"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/white"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="A" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="64dp"
+        android:orientation="vertical">
+
+        <!-- Sender name (for group) -->
+        <TextView
+            android:id="@+id/txtSenderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="Nguyễn Văn A" />
+
+        <!-- Bubble -->
+        <LinearLayout
+            android:id="@+id/bubbleOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_other"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="8dp">
+
+            <!-- Quoted message box (hidden by default) -->
+            <LinearLayout
+                android:id="@+id/layoutReplyQuote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:background="@color/rentify_primary_container"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:background="@color/rentify_primary" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtReplySender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:textColor="@color/rentify_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        tools:text="Nguyễn Văn A" />
+
+                    <TextView
+                        android:id="@+id/txtReplyContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:maxLines="1"
+                        android:textColor="@color/rentify_text_secondary"
+                        android:textSize="11sp"
+                        tools:text="Vòi xịt nhà tắm bị rỉ" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="14sp"
+                tools:text="Chào bạn, phòng 305 còn trống nhé!" />
+
+            <TextView
+                android:id="@+id/txtTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_neutral"
+                android:textSize="10sp"
+                tools:text="11:32" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+
