@@ -30,6 +30,11 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".ui.property.CreateRoomActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name=".ui.property.BuildingDetailActivity"
             android:exported="false" />
     </application>

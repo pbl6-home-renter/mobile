@@ -2,7 +2,6 @@ package com.rentify.app.landlord.ui.property
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,7 +18,12 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
         BuildingViewModelFactory(requireContext())
     }
 
+    private val roomViewModel: RoomViewModel by viewModels {
+        RoomViewModelFactory(requireContext())
+    }
+
     private lateinit var buildingAdapter: BuildingAdapter
+    private lateinit var roomAdapter: LandlordRoomAdapter
     private var currentTabIndex = 0
 
     private val createBuildingLauncher = registerForActivityResult(
@@ -27,6 +31,14 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             buildingViewModel.loadBuildings()
+        }
+    }
+
+    private val createRoomLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            roomViewModel.loadRooms()
         }
     }
 
@@ -54,6 +66,15 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
             buildingDetailLauncher.launch(intent)
         }
 
+        roomAdapter = LandlordRoomAdapter(
+            onRoomClick = { room ->
+                Toast.makeText(requireContext(), "Phòng ${room.name} - Giá: ${room.rentPrice} đ", Toast.LENGTH_SHORT).show()
+            },
+            onMarkReadyClick = { room ->
+                roomViewModel.markRoomReady(room.id)
+            }
+        )
+
         binding.rvPropertyItems.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = buildingAdapter
@@ -74,14 +95,11 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
 
     private fun handleTabChanged(position: Int) {
         if (position == 0) {
-            // Tab Tòa nhà
             binding.rvPropertyItems.adapter = buildingAdapter
             buildingViewModel.loadBuildings()
         } else {
-            // Tab Phòng trọ (sẽ tích hợp LandlordRoomAdapter trong Commit 4)
-            binding.layoutEmpty.visibility = View.VISIBLE
-            binding.tvEmptyTitle.text = "Chưa có danh sách phòng trọ"
-            binding.tvEmptySubtitle.text = "Chọn tòa nhà hoặc nhấn '+ Thêm mới' để tạo phòng"
+            binding.rvPropertyItems.adapter = roomAdapter
+            roomViewModel.loadRooms()
         }
     }
 
@@ -90,7 +108,7 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
             if (currentTabIndex == 0) {
                 buildingViewModel.loadBuildings()
             } else {
-                binding.swipeRefresh.isRefreshing = false
+                roomViewModel.loadRooms()
             }
         }
 
@@ -99,13 +117,16 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
                 val intent = Intent(requireContext(), CreateBuildingActivity::class.java)
                 createBuildingLauncher.launch(intent)
             } else {
-                Toast.makeText(requireContext(), "Tính năng tạo phòng đang được chuẩn bị", Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireContext(), CreateRoomActivity::class.java)
+                createRoomLauncher.launch(intent)
             }
         }
     }
 
     override fun observeData() {
+        // Observe Buildings
         buildingViewModel.buildingListState.collectWhenStarted { state ->
+            if (currentTabIndex != 0) return@collectWhenStarted
             binding.swipeRefresh.isRefreshing = false
             when (state) {
                 is BuildingListUiState.Loading -> {
@@ -115,25 +136,77 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
                 }
                 is BuildingListUiState.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    if (currentTabIndex == 0) {
-                        buildingAdapter.submitList(state.buildings)
-                        if (state.buildings.isEmpty()) {
-                            binding.layoutEmpty.visibility = View.VISIBLE
-                            binding.tvEmptyTitle.text = "Chưa có tòa nhà nào"
-                            binding.tvEmptySubtitle.text = "Nhấn '+ Thêm mới' để gửi yêu cầu phê duyệt tòa nhà"
-                        } else {
-                            binding.layoutEmpty.visibility = View.GONE
-                        }
+                    buildingAdapter.submitList(state.buildings)
+                    if (state.buildings.isEmpty()) {
+                        binding.layoutEmpty.visibility = View.VISIBLE
+                        binding.tvEmptyTitle.text = "Chưa có tòa nhà nào"
+                        binding.tvEmptySubtitle.text = "Nhấn '+ Thêm mới' để gửi yêu cầu phê duyệt tòa nhà"
+                    } else {
+                        binding.layoutEmpty.visibility = View.GONE
                     }
                 }
                 is BuildingListUiState.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    if (currentTabIndex == 0 && buildingAdapter.itemCount == 0) {
+                    if (buildingAdapter.itemCount == 0) {
                         binding.layoutEmpty.visibility = View.VISIBLE
                         binding.tvEmptyTitle.text = "Không thể tải danh sách"
                         binding.tvEmptySubtitle.text = state.message
                     }
                     Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        // Observe Rooms
+        roomViewModel.roomListState.collectWhenStarted { state ->
+            if (currentTabIndex != 1) return@collectWhenStarted
+            binding.swipeRefresh.isRefreshing = false
+            when (state) {
+                is RoomListUiState.Loading -> {
+                    if (!binding.swipeRefresh.isRefreshing) {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                }
+                is RoomListUiState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    roomAdapter.submitList(state.rooms)
+                    if (state.rooms.isEmpty()) {
+                        binding.layoutEmpty.visibility = View.VISIBLE
+                        binding.tvEmptyTitle.text = "Chưa có phòng trọ nào"
+                        binding.tvEmptySubtitle.text = "Nhấn '+ Thêm mới' để tạo phòng cho tòa nhà"
+                    } else {
+                        binding.layoutEmpty.visibility = View.GONE
+                    }
+                }
+                is RoomListUiState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (roomAdapter.itemCount == 0) {
+                        binding.layoutEmpty.visibility = View.VISIBLE
+                        binding.tvEmptyTitle.text = "Không thể tải danh sách"
+                        binding.tvEmptySubtitle.text = state.message
+                    }
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        roomViewModel.actionState.collectWhenStarted { state ->
+            when (state) {
+                is RoomActionUiState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is RoomActionUiState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    roomViewModel.resetActionState()
+                }
+                is RoomActionUiState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    roomViewModel.resetActionState()
+                }
+                is RoomActionUiState.Idle -> {
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }

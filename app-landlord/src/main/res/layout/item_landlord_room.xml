@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/rentify_surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/rentify_divider"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header: Room Name + Status Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvRoomName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                tools:text="Phòng P.201" />
+
+            <TextView
+                android:id="@+id/tvRoomStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Trống" />
+        </LinearLayout>
+
+        <!-- Floor & Area -->
+        <TextView
+            android:id="@+id/tvRoomFloorArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="13sp"
+            tools:text="Tầng 2 • 25.0 m²" />
+
+        <!-- Rent Price -->
+        <TextView
+            android:id="@+id/tvRoomPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:textColor="@color/rentify_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="3.500.000 đ/tháng" />
+
+        <!-- Current Tenant Info (if occupied) -->
+        <LinearLayout
+            android:id="@+id/layoutTenantInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/rentify_card_near_bg"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvTenantName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                tools:text="Khách thuê: Nguyễn Văn An" />
+
+            <TextView
+                android:id="@+id/tvTenantPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="12sp"
+                tools:text="SĐT: 0912 345 678" />
+        </LinearLayout>
+
+        <!-- Active Issues Alert (if > 0) -->
+        <LinearLayout
+            android:id="@+id/layoutActiveIssues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvActiveIssues"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_warning"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="⚠️ Có 1 sự cố chưa xử lý" />
+        </LinearLayout>
+
+        <!-- Action: Mark Ready button (if maintenance) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMarkReady"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="✓ Đánh dấu đã sẵn sàng cho thuê"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
