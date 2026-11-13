@@ -6,12 +6,18 @@
 |---|---|---|---|
 | Core Network | Hoàn thành | AI & Dev | Đã dựng Retrofit, OkHttp, Moshi DTO wrappers, Auth DTOs (Email Verification), Room DTOs, User DTOs (avatarUrl), Chat DTOs v2 (Reply quotes, maxSequence, Search), Matching DTOs, Issue DTOs, Contract DTOs, Invoice DTOs (/me/invoices, String amounts & breakdown), Media DTOs (Download URL) & Chat Group DTOs |
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
-| Core UI | Hoàn thành | AI & Dev | Hoàn thiện toàn bộ luồng Auth, base components, vector icons & dialogs dùng chung |
-| App Tenant | Hoàn thành | AI & Dev | Hoàn thiện Explore, Profile, FavoriteRooms, MyRoom Hub, Ghép bạn ở cùng, Chi tiết xem trọ, Quản lý Sự cố, Quản lý Hợp đồng, Quản lý Hóa đơn (/me/invoices), và Nâng cấp Chat v2 (Gửi ảnh R2, Photo Viewer, Quản lý nhóm, Nhấn giữ để trả lời tin nhắn - Reply quote) |
-| App Landlord | Hoàn thành toàn diện (100%) | AI & Dev | Đã hoàn thành toàn bộ 5 Giai đoạn: Nền tảng Điều hướng, Dashboard KPI, Quản lý Tòa nhà & Phòng trọ, Hợp đồng & Khách thuê, Ghi chỉ số Điện Nước, Hóa đơn & Thu tiền mặt, Quản lý Sự cố & Bảo trì, và Chat v2 kèm Bot Reminders & Hồ sơ cá nhân |
+| Core UI | Hoàn thành | AI & Dev | Đã chuẩn hóa thang đo Spacing 4dp và nâng cấp 100% hệ thống icon (50 icon) sang Lucide Icons chính thức |
+| App Tenant | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn bộ 51 layout sang hệ thống Spacing dimens.xml (bội số 4dp) |
+| App Landlord | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn bộ 39 layout sang hệ thống Spacing dimens.xml (bội số 4dp) |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Nâng cấp toàn diện hệ thống Icon dự án sang Lucide Icons chính thức
+- **Lý do:** Chuẩn hóa phong cách đồ họa của toàn bộ ứng dụng Rentify theo ngôn ngữ thiết kế Minimalist hiện đại, nét vẽ 2dp thanh thoát bo góc mềm mại, độ phân giải sắc nét 24x24dp và hỗ trợ đổi màu động (tinting) hoàn hảo.
+- **Ảnh hưởng:** `:core-ui` cập nhật 50 file icon vector (`ic_*.xml`) bao gồm toàn bộ BottomNav của Tenant & Landlord, các nút thao tác nhanh, icon tiện ích phòng trọ và danh mục phân loại sự cố. Giữ nguyên tên file tài nguyên giúp 102 layout của cả `:app-tenant` và `:app-landlord` tự động áp dụng giao diện mới mà không gây xung đột.
+### 2026-11-13 – Chuẩn hóa toàn bộ hệ thống Spacing (Margin & Padding) theo dimens.xml (hệ số 4dp) trên toàn bộ ứng dụng
+- **Lý do:** Loại bỏ hoàn toàn các giá trị hardcode `dp` rải rác, thống nhất nhịp điệu thị giác (visual cadence), đảm bảo giao diện đạt độ hoàn thiện cao và chuẩn xác theo nguyên tắc thiết kế 4dp/8dp của Material Design 3 trên cả 2 ứng dụng Tenant và Landlord.
+- **Ảnh hưởng:** `:core-ui` mở rộng thang đo `dimens.xml` từ `2dp` (`spacing_2xs`) đến `96dp` (`spacing_bottom_nav`), chuẩn hóa toàn bộ 102 layout XML (`:core-ui`, `:app-tenant`, `:app-landlord`), quy đổi an toàn các khoảng cách lẻ (6dp, 10dp, 14dp) về mốc 4dp tương ứng mà không làm vỡ cấu trúc giao diện.
 ### 2026-11-13 – Triển khai Phân hệ Chat v2, Lời nhắc tự động Bot Reminders và Hồ sơ Chủ trọ (Giai đoạn 5)
 - **Lý do:** Hoàn thành giai đoạn cuối cùng trong kế hoạch xây dựng ứng dụng Chủ trọ (`:app-landlord`): Xây dựng giao diện danh sách hội thoại đa luồng (trực tiếp 1:1 và nhóm tòa nhà/cư dân), màn hình nhắn tin chi tiết thời gian thực hỗ trợ gửi tin nhắn và tính năng đặc thù cho Chủ trọ là gửi lời nhắc tự động Rentify Bot (`POST /conversations/{id}/bot-reminders` theo mẫu hóa đơn/hợp đồng/điện nước), đồng thời hoàn thiện màn hình Hồ sơ cá nhân (`LandlordProfileFragment`) với hiển thị thông tin người dùng, đổi mật khẩu bảo mật (`POST /auth/change-password`) và quy trình đăng xuất an toàn.
 - **Ảnh hưởng:** 
@@ -156,6 +162,8 @@
 
 ## 4. Nhật ký thay đổi lớn
 <!-- Chỉ thay đổi đáng kể, kèm link PR -->
+- 2026-11-13 – Nâng cấp toàn diện 50 icon vector sang Lucide Icons chính thức trên nhánh `feature/ui-lucide-icons` (commit `d5a0225`), cả 2 ứng dụng `:app-tenant` và `:app-landlord` đều biên dịch thành công.
+- 2026-11-13 – Chuẩn hóa toàn diện 102 file layout XML theo thang đo Spacing bội số 4dp (dimens.xml) trên nhánh `feature/ui-spacing-dimens` (commits `ab5e76d`, `f283923`, `14a3ef2`), cả 2 ứng dụng `:app-tenant` và `:app-landlord` đều biên dịch thành công.
 - 2026-11-13 – Hoàn thành triển khai Giai đoạn 2 cho `:app-landlord` trên nhánh `feature/landlord-contracts` (commit `765847b`), biên dịch và đóng gói thành công APK debug.
 - 2026-11-13 – Hoàn thành triển khai Giai đoạn 1 cho `:app-landlord` trên nhánh `feature/landlord-properties` gồm 5 commit chuẩn Conventional Commits, biên dịch thành công toàn bộ APK debug.
 - 2026-11-13 – Đồng bộ mã nguồn theo API Spec Rentify mới nhất (PR #50 - PR #56): Thay thế endpoint `/invoices/tenant` bằng `/me/invoices`, hỗ trợ `breakdown` dịch vụ hóa đơn, bổ sung luồng email verification, signed download URL cho media, và tính năng trả lời tin nhắn (Message Reply Quotes) trong phân hệ Chat.
