@@ -38,7 +38,7 @@
 16. **Câu hỏi tự kiểm tra duy nhất trước khi đề xuất**: *"2 tháng nữa có người cần thông tin này không, và họ có tự tìm ra được từ code hoặc git log không?"*
 17. **Nên ghi**:
     - Các quyết định quan trọng kèm lý do (vì sao chọn cách đó).
-    - Những chỗ code đang lệch so me spec hoặc BE, và cách tạm xử lý (workaround).
+    - Những chỗ code đang lệch so với spec hoặc BE, và cách tạm xử lý (workaround).
     - Các vấn đề đang chờ BE hoặc chờ quyết định.
     - Thay đổi ảnh hưởng tới người khác (ví dụ đổi cấu trúc dùng chung, thêm bước setup mới).
     - Bẫy đã từng gặp, để người sau không mắc lại.
@@ -50,3 +50,6 @@
 19. **Quy tắc cập nhật bố cục**:
     - **Mục 1 (Trạng thái hiện tại)**: Luôn ghi đè để phản ánh hiện tại.
     - **Mục 2, 3, 4 (Quyết định, Vấn đề & lưu ý, Nhật ký thay đổi lớn)**: Chỉ thêm vào, không xóa. Mỗi mục ngắn gọn 1–4 dòng.
+    - **Mục 5 (Danh mục cần dọn dẹp & hoàn thiện sau này - Technical Debt & Cleanup Backlog)**: Quản lý các hạng mục nợ kỹ thuật, code tạm thời hoặc chờ BE. Khi đã hoàn thành dọn dẹp/kết nối thật thì chuyển trạng thái sang `[ĐÃ DỌN DẸP]`.
+20. **Quy tắc bắt buộc ghi nhận Code tạm & Technical Debt**:
+    - Bất kỳ khi nào viết code tạm thời (workaround), dữ liệu giả lập (mock data), cờ kiểm thử nhà phát triển (dev tweaks), hoặc tính năng placeholder/chờ BE, AI PHẢI lập tức ghi nhận vào **Mục 5 của `PROJECT_LOG.md`** kèm theo: vị trí file, nguyên nhân, và điều kiện để dọn dẹp (trigger cleanup). Tuyệt đối không để lại code tạm mà không có mục tương ứng trong backlog dọn dẹp.
