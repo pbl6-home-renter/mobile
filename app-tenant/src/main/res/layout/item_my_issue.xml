@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/rentify_surface"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/rentify_divider"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header: Status + Urgency badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pill_badge_role"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/rentify_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Chờ tiếp nhận" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvUrgencyBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="● Trung bình" />
+        </LinearLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:maxLines="2"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="Vòi xịt bồn cầu bị rò rỉ nước liên tục" />
+
+        <!-- Info row: Category & Room name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivCategoryIcon"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:contentDescription="Danh mục"
+                android:src="@drawable/ic_issue_other"
+                app:tint="@color/rentify_primary_gradient_start" />
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp"
+                tools:text="Đường nước" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:text="•"
+                android:textColor="@color/rentify_neutral" />
+
+            <TextView
+                android:id="@+id/tvRoomName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:singleLine="true"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp"
+                tools:text="Phòng P.201 - Nhà Trọ Hòa Khánh" />
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/rentify_divider" />
+
+        <!-- Footer: Date + Assigned Repairer + Chevron -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCreatedAt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="12sp"
+                tools:text="14:30 02/11/2026" />
+
+            <TextView
+                android:id="@+id/tvAssignedTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:textColor="@color/rentify_primary"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="Thợ: Nguyễn Văn A"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:contentDescription="Xem chi tiết"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="@color/rentify_text_secondary" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
+
