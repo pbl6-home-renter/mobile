@@ -6,12 +6,20 @@
 |---|---|---|---|
 | Core Network | Hoàn thành | AI & Dev | Đã dựng Retrofit, OkHttp, Moshi DTO wrappers, Auth DTOs (Email Verification), Room DTOs, User DTOs (avatarUrl), Chat DTOs v2 (Reply quotes, maxSequence, Search), Matching DTOs, Issue DTOs, Contract DTOs, Invoice DTOs (/me/invoices, String amounts & breakdown), Media DTOs (Download URL) & Chat Group DTOs |
 | Core Data | Hoàn thành chuẩn hóa (Hướng B) | AI & Dev | Đảm bảo 100% dùng chung: TokenDataStore, AppDataStore (Onboarding), SessionManager, BaseRepository, AuthRepository, UserRepository |
-| Core UI | Hoàn thành | AI & Dev | Đã chuẩn hóa thang đo Spacing 4dp và nâng cấp 100% hệ thống icon (50 icon) sang Lucide Icons chính thức |
-| App Tenant | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn bộ 51 layout sang hệ thống Spacing dimens.xml (bội số 4dp) |
-| App Landlord | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn bộ 39 layout sang hệ thống Spacing dimens.xml (bội số 4dp) |
+| Core UI | Hoàn thành | AI & Dev | Đã chuẩn hóa thang đo Spacing 4dp, nâng cấp 100% icon (50 icon) sang Lucide Icons, chuẩn hóa Card style (viền #E2E8F0, ripple foreground) và Empty/Error State huy hiệu tròn pastel |
+| App Tenant | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn diện 51 layout: Spacing 4dp, Card surface & ripple, Empty state và độ tương phản Typography WCAG AA |
+| App Landlord | Hoàn thành | AI & Dev | Đã chuẩn hóa toàn diện 39 layout: Spacing 4dp, Card surface & ripple, Empty state và độ tương phản Typography WCAG AA |
 
 ## 2. Quyết định
 <!-- Mới nhất ở trên. Mỗi mục 2–4 dòng -->
+### 2026-11-13 – Chuẩn hóa Trạng thái Trống (Empty/Error States) huy hiệu tròn pastel và Độ tương phản Typography WCAG AA
+- **Lý do:** Khắc phục tình trạng các màn hình danh sách trống dùng icon xám mờ rời rạc thiếu hướng dẫn hành động; nâng cấp độ tương phản chữ từ `#94A3B8` (< 3:1) lên `@color/rentify_text_muted` (`#64748B`, > 4.5:1) đạt chuẩn tiếp cận WCAG AA.
+- **Ảnh hưởng:** `:core-ui` cập nhật `view_empty_state.xml` và `view_error_state.xml` với container tròn pastel 72x72dp và icon Lucide; chuẩn hóa hơn 14 màn hình trống trên cả `:app-tenant` và `:app-landlord` (Hợp đồng, Hóa đơn, Sự cố, Yêu thích, Tìm kiếm, Matching, Chat, Tòa nhà, Điện nước).
+
+### 2026-11-13 – Nâng cấp Bề mặt Thẻ (Card Surfaces), Viền mảnh `#E2E8F0`, Thang bo góc và Hiệu ứng Chạm Ripple
+- **Lý do:** Loại bỏ bóng đổ nặng nề thiếu tinh tế (`cardElevation` lớn), thay thế bằng ngôn ngữ thẻ phẳng hiện đại có viền vi mô tinh tế (`strokeColor="@color/rentify_divider"` `#E2E8F0`, `cardElevation="0dp/1dp"`), đồng thời sửa lỗi gán `background="?attr/selectableItemBackground"` trên MaterialCardView làm chìm hiệu ứng ripple dưới màu nền thẻ.
+- **Ảnh hưởng:** `:core-ui` cập nhật theme gốc `Widget.Rentify.CardView`; chuẩn hóa 44 file layout của Tenant và Landlord: quy đổi corner radius về thang `@dimen/radius_*`, cấu hình `foreground="?attr/selectableItemBackground"` kèm `clickable="true"` và `focusable="true"` cho toàn bộ thẻ bấm được.
+
 ### 2026-11-13 – Nâng cấp toàn diện hệ thống Icon dự án sang Lucide Icons chính thức
 - **Lý do:** Chuẩn hóa phong cách đồ họa của toàn bộ ứng dụng Rentify theo ngôn ngữ thiết kế Minimalist hiện đại, nét vẽ 2dp thanh thoát bo góc mềm mại, độ phân giải sắc nét 24x24dp và hỗ trợ đổi màu động (tinting) hoàn hảo.
 - **Ảnh hưởng:** `:core-ui` cập nhật 50 file icon vector (`ic_*.xml`) bao gồm toàn bộ BottomNav của Tenant & Landlord, các nút thao tác nhanh, icon tiện ích phòng trọ và danh mục phân loại sự cố. Giữ nguyên tên file tài nguyên giúp 102 layout của cả `:app-tenant` và `:app-landlord` tự động áp dụng giao diện mới mà không gây xung đột.
@@ -139,6 +147,8 @@
 
 ## 3. Vấn đề & lưu ý
 <!-- [MỞ] / [ĐÃ XỬ LÝ] -->
+- [ĐÃ XỬ LÝ] 2026-11-13 – Hiệu ứng Ripple trên MaterialCardView: Khi gán `android:background="?attr/selectableItemBackground"` trên `MaterialCardView`, hiệu ứng ripple sẽ bị che khuất bởi màu nền (`cardBackgroundColor`) của thẻ. Luôn dùng `android:foreground="?attr/selectableItemBackground"` kết hợp `android:clickable="true"` và `android:focusable="true"` để hiệu ứng gợn sóng hiển thị đúng trên bề mặt thẻ.
+- [ĐÃ XỬ LÝ] 2026-11-13 – Android XML AAPT2 không hỗ trợ cú pháp âm trên Dimension Token: Thuộc tính âm như `-16dp` không thể viết dạng `-@dimen/spacing_md` trong XML layout (gây lỗi biên dịch AAPT2). Những trường hợp cần margin âm (như bù đắp padding container) phải giữ nguyên `-16dp` hoặc định nghĩa token riêng có giá trị âm.
 - [MỞ] 2026-11-13 – Ghi nhận thành viên rời phòng (`leave-contract`): Endpoint `/contract-members/{tenantId}/leave-contract` yêu cầu thành viên phải có tài khoản hệ thống (`tenantId` khác null); thành viên không có tài khoản chỉ cập nhật qua ghi chú hợp đồng.
 - [MỞ] 2026-11-13 – Quy trình kiểm duyệt Tòa nhà: Chủ trọ chỉ gửi yêu cầu phê duyệt (`POST /buildings` -> `status = pending`), quyền phê duyệt hoặc từ chối thuộc về Admin. Khi bị từ chối (`rejected`), app hiển thị trực quan hộp cảnh báo kèm lý do (`rejectionReason`/`reviewNote`) để chủ trọ chỉnh sửa nộp lại.
 - [ĐÃ XỬ LÝ] 2026-11-13 – Chuyển đổi toàn bộ trường số tiền trong phân hệ Hóa đơn sang `String` kèm getter `Long`, xử lý triệt để nguy cơ crash Moshi JSON khi server trả số thực hoặc chuỗi số lớn.
@@ -162,6 +172,8 @@
 
 ## 4. Nhật ký thay đổi lớn
 <!-- Chỉ thay đổi đáng kể, kèm link PR -->
+- 2026-11-13 – Chuẩn hóa bề mặt thẻ, viền mảnh `#E2E8F0`, hiệu ứng ripple foreground và thang bo góc radius trên toàn bộ 44 layout `:app-tenant` và `:app-landlord` trên nhánh `feature/ui-card-surface-polish` (commit `716eeaa`).
+- 2026-11-13 – Nâng cấp toàn diện Empty/Error states với huy hiệu tròn pastel 72x72dp & icon Lucide, chuẩn hóa độ tương phản văn bản phụ đạt chuẩn WCAG AA trên `:core-ui`, `:app-tenant` và `:app-landlord` trên nhánh `feature/ui-empty-states-typography` (commit `16b3b52`).
 - 2026-11-13 – Nâng cấp toàn diện 50 icon vector sang Lucide Icons chính thức trên nhánh `feature/ui-lucide-icons` (commit `d5a0225`), cả 2 ứng dụng `:app-tenant` và `:app-landlord` đều biên dịch thành công.
 - 2026-11-13 – Chuẩn hóa toàn diện 102 file layout XML theo thang đo Spacing bội số 4dp (dimens.xml) trên nhánh `feature/ui-spacing-dimens` (commits `ab5e76d`, `f283923`, `14a3ef2`), cả 2 ứng dụng `:app-tenant` và `:app-landlord` đều biên dịch thành công.
 - 2026-11-13 – Hoàn thành triển khai Giai đoạn 2 cho `:app-landlord` trên nhánh `feature/landlord-contracts` (commit `765847b`), biên dịch và đóng gói thành công APK debug.
