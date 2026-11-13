@@ -10,6 +10,7 @@
     <color name="rentify_surface">#FFFFFF</color>
     <color name="rentify_text_primary">#0F172A</color>
     <color name="rentify_text_secondary">#475569</color>
+    <color name="rentify_text_muted">#64748B</color>
     <color name="rentify_divider">#E2E8F0</color>
     <color name="rentify_success">#16A34A</color>
     <color name="rentify_warning">#F59E0B</color>
