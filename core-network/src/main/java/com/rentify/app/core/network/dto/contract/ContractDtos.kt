@@ -36,8 +36,11 @@ data class ContractListResponseDto(
 @JsonClass(generateAdapter = true)
 data class ContractDetailResponseDto(
     @field:Json(name = "id") val id: String,
-    @field:Json(name = "roomId") val roomId: String,
+    @field:Json(name = "roomId") val roomId: String = "",
     @field:Json(name = "status") val status: String = "active",
+    @field:Json(name = "templateKey") val templateKey: String? = null,
+    @field:Json(name = "handoverRequired") val handoverRequired: Boolean = false,
+    @field:Json(name = "handoverCompletedOn") val handoverCompletedOn: String? = null,
     @field:Json(name = "tenantId") val tenantId: String? = null,
     @field:Json(name = "tenantName") val tenantName: String? = null,
     @field:Json(name = "tenantPhone") val tenantPhone: String? = null,
@@ -47,6 +50,18 @@ data class ContractDetailResponseDto(
     @field:Json(name = "endDate") val endDate: String = "",
     @field:Json(name = "vehicleCount") val vehicleCount: Int? = null,
     @field:Json(name = "description") val description: String? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class ContractTemplateItemDto(
+    @field:Json(name = "templateKey") val templateKey: String,
+    @field:Json(name = "title") val title: String = "",
+    @field:Json(name = "version") val version: String = ""
+)
+
+@JsonClass(generateAdapter = true)
+data class ContractApplyTemplateRequestDto(
+    @field:Json(name = "templateKey") val templateKey: String
 )
 
 @JsonClass(generateAdapter = true)
@@ -64,10 +79,6 @@ data class ContractCreateRequestDto(
 
 @JsonClass(generateAdapter = true)
 data class ContractUpdateRequestDto(
-    @field:Json(name = "rentPrice") val rentPrice: Double? = null,
-    @field:Json(name = "depositAmount") val depositAmount: Double? = null,
-    @field:Json(name = "startDate") val startDate: String? = null,
-    @field:Json(name = "endDate") val endDate: String? = null,
     @field:Json(name = "vehicleCount") val vehicleCount: Int? = null,
     @field:Json(name = "description") val description: String? = null
 )
@@ -86,7 +97,21 @@ data class ContractCompleteCheckoutRequestDto(
 data class DepositSettlementDeductionDto(
     @field:Json(name = "category") val category: String,
     @field:Json(name = "amount") val amount: Double,
-    @field:Json(name = "reason") val reason: String
+    @field:Json(name = "description") val description: String,
+    @field:Json(name = "evidenceMediaIds") val evidenceMediaIds: List<String> = emptyList()
+)
+
+@JsonClass(generateAdapter = true)
+data class DepositSettlementResponseDto(
+    @field:Json(name = "contractId") val contractId: String = "",
+    @field:Json(name = "settlementId") val settlementId: String = "",
+    @field:Json(name = "originalDeposit") val originalDeposit: Double = 0.0,
+    @field:Json(name = "totalDeductions") val totalDeductions: Double = 0.0,
+    @field:Json(name = "finalAmount") val finalAmount: Double = 0.0,
+    @field:Json(name = "settlementType") val settlementType: String = "",
+    @field:Json(name = "status") val status: String = "completed",
+    @field:Json(name = "settledAt") val settledAt: String = "",
+    @field:Json(name = "transactionId") val transactionId: String? = null
 )
 
 @JsonClass(generateAdapter = true)
@@ -114,6 +139,7 @@ data class ContractMemberListResponseDto(
     @field:Json(name = "tenantId") val tenantId: String? = null,
     @field:Json(name = "tenantName") val tenantName: String? = null,
     @field:Json(name = "tenantPhone") val tenantPhone: String? = null,
+    @field:Json(name = "tenantAvatarUrl") val tenantAvatarUrl: String? = null,
     @field:Json(name = "status") val status: String = "active",
     @field:Json(name = "joinedAt") val joinedAt: String = "",
     @field:Json(name = "leftAt") val leftAt: String? = null

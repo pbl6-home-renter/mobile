@@ -5,6 +5,7 @@ import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.building.BuildingCreateRequestDto
 import com.rentify.app.core.network.dto.building.BuildingMyDetailResponseDto
 import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
+import com.rentify.app.core.network.dto.building.BuildingPublicResponseDto
 import com.rentify.app.core.network.dto.building.BuildingUpdateRequestDto
 import com.rentify.app.core.network.dto.building.BuildingVietQrConfigRequestDto
 import com.rentify.app.core.network.dto.building.BuildingVietQrConfigResponseDto
@@ -19,6 +20,18 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BuildingApiService {
+
+    @GET("buildings")
+    suspend fun getPublicBuildings(
+        @Query("pageNo") pageNo: Int = 1,
+        @Query("pageSize") pageSize: Int = 100,
+        @Query("format") format: String = "json"
+    ): Response<ApiListResponse<BuildingPublicResponseDto>>
+
+    @GET("buildings/{buildingId}")
+    suspend fun getPublicBuilding(
+        @Path("buildingId") buildingId: String
+    ): Response<ApiSingleResponse<BuildingPublicResponseDto>>
 
     @GET("me/buildings")
     suspend fun getMyBuildings(

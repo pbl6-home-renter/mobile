@@ -10,6 +10,7 @@ import com.rentify.app.core.network.dto.invoice.InvoiceIssueRequestDto
 import com.rentify.app.core.network.dto.invoice.InvoiceIssueResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceListResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceMyListResponseDto
+import com.rentify.app.core.network.dto.invoice.InvoiceUpdateExtrasRequestDto
 import com.rentify.app.core.network.dto.invoice.PaymentCreateIntentRequestDto
 import com.rentify.app.core.network.dto.invoice.PaymentCreateIntentResponseDto
 import com.rentify.app.core.network.dto.invoice.PaymentMyListResponseDto
@@ -18,6 +19,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -31,8 +33,7 @@ interface InvoiceApiService {
         @Query("pageNo") pageNo: Int = 1,
         @Query("pageSize") pageSize: Int = 20,
         @Query("sort") sort: String? = null,
-        @Query("order") order: String? = null,
-        @Query("format") format: String = "json"
+        @Query("order") order: String? = null
     ): Response<ApiListResponse<InvoiceMyListResponseDto>>
 
     @GET("invoices")
@@ -61,6 +62,12 @@ interface InvoiceApiService {
     @GET("invoices/{invoiceId}")
     suspend fun getInvoiceDetail(
         @Path("invoiceId") invoiceId: String
+    ): Response<ApiSingleResponse<InvoiceDetailResponseDto>>
+
+    @PATCH("invoices/{invoiceId}")
+    suspend fun updatePendingInvoiceExtras(
+        @Path("invoiceId") invoiceId: String,
+        @Body request: InvoiceUpdateExtrasRequestDto
     ): Response<ApiSingleResponse<InvoiceDetailResponseDto>>
 
     @POST("invoices/{invoiceId}/cancel-invoice")

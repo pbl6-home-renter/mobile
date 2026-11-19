@@ -5,13 +5,15 @@ import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.room.FavoriteRoomListResponseDto
 import com.rentify.app.core.network.dto.room.FavoriteRoomToggleRequestDto
 import com.rentify.app.core.network.dto.room.FavoriteRoomToggleResponseDto
-import com.rentify.app.core.network.dto.room.MyRoomHubResponseDto
+import com.rentify.app.core.network.dto.room.MyRoomHubItemDto
 import com.rentify.app.core.network.dto.room.RoomCreateRequestDto
+import com.rentify.app.core.network.dto.room.RoomCreateResponseDto
 import com.rentify.app.core.network.dto.room.RoomDetailResponseDto
 import com.rentify.app.core.network.dto.room.RoomMarkReadyResponseDto
 import com.rentify.app.core.network.dto.room.RoomMyListResponseDto
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
 import com.rentify.app.core.network.dto.room.RoomUpdateRequestDto
+import com.rentify.app.core.network.dto.room.RoomUpdateResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -43,7 +45,7 @@ interface RoomApiService {
     ): Response<ApiSingleResponse<RoomDetailResponseDto>>
 
     @GET("me/room-hub")
-    suspend fun getMyRoomHub(): Response<ApiSingleResponse<MyRoomHubResponseDto>>
+    suspend fun getMyRoomHub(): Response<ApiListResponse<MyRoomHubItemDto>>
 
     @GET("me/favorite-rooms")
     suspend fun getFavoriteRooms(
@@ -76,13 +78,13 @@ interface RoomApiService {
     @POST("rooms")
     suspend fun createRoom(
         @Body request: RoomCreateRequestDto
-    ): Response<ApiSingleResponse<RoomDetailResponseDto>>
+    ): Response<ApiSingleResponse<RoomCreateResponseDto>>
 
     @PATCH("rooms/{roomId}")
     suspend fun updateRoom(
         @Path("roomId") roomId: String,
         @Body request: RoomUpdateRequestDto
-    ): Response<ApiSingleResponse<RoomDetailResponseDto>>
+    ): Response<ApiSingleResponse<RoomUpdateResponseDto>>
 
     @DELETE("rooms/{roomId}")
     suspend fun deleteRoom(

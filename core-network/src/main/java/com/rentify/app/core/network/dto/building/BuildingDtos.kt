@@ -9,6 +9,7 @@ data class BuildingMyListResponseDto(
     @field:Json(name = "name") val name: String,
     @field:Json(name = "address") val address: String,
     @field:Json(name = "status") val status: String,
+    @field:Json(name = "totalRooms") val totalRooms: Int = 0,
     @field:Json(name = "occupiedRooms") val occupiedRooms: Int = 0,
     @field:Json(name = "occupancyRate") val occupancyRate: String = "0%",
     @field:Json(name = "rejectionReason") val rejectionReason: String? = null,
@@ -65,17 +66,27 @@ data class BuildingRatePolicyItemDto(
 )
 
 @JsonClass(generateAdapter = true)
+data class BuildingAmenitiesDto(
+    @field:Json(name = "elevator") val elevator: Boolean? = false,
+    @field:Json(name = "parking") val parking: Boolean? = false,
+    @field:Json(name = "securityCamera") val securityCamera: Boolean? = false,
+    @field:Json(name = "fingerprintLock") val fingerprintLock: Boolean? = false
+)
+
+@JsonClass(generateAdapter = true)
 data class BuildingMyDetailResponseDto(
     @field:Json(name = "id") val id: String,
-    @field:Json(name = "name") val name: String,
+    @field:Json(name = "name") val name: String = "",
     @field:Json(name = "province") val province: String = "",
     @field:Json(name = "ward") val ward: String = "",
     @field:Json(name = "address") val address: String = "",
     @field:Json(name = "totalFloors") val totalFloors: Int? = null,
+    @field:Json(name = "totalRooms") val totalRooms: Int = 0,
     @field:Json(name = "occupiedRooms") val occupiedRooms: Int = 0,
     @field:Json(name = "occupancyRate") val occupancyRate: String = "0%",
     @field:Json(name = "status") val status: String = "pending",
     @field:Json(name = "reviewNote") val reviewNote: String? = null,
+    @field:Json(name = "amenities") val amenities: BuildingAmenitiesDto? = null,
     @field:Json(name = "ownershipCertificateUrls") val ownershipCertificateUrls: List<String> = emptyList(),
     @field:Json(name = "vietQrConfigured") val vietQrConfigured: Boolean = false,
     @field:Json(name = "ratePolicies") val ratePolicies: List<BuildingRatePolicyItemDto> = emptyList(),

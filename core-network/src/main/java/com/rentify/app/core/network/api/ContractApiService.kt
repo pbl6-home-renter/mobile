@@ -3,6 +3,7 @@ package com.rentify.app.core.network.api
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.contract.ContractActivateRequestDto
+import com.rentify.app.core.network.dto.contract.ContractApplyTemplateRequestDto
 import com.rentify.app.core.network.dto.contract.ContractCompleteCheckoutRequestDto
 import com.rentify.app.core.network.dto.contract.ContractCreateRequestDto
 import com.rentify.app.core.network.dto.contract.ContractDetailResponseDto
@@ -12,15 +13,20 @@ import com.rentify.app.core.network.dto.contract.ContractMemberLeaveRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberLeaveResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMyListResponseDto
+import com.rentify.app.core.network.dto.contract.ContractTemplateItemDto
 import com.rentify.app.core.network.dto.contract.ContractUpdateRequestDto
 import com.rentify.app.core.network.dto.contract.DepositSettlementRequestDto
+import com.rentify.app.core.network.dto.contract.DepositSettlementResponseDto
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.Streaming
 
 interface ContractApiService {
 
@@ -62,6 +68,24 @@ interface ContractApiService {
         @Body request: ContractUpdateRequestDto
     ): Response<ApiSingleResponse<ContractDetailResponseDto>>
 
+    @GET("contract-templates")
+    suspend fun getContractTemplates(
+        @Query("pageNo") pageNo: Int = 1,
+        @Query("pageSize") pageSize: Int = 50
+    ): Response<ApiListResponse<ContractTemplateItemDto>>
+
+    @PUT("contracts/{contractId}/apply-template")
+    suspend fun applyContractTemplate(
+        @Path("contractId") contractId: String,
+        @Body request: ContractApplyTemplateRequestDto
+    ): Response<ApiSingleResponse<ContractDetailResponseDto>>
+
+    @Streaming
+    @POST("contracts/{contractId}/generate-draft-document")
+    suspend fun generateDraftDocument(
+        @Path("contractId") contractId: String
+    ): Response<ResponseBody>
+
     @POST("contracts/{contractId}/activate-contract")
     suspend fun activateContract(
         @Path("contractId") contractId: String,
@@ -78,12 +102,11 @@ interface ContractApiService {
     suspend fun depositSettlement(
         @Path("contractId") contractId: String,
         @Body request: DepositSettlementRequestDto
-    ): Response<ApiSingleResponse<Any>>
+    ): Response<ApiSingleResponse<DepositSettlementResponseDto>>
 
     @GET("contract-members")
     suspend fun getContractMembers(
         @Query("filter[contractId]") contractId: String? = null,
-        @Query("filter[status]") status: String? = null,
         @Query("pageNo") pageNo: Int = 1,
         @Query("pageSize") pageSize: Int = 50,
         @Query("format") format: String = "json"

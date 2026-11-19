@@ -44,6 +44,28 @@ data class RoomUpdateRequestDto(
 )
 
 @JsonClass(generateAdapter = true)
+data class RoomCreateResponseDto(
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "buildingId") val buildingId: String,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "status") val status: String = "available",
+    @field:Json(name = "rentPrice") val rentPrice: Long = 0L
+)
+
+@JsonClass(generateAdapter = true)
+data class RoomUpdateResponseDto(
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "name") val name: String,
+    @field:Json(name = "floorNumber") val floorNumber: Int? = null,
+    @field:Json(name = "description") val description: String? = null,
+    @field:Json(name = "area") val area: Double? = null,
+    @field:Json(name = "amenities") val amenities: RoomAmenitiesDto? = null,
+    @field:Json(name = "maxOccupancy") val maxOccupancy: Int? = null,
+    @field:Json(name = "genderPolicy") val genderPolicy: String = "any",
+    @field:Json(name = "rentPrice") val rentPrice: Long = 0L
+)
+
+@JsonClass(generateAdapter = true)
 data class RoomMarkReadyResponseDto(
     @field:Json(name = "id") val id: String,
     @field:Json(name = "status") val status: String = "available"

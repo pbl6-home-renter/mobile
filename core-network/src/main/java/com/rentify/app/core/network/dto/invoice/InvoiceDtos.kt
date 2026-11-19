@@ -199,11 +199,25 @@ data class InvoiceGeneratedItemDto(
 )
 
 @JsonClass(generateAdapter = true)
+data class InvoiceBlockedItemDto(
+    @field:Json(name = "roomId") val roomId: String = "",
+    @field:Json(name = "contractId") val contractId: String = "",
+    @field:Json(name = "reasonCode") val reasonCode: String = ""
+)
+
+@JsonClass(generateAdapter = true)
 data class InvoiceGenerateResponseDto(
     @field:Json(name = "buildingId") val buildingId: String,
     @field:Json(name = "period") val period: String,
     @field:Json(name = "generated") val generated: List<InvoiceGeneratedItemDto> = emptyList(),
-    @field:Json(name = "recalculated") val recalculated: List<InvoiceGeneratedItemDto> = emptyList()
+    @field:Json(name = "recalculated") val recalculated: List<InvoiceGeneratedItemDto> = emptyList(),
+    @field:Json(name = "blocked") val blocked: List<InvoiceBlockedItemDto> = emptyList()
+)
+
+@JsonClass(generateAdapter = true)
+data class InvoiceUpdateExtrasRequestDto(
+    @field:Json(name = "otherFees") val otherFees: List<InvoiceOtherFeeItemDto>? = null,
+    @field:Json(name = "note") val note: String? = null
 )
 
 @JsonClass(generateAdapter = true)

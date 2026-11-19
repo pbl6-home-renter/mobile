@@ -20,7 +20,6 @@ interface MeterApiService {
     @GET("meter-readings")
     suspend fun getMeterReadings(
         @Query("filter[roomId]") roomId: String? = null,
-        @Query("filter[buildingId]") buildingId: String? = null,
         @Query("filter[period]") period: String? = null,
         @Query("filter[type]") type: String? = null,
         @Query("pageNo") pageNo: Int = 1,
