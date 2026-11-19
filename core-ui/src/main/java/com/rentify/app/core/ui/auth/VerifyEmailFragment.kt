@@ -13,7 +13,8 @@ import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.core.ui.R
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.databinding.FragmentVerifyEmailBinding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.state.UiState
 
 class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>(FragmentVerifyEmailBinding::inflate) {
@@ -67,7 +68,7 @@ class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>(FragmentVer
             when (state) {
                 is UiState.Success -> {
                     binding.tvError.visibility = View.GONE
-                    toast(getString(R.string.auth_verify_email_resent))
+                    showSuccess(getString(R.string.auth_verify_email_resent))
                     viewModel.resetResendState()
                 }
                 is UiState.Error -> {
@@ -86,7 +87,7 @@ class VerifyEmailFragment : BaseFragment<FragmentVerifyEmailBinding>(FragmentVer
         try {
             startActivity(intent)
         } catch (_: ActivityNotFoundException) {
-            toast(getString(R.string.auth_verify_email_no_mail_app))
+            showError(getString(R.string.auth_verify_email_no_mail_app))
         }
     }
 

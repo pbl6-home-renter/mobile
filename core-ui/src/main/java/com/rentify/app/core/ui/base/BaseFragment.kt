@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
 import com.rentify.app.core.ui.component.LoadingDialog
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.state.UiState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -71,7 +71,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     fun <T> renderState(
         state: UiState<T>,
-        onError: ((String) -> Unit)? = { message -> toast(message) },
+        onError: ((String) -> Unit)? = { message -> showError(message) },
         onSuccess: (T) -> Unit
     ) {
         when (state) {

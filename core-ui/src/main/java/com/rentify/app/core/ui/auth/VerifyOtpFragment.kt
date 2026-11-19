@@ -14,7 +14,7 @@ import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.core.ui.R
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.databinding.FragmentVerifyOtpBinding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showSuccess
 
 class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyOtpBinding::inflate) {
 
@@ -92,7 +92,7 @@ class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyO
     private fun performResendCode() {
         if (targetEmail.isNotBlank()) {
             viewModel.requestPasswordReset(targetEmail)
-            toast(getString(R.string.auth_verify_otp_resend_success))
+            showSuccess(getString(R.string.auth_verify_otp_resend_success))
             startCountDownTimer()
         }
     }

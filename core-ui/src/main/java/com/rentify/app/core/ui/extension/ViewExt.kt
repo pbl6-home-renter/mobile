@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 fun View.visible() {
@@ -38,30 +36,10 @@ fun View.setOnSingleClickListener(intervalMs: Long = 600L, onClick: (View) -> Un
     })
 }
 
-fun Fragment.toast(message: String) {
-    context?.let {
-        Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
-    }
-}
-
-fun Fragment.toast(@StringRes messageRes: Int) {
-    context?.let {
-        Toast.makeText(it, messageRes, Toast.LENGTH_SHORT).show()
-    }
-}
-
 fun Fragment.hideKeyboard() {
     val currentView = activity?.currentFocus ?: view ?: return
     val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
     imm?.hideSoftInputFromWindow(currentView.windowToken, 0)
-}
-
-fun Activity.toast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-}
-
-fun Activity.toast(@StringRes messageRes: Int) {
-    Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
 }
 
 fun Activity.hideKeyboard() {
