@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/sl_textfield_card_bg"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/sl_textfield_card_stroke"
+        app:strokeWidth="1.5dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/rentify_text_muted"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp"
+            app:boxCollapsedPaddingTop="6dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:cursorColor="@color/rentify_primary"
+            app:endIconTint="@color/rentify_text_muted"
+            app:hintTextColor="@color/rentify_primary"
+            app:startIconTint="@color/sl_textfield_start_icon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/plus_jakarta_sans_regular"
+                android:maxLines="1"
+                android:paddingTop="26dp"
+                android:paddingBottom="6dp"
+                android:textColor="@color/rentify_text"
+                android:textCursorDrawable="@drawable/bg_cursor_primary"
+                android:textSize="15sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvFieldError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/plus_jakarta_sans_regular"
+        android:textColor="@color/rentify_error"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:text="Vui lòng nhập thông tin"
+        tools:visibility="visible" />
+
+</LinearLayout>

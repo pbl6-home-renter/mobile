@@ -3,7 +3,8 @@
     <string name="rentify_loading">Đang tải...</string>
     <string name="rentify_retry">Thử lại</string>
     <string name="rentify_error_network">Không có kết nối mạng</string>
-    <string name="rentify_error_unknown">Đã có lỗi xảy ra, vui lòng thử lại</string>
+    <string name="rentify_error_title">Không tải được dữ liệu</string>
+    <string name="rentify_error_unknown">Kiểm tra kết nối mạng rồi thử lại.</string>
     <string name="rentify_empty_data">Chưa có dữ liệu</string>
     <string name="rentify_ok">OK</string>
     <string name="rentify_cancel">Hủy</string>
@@ -85,4 +86,17 @@
     <string name="auth_reset_password_error_empty">Vui lòng nhập mật khẩu mới</string>
     <string name="auth_reset_password_error_length">Mật khẩu phải có ít nhất 6 ký tự</string>
     <string name="auth_reset_password_error_mismatch">Mật khẩu xác nhận không khớp</string>
+
+    <string name="auth_verify_email_title">Xác minh email của bạn</string>
+    <string name="auth_verify_email_subtitle">Chúng tôi đã gửi liên kết xác minh tới %1$s. Mở email và bấm \"Verify email address\" để kích hoạt tài khoản.</string>
+    <string name="auth_verify_email_note">Liên kết có hạn 24 giờ và chỉ dùng được một lần.</string>
+    <string name="auth_verify_email_open_mail">Mở ứng dụng Email</string>
+    <string name="auth_verify_email_resend">Gửi lại email</string>
+    <string name="auth_verify_email_resend_countdown">Gửi lại email (%1$ds)</string>
+    <string name="auth_verify_email_resent">Đã gửi lại email xác minh</string>
+    <string name="auth_verify_email_no_mail_app">Không tìm thấy ứng dụng email trên máy</string>
+    <string name="auth_verify_email_done_question">Đã xác minh xong?</string>
+    <string name="auth_verify_email_login_now">Đăng nhập</string>
+    <string name="auth_login_email_not_verified">Email chưa được xác minh</string>
+    <string name="auth_login_resend_verification">Gửi lại email xác minh</string>
 </resources>
