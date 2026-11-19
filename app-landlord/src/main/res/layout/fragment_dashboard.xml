@@ -24,6 +24,7 @@
 
                 <!-- Header Gradient Card -->
                 <LinearLayout
+                    android:id="@+id/layoutHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_header_gradient"
@@ -32,25 +33,48 @@
                     android:paddingTop="@dimen/spacing_lg"
                     android:paddingBottom="@dimen/spacing_lg">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/plus_jakarta_sans"
-                        android:text="Rentify Landlord"
-                        android:textColor="#E0E7FF"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tvWelcomeTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:fontFamily="@font/plus_jakarta_sans"
-                        android:text="Tổng quan vận hành"
-                        android:textColor="@android:color/white"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Rentify Landlord"
+                                android:textColor="#E0E7FF"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvWelcomeTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Tổng quan vận hành"
+                                android:textColor="@android:color/white"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btnNotifications"
+                            android:layout_width="42dp"
+                            android:layout_height="42dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:contentDescription="Thông báo"
+                            android:src="@drawable/ic_notification"
+                            app:tint="@android:color/white" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -252,7 +276,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/plus_jakarta_sans"
-                                    android:text="Mạng lưới khách thuê"
+                                    android:text="Khách đang thuê"
                                     android:textColor="@color/rentify_text_secondary"
                                     android:textSize="12sp" />
 
@@ -272,7 +296,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/spacing_2xs"
                                     android:fontFamily="@font/plus_jakarta_sans"
-                                    android:text="Người dùng đang hoạt động"
+                                    android:text="Hợp đồng đang hiệu lực"
                                     android:textColor="@color/rentify_text_muted"
                                     android:textSize="11sp" />
                             </LinearLayout>
@@ -339,7 +363,7 @@
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Button Add Room -->
+                    <!-- Button Contracts & Tenants -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/btnQuickAddRoom"
                         android:layout_width="0dp"
@@ -348,6 +372,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/rentify_surface"
                         app:cardCornerRadius="@dimen/radius_lg"
                         app:cardElevation="1dp"
@@ -364,7 +389,7 @@
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                android:src="@drawable/ic_nav_my_room"
+                                android:src="@drawable/ic_file_text"
                                 app:tint="@color/rentify_primary" />
 
                             <TextView
@@ -372,7 +397,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Thêm phòng trọ"
+                                android:text="Hợp đồng &amp; Khách"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -396,6 +421,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/rentify_surface"
                         app:cardCornerRadius="@dimen/radius_lg"
                         app:cardElevation="1dp"
@@ -420,14 +446,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Ghi điện nước"
+                                android:text="Chốt điện nước"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Button Issues -->
+                    <!-- Button Invoices -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/btnQuickIssues"
                         android:layout_width="0dp"
@@ -436,6 +462,7 @@
                         android:layout_weight="1"
                         android:clickable="true"
                         android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground"
                         app:cardBackgroundColor="@color/rentify_surface"
                         app:cardCornerRadius="@dimen/radius_lg"
                         app:cardElevation="1dp"
@@ -452,7 +479,7 @@
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                android:src="@drawable/ic_wrench_tool"
+                                android:src="@drawable/ic_receipt_text"
                                 app:tint="@color/rentify_primary" />
 
                             <TextView
@@ -460,13 +487,156 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_sm"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Xem sự cố"
+                                android:text="Lập hóa đơn"
                                 android:textColor="@color/rentify_text_primary"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
+
+                <!-- Recent Issues Summary Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_ml"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:text="Sự cố cần xử lý"
+                        android:textColor="@color/rentify_text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnViewAllIssues"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:padding="@dimen/spacing_xs"
+                        android:text="Xem tất cả"
+                        android:textColor="@color/rentify_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_md"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="@dimen/radius_lg"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_md">
+
+                        <TextView
+                            android:id="@+id/tvEmptyRecentIssues"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:gravity="center"
+                            android:paddingVertical="@dimen/spacing_sm"
+                            android:text="Không có sự cố nào đang chờ xử lý."
+                            android:textColor="@color/rentify_text_muted"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutRecentIssuesList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Recent Invoices Summary Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_ml"
+                    android:layout_marginTop="@dimen/spacing_lg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:text="Hóa đơn gần đây"
+                        android:textColor="@color/rentify_text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnViewAllInvoices"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:padding="@dimen/spacing_xs"
+                        android:text="Xem tất cả"
+                        android:textColor="@color/rentify_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_md"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:layout_marginBottom="@dimen/spacing_md"
+                    app:cardBackgroundColor="@color/rentify_surface"
+                    app:cardCornerRadius="@dimen/radius_lg"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/rentify_divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_md">
+
+                        <TextView
+                            android:id="@+id/tvEmptyRecentInvoices"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:gravity="center"
+                            android:paddingVertical="@dimen/spacing_sm"
+                            android:text="Chưa có hóa đơn nào gần đây."
+                            android:textColor="@color/rentify_text_muted"
+                            android:textSize="13sp" />
+
+                        <LinearLayout
+                            android:id="@+id/layoutRecentInvoicesList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

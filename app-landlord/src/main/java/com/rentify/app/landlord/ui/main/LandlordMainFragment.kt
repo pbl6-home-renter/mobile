@@ -1,10 +1,11 @@
 package com.rentify.app.landlord.ui.main
 
 import android.content.Context
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.R as CoreR
+import com.rentify.app.core.ui.view.RentifyFloatingBottomBar
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.FragmentLandlordMainBinding
 import com.rentify.app.landlord.ui.chat.LandlordChatFragment
@@ -41,18 +42,25 @@ class LandlordMainFragment : BaseFragment<FragmentLandlordMainBinding>(FragmentL
     }
 
     override fun initView() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNav) { _, insets -> insets }
         binding.root.applySystemBarsPadding(top = false, bottom = true)
         setupBottomNavigation()
     }
 
     private fun setupBottomNavigation() {
-        binding.bottomNav.isItemActiveIndicatorEnabled = false
+        binding.bottomNav.setTabs(
+            listOf(
+                RentifyFloatingBottomBar.TabItem(R.id.nav_dashboard, R.string.nav_landlord_dashboard, CoreR.drawable.ic_nav_dashboard),
+                RentifyFloatingBottomBar.TabItem(R.id.nav_properties, R.string.nav_landlord_properties, CoreR.drawable.ic_nav_properties),
+                RentifyFloatingBottomBar.TabItem(R.id.nav_operations, R.string.nav_landlord_operations, CoreR.drawable.ic_nav_operations),
+                RentifyFloatingBottomBar.TabItem(R.id.nav_chat, R.string.nav_landlord_chat, CoreR.drawable.ic_nav_chat),
+                RentifyFloatingBottomBar.TabItem(R.id.nav_profile, R.string.nav_landlord_profile, CoreR.drawable.ic_nav_profile)
+            )
+        )
 
         switchTab(dashboardFragment, TAG_DASHBOARD)
 
-        binding.bottomNav.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
+        binding.bottomNav.setOnTabSelectedListener { tabId ->
+            when (tabId) {
                 R.id.nav_dashboard -> {
                     switchTab(dashboardFragment, TAG_DASHBOARD)
                     true
@@ -100,12 +108,12 @@ class LandlordMainFragment : BaseFragment<FragmentLandlordMainBinding>(FragmentL
 
     override fun onNavigateToProperties() {
         switchTab(propertiesFragment, TAG_PROPERTIES)
-        binding.bottomNav.selectedItemId = R.id.nav_properties
+        binding.bottomNav.setSelectedTab(R.id.nav_properties)
     }
 
     override fun onNavigateToOperations(tabIndex: Int) {
         switchTab(operationsFragment, TAG_OPERATIONS)
-        binding.bottomNav.selectedItemId = R.id.nav_operations
+        binding.bottomNav.setSelectedTab(R.id.nav_operations)
     }
 
     override fun onLandlordLogoutRequested() {
