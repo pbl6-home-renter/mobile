@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_smd"
-    
+    android:layout_marginBottom="12dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="@dimen/radius_lg"
-    app:cardElevation="1dp"
-    app:strokeColor="@color/rentify_divider"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#EEF0F3"
     app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/spacing_smd">
+        android:padding="10dp">
 
-        <!-- Left Image Container with Badges -->
-        <FrameLayout
-            android:layout_width="115dp"
-            android:layout_height="115dp">
+        <!-- Cột trái: Ảnh vuông 112x112 bo 14dp + Nút tim 32dp offset 6dp -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
 
-            <com.google.android.material.card.MaterialCardView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardCornerRadius="@dimen/radius_md"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/ivThumbnail"
@@ -40,125 +39,130 @@
                     android:contentDescription="Ảnh phòng trọ"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_image_placeholder" />
-            </com.google.android.material.card.MaterialCardView>
-        </FrameLayout>
 
-        <!-- Right Info Column -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/spacing_smd"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <!-- Title & Favorite Button Row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvRoomName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:maxLines="2"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    tools:text="Cho thuê phòng STUDIO 30m2 tại ngõ 185 Chùa Láng, Hà Nội" />
-
-                <ImageView
+                <!-- Nút tim đặt trên ảnh, góc phải trên (offset 6dp): vòng tròn 32dp nền trắng -->
+                <FrameLayout
                     android:id="@+id/btnFavorite"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/spacing_xs"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_heart_btn_default"
+                    android:clickable="true"
                     android:contentDescription="Lưu phòng"
-                    android:padding="@dimen/spacing_sm"
-                    android:src="@drawable/ic_heart_outline"
-                    app:tint="@color/rentify_text_secondary" />
-            </LinearLayout>
+                    android:focusable="true">
 
-            <!-- Location Row -->
+                    <ImageView
+                        android:id="@+id/ivFavoriteIcon"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Lưu phòng"
+                        android:src="@drawable/ic_heart_outline"
+                        app:tint="#6B7280" />
+                </FrameLayout>
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Cột phải: Cao bằng ảnh 112dp, cách ảnh 14dp -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="112dp"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Tên phòng: 15sp semibold #14161B, tối đa 1 dòng, ellipsis -->
+            <TextView
+                android:id="@+id/tvRoomName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:maxLines="1"
+                android:textColor="@color/rentify_chip_text"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Phòng trọ cao cấp Studio Full NT" />
+
+            <!-- Địa chỉ: icon ghim 14dp + chữ 13sp #6B7280, 1 dòng, cách tên 4dp -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
+                android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
+                    android:contentDescription="Vị trí"
                     android:src="@drawable/ic_location_pin"
-                    app:tint="@color/rentify_text_secondary" />
+                    app:tint="#6B7280" />
 
                 <TextView
                     android:id="@+id/tvLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:layout_marginStart="4dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
-                    android:textColor="@color/rentify_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="Đống Đa, Thành phố Hà Nội" />
+                    android:textColor="#6B7280"
+                    android:textSize="13sp"
+                    tools:text="Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng" />
             </LinearLayout>
 
-            <!-- Bottom Row: Price & Area -->
+            <!-- Chip diện tích, 12sp, nền #F3F5F9, chữ #4B5563, bo tròn -->
+            <TextView
+                android:id="@+id/tvAreaTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_chip_meta_tag"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2.5dp"
+                android:textColor="@color/rentify_chip_meta_text"
+                android:textSize="12sp"
+                tools:text="28 m²" />
+
+            <!-- Spacer đẩy hàng giá xuống sát đáy cột phải -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Giá dính đáy cột: 17sp bold màu #006876 kèm "/tháng" 12sp #6B7280 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:orientation="horizontal">
-
-                <!-- Rent Price with Green Bullet -->
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/bg_circle_icon_badge"
-                    android:backgroundTint="#10B981" />
 
                 <TextView
                     android:id="@+id/tvRentPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="#DC2626"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    tools:text="4.600.000 đ" />
-
-                <!-- Area with Orange Bullet -->
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:background="@drawable/bg_circle_icon_badge"
-                    android:backgroundTint="#F59E0B" />
-
-                <TextView
-                    android:id="@+id/tvArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="12sp"
+                    android:textColor="#006876"
+                    android:textSize="17sp"
                     android:textStyle="bold"
-                    tools:text="30 m²" />
+                    tools:text="3.500.000 đ" />
 
+                <TextView
+                    android:id="@+id/tvPriceUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="/tháng"
+                    android:textColor="#6B7280"
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

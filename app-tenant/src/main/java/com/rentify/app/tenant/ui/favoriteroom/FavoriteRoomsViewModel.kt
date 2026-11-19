@@ -2,6 +2,7 @@ package com.rentify.app.tenant.ui.favoriteroom
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rentify.app.tenant.data.repository.FavoriteResultMessages
 import com.rentify.app.tenant.data.repository.TenantRoomRepository
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.room.FavoriteRoomListResponseDto
@@ -178,7 +179,7 @@ class FavoriteRoomsViewModel(
                             totalItems = originalTotal
                         )
                     }
-                    _events.emit(FavoriteRoomsEvent.ShowError("Không thể bỏ lưu phòng, vui lòng thử lại"))
+                    _events.emit(FavoriteRoomsEvent.ShowError(FavoriteResultMessages.failureMessage(result, adding = false)))
                 }
             }
         }

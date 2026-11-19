@@ -2,36 +2,44 @@ package com.rentify.app.tenant.ui.room.detail
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
-import android.os.Bundle
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewpager2.widget.ViewPager2
-import android.view.View
-import android.widget.LinearLayout
-import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.rentify.app.core.network.dto.room.RoomDetailResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
 import com.rentify.app.core.ui.extension.toast
-import com.rentify.app.core.ui.extension.toVnd
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.MainActivity
+import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivityRoomDetailBinding
 import com.rentify.app.tenant.ui.chat.detail.ChatDetailActivity
-import com.rentify.app.tenant.ui.dialog.showRequireLoginDialog
+import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
+import kotlin.math.roundToInt
 
 class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomDetailBinding::inflate) {
 
@@ -41,6 +49,10 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
 
     private val initialIsFavorited: Boolean by lazy {
         intent.getBooleanExtra(EXTRA_IS_FAVORITED, false)
+    }
+
+    private val fallbackAddress: String? by lazy {
+        intent.getStringExtra(EXTRA_FALLBACK_ADDRESS)
     }
 
     private val viewModel: RoomDetailViewModel by viewModels {
@@ -109,8 +121,8 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
 
                 launch {
                     viewModel.isContacting.collect { isContacting ->
-                        binding.btnChatLandlord.isEnabled = !isContacting
-                        binding.btnChatLandlord.text = if (isContacting) "Đang kết nối..." else "Nhắn tin"
+                        binding.btnBottomChatLandlord.isEnabled = !isContacting
+                        binding.btnBottomChatLandlord.text = if (isContacting) "Đang mở..." else "Nhắn tin"
                     }
                 }
 
@@ -128,8 +140,6 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
         binding.vpImageSlider.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val total = maxOf(1, imageAdapter.itemCount)
-                binding.tvImageIndicator.text = "${position + 1} / $total"
                 updateDotsIndicator(position)
             }
 
@@ -148,23 +158,21 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
         }
         binding.layoutDotsIndicator.isVisible = true
         val density = resources.displayMetrics.density
+        val activeW = (16f * density).roundToInt()
+        val inactiveW = (5f * density).roundToInt()
+        val dotH = (5f * density).roundToInt()
+        val marginH = (3f * density).roundToInt()
 
         for (i in 0 until count) {
+            val isSelected = i == 0
             val dot = View(this).apply {
-                val params = LinearLayout.LayoutParams(
-                    if (i == 0) (16 * density).toInt() else (6 * density).toInt(),
-                    (6 * density).toInt()
+                layoutParams = LinearLayout.LayoutParams(
+                    if (isSelected) activeW else inactiveW,
+                    dotH
                 ).apply {
-                    setMargins((2 * density).toInt(), 0, (2 * density).toInt(), 0)
+                    setMargins(marginH, 0, marginH, 0)
                 }
-                layoutParams = params
-                background = ContextCompat.getDrawable(
-                    this@RoomDetailActivity,
-                    if (i == 0) CoreUiR.drawable.bg_pill_badge_role else CoreUiR.drawable.bg_circle_icon_button
-                )
-                backgroundTintList = ColorStateList.valueOf(
-                    if (i == 0) Color.WHITE else Color.parseColor("#80FFFFFF")
-                )
+                background = createDotDrawable(isSelected)
             }
             binding.layoutDotsIndicator.addView(dot)
         }
@@ -172,18 +180,31 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
 
     private fun updateDotsIndicator(selectedPosition: Int) {
         val density = resources.displayMetrics.density
+        val activeW = (16f * density).roundToInt()
+        val inactiveW = (5f * density).roundToInt()
+        val dotH = (5f * density).roundToInt()
+
         for (i in 0 until binding.layoutDotsIndicator.childCount) {
             val dot = binding.layoutDotsIndicator.getChildAt(i)
             val isSelected = i == selectedPosition
             val params = dot.layoutParams as LinearLayout.LayoutParams
-            params.width = if (isSelected) (16 * density).toInt() else (6 * density).toInt()
+            params.width = if (isSelected) activeW else inactiveW
+            params.height = dotH
             dot.layoutParams = params
-            dot.background = ContextCompat.getDrawable(
-                this,
-                if (isSelected) CoreUiR.drawable.bg_pill_badge_role else CoreUiR.drawable.bg_circle_icon_button
-            )
-            dot.backgroundTintList = ColorStateList.valueOf(
-                if (isSelected) Color.WHITE else Color.parseColor("#80FFFFFF")
+            dot.background = createDotDrawable(isSelected)
+        }
+    }
+
+    private fun createDotDrawable(isSelected: Boolean): GradientDrawable {
+        val density = resources.displayMetrics.density
+        return GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = 999f * density
+            setColor(
+                ContextCompat.getColor(
+                    this@RoomDetailActivity,
+                    if (isSelected) CoreUiR.color.rentify_surface else CoreUiR.color.rentify_dot_inactive
+                )
             )
         }
     }
@@ -193,11 +214,25 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
             finish()
         }
 
+        binding.btnShare.setOnSingleClickListener {
+            val currentData = (viewModel.uiState.value as? UiState.Success)?.data ?: return@setOnSingleClickListener
+            val shareText = "Phòng ${currentData.name}\n" +
+                "Giá thuê: ${formatVndVi(currentData.rentPrice)}/tháng\n" +
+                "Tiền cọc: ${formatVndVi(currentData.depositAmount)}\n" +
+                "Xem phòng trên ứng dụng Rentify!"
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(sendIntent, "Chia sẻ phòng"))
+        }
+
         binding.btnFavorite.setOnSingleClickListener {
             viewModel.toggleFavorite()
         }
 
-        binding.btnRetry.setOnSingleClickListener {
+        binding.layoutError.btnRetry.setOnSingleClickListener {
             viewModel.loadDetail()
         }
 
@@ -212,7 +247,11 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
             }
         }
 
-        binding.btnChatLandlord.setOnSingleClickListener {
+        binding.btnCallLandlord.setOnSingleClickListener {
+            viewModel.callLandlord()
+        }
+
+        binding.btnBottomChatLandlord.setOnSingleClickListener {
             viewModel.contactLandlord()
         }
     }
@@ -221,19 +260,21 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
         when (state) {
             is UiState.Loading -> {
                 binding.progressBar.isVisible = true
-                binding.layoutContent.isVisible = false
-                binding.layoutError.isVisible = false
+                binding.scrollView.isVisible = false
+                binding.layoutError.root.isVisible = false
+                binding.layoutBottomBar.isVisible = false
             }
             is UiState.Error -> {
                 binding.progressBar.isVisible = false
-                binding.layoutContent.isVisible = false
-                binding.layoutError.isVisible = true
-                binding.tvErrorMessage.text = state.message
+                binding.scrollView.isVisible = false
+                binding.layoutError.root.isVisible = true
+                binding.layoutBottomBar.isVisible = false
             }
             is UiState.Success -> {
                 binding.progressBar.isVisible = false
-                binding.layoutError.isVisible = false
-                binding.layoutContent.isVisible = true
+                binding.layoutError.root.isVisible = false
+                binding.scrollView.isVisible = true
+                binding.layoutBottomBar.isVisible = true
                 bindRoomDetail(state.data)
             }
             is UiState.Idle -> Unit
@@ -241,81 +282,187 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
     }
 
     private fun bindRoomDetail(room: RoomDetailResponseDto) {
-        // Image carousel
+        // 2. Ảnh
         imageAdapter.submitList(room.photoUrls)
         val totalImages = imageAdapter.itemCount
-        binding.tvImageIndicator.text = "1 / $totalImages"
         setupDotsIndicator(totalImages)
         if (totalImages > 1) {
             startAutoScroll()
         }
 
-        // Status badge
+        // 3. Trạng thái, ngày đăng, tên, địa chỉ
         bindStatusBadge(room.status)
+        bindPostedAgo(room.createdAt)
+        binding.tvRoomTitle.text = room.name.ifBlank { "Phòng cho thuê" }
+        bindRoomAddress(room)
 
-        // Header info
-        binding.tvBuildingNameHeader.text = room.buildingName
-        binding.tvRoomTitle.text = room.name
-        binding.tvRentPrice.text = room.rentPrice.toVnd()
-        binding.tvDepositAmount.text = "Cọc: ${room.depositAmount.toVnd()}"
-
-        // Specs
+        // 4. Thông số (Diện tích, Tầng, Tối đa, Giới tính)
         val parsedArea = room.area?.trim()?.toDoubleOrNull()
-        val displayArea = if (parsedArea != null) {
+        binding.tvSpecArea.text = if (parsedArea != null && parsedArea > 0.0) {
             if (parsedArea % 1.0 == 0.0) "${parsedArea.toInt()} m²" else "$parsedArea m²"
         } else {
-            "25 m²"
-        }
-        binding.tvSpecArea.text = displayArea
-        binding.tvSpecFloor.text = if (room.floorNumber != null) "Tầng ${room.floorNumber}" else "Đang cập nhật"
-        binding.tvSpecOccupancy.text = if (room.maxOccupancy != null) "Tối đa ${room.maxOccupancy} người" else "Không giới hạn"
-        binding.tvSpecGender.text = when (room.genderPolicy?.lowercase()) {
-            "male" -> "Chỉ nam"
-            "female" -> "Chỉ nữ"
-            else -> "Nam & Nữ"
+            "Chưa cập nhật"
         }
 
-        // Amenities chips
+        val floor = room.floorNumber
+        binding.tvSpecFloor.text = if (floor != null && floor > 0) {
+            floor.toString()
+        } else {
+            "Chưa cập nhật"
+        }
+
+        val maxOcc = room.maxOccupancy
+        binding.tvSpecOccupancy.text = when {
+            maxOcc == null -> "Không giới hạn"
+            maxOcc <= 0 -> "Chưa cập nhật"
+            else -> "$maxOcc người"
+        }
+
+        binding.tvSpecGender.text = when (room.genderPolicy?.lowercase(Locale.ROOT)) {
+            "male" -> "Nam"
+            "female" -> "Nữ"
+            else -> "Nam, Nữ"
+        }
+
+        // 5. Tiện nghi
         bindAmenities(room)
 
-        // Rates & utilities
-        binding.tvElectricityPolicy.text = when (room.effectiveRatePolicySummary?.electricity?.lowercase()) {
-            "flat" -> "Giá cố định"
-            else -> "Theo công tơ"
-        }
-        binding.tvWaterPolicy.text = when (room.effectiveRatePolicySummary?.water?.lowercase()) {
-            "flat" -> "Giá cố định"
-            else -> "Theo khối tiêu thụ"
-        }
+        // 6. Điện và nước
+        binding.tvElectricityPolicy.text = formatUtilityPolicy(
+            raw = room.effectiveRatePolicySummary?.electricity,
+            unit = "kWh",
+            defaultMeterLabel = "Theo công tơ"
+        )
+        binding.tvWaterPolicy.text = formatUtilityPolicy(
+            raw = room.effectiveRatePolicySummary?.water,
+            unit = "m³",
+            defaultMeterLabel = "Theo khối tiêu thụ"
+        )
 
-        // Description
-        val desc = room.description
-        if (!desc.isNullOrBlank()) {
+        // 7. Mô tả
+        isDescriptionExpanded = false
+        binding.tvDescription.maxLines = 4
+        binding.btnToggleDescription.text = "Xem thêm"
+        val desc = room.description?.trim()
+        if (!desc.isNullOrEmpty()) {
             binding.tvDescription.text = desc
-            binding.btnToggleDescription.isVisible = desc.length > 150
+            binding.tvDescription.post {
+                val layout = binding.tvDescription.layout
+                val isTruncated = if (layout != null && layout.lineCount > 0) {
+                    layout.lineCount > 4 || layout.getEllipsisCount(layout.lineCount - 1) > 0
+                } else {
+                    desc.length > 160
+                }
+                binding.btnToggleDescription.isVisible = isTruncated
+            }
         } else {
-            binding.tvDescription.text = "Chưa có mô tả chi tiết cho phòng trọ này."
+            binding.tvDescription.text = "Chưa có mô tả cho phòng trọ này."
             binding.btnToggleDescription.isVisible = false
         }
 
-        // Landlord card
-        binding.tvLandlordName.text = room.landlord.name.ifBlank { "Chủ trọ" }
-        val initial = room.landlord.name.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "C"
-        binding.tvLandlordAvatar.text = initial
+        // 7b. Chủ trọ
+        val landlord = room.landlord
+        binding.tvLandlordSectionTitle.isVisible = landlord != null
+        binding.layoutLandlordCard.isVisible = landlord != null
+        if (landlord != null) {
+            val landlordName = landlord.name.ifBlank { "Chủ trọ" }
+            binding.tvLandlordName.text = landlordName
+            binding.landlordAvatarView.bindPersonal(
+                userId = landlord.id.ifBlank { landlordName },
+                displayName = landlordName,
+                avatarUrl = landlord.avatarUrl
+            )
+        }
+
+        // 8. Thanh nổi dưới cùng
+        val priceFormatted = formatVndVi(room.rentPrice)
+        val depositFormatted = formatVndVi(room.depositAmount)
+        binding.tvBottomRentPrice.text = priceFormatted
+        binding.tvBottomDepositAmount.text = "Cọc $depositFormatted"
+
+        val screenWidthDp = resources.configuration.screenWidthDp
+        val priceSp = if (screenWidthDp <= 360 || priceFormatted.length >= 12) 15f else 16f
+        binding.tvBottomRentPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, priceSp)
     }
 
+    /**
+     * 3. Bảng ánh xạ trạng thái phòng từ API sang 3 nhóm hiển thị (lấy từ strings.xml):
+     * - "available" -> @string/room_status_available ("Còn trống")
+     * - "occupied" -> @string/room_status_unavailable ("Hết phòng")
+     * - "cleaning", "pending_cleanup", "maintenance" -> @string/room_status_preparing ("Sắp trống")
+     */
     private fun bindStatusBadge(status: String) {
-        val (text, bgColor, textColor) = when (status.lowercase()) {
-            "available" -> Triple("Còn trống", Color.parseColor("#E8F5E9"), Color.parseColor("#2E7D32"))
-            "occupied" -> Triple("Đã cho thuê", Color.parseColor("#ECEFF1"), Color.parseColor("#546E7A"))
-            "maintenance" -> Triple("Đang bảo trì", Color.parseColor("#FFF3E0"), Color.parseColor("#E65100"))
-            "cleaning", "pending_cleanup" -> Triple("Chờ dọn dẹp", Color.parseColor("#E3F2FD"), Color.parseColor("#1565C0"))
-            else -> Triple(status, Color.parseColor("#ECEFF1"), Color.parseColor("#546E7A"))
+        when (status.lowercase(Locale.ROOT).trim()) {
+            "available" -> {
+                binding.tvRoomStatus.setText(R.string.room_status_available)
+                binding.tvRoomStatus.setBackgroundResource(R.drawable.bg_room_status_available)
+                binding.tvRoomStatus.setTextColor(ContextCompat.getColor(this, CoreUiR.color.rentify_teal))
+            }
+            "occupied" -> {
+                binding.tvRoomStatus.setText(R.string.room_status_unavailable)
+                binding.tvRoomStatus.setBackgroundResource(R.drawable.bg_room_status_unavailable)
+                binding.tvRoomStatus.setTextColor(ContextCompat.getColor(this, CoreUiR.color.rentify_text_secondary))
+            }
+            "cleaning", "pending_cleanup", "maintenance" -> {
+                binding.tvRoomStatus.setText(R.string.room_status_preparing)
+                binding.tvRoomStatus.setBackgroundResource(R.drawable.bg_room_status_preparing)
+                binding.tvRoomStatus.setTextColor(ContextCompat.getColor(this, CoreUiR.color.rentify_warning_text))
+            }
+            else -> {
+                binding.tvRoomStatus.setText(R.string.room_status_unavailable)
+                binding.tvRoomStatus.setBackgroundResource(R.drawable.bg_room_status_unavailable)
+                binding.tvRoomStatus.setTextColor(ContextCompat.getColor(this, CoreUiR.color.rentify_text_secondary))
+            }
         }
-        binding.tvRoomStatus.text = text
-        binding.layoutRoomStatusBadge.backgroundTintList = ColorStateList.valueOf(bgColor)
-        binding.tvRoomStatus.setTextColor(textColor)
-        binding.ivStatusDot.imageTintList = ColorStateList.valueOf(textColor)
+    }
+
+    private fun bindPostedAgo(createdAt: String?) {
+        if (createdAt.isNullOrBlank()) {
+            binding.tvPostedAgo.isVisible = false
+            return
+        }
+        val date = try {
+            val cleanIso = createdAt.substringBefore("Z").substringBefore("+")
+            val base = cleanIso.substringBefore(".")
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }.parse(base)
+        } catch (_: Exception) {
+            null
+        }
+        if (date == null) {
+            binding.tvPostedAgo.isVisible = false
+            return
+        }
+        val diffDays = ((System.currentTimeMillis() - date.time) / (1000L * 60 * 60 * 24)).coerceAtLeast(0L)
+        binding.tvPostedAgo.isVisible = true
+        binding.tvPostedAgo.text = if (diffDays == 0L) "Đăng hôm nay" else "Đăng $diffDays ngày trước"
+    }
+
+    private fun bindRoomAddress(room: RoomDetailResponseDto) {
+        val apiAddress = listOfNotNull(room.address, room.ward, room.province)
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .joinToString(", ")
+
+        val resolvedAddress = when {
+            apiAddress.isNotEmpty() -> apiAddress
+            !fallbackAddress.isNullOrBlank() -> fallbackAddress!!.trim()
+            else -> "Chưa cập nhật địa chỉ"
+        }
+        binding.tvRoomAddress.text = resolvedAddress
+    }
+
+    private fun formatUtilityPolicy(raw: String?, unit: String, defaultMeterLabel: String): String {
+        val cleaned = raw?.trim().orEmpty()
+        val numericRate = cleaned.toLongOrNull()
+        if (numericRate != null && numericRate > 0L) {
+            return "${formatVndVi(numericRate)}/$unit"
+        }
+        return when (cleaned.lowercase(Locale.ROOT)) {
+            "flat" -> "Giá cố định"
+            else -> defaultMeterLabel
+        }
     }
 
     private data class AmenityItem(val label: String, val iconRes: Int)
@@ -333,36 +480,71 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
         if (amenities?.chair == true) list.add(AmenityItem("Ghế ngồi", CoreUiR.drawable.ic_amenity_furniture))
 
         if (list.isEmpty()) {
-            list.add(AmenityItem("Tiện nghi cơ bản", CoreUiR.drawable.ic_ai_sparkle))
+            binding.layoutAmenitiesSection.isVisible = false
+            return
         }
 
+        binding.layoutAmenitiesSection.isVisible = true
+        val density = resources.displayMetrics.density
+        val padH = (12f * density).roundToInt()
+        val padV = (8f * density).roundToInt()
+        val iconSize = (16f * density).roundToInt()
+        val iconGap = (6f * density).roundToInt()
+        val fontRegular = ResourcesCompat.getFont(this, CoreUiR.font.plus_jakarta_sans)
+        val iconColor = ContextCompat.getColor(this, CoreUiR.color.rentify_icon_slate)
+        val textColor = ContextCompat.getColor(this, CoreUiR.color.rentify_text)
+
         for (item in list) {
-            val chip = Chip(this).apply {
-                text = item.label
-                isClickable = false
-                isCheckable = false
-                setChipIconResource(item.iconRes)
-                chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(this@RoomDetailActivity, CoreUiR.color.rentify_primary))
-                chipIconSize = resources.displayMetrics.density * 18f
-                iconStartPadding = resources.displayMetrics.density * 8f
-                chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(this@RoomDetailActivity, CoreUiR.color.rentify_surface))
-                setTextColor(ContextCompat.getColor(this@RoomDetailActivity, CoreUiR.color.rentify_text_primary))
-                chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(this@RoomDetailActivity, CoreUiR.color.rentify_divider))
-                chipStrokeWidth = 1f
-                textSize = 13f
+            val pillLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setBackgroundResource(R.drawable.bg_room_amenity_chip)
+                setPadding(padH, padV, padH, padV)
+                layoutParams = ChipGroup.LayoutParams(
+                    ChipGroup.LayoutParams.WRAP_CONTENT,
+                    ChipGroup.LayoutParams.WRAP_CONTENT
+                )
             }
-            binding.chipGroupAmenities.addView(chip)
+            val iconView = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(iconSize, iconSize)
+                setImageResource(item.iconRes)
+                setColorFilter(iconColor)
+                importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+            }
+            val labelView = TextView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = iconGap
+                }
+                text = item.label
+                setTextColor(textColor)
+                setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+                typeface = fontRegular
+                includeFontPadding = false
+            }
+            pillLayout.addView(iconView)
+            pillLayout.addView(labelView)
+            binding.chipGroupAmenities.addView(pillLayout)
         }
     }
 
     private fun updateFavoriteButton(isFav: Boolean) {
         if (isFav) {
             binding.btnFavorite.setImageResource(CoreUiR.drawable.ic_heart_filled)
-            binding.btnFavorite.setColorFilter(ContextCompat.getColor(this, CoreUiR.color.rentify_card_saved_icon))
+            binding.btnFavorite.setColorFilter(ContextCompat.getColor(this, CoreUiR.color.rentify_heart_saved))
+            binding.btnFavorite.contentDescription = "Bỏ lưu phòng"
         } else {
             binding.btnFavorite.setImageResource(CoreUiR.drawable.ic_heart_outline)
-            binding.btnFavorite.setColorFilter(ContextCompat.getColor(this, CoreUiR.color.rentify_neutral))
+            binding.btnFavorite.setColorFilter(ContextCompat.getColor(this, CoreUiR.color.rentify_text))
+            binding.btnFavorite.contentDescription = "Lưu phòng"
         }
+    }
+
+    private fun formatVndVi(amount: Long): String {
+        val numberFormat = NumberFormat.getNumberInstance(Locale.forLanguageTag("vi-VN"))
+        return "${numberFormat.format(amount.coerceAtLeast(0L))} đ"
     }
 
     private fun handleUiEvent(event: RoomDetailUiEvent) {
@@ -371,7 +553,7 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
                 toast(event.message)
             }
             is RoomDetailUiEvent.ShowLoginRequired -> {
-                showRequireLoginDialog("Vui lòng đăng nhập để thực hiện tính năng này.") {
+                showLoginRequiredSheet(event.feature) {
                     startActivity(MainActivity.createLoginIntent(this))
                 }
             }
@@ -395,11 +577,18 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
     companion object {
         const val EXTRA_ROOM_ID = "extra_room_id"
         const val EXTRA_IS_FAVORITED = "extra_is_favorited"
+        const val EXTRA_FALLBACK_ADDRESS = "extra_fallback_address"
 
-        fun start(context: Context, roomId: String, isFavorited: Boolean = false) {
+        fun start(
+            context: Context,
+            roomId: String,
+            isFavorited: Boolean = false,
+            fallbackAddress: String? = null
+        ) {
             val intent = Intent(context, RoomDetailActivity::class.java).apply {
                 putExtra(EXTRA_ROOM_ID, roomId)
                 putExtra(EXTRA_IS_FAVORITED, isFavorited)
+                putExtra(EXTRA_FALLBACK_ADDRESS, fallbackAddress)
             }
             context.startActivity(intent)
         }

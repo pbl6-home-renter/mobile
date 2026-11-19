@@ -84,7 +84,7 @@ class FavoriteRoomsActivity : BaseActivity<ActivityFavoriteRoomsBinding>(Activit
                     binding.rvFavoriteRooms.isVisible = !isEmpty
 
                     binding.toolbar.subtitle = if (state.totalItems > 0) {
-                        "${state.totalItems} phòng đã lưu"
+                        "${state.totalItems} phòng"
                     } else {
                         null
                     }

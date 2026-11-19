@@ -19,7 +19,6 @@ data class RoomFilter(
         if (!ward.isNullOrBlank()) count++
         if (minPrice != null || maxPrice != null) count++
         if (genderPolicy != "any") count++
-        if (sort != "rentPrice" || order != "asc") count++
         return count
     }
 
