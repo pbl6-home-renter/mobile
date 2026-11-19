@@ -8,7 +8,9 @@ import com.rentify.app.core.network.dto.auth.AuthRegisterResponseDto
 import com.rentify.app.core.ui.auth.ForgotPasswordFragment
 import com.rentify.app.core.ui.auth.LoginFragment
 import com.rentify.app.core.ui.auth.RegisterFragment
+import com.rentify.app.core.network.socket.CommunitySocketClient
 import com.rentify.app.core.ui.auth.ResetPasswordFragment
+import com.rentify.app.core.ui.auth.VerifyEmailFragment
 import com.rentify.app.core.ui.auth.VerifyOtpFragment
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.toast
@@ -24,6 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     LoginFragment.LoginListener,
     RegisterFragment.RegisterListener,
     ForgotPasswordFragment.ForgotPasswordListener,
+    VerifyEmailFragment.VerifyEmailListener,
     VerifyOtpFragment.VerifyOtpListener,
     ResetPasswordFragment.ResetPasswordListener,
     TenantMainFragment.TenantMainListener {
@@ -31,31 +34,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     private val tokenDataStore by lazy { TokenDataStore(applicationContext) }
     private val appDataStore by lazy { AppDataStore(applicationContext) }
 
+    private var pendingTargetTabId: Int = R.id.nav_explore
+
     override fun initView() {
+        val targetTabFromIntent = intent.getIntExtra(EXTRA_TARGET_TAB_ID, R.id.nav_explore)
         if (intent.getBooleanExtra(EXTRA_NAVIGATE_LOGIN, false)) {
+            pendingTargetTabId = targetTabFromIntent
             showLoginScreen()
             return
         }
 
         if (supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
-            checkAppStartDestination()
+            checkAppStartDestination(targetTabFromIntent)
         }
     }
 
     override fun onNewIntent(intent: android.content.Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        val targetTabFromIntent = intent.getIntExtra(EXTRA_TARGET_TAB_ID, R.id.nav_explore)
         if (intent.getBooleanExtra(EXTRA_NAVIGATE_LOGIN, false)) {
+            pendingTargetTabId = targetTabFromIntent
             showLoginScreen()
+        } else if (targetTabFromIntent != R.id.nav_explore) {
+            showHomeScreen(initialTabId = targetTabFromIntent)
         }
     }
 
-    private fun checkAppStartDestination() {
+    private fun checkAppStartDestination(initialTabId: Int = R.id.nav_explore) {
         lifecycleScope.launch {
             val isOnboardingCompleted = appDataStore.isOnboardingCompleted.first()
 
             if (isOnboardingCompleted) {
-                showHomeScreen()
+                showHomeScreen(initialTabId = initialTabId)
             } else {
                 showOnboardingScreen()
             }
@@ -71,18 +82,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     override fun onLoginSuccess(response: AuthLoginResponseDto) {
         toast("Đăng nhập thành công! Chào mừng ${response.profile.name}")
-        showHomeScreen()
+        val targetTab = pendingTargetTabId
+        pendingTargetTabId = R.id.nav_explore
+        showHomeScreen(initialTabId = targetTab)
     }
 
     override fun onTenantLogoutRequested() {
         lifecycleScope.launch {
             tokenDataStore.clearTokens()
+            CommunitySocketClient.disconnect()
             toast("Đã đăng xuất thành công")
-            showLoginScreen()
+            pendingTargetTabId = R.id.nav_explore
+            showHomeScreen()
         }
     }
 
-    override fun onTenantLoginRequested() {
+    override fun onTenantLoginRequested(targetTabId: Int) {
+        pendingTargetTabId = targetTabId
         showLoginScreen()
     }
 
@@ -96,10 +112,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     override fun onRegisterSuccess(response: AuthRegisterResponseDto) {
         if (response.verificationRequired) {
-            toast("Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản.")
+            showVerifyEmailScreen(response.email, justSent = true)
         } else {
             toast("Đăng ký thành công! Vui lòng đăng nhập")
+            showLoginScreen()
         }
+    }
+
+    override fun onNavigateToVerifyEmail(email: String) {
+        showVerifyEmailScreen(email, justSent = false)
+    }
+
+    override fun onVerifyEmailLoginRequested() {
         showLoginScreen()
     }
 
@@ -131,15 +155,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             .commit()
     }
 
-    private fun showHomeScreen() {
+    private fun showHomeScreen(initialTabId: Int = R.id.nav_explore) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, TenantMainFragment.newInstance())
+            .replace(R.id.fragmentContainer, TenantMainFragment.newInstance(initialTabId = initialTabId))
             .commit()
     }
 
     private fun showRegisterScreen() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, RegisterFragment.newInstance(role = "TENANT"))
+            .commit()
+    }
+
+    private fun showVerifyEmailScreen(email: String, justSent: Boolean) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, VerifyEmailFragment.newInstance(email, justSent))
             .commit()
     }
 
@@ -165,10 +195,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     companion object {
         const val EXTRA_NAVIGATE_LOGIN = "extra_navigate_login"
+        const val EXTRA_TARGET_TAB_ID = "extra_target_tab_id"
 
-        fun createLoginIntent(context: android.content.Context): android.content.Intent {
+        fun createLoginIntent(
+            context: android.content.Context,
+            targetTabId: Int = R.id.nav_explore
+        ): android.content.Intent {
             return android.content.Intent(context, MainActivity::class.java).apply {
                 putExtra(EXTRA_NAVIGATE_LOGIN, true)
+                putExtra(EXTRA_TARGET_TAB_ID, targetTabId)
                 flags = android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP or android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
             }
         }
