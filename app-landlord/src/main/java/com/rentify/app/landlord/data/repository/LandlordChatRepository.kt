@@ -3,11 +3,15 @@ package com.rentify.app.landlord.data.repository
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
+import com.rentify.app.core.network.dto.chat.ConversationCreateRequestDto
 import com.rentify.app.core.network.dto.chat.ConversationDetailResponseDto
 import com.rentify.app.core.network.dto.chat.ConversationListResponseDto
+import com.rentify.app.core.network.dto.chat.ConversationMemberDto
+import com.rentify.app.core.network.dto.chat.ConversationMetadataUpdateResponseDto
 import com.rentify.app.core.network.dto.chat.MessageListResponseDto
 import com.rentify.app.core.network.dto.chat.MessageMarkReadResponseDto
 import com.rentify.app.core.network.dto.chat.MessageSendResponseDto
+import com.rentify.app.core.network.dto.user.UserDirectoryResponseDto
 
 interface LandlordChatRepository {
     suspend fun getConversations(
@@ -17,9 +21,43 @@ interface LandlordChatRepository {
         q: String? = null
     ): NetworkResult<ApiListResponse<ConversationListResponseDto>>
 
+    suspend fun createConversation(
+        request: ConversationCreateRequestDto
+    ): NetworkResult<ApiSingleResponse<ConversationDetailResponseDto>>
+
     suspend fun getConversationDetail(
         conversationId: String
     ): NetworkResult<ApiSingleResponse<ConversationDetailResponseDto>>
+
+    suspend fun updateConversationMetadata(
+        conversationId: String,
+        title: String?,
+        avatarMediaId: String? = null
+    ): NetworkResult<ApiSingleResponse<ConversationMetadataUpdateResponseDto>>
+
+    suspend fun getConversationMembers(
+        conversationId: String
+    ): NetworkResult<ApiSingleResponse<List<ConversationMemberDto>>>
+
+    suspend fun addConversationMembers(
+        conversationId: String,
+        userIds: List<String>
+    ): NetworkResult<ApiSingleResponse<List<ConversationMemberDto>>>
+
+    suspend fun removeConversationMember(
+        conversationId: String,
+        userId: String
+    ): NetworkResult<ApiSingleResponse<Any?>>
+
+    suspend fun leaveConversation(
+        conversationId: String
+    ): NetworkResult<ApiSingleResponse<Any?>>
+
+    suspend fun getUsersDirectory(
+        q: String? = null,
+        pageNo: Int = 1,
+        pageSize: Int = 30
+    ): NetworkResult<ApiListResponse<UserDirectoryResponseDto>>
 
     suspend fun getMessages(
         conversationId: String,

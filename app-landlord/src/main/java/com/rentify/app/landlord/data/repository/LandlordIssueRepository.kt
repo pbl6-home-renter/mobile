@@ -4,6 +4,8 @@ import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.issue.IssueReportCancelResponseDto
+import com.rentify.app.core.network.dto.issue.IssueReportCreateRequestDto
+import com.rentify.app.core.network.dto.issue.IssueReportCreateResponseDto
 import com.rentify.app.core.network.dto.issue.IssueReportDetailResponseDto
 import com.rentify.app.core.network.dto.issue.IssueReportListResponseDto
 import com.rentify.app.core.network.dto.issue.IssueReportUpdateRequestDto
@@ -19,6 +21,10 @@ interface LandlordIssueRepository {
         pageNo: Int = 1,
         pageSize: Int = 50
     ): NetworkResult<ApiListResponse<IssueReportListResponseDto>>
+
+    suspend fun createIssue(
+        request: IssueReportCreateRequestDto
+    ): NetworkResult<ApiSingleResponse<IssueReportCreateResponseDto>>
 
     suspend fun getIssueDetail(
         issueId: String

@@ -9,6 +9,7 @@ import com.rentify.app.core.network.dto.invoice.InvoiceGenerateResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceIssueRequestDto
 import com.rentify.app.core.network.dto.invoice.InvoiceIssueResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceListResponseDto
+import com.rentify.app.core.network.dto.invoice.InvoiceOtherFeeItemDto
 import com.rentify.app.core.network.dto.invoice.PaymentRecordCashRequestDto
 
 interface LandlordInvoiceRepository {
@@ -34,6 +35,12 @@ interface LandlordInvoiceRepository {
 
     suspend fun getInvoiceDetail(
         invoiceId: String
+    ): NetworkResult<ApiSingleResponse<InvoiceDetailResponseDto>>
+
+    suspend fun updatePendingInvoiceExtras(
+        invoiceId: String,
+        otherFees: List<InvoiceOtherFeeItemDto>?,
+        note: String?
     ): NetworkResult<ApiSingleResponse<InvoiceDetailResponseDto>>
 
     suspend fun cancelInvoice(

@@ -10,8 +10,10 @@ import com.rentify.app.core.network.dto.contract.ContractMemberAddRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberLeaveRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberLeaveResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
+import com.rentify.app.core.network.dto.contract.ContractTemplateItemDto
 import com.rentify.app.core.network.dto.contract.ContractUpdateRequestDto
 import com.rentify.app.core.network.dto.contract.DepositSettlementRequestDto
+import com.rentify.app.core.network.dto.contract.DepositSettlementResponseDto
 
 interface LandlordContractRepository {
     suspend fun getContracts(
@@ -36,6 +38,17 @@ interface LandlordContractRepository {
         request: ContractUpdateRequestDto
     ): NetworkResult<ApiSingleResponse<ContractDetailResponseDto>>
 
+    suspend fun getContractTemplates(): NetworkResult<ApiListResponse<ContractTemplateItemDto>>
+
+    suspend fun applyContractTemplate(
+        contractId: String,
+        templateKey: String
+    ): NetworkResult<ApiSingleResponse<ContractDetailResponseDto>>
+
+    suspend fun generateDraftDocument(
+        contractId: String
+    ): NetworkResult<ByteArray>
+
     suspend fun activateContract(
         contractId: String,
         signedContractMediaId: String
@@ -49,7 +62,7 @@ interface LandlordContractRepository {
     suspend fun depositSettlement(
         contractId: String,
         request: DepositSettlementRequestDto
-    ): NetworkResult<ApiSingleResponse<Any>>
+    ): NetworkResult<ApiSingleResponse<DepositSettlementResponseDto>>
 
     suspend fun getContractMembers(
         contractId: String

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="nav_dashboard" type="id" />
+    <item name="nav_properties" type="id" />
+    <item name="nav_operations" type="id" />
+    <item name="nav_chat" type="id" />
+    <item name="nav_profile" type="id" />
+</resources>

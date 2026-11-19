@@ -3,12 +3,16 @@ package com.rentify.app.landlord
 import androidx.lifecycle.lifecycleScope
 import com.rentify.app.core.data.local.datastore.AppDataStore
 import com.rentify.app.core.data.local.datastore.TokenDataStore
+import com.rentify.app.core.data.repository.auth.AuthRepositoryImpl
+import com.rentify.app.core.network.api.AuthApiService
+import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.core.network.dto.auth.AuthLoginResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterResponseDto
 import com.rentify.app.core.ui.auth.ForgotPasswordFragment
 import com.rentify.app.core.ui.auth.LoginFragment
 import com.rentify.app.core.ui.auth.RegisterFragment
 import com.rentify.app.core.ui.auth.ResetPasswordFragment
+import com.rentify.app.core.ui.auth.VerifyEmailFragment
 import com.rentify.app.core.ui.auth.VerifyOtpFragment
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.toast
@@ -25,6 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     LoginFragment.LoginListener,
     RegisterFragment.RegisterListener,
     ForgotPasswordFragment.ForgotPasswordListener,
+    VerifyEmailFragment.VerifyEmailListener,
     VerifyOtpFragment.VerifyOtpListener,
     ResetPasswordFragment.ResetPasswordListener,
     HomePlaceholderFragment.HomePlaceholderListener,
@@ -71,11 +76,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onLogoutClicked() {
-        lifecycleScope.launch {
-            tokenDataStore.clearTokens()
-            toast("Đã đăng xuất thành công")
-            showLoginScreen()
-        }
+        performLogout()
     }
 
     override fun onNavigateToRegister() {
@@ -88,10 +89,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     override fun onRegisterSuccess(response: AuthRegisterResponseDto) {
         if (response.verificationRequired) {
-            toast("Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản.")
+            showVerifyEmailScreen(response.email, justSent = true)
         } else {
             toast("Đăng ký thành công! Vui lòng đăng nhập")
+            showLoginScreen()
         }
+    }
+
+    override fun onNavigateToVerifyEmail(email: String) {
+        showVerifyEmailScreen(email, justSent = false)
+    }
+
+    override fun onVerifyEmailLoginRequested() {
         showLoginScreen()
     }
 
@@ -124,8 +133,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onLandlordLogoutRequested() {
+        performLogout()
+    }
+
+    private fun performLogout() {
         lifecycleScope.launch {
-            tokenDataStore.clearTokens()
+            val token = tokenDataStore.accessToken.first()
+            val authApi = NetworkClient.createService<AuthApiService>(
+                tokenProvider = { token }
+            )
+            val authRepo = AuthRepositoryImpl(authApi, tokenDataStore)
+            authRepo.logout()
             toast("Đã đăng xuất thành công")
             showLoginScreen()
         }
@@ -140,6 +158,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     private fun showRegisterScreen() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, RegisterFragment.newInstance(role = "LANDLORD"))
+            .commit()
+    }
+
+    private fun showVerifyEmailScreen(email: String, justSent: Boolean) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, VerifyEmailFragment.newInstance(email, justSent))
             .commit()
     }
 

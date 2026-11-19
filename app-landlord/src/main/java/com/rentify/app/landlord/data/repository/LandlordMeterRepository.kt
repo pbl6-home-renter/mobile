@@ -11,7 +11,6 @@ import com.rentify.app.core.network.dto.meter.MeterReadingListResponseDto
 interface LandlordMeterRepository {
     suspend fun getMeterReadings(
         roomId: String? = null,
-        buildingId: String? = null,
         period: String? = null,
         type: String? = null,
         pageNo: Int = 1,

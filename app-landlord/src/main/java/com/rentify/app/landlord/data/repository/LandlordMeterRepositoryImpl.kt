@@ -17,7 +17,6 @@ class LandlordMeterRepositoryImpl(
 
     override suspend fun getMeterReadings(
         roomId: String?,
-        buildingId: String?,
         period: String?,
         type: String?,
         pageNo: Int,
@@ -26,7 +25,6 @@ class LandlordMeterRepositoryImpl(
         return safeApiCall {
             meterApiService.getMeterReadings(
                 roomId = roomId,
-                buildingId = buildingId,
                 period = period,
                 type = type,
                 pageNo = pageNo,

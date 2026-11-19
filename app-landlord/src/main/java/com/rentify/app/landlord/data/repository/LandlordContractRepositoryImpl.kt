@@ -6,6 +6,7 @@ import com.rentify.app.core.network.api.ContractApiService
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.contract.ContractActivateRequestDto
+import com.rentify.app.core.network.dto.contract.ContractApplyTemplateRequestDto
 import com.rentify.app.core.network.dto.contract.ContractCompleteCheckoutRequestDto
 import com.rentify.app.core.network.dto.contract.ContractCreateRequestDto
 import com.rentify.app.core.network.dto.contract.ContractDetailResponseDto
@@ -14,8 +15,10 @@ import com.rentify.app.core.network.dto.contract.ContractMemberAddRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberLeaveRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberLeaveResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
+import com.rentify.app.core.network.dto.contract.ContractTemplateItemDto
 import com.rentify.app.core.network.dto.contract.ContractUpdateRequestDto
 import com.rentify.app.core.network.dto.contract.DepositSettlementRequestDto
+import com.rentify.app.core.network.dto.contract.DepositSettlementResponseDto
 
 class LandlordContractRepositoryImpl(
     private val contractApiService: ContractApiService
@@ -66,6 +69,46 @@ class LandlordContractRepositoryImpl(
         }
     }
 
+    override suspend fun getContractTemplates(): NetworkResult<ApiListResponse<ContractTemplateItemDto>> {
+        return safeApiCall {
+            contractApiService.getContractTemplates()
+        }
+    }
+
+    override suspend fun applyContractTemplate(
+        contractId: String,
+        templateKey: String
+    ): NetworkResult<ApiSingleResponse<ContractDetailResponseDto>> {
+        return safeApiCall {
+            contractApiService.applyContractTemplate(
+                contractId,
+                ContractApplyTemplateRequestDto(templateKey = templateKey)
+            )
+        }
+    }
+
+    override suspend fun generateDraftDocument(
+        contractId: String
+    ): NetworkResult<ByteArray> {
+        return try {
+            val response = contractApiService.generateDraftDocument(contractId)
+            if (response.isSuccessful) {
+                val bytes = response.body()?.bytes()
+                if (bytes != null && bytes.isNotEmpty()) {
+                    NetworkResult.Success(bytes)
+                } else {
+                    NetworkResult.UnknownError(Exception("Tệp PDF bản nháp trống"))
+                }
+            } else {
+                NetworkResult.ApiError(response.code(), null)
+            }
+        } catch (e: java.io.IOException) {
+            NetworkResult.NetworkError(e)
+        } catch (e: Exception) {
+            NetworkResult.UnknownError(e)
+        }
+    }
+
     override suspend fun activateContract(
         contractId: String,
         signedContractMediaId: String
@@ -93,7 +136,7 @@ class LandlordContractRepositoryImpl(
     override suspend fun depositSettlement(
         contractId: String,
         request: DepositSettlementRequestDto
-    ): NetworkResult<ApiSingleResponse<Any>> {
+    ): NetworkResult<ApiSingleResponse<DepositSettlementResponseDto>> {
         return safeApiCall {
             contractApiService.depositSettlement(contractId, request)
         }

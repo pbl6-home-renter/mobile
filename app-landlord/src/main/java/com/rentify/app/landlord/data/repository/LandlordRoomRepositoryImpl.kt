@@ -6,10 +6,12 @@ import com.rentify.app.core.network.api.RoomApiService
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.room.RoomCreateRequestDto
+import com.rentify.app.core.network.dto.room.RoomCreateResponseDto
 import com.rentify.app.core.network.dto.room.RoomDetailResponseDto
 import com.rentify.app.core.network.dto.room.RoomMarkReadyResponseDto
 import com.rentify.app.core.network.dto.room.RoomMyListResponseDto
 import com.rentify.app.core.network.dto.room.RoomUpdateRequestDto
+import com.rentify.app.core.network.dto.room.RoomUpdateResponseDto
 
 class LandlordRoomRepositoryImpl(
     private val roomApiService: RoomApiService
@@ -31,9 +33,17 @@ class LandlordRoomRepositoryImpl(
         }
     }
 
+    override suspend fun getRoomDetail(
+        roomId: String
+    ): NetworkResult<ApiSingleResponse<RoomDetailResponseDto>> {
+        return safeApiCall {
+            roomApiService.getRoomDetail(roomId)
+        }
+    }
+
     override suspend fun createRoom(
         request: RoomCreateRequestDto
-    ): NetworkResult<ApiSingleResponse<RoomDetailResponseDto>> {
+    ): NetworkResult<ApiSingleResponse<RoomCreateResponseDto>> {
         return safeApiCall {
             roomApiService.createRoom(request)
         }
@@ -42,7 +52,7 @@ class LandlordRoomRepositoryImpl(
     override suspend fun updateRoom(
         roomId: String,
         request: RoomUpdateRequestDto
-    ): NetworkResult<ApiSingleResponse<RoomDetailResponseDto>> {
+    ): NetworkResult<ApiSingleResponse<RoomUpdateResponseDto>> {
         return safeApiCall {
             roomApiService.updateRoom(roomId, request)
         }

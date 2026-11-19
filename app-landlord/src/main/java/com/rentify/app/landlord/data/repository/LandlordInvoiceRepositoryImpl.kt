@@ -12,6 +12,8 @@ import com.rentify.app.core.network.dto.invoice.InvoiceGenerateResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceIssueRequestDto
 import com.rentify.app.core.network.dto.invoice.InvoiceIssueResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceListResponseDto
+import com.rentify.app.core.network.dto.invoice.InvoiceOtherFeeItemDto
+import com.rentify.app.core.network.dto.invoice.InvoiceUpdateExtrasRequestDto
 import com.rentify.app.core.network.dto.invoice.PaymentRecordCashRequestDto
 import java.util.UUID
 
@@ -66,6 +68,19 @@ class LandlordInvoiceRepositoryImpl(
     ): NetworkResult<ApiSingleResponse<InvoiceDetailResponseDto>> {
         return safeApiCall {
             invoiceApiService.getInvoiceDetail(invoiceId)
+        }
+    }
+
+    override suspend fun updatePendingInvoiceExtras(
+        invoiceId: String,
+        otherFees: List<InvoiceOtherFeeItemDto>?,
+        note: String?
+    ): NetworkResult<ApiSingleResponse<InvoiceDetailResponseDto>> {
+        return safeApiCall {
+            invoiceApiService.updatePendingInvoiceExtras(
+                invoiceId = invoiceId,
+                request = InvoiceUpdateExtrasRequestDto(otherFees = otherFees, note = note)
+            )
         }
     }
 
