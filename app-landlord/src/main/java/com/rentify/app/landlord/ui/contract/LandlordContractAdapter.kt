@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rentify.app.core.network.dto.contract.ContractListResponseDto
+import com.rentify.app.core.ui.extension.toDisplayDate
 import com.rentify.app.landlord.R
 import java.text.NumberFormat
 import java.util.Locale
@@ -51,7 +52,7 @@ class LandlordContractAdapter(
             val depositFormatted = NumberFormat.getNumberInstance(Locale.forLanguageTag("vi-VN")).format(item.depositAmount.toLong())
             tvPrice.text = "$priceFormatted đ/tháng • Cọc: $depositFormatted đ"
 
-            tvDuration.text = "${item.startDate} → ${item.endDate}"
+            tvDuration.text = "${item.startDate.toDisplayDate()} → ${item.endDate.toDisplayDate()}"
 
             val (badgeText, textColor, bgColor) = when (item.status.lowercase()) {
                 "active" -> Triple("Đang hiệu lực", Color.parseColor("#16A34A"), Color.parseColor("#DCFCE7"))

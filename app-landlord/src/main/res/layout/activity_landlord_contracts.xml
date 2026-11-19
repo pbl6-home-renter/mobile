@@ -45,26 +45,89 @@
             android:layout_height="38dp"
             android:fontFamily="@font/plus_jakarta_sans"
             android:paddingHorizontal="@dimen/spacing_smd"
-            android:text="+ Tạo HĐ"
+            android:text="+ Tạo hợp đồng"
             android:textSize="12sp"
             android:textStyle="bold"
             app:cornerRadius="19dp" />
     </LinearLayout>
 
-    <!-- Filter Chips -->
+    <!-- Search & Building Filter -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_sm">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSearchContract"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tìm Mã HĐ, Phòng, Người đại diện..."
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/ic_search"
+            app:startIconTint="@color/rentify_text_secondary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSearchContract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="@dimen/spacing_sm"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFilterContractBuilding"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:hint="Tòa nhà"
+            app:boxCornerRadiusBottomEnd="14dp"
+            app:boxCornerRadiusBottomStart="14dp"
+            app:boxCornerRadiusTopEnd="14dp"
+            app:boxCornerRadiusTopStart="14dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/actvFilterContractBuilding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:inputType="none"
+                android:paddingVertical="@dimen/spacing_sm"
+                android:text="Tất cả tòa nhà"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Status Filter Chips -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:clipToPadding="false"
         android:paddingHorizontal="@dimen/spacing_md"
-        android:paddingVertical="@dimen/spacing_sm"
+        android:paddingVertical="@dimen/spacing_xs"
         android:scrollbars="none">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:selectionRequired="true"
+            app:singleLine="true"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
@@ -78,6 +141,15 @@
                 android:textSize="12sp" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/chipDraft"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Bản nháp"
+                android:textSize="12sp" />
+
+            <com.google.android.material.chip.Chip
                 android:id="@+id/chipActive"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
@@ -87,21 +159,21 @@
                 android:textSize="12sp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chipPending"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Chờ kích hoạt"
-                android:textSize="12sp" />
-
-            <com.google.android.material.chip.Chip
                 android:id="@+id/chipEnded"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Đã kết thúc"
+                android:text="Đã chấm dứt"
+                android:textSize="12sp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipExpired"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Hết hạn"
                 android:textSize="12sp" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
@@ -178,11 +250,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:text="Nhấn '+ Tạo HĐ' để lập hợp đồng mới cho phòng trống"
+                    android:text="Nhấn '+ Tạo hợp đồng' để lập hợp đồng nháp mới cho phòng trống"
+                    android:textAlignment="center"
                     android:textColor="@color/rentify_text_muted"
                     android:textSize="13sp" />
             </LinearLayout>
         </FrameLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
-

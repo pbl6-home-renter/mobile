@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
+import com.rentify.app.core.ui.extension.toDisplayDate
 import com.rentify.app.landlord.R
 
 class ContractMemberAdapter(
@@ -40,7 +41,7 @@ class ContractMemberAdapter(
         fun bind(item: ContractMemberListResponseDto) {
             tvName.text = item.tenantName ?: "Thành viên"
             tvPhone.text = "SĐT: ${item.tenantPhone ?: "Chưa có"}"
-            tvJoinedAt.text = "Vào ở: ${item.joinedAt}"
+            tvJoinedAt.text = "Vào ở: ${item.joinedAt.toDisplayDate()}"
 
             val isActive = item.status.equals("active", ignoreCase = true)
             val (badgeText, textColor, bgColor) = if (isActive) {

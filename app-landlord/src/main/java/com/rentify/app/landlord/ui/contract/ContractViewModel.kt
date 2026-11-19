@@ -2,16 +2,20 @@ package com.rentify.app.landlord.ui.contract
 
 import androidx.lifecycle.viewModelScope
 import com.rentify.app.core.network.adapter.NetworkResult
+import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractCreateRequestDto
 import com.rentify.app.core.network.dto.contract.ContractDetailResponseDto
 import com.rentify.app.core.network.dto.contract.ContractListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMemberAddRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberLeaveRequestDto
 import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
+import com.rentify.app.core.network.dto.contract.ContractTemplateItemDto
 import com.rentify.app.core.network.dto.contract.ContractUpdateRequestDto
 import com.rentify.app.core.network.dto.contract.DepositSettlementRequestDto
 import com.rentify.app.core.ui.base.BaseViewModel
+import com.rentify.app.landlord.data.repository.LandlordBuildingRepository
 import com.rentify.app.landlord.data.repository.LandlordContractRepository
+import com.rentify.app.landlord.data.repository.LandlordMediaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,7 +49,9 @@ sealed interface ContractActionUiState {
 }
 
 class ContractViewModel(
-    private val contractRepository: LandlordContractRepository
+    private val contractRepository: LandlordContractRepository,
+    private val buildingRepository: LandlordBuildingRepository? = null,
+    private val mediaRepository: LandlordMediaRepository? = null
 ) : BaseViewModel() {
 
     private val _contractListState = MutableStateFlow<ContractListUiState>(ContractListUiState.Loading)
@@ -57,13 +63,32 @@ class ContractViewModel(
     private val _contractMembersState = MutableStateFlow<ContractMembersUiState>(ContractMembersUiState.Idle)
     val contractMembersState: StateFlow<ContractMembersUiState> = _contractMembersState.asStateFlow()
 
+    private val _approvedBuildings = MutableStateFlow<List<BuildingMyListResponseDto>>(emptyList())
+    val approvedBuildings: StateFlow<List<BuildingMyListResponseDto>> = _approvedBuildings.asStateFlow()
+
+    private val _contractTemplates = MutableStateFlow<List<ContractTemplateItemDto>>(emptyList())
+    val contractTemplates: StateFlow<List<ContractTemplateItemDto>> = _contractTemplates.asStateFlow()
+
     private val _actionState = MutableStateFlow<ContractActionUiState>(ContractActionUiState.Idle)
     val actionState: StateFlow<ContractActionUiState> = _actionState.asStateFlow()
 
-    fun loadContracts(status: String? = null, roomId: String? = null) {
+    private var lastStatus: String? = null
+    private var lastBuildingId: String? = null
+
+    fun loadContracts(
+        status: String? = lastStatus,
+        buildingId: String? = lastBuildingId,
+        roomId: String? = null
+    ) {
+        lastStatus = status
+        lastBuildingId = buildingId
         _contractListState.value = ContractListUiState.Loading
         viewModelScope.launch {
-            when (val result = contractRepository.getContracts(status = status, roomId = roomId)) {
+            when (val result = contractRepository.getContracts(
+                status = status,
+                roomId = roomId,
+                buildingId = buildingId
+            )) {
                 is NetworkResult.Success -> {
                     _contractListState.value = ContractListUiState.Success(result.data.data)
                 }
@@ -75,6 +100,33 @@ class ContractViewModel(
                 }
                 is NetworkResult.UnknownError -> {
                     _contractListState.value = ContractListUiState.Error("Không thể tải danh sách hợp đồng")
+                }
+            }
+        }
+    }
+
+    fun loadApprovedBuildings() {
+        val repo = buildingRepository ?: return
+        viewModelScope.launch {
+            when (val result = repo.getMyBuildings(status = "approved")) {
+                is NetworkResult.Success -> {
+                    _approvedBuildings.value = result.data.data
+                }
+                else -> {
+                    _approvedBuildings.value = emptyList()
+                }
+            }
+        }
+    }
+
+    fun loadContractTemplates() {
+        viewModelScope.launch {
+            when (val result = contractRepository.getContractTemplates()) {
+                is NetworkResult.Success -> {
+                    _contractTemplates.value = result.data.data
+                }
+                else -> {
+                    _contractTemplates.value = emptyList()
                 }
             }
         }
@@ -140,6 +192,106 @@ class ContractViewModel(
                 }
                 is NetworkResult.UnknownError -> {
                     _actionState.value = ContractActionUiState.Error("Đã xảy ra lỗi khi tạo hợp đồng")
+                }
+            }
+        }
+    }
+
+    fun updateContract(contractId: String, vehicleCount: Int?, description: String?) {
+        _actionState.value = ContractActionUiState.Loading
+        viewModelScope.launch {
+            val req = ContractUpdateRequestDto(vehicleCount = vehicleCount, description = description)
+            when (val result = contractRepository.updateContract(contractId, req)) {
+                is NetworkResult.Success -> {
+                    _actionState.value = ContractActionUiState.Success("Cập nhật số xe & ghi chú hợp đồng thành công!", result.data.data)
+                    loadContractDetail(contractId)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = ContractActionUiState.Error(result.error?.message ?: "Cập nhật hợp đồng thất bại")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = ContractActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = ContractActionUiState.Error("Đã xảy ra lỗi khi cập nhật hợp đồng")
+                }
+            }
+        }
+    }
+
+    fun applyContractTemplate(contractId: String, templateKey: String) {
+        _actionState.value = ContractActionUiState.Loading
+        viewModelScope.launch {
+            when (val result = contractRepository.applyContractTemplate(contractId, templateKey)) {
+                is NetworkResult.Success -> {
+                    _actionState.value = ContractActionUiState.Success("Đã áp dụng mẫu hợp đồng thành công!", result.data.data)
+                    loadContractDetail(contractId)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = ContractActionUiState.Error(result.error?.message ?: "Áp mẫu hợp đồng thất bại")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = ContractActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = ContractActionUiState.Error("Đã xảy ra lỗi khi áp mẫu hợp đồng")
+                }
+            }
+        }
+    }
+
+    fun generateDraftDocumentPdf(contractId: String, onPdfReady: (ByteArray) -> Unit) {
+        _actionState.value = ContractActionUiState.Loading
+        viewModelScope.launch {
+            when (val result = contractRepository.generateDraftDocument(contractId)) {
+                is NetworkResult.Success -> {
+                    _actionState.value = ContractActionUiState.Success("Đã sinh bản nháp PDF hợp đồng!")
+                    onPdfReady(result.data)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = ContractActionUiState.Error(result.error?.message ?: "Không thể sinh bản nháp PDF (hãy kiểm tra đã áp mẫu chưa)")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = ContractActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = ContractActionUiState.Error("Đã xảy ra lỗi khi sinh bản nháp PDF")
+                }
+            }
+        }
+    }
+
+    fun uploadSignedContractFile(
+        contractId: String,
+        fileBytes: ByteArray,
+        fileName: String,
+        contentType: String,
+        onMediaUploaded: (String) -> Unit
+    ) {
+        val repo = mediaRepository ?: return
+        _actionState.value = ContractActionUiState.Loading
+        viewModelScope.launch {
+            val result = repo.uploadMedia(
+                ownerType = "contract",
+                ownerId = contractId,
+                purpose = "signed_contract",
+                fileBytes = fileBytes,
+                fileName = fileName,
+                contentType = contentType
+            )
+            when (result) {
+                is NetworkResult.Success -> {
+                    onMediaUploaded(result.data.id)
+                    _actionState.value = ContractActionUiState.Success("Đã tải lên tệp hợp đồng đã ký! Bạn có thể bấm Kích hoạt hợp đồng.")
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = ContractActionUiState.Error(result.error?.message ?: "Tải lên bản hợp đồng đã ký thất bại")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = ContractActionUiState.Error("Lỗi kết nối mạng khi tải tệp")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = ContractActionUiState.Error("Đã xảy ra lỗi khi tải tệp hợp đồng")
                 }
             }
         }
@@ -254,4 +406,3 @@ class ContractViewModel(
         _actionState.value = ContractActionUiState.Idle
     }
 }
-
