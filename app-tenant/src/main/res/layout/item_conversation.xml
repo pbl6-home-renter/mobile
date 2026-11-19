@@ -7,10 +7,10 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingStart="@dimen/spacing_md"
-    android:paddingTop="@dimen/spacing_smd"
-    android:paddingEnd="@dimen/spacing_md"
-    android:paddingBottom="@dimen/spacing_smd">
+    android:paddingStart="18dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="18dp"
+    android:paddingBottom="12dp">
 
     <!-- Avatar container (52dp x 52dp) -->
     <FrameLayout
@@ -21,138 +21,133 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txtAvatarInitial"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_avatar_gradient"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            tools:text="H" />
+        <com.rentify.app.core.ui.view.RentifyAvatarView
+            android:id="@+id/avatarView"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            app:avatarSize="52dp" />
 
-        <ImageView
-            android:id="@+id/imgGroupIcon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_avatar_gradient"
-            android:contentDescription="Ảnh nhóm"
-            android:padding="@dimen/spacing_smd"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_group"
+        <!-- Chấm trạng thái trực tuyến (12dp, viền trắng 2dp, góc dưới phải) -->
+        <View
+            android:id="@+id/viewOnlineDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/bg_online_status_dot"
+            android:contentDescription="Đang hoạt động"
             android:visibility="gone"
-            app:tint="@android:color/white" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-            tools:src="@tools:sample/avatars" />
+            tools:visibility="visible" />
     </FrameLayout>
 
-    <!-- Time at top right -->
-    <TextView
-        android:id="@+id/txtTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:includeFontPadding="false"
-        android:textColor="@color/rentify_text_muted"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/avatarContainer"
-        tools:text="18 giờ" />
-
-    <!-- Group indicator icon right before Title -->
-    <ImageView
-        android:id="@+id/ivGroupIndicator"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="@dimen/spacing_md"
-        android:contentDescription="Nhóm"
-        android:src="@drawable/ic_group"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
-        app:layout_constraintStart_toEndOf="@+id/avatarContainer"
-        app:layout_constraintTop_toTopOf="@+id/txtTitle"
-        app:tint="@color/rentify_text_secondary"
-        tools:visibility="visible" />
-
-    <!-- Title (Name / Group Name) -->
-    <TextView
-        android:id="@+id/txtTitle"
+    <!-- Cột nội dung (cách avatar 12dp -> lề trái 82dp) -->
+    <LinearLayout
+        android:id="@+id/contentColumn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xs"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:layout_marginEnd="@dimen/spacing_sm"
-        android:ellipsize="end"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/rentify_text_primary"
-        android:textSize="15.5sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/txtTime"
-        app:layout_constraintStart_toEndOf="@+id/ivGroupIndicator"
-        app:layout_constraintTop_toTopOf="@+id/avatarContainer"
-        app:layout_goneMarginStart="@dimen/spacing_md"
-        tools:text="Google Developer Group Đà Nẵng" />
-
-    <!-- Unread badge count at bottom right -->
-    <TextView
-        android:id="@+id/txtUnreadBadge"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginBottom="@dimen/spacing_xs"
-        android:background="@drawable/bg_unread_badge"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:minWidth="18dp"
-        android:paddingHorizontal="@dimen/spacing_sm"
-        android:textColor="@android:color/white"
-        android:textSize="10.5sp"
-        android:textStyle="bold"
-        android:visibility="gone"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/avatarContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="99+"
-        tools:visibility="visible" />
-
-    <!-- Last message preview at bottom left -->
-    <TextView
-        android:id="@+id/txtLastMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_md"
-        android:layout_marginEnd="@dimen/spacing_sm"
-        android:layout_marginBottom="@dimen/spacing_xs"
-        android:ellipsize="end"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/rentify_text_secondary"
-        android:textSize="13.5sp"
-        app:layout_constraintBottom_toBottomOf="@+id/avatarContainer"
-        app:layout_constraintEnd_toStartOf="@+id/txtUnreadBadge"
         app:layout_constraintStart_toEndOf="@+id/avatarContainer"
-        tools:text="Tường Vi: @All Chỉ còn 24h nữa để..." />
+        app:layout_constraintTop_toTopOf="@+id/avatarContainer">
 
-    <!-- Subtle divider indented like Zalo/iOS -->
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.8dp"
-        android:background="#F1F5F9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/txtLastMessage" />
+        <!-- Dòng 1: Tên + Nhãn Chủ trọ + Thời gian -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text"
+                android:textSize="15sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvLandlordBadge"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Trần Văn Tâm" />
+
+            <TextView
+                android:id="@+id/tvLandlordBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_landlord_role_badge"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="7dp"
+                android:paddingVertical="2dp"
+                android:text="Chủ trọ"
+                android:textColor="@color/rentify_teal"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtTime"
+                app:layout_constraintStart_toEndOf="@+id/txtTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txtTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:includeFontPadding="false"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="09:42" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Dòng 2: Tin cuối + Huy hiệu chưa đọc -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtLastMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="13sp"
+                tools:text="Mai anh qua xem phòng nhé" />
+
+            <TextView
+                android:id="@+id/txtUnreadBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_unread_badge"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:minWidth="20dp"
+                android:paddingHorizontal="6dp"
+                android:textColor="@color/rentify_on_primary"
+                android:textSize="11sp"
+                android:visibility="gone"
+                tools:text="2"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

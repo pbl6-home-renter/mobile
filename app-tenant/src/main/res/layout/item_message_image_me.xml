@@ -6,8 +6,11 @@
     android:layout_height="wrap_content"
     android:gravity="end"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/spacing_md"
-    android:paddingVertical="@dimen/spacing_xs">
+    android:paddingHorizontal="14dp">
+
+    <include
+        android:id="@+id/layoutDateSeparator"
+        layout="@layout/layout_message_date_separator" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardImage"
@@ -15,10 +18,10 @@
         android:layout_height="220dp"
         android:clickable="true"
         android:focusable="true"
-        app:cardBackgroundColor="#102563EB"
-        app:cardCornerRadius="@dimen/radius_lg"
+        app:cardBackgroundColor="@color/rentify_field_bg"
+        app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
-        app:strokeColor="@color/rentify_primary_gradient_start"
+        app:strokeColor="@color/rentify_border"
         app:strokeWidth="1dp">
 
         <FrameLayout
@@ -29,33 +32,33 @@
                 android:id="@+id/ivMessageImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Hình ảnh tin nhắn"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/ic_image_placeholder" />
 
-            <ProgressBar
+            <com.rentify.app.tenant.ui.component.TenantLoadingView
                 android:id="@+id/pbUploadProgress"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:visibility="gone"
                 tools:visibility="visible" />
-
-            <!-- Time Overlay at bottom right -->
-            <TextView
-                android:id="@+id/txtImageTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/spacing_sm"
-                android:background="#80000000"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="@dimen/spacing_sm"
-                android:paddingVertical="@dimen/spacing_2xs"
-                android:textColor="@android:color/white"
-                android:textSize="10sp"
-                tools:text="14:32" />
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
 
+    <!-- 3.4 Giờ gửi và trạng thái đã xem bên dưới bong bóng ảnh -->
+    <TextView
+        android:id="@+id/txtTimeStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:includeFontPadding="false"
+        android:textColor="@color/rentify_text_faint"
+        android:textSize="11sp"
+        android:visibility="gone"
+        tools:text="14:32, đã xem"
+        tools:visibility="visible" />
+
+</LinearLayout>

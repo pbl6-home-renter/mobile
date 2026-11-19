@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@color/rentify_border"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/tvDateSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:fontFamily="@font/plus_jakarta_sans_medium"
+        android:includeFontPadding="false"
+        android:textColor="@color/rentify_text_faint"
+        android:textSize="12sp"
+        tools:text="Hôm nay" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@color/rentify_border"
+        android:importantForAccessibility="no" />
+</LinearLayout>

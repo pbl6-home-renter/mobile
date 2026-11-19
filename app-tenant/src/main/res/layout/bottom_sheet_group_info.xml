@@ -4,84 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_rounded_surface"
+    android:background="@drawable/bg_group_sheet_rounded"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/spacing_lg">
+    android:paddingBottom="16dp">
 
-    <!-- Drag handle -->
+    <!-- Drag handle (36x4dp, rentify_border) -->
     <View
-        android:layout_width="40dp"
+        android:layout_width="36dp"
         android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/spacing_smd"
-        android:layout_marginBottom="@dimen/spacing_smd"
-        android:background="#D1D5DB" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_group_sheet_drag_handle"
+        android:importantForAccessibility="no" />
 
-    <!-- Top header with close -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/spacing_ml"
-        android:paddingBottom="@dimen/spacing_smd">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Thông tin nhóm"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/btnClose"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Đóng"
-            android:src="@drawable/ic_close"
-            app:tint="@color/rentify_neutral" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/rentify_divider" />
-
-    <!-- Group Header Card -->
+    <!-- Phần đầu căn giữa: RentifyAvatarView nhóm 64dp, tên nhóm 18sp medium, "<n> thành viên" 13sp rentify_text_muted -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/spacing_ml"
-        android:paddingVertical="@dimen/spacing_md">
+        android:paddingHorizontal="20dp">
 
-        <FrameLayout
+        <com.rentify.app.core.ui.view.RentifyAvatarView
+            android:id="@+id/groupAvatarView"
             android:layout_width="64dp"
-            android:layout_height="64dp">
-
-            <TextView
-                android:id="@+id/txtGroupAvatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_avatar_gradient"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:textColor="@android:color/white"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                tools:text="G" />
-        </FrameLayout>
+            android:layout_height="64dp"
+            app:avatarSize="64dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_smd"
+            android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -89,125 +43,137 @@
                 android:id="@+id/txtGroupName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="17sp"
-                android:textStyle="bold"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text"
+                android:textSize="18sp"
                 tools:text="Nhóm phòng 302" />
 
             <ImageButton
                 android:id="@+id/btnEditGroupName"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="@dimen/spacing_sm"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="6dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Đổi tên nhóm"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_edit_pencil"
-                app:tint="@color/rentify_primary_gradient_start" />
+                android:visibility="gone"
+                app:tint="@color/rentify_text_muted"
+                tools:visibility="visible" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/txtMemberCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_2xs"
+            android:layout_marginTop="4dp"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:textColor="@color/rentify_text_secondary"
+            android:includeFontPadding="false"
+            android:textColor="@color/rentify_text_muted"
             android:textSize="13sp"
             tools:text="3 thành viên" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/rentify_divider" />
-
-    <!-- Action Section Header -->
+    <!-- Tiêu đề "Thành viên" 13sp medium rentify_text_muted -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/spacing_ml"
-        android:paddingTop="@dimen/spacing_md"
-        android:paddingBottom="@dimen/spacing_sm">
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="6dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Thành viên nhóm"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:text="Thành viên"
+            android:textColor="@color/rentify_text_muted"
+            android:textSize="13sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddMember"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans"
+            android:layout_height="32dp"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="32dp"
+            android:paddingHorizontal="8dp"
             android:text="+ Thêm"
-            android:textColor="@color/rentify_primary_gradient_start"
-            android:textSize="13sp" />
+            android:textAllCaps="false"
+            android:textColor="@color/rentify_primary"
+            android:textSize="13sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </LinearLayout>
 
-    <!-- Member RecyclerView -->
+    <!-- Danh sách thành viên -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGroupMembers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="280dp"
-        android:nestedScrollingEnabled="false"
+        android:maxHeight="320dp"
+        android:nestedScrollingEnabled="true"
         tools:itemCount="3"
         tools:listitem="@layout/item_group_member" />
 
-    <ProgressBar
+    <com.rentify.app.tenant.ui.component.TenantLoadingView
         android:id="@+id/pbMembersLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_gravity="center"
-        android:layout_marginVertical="@dimen/spacing_md"
         android:visibility="gone"
         tools:visibility="visible" />
 
+    <!-- Đường kẻ 1dp rentify_divider ngăn cách dòng Rời khỏi nhóm -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/spacing_smd"
-        android:background="@color/rentify_divider" />
+        android:layout_marginTop="8dp"
+        android:background="@color/rentify_divider"
+        android:importantForAccessibility="no" />
 
-    <!-- Danger Zone: Leave Group -->
+    <!-- Cuối sheet: dòng "Rời khỏi nhóm" (icon thoát 20dp + chữ 14sp medium, màu rentify_error, cao tối thiểu 48dp) -->
     <LinearLayout
         android:id="@+id/btnLeaveGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_smd"
+        android:layout_marginTop="4dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
+        android:minHeight="48dp"
         android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/spacing_ml"
-        android:paddingVertical="@dimen/spacing_smd">
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="12dp">
 
         <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@null"
             android:src="@drawable/ic_logout"
-            app:tint="#EF4444" />
+            app:tint="@color/rentify_error" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_smd"
-            android:fontFamily="@font/plus_jakarta_sans"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
             android:text="Rời khỏi nhóm"
-            android:textColor="#EF4444"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textColor="@color/rentify_error"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </LinearLayout>
-

@@ -1,6 +1,7 @@
 package com.rentify.app.tenant.ui.chat.group
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +16,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rentify.app.core.network.dto.chat.ConversationMemberDto
 import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.view.RentifyAvatarView
 import com.rentify.app.tenant.databinding.BottomSheetGroupInfoBinding
 import com.rentify.app.tenant.databinding.DialogAddGroupMemberBinding
+import com.rentify.app.tenant.ui.chat.detail.ChatDetailActivity
+import com.rentify.app.tenant.ui.chat.detail.ChatDetailViewModel
 import kotlinx.coroutines.launch
 
 class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
+
+    interface GroupInfoListener {
+        fun onGroupInfoUpdated()
+    }
 
     private var _binding: BottomSheetGroupInfoBinding? = null
     private val binding get() = _binding!!
 
     private val conversationId: String by lazy {
         arguments?.getString(ARG_CONVERSATION_ID) ?: ""
+    }
+
+    private val fallbackTitle: String? by lazy {
+        arguments?.getString(ARG_FALLBACK_TITLE)
     }
 
     private val viewModel: GroupInfoViewModel by viewModels {
@@ -43,6 +55,11 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.setBackgroundColor(Color.TRANSPARENT)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,14 +68,13 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     private fun setupUI() {
-        binding.btnClose.setOnClickListener {
-            dismiss()
-        }
-
         binding.rvGroupMembers.layoutManager = LinearLayoutManager(requireContext())
         val adapter = GroupMemberAdapter(
             currentUserId = viewModel.currentUserId.value,
             isCurrentUserAdmin = viewModel.isCurrentUserAdmin.value,
+            onMessageMemberClick = { member ->
+                viewModel.lookupAndOpenDirectChat(member)
+            },
             onMemberActionClick = { member ->
                 showMemberActionDialog(member)
             }
@@ -77,19 +93,34 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
         binding.btnLeaveGroup.setOnClickListener {
             showLeaveGroupConfirmDialog()
         }
+
+        bindGroupHeader()
+    }
+
+    private fun bindGroupHeader() {
+        val detail = viewModel.conversationDetail.value
+        val unifiedName = ChatDetailViewModel.resolveUnifiedGroupTitle(detail, fallbackTitle)
+        binding.txtGroupName.text = unifiedName
+
+        val memberList = viewModel.members.value
+        val avatarMembers = RentifyAvatarView.selectGroupAvatarMembers(
+            currentUserId = viewModel.currentUserId.value,
+            members = memberList
+        )
+        binding.groupAvatarView.bindGroup(
+            groupId = conversationId,
+            groupName = unifiedName,
+            avatarUrl = detail?.avatarUrl,
+            otherMembers = avatarMembers
+        )
     }
 
     private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.conversationDetail.collect { detail ->
-                        if (detail != null) {
-                            val name = detail.title ?: "Nhóm trao đổi"
-                            binding.txtGroupName.text = name
-                            val initial = name.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "G"
-                            binding.txtGroupAvatar.text = initial
-                        }
+                    viewModel.conversationDetail.collect {
+                        bindGroupHeader()
                     }
                 }
 
@@ -97,6 +128,7 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
                     viewModel.members.collect { memberList ->
                         binding.txtMemberCount.text = "${memberList.size} thành viên"
                         memberAdapter?.submitList(memberList)
+                        bindGroupHeader()
                     }
                 }
 
@@ -113,12 +145,34 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
                     viewModel.currentUserId.collect { userId ->
                         memberAdapter?.currentUserId = userId
                         memberAdapter?.notifyDataSetChanged()
+                        bindGroupHeader()
                     }
                 }
 
                 launch {
                     viewModel.isLoading.collect { loading ->
                         binding.pbMembersLoading.isVisible = loading
+                    }
+                }
+
+                launch {
+                    viewModel.openDirectChatEvent.collect { target ->
+                        dismiss()
+                        val intent = ChatDetailActivity.createIntent(
+                            context = requireContext(),
+                            conversationId = target.conversationId,
+                            recipientUserId = target.recipientUserId,
+                            recipientName = target.recipientName,
+                            recipientAvatarUrl = target.recipientAvatarUrl,
+                            isGroup = false
+                        )
+                        startActivity(intent)
+                    }
+                }
+
+                launch {
+                    viewModel.groupMetadataUpdatedEvent.collect {
+                        (activity as? GroupInfoListener)?.onGroupInfoUpdated()
                     }
                 }
 
@@ -234,11 +288,16 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
 
     companion object {
         private const val ARG_CONVERSATION_ID = "arg_conversation_id"
+        private const val ARG_FALLBACK_TITLE = "arg_fallback_title"
 
-        fun newInstance(conversationId: String): GroupInfoBottomSheetDialog {
+        fun newInstance(
+            conversationId: String,
+            fallbackTitle: String? = null
+        ): GroupInfoBottomSheetDialog {
             return GroupInfoBottomSheetDialog().apply {
-                arguments = android.os.Bundle().apply {
+                arguments = Bundle().apply {
                     putString(ARG_CONVERSATION_ID, conversationId)
+                    putString(ARG_FALLBACK_TITLE, fallbackTitle)
                 }
             }
         }

@@ -1,17 +1,23 @@
 package com.rentify.app.tenant.ui.chat.group
 
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.rentify.app.core.network.dto.chat.ConversationMemberDto
+import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.tenant.databinding.ItemGroupMemberBinding
 
 class GroupMemberAdapter(
     var currentUserId: String?,
     var isCurrentUserAdmin: Boolean,
+    private val onMessageMemberClick: (ConversationMemberDto) -> Unit,
     private val onMemberActionClick: (ConversationMemberDto) -> Unit
 ) : ListAdapter<ConversationMemberDto, GroupMemberAdapter.MemberViewHolder>(MemberDiffCallback) {
 
@@ -26,28 +32,55 @@ class GroupMemberAdapter(
 
     inner class MemberViewHolder(private val binding: ItemGroupMemberBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ConversationMemberDto) {
-            val isMe = item.userId != null && item.userId == currentUserId
+            val context = binding.root.context
+            val isMe = !item.userId.isNullOrBlank() && item.userId == currentUserId
             val name = item.displayName.ifBlank { item.userId ?: "Thành viên" }
-            binding.txtMemberName.text = name
 
-            val initial = name.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "U"
-            binding.txtMemberAvatar.text = initial
+            binding.memberAvatarView.bindPersonal(
+                userId = item.userId ?: name,
+                displayName = name,
+                avatarUrl = item.avatarUrl
+            )
 
-            binding.txtYouBadge.isVisible = isMe
-
-            val isAdmin = item.role.equals("admin", ignoreCase = true)
-            binding.txtMemberRole.text = if (isAdmin) "Trưởng nhóm" else "Thành viên"
-
-            // Only admin can manage other members
-            val canManage = isCurrentUserAdmin && !isMe
-            binding.btnMemberMenu.isVisible = canManage
-
-            if (canManage) {
-                binding.btnMemberMenu.setOnClickListener {
-                    onMemberActionClick(item)
+            if (isMe) {
+                val suffix = " (Bạn)"
+                val spannable = SpannableStringBuilder(name).apply {
+                    val start = length
+                    append(suffix)
+                    setSpan(
+                        ForegroundColorSpan(ContextCompat.getColor(context, CoreUiR.color.rentify_text_faint)),
+                        start,
+                        length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                 }
+                binding.txtMemberName.text = spannable
+                binding.btnMessageMember.isVisible = false
+                binding.btnMessageMember.setOnClickListener(null)
             } else {
-                binding.btnMemberMenu.setOnClickListener(null)
+                binding.txtMemberName.text = name
+                binding.btnMessageMember.isVisible = true
+                binding.btnMessageMember.contentDescription = "Nhắn tin với $name"
+                binding.btnMessageMember.setOnClickListener {
+                    onMessageMemberClick(item)
+                }
+            }
+
+            // Nhãn vai trò chỉ hiện cho vai trò đặc biệt ("Trưởng nhóm"), bỏ dòng "Thành viên"
+            val isAdmin = item.role.equals("admin", ignoreCase = true)
+            binding.txtRoleBadge.isVisible = isAdmin
+            if (isAdmin) {
+                binding.txtRoleBadge.text = "Trưởng nhóm"
+            }
+
+            val canManage = isCurrentUserAdmin && !isMe
+            binding.root.setOnLongClickListener {
+                if (canManage) {
+                    onMemberActionClick(item)
+                    true
+                } else {
+                    false
+                }
             }
         }
     }
@@ -62,4 +95,3 @@ class GroupMemberAdapter(
         }
     }
 }
-

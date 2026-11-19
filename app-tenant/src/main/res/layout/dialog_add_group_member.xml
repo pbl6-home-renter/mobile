@@ -25,28 +25,54 @@
         android:textColor="@color/rentify_text_secondary"
         android:textSize="13sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_md"
-        android:hint="User ID *"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxStrokeColor="@color/rentify_primary_gradient_start"
-        app:helperText="Có thể nhập nhiều ID phân tách bằng dấu phẩy (,)"
-        app:helperTextEnabled="true">
+        app:cardBackgroundColor="@color/sl_textfield_card_bg"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/sl_textfield_card_stroke"
+        app:strokeWidth="1.5dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtAddMemberIds"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:inputType="textMultiLine"
-            android:minLines="2" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="User ID *"
+            android:textColorHint="@color/rentify_text_muted"
+            app:boxBackgroundColor="@android:color/transparent"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:cursorColor="@color/rentify_primary"
+            app:hintTextColor="@color/rentify_primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAddMemberIds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/plus_jakarta_sans_regular"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:paddingTop="26dp"
+                android:paddingBottom="12dp"
+                android:textColor="@color/rentify_text"
+                android:textCursorDrawable="@drawable/bg_cursor_primary"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/plus_jakarta_sans_regular"
+        android:text="Có thể nhập nhiều ID phân tách bằng dấu phẩy (,)"
+        android:textColor="@color/rentify_text_muted"
+        android:textSize="12sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -2,28 +2,47 @@ package com.rentify.app.tenant.ui.chat
 
 import android.content.Context
 import android.content.Intent
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rentify.app.core.network.dto.chat.ConversationListResponseDto
+import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.state.UiState
+import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentChatBinding
 import com.rentify.app.tenant.ui.chat.detail.ChatDetailActivity
 import com.rentify.app.tenant.ui.chat.group.CreateGroupChatDialogFragment
+import com.rentify.app.tenant.ui.dialog.LoginFeature
+import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.text.Normalizer
+import java.util.Locale
 
 class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::inflate) {
 
     interface ChatListener {
         fun onNavigateToLoginRequested()
+    }
+
+    private enum class ConversationFilter {
+        ALL,
+        UNREAD,
+        LANDLORD,
+        GROUP
     }
 
     private var listener: ChatListener? = null
@@ -35,6 +54,19 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
     private val conversationAdapter by lazy {
         ConversationAdapter { conversation ->
             openChatDetail(conversation)
+        }
+    }
+
+    private var allConversations: List<ConversationListResponseDto> = emptyList()
+    private var selectedFilter: ConversationFilter = ConversationFilter.ALL
+    private var searchQuery: String = ""
+    private var searchDebounceJob: Job? = null
+
+    private val skeletonPulseAnimation by lazy {
+        AlphaAnimation(0.45f, 1.0f).apply {
+            duration = 750L
+            repeatMode = Animation.REVERSE
+            repeatCount = Animation.INFINITE
         }
     }
 
@@ -53,6 +85,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
         binding.root.applySystemBarsPadding(top = true, bottom = false)
         setupRecyclerView()
         setupSwipeRefresh()
+        setupSearchBox()
+        setupFilterChips()
+        setupErrorState()
         setupGuestView()
         setupCreateGroupButton()
     }
@@ -65,6 +100,19 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
                         binding.layoutGuest.isVisible = !loggedIn
                         binding.swipeRefreshLayout.isVisible = loggedIn
                         binding.btnCreateGroup.isVisible = loggedIn
+                        binding.layoutSearchContainer.isVisible = loggedIn
+                        binding.scrollFilterChips.isVisible = loggedIn
+                        if (!loggedIn) {
+                            stopSkeletonLoading()
+                            binding.layoutEmptyState.root.isVisible = false
+                            binding.layoutErrorState.root.isVisible = false
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.currentUserId.collect { userId ->
+                        conversationAdapter.currentUserId = userId
                     }
                 }
 
@@ -77,17 +125,6 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
                 launch {
                     viewModel.conversationsState.collect { state ->
                         handleConversationsState(state)
-                    }
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                while (isActive) {
-                    delay(12000)
-                    if (viewModel.isLoggedIn.value) {
-                        viewModel.checkAuthAndLoad(isRefresh = true)
                     }
                 }
             }
@@ -110,6 +147,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
         binding.rvConversations.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = conversationAdapter
+            if (itemDecorationCount == 0) {
+                addItemDecoration(ConversationDividerItemDecoration(requireContext()))
+            }
         }
     }
 
@@ -119,9 +159,89 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
         }
     }
 
+    private fun setupSearchBox() {
+        binding.edtSearch.doAfterTextChanged { editable ->
+            val raw = editable?.toString()?.trim().orEmpty()
+            searchDebounceJob?.cancel()
+            searchDebounceJob = viewLifecycleOwner.lifecycleScope.launch {
+                delay(300L)
+                if (searchQuery != raw) {
+                    searchQuery = raw
+                    if (viewModel.conversationsState.value is UiState.Success) {
+                        applyFiltersAndRender()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupFilterChips() {
+        binding.chipFilterAll.setOnClickListener {
+            selectFilter(ConversationFilter.ALL)
+        }
+        binding.chipFilterUnread.setOnClickListener {
+            selectFilter(ConversationFilter.UNREAD)
+        }
+        binding.chipFilterLandlord.setOnClickListener {
+            selectFilter(ConversationFilter.LANDLORD)
+        }
+        binding.chipFilterGroup.setOnClickListener {
+            selectFilter(ConversationFilter.GROUP)
+        }
+        updateFilterChipsAppearance()
+    }
+
+    private fun selectFilter(filter: ConversationFilter) {
+        if (selectedFilter == filter) return
+        selectedFilter = filter
+        updateFilterChipsAppearance()
+        if (viewModel.conversationsState.value is UiState.Success) {
+            applyFiltersAndRender()
+        }
+    }
+
+    private fun updateFilterChipsAppearance() {
+        val context = requireContext()
+        val fontRegular = ResourcesCompat.getFont(context, CoreUiR.font.plus_jakarta_sans)
+        val fontMedium = ResourcesCompat.getFont(context, CoreUiR.font.plus_jakarta_sans_medium)
+        val colorSelectedText = ContextCompat.getColor(context, CoreUiR.color.rentify_text)
+        val colorNormalText = ContextCompat.getColor(context, CoreUiR.color.rentify_text_secondary)
+
+        fun styleChip(chip: TextView, isSelected: Boolean) {
+            chip.setBackgroundResource(
+                if (isSelected) R.drawable.bg_chat_filter_chip_selected
+                else R.drawable.bg_chat_filter_chip_normal
+            )
+            chip.setTextColor(if (isSelected) colorSelectedText else colorNormalText)
+            chip.typeface = if (isSelected) fontMedium else fontRegular
+        }
+
+        styleChip(binding.chipFilterAll, selectedFilter == ConversationFilter.ALL)
+        styleChip(binding.chipFilterUnread, selectedFilter == ConversationFilter.UNREAD)
+        styleChip(binding.chipFilterLandlord, selectedFilter == ConversationFilter.LANDLORD)
+        styleChip(binding.chipFilterGroup, selectedFilter == ConversationFilter.GROUP)
+    }
+
+    private fun updateUnreadChipLabel(conversations: List<ConversationListResponseDto>) {
+        val unreadConvCount = conversations.count { it.unreadCount > 0 }
+        binding.chipFilterUnread.text = if (unreadConvCount > 0) {
+            "Chưa đọc $unreadConvCount"
+        } else {
+            "Chưa đọc"
+        }
+    }
+
+    private fun setupErrorState() {
+        binding.layoutErrorState.btnRetry.setOnClickListener {
+            viewModel.checkAuthAndLoad(isRefresh = false)
+        }
+    }
+
     private fun setupGuestView() {
         binding.btnLogin.setOnClickListener {
-            listener?.onNavigateToLoginRequested()
+            showLoginRequiredSheet(LoginFeature.MESSAGES) {
+                listener?.onNavigateToLoginRequested()
+            }
         }
     }
 
@@ -138,23 +258,94 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
     private fun handleConversationsState(state: UiState<List<ConversationListResponseDto>>) {
         when (state) {
             is UiState.Loading -> {
-                binding.progressBar.isVisible = true
-                binding.layoutEmptyState.isVisible = false
+                startSkeletonLoading()
+                binding.rvConversations.isVisible = false
+                binding.layoutEmptyState.root.isVisible = false
+                binding.layoutErrorState.root.isVisible = false
             }
             is UiState.Success -> {
-                binding.progressBar.isVisible = false
-                val items = state.data
-                conversationAdapter.submitList(items)
-                binding.layoutEmptyState.isVisible = items.isEmpty()
+                stopSkeletonLoading()
+                binding.layoutErrorState.root.isVisible = false
+                allConversations = state.data
+                updateUnreadChipLabel(allConversations)
+                applyFiltersAndRender()
             }
             is UiState.Error -> {
-                binding.progressBar.isVisible = false
-                toast(state.message)
+                stopSkeletonLoading()
+                binding.rvConversations.isVisible = false
+                binding.layoutEmptyState.root.isVisible = false
+                binding.layoutErrorState.root.isVisible = true
+                binding.layoutErrorState.tvErrorMessage.text = state.message
             }
             is UiState.Idle -> {
-                binding.progressBar.isVisible = false
-                binding.layoutEmptyState.isVisible = false
+                stopSkeletonLoading()
+                binding.rvConversations.isVisible = false
+                binding.layoutEmptyState.root.isVisible = false
+                binding.layoutErrorState.root.isVisible = false
             }
+        }
+    }
+
+    private fun applyFiltersAndRender() {
+        val normalizedQuery = normalizeForSearch(searchQuery)
+        val hasActiveFilterOrQuery = selectedFilter != ConversationFilter.ALL || normalizedQuery.isNotEmpty()
+
+        val filtered = allConversations.filter { conv ->
+            val matchesChip = when (selectedFilter) {
+                ConversationFilter.ALL -> true
+                ConversationFilter.UNREAD -> conv.unreadCount > 0
+                ConversationFilter.GROUP -> conv.kind.equals("group", ignoreCase = true)
+                ConversationFilter.LANDLORD -> false
+            }
+            if (!matchesChip) return@filter false
+
+            if (normalizedQuery.isEmpty()) return@filter true
+
+            val nameCandidate = conv.displayName ?: conv.title ?: ""
+            val lastMsgCandidate = conv.lastMessage?.contentPreview ?: ""
+            normalizeForSearch(nameCandidate).contains(normalizedQuery) ||
+                normalizeForSearch(lastMsgCandidate).contains(normalizedQuery)
+        }
+
+        conversationAdapter.submitList(filtered)
+
+        if (filtered.isEmpty()) {
+            binding.rvConversations.isVisible = false
+            binding.layoutEmptyState.root.isVisible = true
+            if (allConversations.isEmpty() && !hasActiveFilterOrQuery) {
+                binding.layoutEmptyState.ivEmptyIcon.setImageResource(CoreUiR.drawable.ic_nav_chat)
+                binding.layoutEmptyState.tvEmptyTitle.text = "Chưa có tin nhắn nào"
+                binding.layoutEmptyState.tvEmptyMessage.isVisible = false
+            } else {
+                binding.layoutEmptyState.ivEmptyIcon.setImageResource(CoreUiR.drawable.ic_search)
+                binding.layoutEmptyState.tvEmptyTitle.text = "Không tìm thấy hội thoại phù hợp"
+                binding.layoutEmptyState.tvEmptyMessage.isVisible = false
+            }
+        } else {
+            binding.rvConversations.isVisible = true
+            binding.layoutEmptyState.root.isVisible = false
+        }
+    }
+
+    private fun normalizeForSearch(input: String): String {
+        if (input.isBlank()) return ""
+        val decomposed = Normalizer.normalize(input.lowercase(Locale.ROOT), Normalizer.Form.NFD)
+        return decomposed
+            .replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
+            .replace('đ', 'd')
+    }
+
+    private fun startSkeletonLoading() {
+        if (!binding.layoutSkeletonLoading.isVisible) {
+            binding.layoutSkeletonLoading.isVisible = true
+            binding.layoutSkeletonLoading.startAnimation(skeletonPulseAnimation)
+        }
+    }
+
+    private fun stopSkeletonLoading() {
+        if (binding.layoutSkeletonLoading.isVisible) {
+            binding.layoutSkeletonLoading.clearAnimation()
+            binding.layoutSkeletonLoading.isVisible = false
         }
     }
 
@@ -165,6 +356,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
             putExtra(ChatDetailActivity.EXTRA_IS_GROUP, conversation.kind.equals("group", ignoreCase = true))
         }
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        searchDebounceJob?.cancel()
+        binding.layoutSkeletonLoading.clearAnimation()
+        super.onDestroyView()
     }
 
     companion object {
