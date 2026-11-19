@@ -39,6 +39,7 @@ import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
 import com.rentify.app.tenant.ui.invoice.detail.InvoiceDetailActivity
 import com.rentify.app.tenant.ui.invoice.list.MyInvoicesActivity
 import com.rentify.app.tenant.ui.issue.list.MyIssuesActivity
+import com.rentify.app.tenant.ui.room.detail.RoomDetailActivity
 import kotlinx.coroutines.launch
 
 class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding::inflate) {
@@ -132,7 +133,7 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
         // Multi contracts list
         contractsAdapter = MyRoomsAdapter(
             onRoomClick = { contract ->
-                ContractDetailActivity.start(requireContext(), contract.id)
+                RoomDetailActivity.start(requireContext(), contract.roomId)
             }
         )
         binding.rvContractsList.apply {
