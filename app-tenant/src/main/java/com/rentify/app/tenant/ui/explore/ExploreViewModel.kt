@@ -4,6 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.data.repository.user.UserRepository
 import com.rentify.app.tenant.data.local.TenantDevPreferences
+import com.rentify.app.tenant.data.repository.BuildingSummary
+import com.rentify.app.tenant.data.repository.FavoriteResultMessages
+import com.rentify.app.tenant.data.repository.MyRoomHubLoader
+import com.rentify.app.tenant.data.repository.TenantBuildingRepository
 import com.rentify.app.tenant.data.repository.TenantRoomRepository
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.room.MyRoomHubResponseDto
@@ -15,14 +19,19 @@ import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
 import com.rentify.app.core.network.dto.user.UserCurrentResponseDto
 import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.core.ui.state.UiState
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ExploreViewModel(
     private val roomRepository: TenantRoomRepository,
+    private val buildingRepository: TenantBuildingRepository,
+    private val hubLoader: MyRoomHubLoader,
     private val userRepository: UserRepository,
     private val tokenDataStore: TokenDataStore,
     private val tenantDevPreferences: TenantDevPreferences
@@ -37,6 +46,11 @@ class ExploreViewModel(
     private val _myRoomHub = MutableStateFlow<MyRoomHubResponseDto?>(null)
     val myRoomHub: StateFlow<MyRoomHubResponseDto?> = _myRoomHub.asStateFlow()
 
+    private val _myRoomsList = MutableStateFlow<List<MyRoomHubResponseDto>>(emptyList())
+    val myRoomsList: StateFlow<List<MyRoomHubResponseDto>> = _myRoomsList.asStateFlow()
+
+    var savedRoomPageIndex: Int = 0
+
     private val _hasRoomVisible = MutableStateFlow(false)
     val hasRoomVisible: StateFlow<Boolean> = _hasRoomVisible.asStateFlow()
 
@@ -45,6 +59,12 @@ class ExploreViewModel(
 
     private val _roomsState = MutableStateFlow<UiState<List<RoomPublicListResponseDto>>>(UiState.Loading)
     val roomsState: StateFlow<UiState<List<RoomPublicListResponseDto>>> = _roomsState.asStateFlow()
+
+    private val _favoriteError = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val favoriteError: SharedFlow<String> = _favoriteError.asSharedFlow()
+
+    private val _buildings = MutableStateFlow<List<BuildingSummary>>(emptyList())
+    val buildings: StateFlow<List<BuildingSummary>> = _buildings.asStateFlow()
 
     private val _isLoadingMore = MutableStateFlow(false)
     val isLoadingMore: StateFlow<Boolean> = _isLoadingMore.asStateFlow()
@@ -86,6 +106,7 @@ class ExploreViewModel(
             } else {
                 _currentUser.value = null
                 _myRoomHub.value = null
+                _myRoomsList.value = emptyList()
                 _hasUnpaidInvoice.value = false
                 recomputeRoomVisibility()
             }
@@ -105,15 +126,17 @@ class ExploreViewModel(
 
     private fun fetchMyRoomHub() {
         launchSafe {
-            when (val result = roomRepository.getMyRoomHub()) {
+            when (val result = hubLoader.load()) {
                 is NetworkResult.Success -> {
-                    val hubData = result.data.data
-                    _myRoomHub.value = hubData
-                    _hasUnpaidInvoice.value = hubData?.currentInvoice != null
+                    val hubs = result.data
+                    _myRoomHub.value = hubs.firstOrNull()
+                    _myRoomsList.value = hubs
+                    _hasUnpaidInvoice.value = hubs.any { (it.currentInvoice?.remainingAmount ?: 0L) > 0L }
                     recomputeRoomVisibility()
                 }
                 is NetworkResult.ApiError -> {
                     _myRoomHub.value = null
+                    _myRoomsList.value = emptyList()
                     _hasUnpaidInvoice.value = false
                     recomputeRoomVisibility()
                 }
@@ -128,17 +151,22 @@ class ExploreViewModel(
 
         if (!loggedIn) {
             _hasRoomVisible.value = false
+            _myRoomsList.value = emptyList()
             return
         }
 
         if (tweak != null) {
             _hasRoomVisible.value = tweak
             if (tweak && _myRoomHub.value == null) {
-                _myRoomHub.value = createMockRoomHub()
+                val mock = createMockRoomHub()
+                _myRoomHub.value = mock
+                _myRoomsList.value = listOf(mock)
                 _hasUnpaidInvoice.value = true
+            } else if (!tweak) {
+                _myRoomsList.value = emptyList()
             }
         } else {
-            _hasRoomVisible.value = _myRoomHub.value != null
+            _hasRoomVisible.value = _myRoomsList.value.isNotEmpty()
         }
     }
 
@@ -148,8 +176,18 @@ class ExploreViewModel(
         }
     }
 
+    private fun loadBuildings() {
+        launchSafe {
+            when (val result = buildingRepository.getBuildings(province = selectedProvince, ward = selectedWard)) {
+                is NetworkResult.Success -> _buildings.value = result.data
+                else -> Unit
+            }
+        }
+    }
+
     fun loadRooms(isRefresh: Boolean = false) {
         if (isRefresh) {
+            loadBuildings()
             currentPage = 1
             hasNextPage = true
             if (currentRoomsList.isEmpty()) {
@@ -258,7 +296,9 @@ class ExploreViewModel(
                 roomRepository.removeFavoriteRoom(room.id)
             }
 
-            if (result !is NetworkResult.Success) {
+            val keepsFavorite = updatedFavorited && FavoriteResultMessages.isAlreadyFavorited(result)
+            if (result !is NetworkResult.Success && !keepsFavorite) {
+                _favoriteError.tryEmit(FavoriteResultMessages.failureMessage(result, adding = updatedFavorited))
                 val revertedList = currentRoomsList.map { item ->
                     if (item.id == room.id) item.copy(isFavorited = originalFavorited) else item
                 }

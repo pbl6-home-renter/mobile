@@ -1,0 +1,47 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="180dp"
+    android:height="90dp"
+    android:viewportWidth="180"
+    android:viewportHeight="90">
+
+    <!-- Họa tiết mái nhà phong cách kiến trúc tối giản, thanh lịch (Minimalist Rooflines) -->
+
+    <!-- Nhà 3 (bên trái, lớp nền) -->
+    <path
+        android:strokeColor="#20FFFFFF"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M15,90 L48,42 L80,82" />
+
+    <!-- Nhà 1 (chính giữa, vươn cao thanh thoát) -->
+    <path
+        android:strokeColor="#35FFFFFF"
+        android:strokeWidth="1.4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M52,90 L102,16 L152,90" />
+
+    <!-- Ô cửa vòm thanh tao áp mái nhà chính -->
+    <path
+        android:strokeColor="#25FFFFFF"
+        android:strokeWidth="1.1"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M95,68 V56 Q102,48 109,56 V68" />
+
+    <!-- Nhà 2 (bên phải, mái dốc hiện đại) -->
+    <path
+        android:strokeColor="#28FFFFFF"
+        android:strokeWidth="1.3"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M118,74 L146,36 L175,65 V90" />
+
+    <!-- Đường chân cơ sở mờ nhẹ -->
+    <path
+        android:strokeColor="#15FFFFFF"
+        android:strokeWidth="1.0"
+        android:strokeLineCap="round"
+        android:pathData="M10,90 L175,90" />
+</vector>

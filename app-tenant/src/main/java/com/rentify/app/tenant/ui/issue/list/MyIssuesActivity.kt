@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivityMyIssuesBinding
@@ -114,7 +114,7 @@ class MyIssuesActivity : BaseActivity<ActivityMyIssuesBinding>(ActivityMyIssuesB
                         is UiState.Error -> {
                             binding.progressBar.isVisible = false
                             binding.swipeRefresh.isRefreshing = false
-                            toast(state.message)
+                            showError(state.message)
                         }
                         is UiState.Idle -> {
                             binding.progressBar.isVisible = false

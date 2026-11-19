@@ -1,17 +1,20 @@
 package com.rentify.app.tenant.ui.profile
 
 import android.content.Context
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.tenant.databinding.BottomSheetChangePasswordBinding
 import com.rentify.app.tenant.databinding.BottomSheetEditProfileBinding
 import com.rentify.app.tenant.databinding.FragmentProfileBinding
-import com.rentify.app.tenant.ui.dialog.showRequireLoginDialog
+import com.rentify.app.tenant.ui.dialog.LoginFeature
+import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
 import com.rentify.app.tenant.ui.explore.DevTweaksDialogFragment
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
@@ -31,7 +34,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        listener = context as? ProfileListener
+        listener = parentFragment as? ProfileListener ?: context as? ProfileListener
     }
 
     override fun onDetach() {
@@ -43,10 +46,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         changePasswordDialog = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        setLightStatusBarIcons(true)
+    }
+
+    private fun setLightStatusBarIcons(light: Boolean) {
+        activity?.window?.let { window ->
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = light
+        }
+    }
+
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
+        setLightStatusBarIcons(!hidden)
         if (!hidden && !viewModel.uiState.value.isLoggedIn) {
-            showRequireLoginDialog("Vui lòng đăng nhập để xem thông tin và quản lý tài khoản cá nhân.") {
+            showLoginRequiredSheet(LoginFeature.PROFILE) {
                 listener?.onNavigateToLoginRequested()
             }
         }
@@ -77,12 +92,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 }
 
                 binding.tvAvatarLetter.text = (displayName.trim().firstOrNull() ?: 'U').uppercaseChar().toString()
-
-                binding.tvUserRoleBadge.text = if (state.role.equals("landlord", ignoreCase = true)) {
-                    "Chủ nhà trọ"
-                } else {
-                    "Người thuê trọ"
-                }
             } else {
                 binding.layoutGuestMode.isVisible = false
                 binding.layoutLoggedInMode.isVisible = false
@@ -92,10 +101,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         viewModel.events.collectWhenStarted { event ->
             when (event) {
                 is ProfileEvent.ShowToast -> {
-                    toast(event.message)
+                    showMessage(event.message)
                 }
                 is ProfileEvent.ShowError -> {
-                    toast(event.message)
+                    showError(event.message)
                 }
                 is ProfileEvent.ProfileUpdated -> {
                     editProfileDialog?.dismiss()
@@ -125,16 +134,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             showDevTweaksDialog()
         }
 
-        binding.btnDevTweaksRow.setOnClickListener {
-            showDevTweaksDialog()
-        }
-
         binding.btnGuestTerms.setOnClickListener {
-            toast("Điều khoản và chính sách đang được cập nhật")
+            showMessage("Điều khoản và chính sách đang được cập nhật")
         }
 
         binding.btnTermsRow.setOnClickListener {
-            toast("Điều khoản và chính sách đang được cập nhật")
+            showMessage("Điều khoản và chính sách đang được cập nhật")
         }
 
         binding.btnFavoriteRooms.setOnClickListener {
@@ -144,7 +149,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
 
         binding.btnNotifications.setOnClickListener {
-            toast("Cài đặt thông báo đang được hoàn thiện")
+            showMessage("Cài đặt thông báo đang được hoàn thiện")
         }
 
         binding.btnQuickEditProfile.setOnClickListener {
@@ -189,13 +194,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         dialog.setContentView(dialogBinding.root)
 
         currentProfile?.let {
-            dialogBinding.etName.setText(it.name)
-            dialogBinding.etPhone.setText(it.phone)
+            dialogBinding.etName.text = it.name
+            dialogBinding.etPhone.text = it.phone
         }
 
         dialogBinding.btnSaveProfile.setOnClickListener {
-            val name = dialogBinding.etName.text?.toString().orEmpty()
-            val phone = dialogBinding.etPhone.text?.toString().orEmpty()
+            val name = dialogBinding.etName.text
+            val phone = dialogBinding.etPhone.text
             viewModel.updateProfile(name, phone)
         }
 
@@ -213,9 +218,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         dialog.setContentView(dialogBinding.root)
 
         dialogBinding.btnSubmitChangePassword.setOnClickListener {
-            val currentPass = dialogBinding.etCurrentPassword.text?.toString().orEmpty()
-            val newPass = dialogBinding.etNewPassword.text?.toString().orEmpty()
-            val confirmPass = dialogBinding.etConfirmPassword.text?.toString().orEmpty()
+            val currentPass = dialogBinding.etCurrentPassword.text
+            val newPass = dialogBinding.etNewPassword.text
+            val confirmPass = dialogBinding.etConfirmPassword.text
 
             viewModel.changePassword(currentPass, newPass, confirmPass)
         }

@@ -5,89 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="start"
-    android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="4dp">
+    android:orientation="vertical"
+    android:paddingHorizontal="14dp">
 
-    <!-- Small Avatar -->
-    <FrameLayout
-        android:id="@+id/layoutAvatar"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_gravity="bottom"
-        android:layout_marginEnd="8dp">
-
-        <TextView
-            android:id="@+id/txtAvatarSmall"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_avatar_gradient"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:textColor="@android:color/white"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            tools:text="N" />
-    </FrameLayout>
+    <include
+        android:id="@+id/layoutDateSeparator"
+        layout="@layout/layout_message_date_separator" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
-        <!-- Sender name if group -->
-        <TextView
-            android:id="@+id/txtSenderName"
+        <!-- Avatar 28dp căn đáy với bong bóng -->
+        <FrameLayout
+            android:id="@+id/layoutAvatarSlot"
+            android:layout_width="28dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="8dp">
+
+            <com.rentify.app.core.ui.view.RentifyAvatarView
+                android:id="@+id/avatarSmall"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:avatarSize="28dp" />
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:textColor="@color/rentify_text_secondary"
-            android:textSize="11sp"
-            android:visibility="gone"
-            tools:text="Nguyễn Văn A"
-            tools:visibility="visible" />
+            android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardImage"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardBackgroundColor="@color/rentify_surface"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:strokeColor="@color/rentify_divider"
-            app:strokeWidth="1dp">
+            <!-- Tên người gửi phía trên tin ĐẦU của nhóm trong chat nhóm -->
+            <TextView
+                android:id="@+id/txtSenderName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:includeFontPadding="false"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp"
+                android:visibility="gone"
+                tools:text="Nguyễn Văn A"
+                tools:visibility="visible" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardImage"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/rentify_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/rentify_border"
+                app:strokeWidth="1dp">
 
                 <ImageView
                     android:id="@+id/ivMessageImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="Hình ảnh tin nhắn"
                     android:scaleType="centerCrop"
                     tools:src="@drawable/ic_image_placeholder" />
-
-                <!-- Time Overlay at bottom right -->
-                <TextView
-                    android:id="@+id/txtImageTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="8dp"
-                    android:background="#80000000"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"
-                    tools:text="14:32" />
-            </FrameLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
+    <!-- 3.4 Giờ gửi ngay dưới tin cuối của nhóm hoặc khi chạm vào tin -->
+    <TextView
+        android:id="@+id/txtTimeStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:includeFontPadding="false"
+        android:textColor="@color/rentify_text_faint"
+        android:textSize="11sp"
+        android:visibility="gone"
+        tools:text="14:32"
+        tools:visibility="visible" />
+
+</LinearLayout>

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="@dimen/spacing_smd"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="14dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/rentify_divider"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/rentify_border_soft"
     app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="@dimen/spacing_md">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,19 +26,16 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <com.rentify.app.core.ui.view.RentifyAvatarView
                 android:id="@+id/ivUserAvatar"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="#E2E8F0"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_user_circle"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                app:avatarSize="48dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/spacing_smd"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -55,9 +55,9 @@
                     android:id="@+id/tvCreatedAt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp"
                     tools:text="14:30 04/11/2026" />
             </LinearLayout>
@@ -69,34 +69,19 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="Đang chờ" />
         </LinearLayout>
-
-        <!-- Message if present -->
-        <TextView
-            android:id="@+id/tvMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="#0A2563EB"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:padding="10dp"
-            android:textColor="@color/rentify_text_secondary"
-            android:textSize="12sp"
-            android:visibility="gone"
-            tools:text="Chào bạn! Mình thấy thói quen sinh hoạt của 2 đứa rất hợp nhau, mình cùng tìm phòng nhé!"
-            tools:visibility="visible" />
 
         <!-- Actions Container -->
         <LinearLayout
             android:id="@+id/layoutActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -104,7 +89,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:insetTop="0dp"
@@ -112,14 +97,14 @@
                 android:text="Từ chối"
                 android:textColor="@color/rentify_error"
                 android:textSize="13sp"
-                app:cornerRadius="8dp"
+                app:cornerRadius="20dp"
                 app:strokeColor="@color/rentify_error" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAccept"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"
@@ -128,7 +113,7 @@
                 android:text="Chấp nhận"
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="13sp"
-                app:cornerRadius="8dp" />
+                app:cornerRadius="20dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnWithdraw"
@@ -139,11 +124,11 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="Rút lời mời"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="13sp"
                 android:visibility="gone"
-                app:cornerRadius="8dp"
-                app:strokeColor="@color/rentify_divider" />
+                app:cornerRadius="20dp"
+                app:strokeColor="@color/rentify_border" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnChat"
@@ -157,7 +142,7 @@
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="13sp"
                 android:visibility="gone"
-                app:cornerRadius="8dp"
+                app:cornerRadius="20dp"
                 app:icon="@drawable/ic_nav_chat"
                 app:iconGravity="textStart"
                 app:iconSize="16dp"

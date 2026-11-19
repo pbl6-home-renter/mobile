@@ -24,7 +24,61 @@
     <!-- Tenant Navigation -->
     <string name="nav_tenant_explore">Khám phá</string>
     <string name="nav_tenant_chat">Tin nhắn</string>
-    <string name="nav_tenant_my_room">Phòng tôi</string>
+    <string name="nav_tenant_my_room">Phòng</string>
     <string name="nav_tenant_matching">Ghép bạn</string>
-    <string name="nav_tenant_profile">Cá nhân</string>
+    <string name="nav_tenant_profile">Tôi</string>
+
+    <!-- Login Required Sheet -->
+    <string name="login_required_badge">Cần đăng nhập</string>
+    <string name="login_required_action">Đăng nhập</string>
+    <string name="login_required_later">Để sau</string>
+    <string name="login_required_messages_title">Đăng nhập để nhắn tin</string>
+    <string name="login_required_messages_desc">Trò chuyện trực tiếp với chủ trọ và bạn ở cùng.</string>
+    <string name="login_required_my_room_title">Đăng nhập để xem phòng của bạn</string>
+    <string name="login_required_my_room_desc">Theo dõi hóa đơn, hợp đồng và báo sự cố.</string>
+    <string name="login_required_roommate_title">Đăng nhập để ghép bạn ở cùng</string>
+    <string name="login_required_roommate_desc">Xem hồ sơ và nhắn tin với người hợp với bạn.</string>
+    <string name="login_required_profile_title">Đăng nhập để vào trang cá nhân</string>
+    <string name="login_required_profile_desc">Quản lý hồ sơ, phòng đã lưu và cài đặt.</string>
+
+    <!-- Room Detail Status Labels -->
+    <string name="room_status_available">Còn trống</string>
+    <string name="room_status_unavailable">Hết phòng</string>
+    <string name="room_status_preparing">Sắp trống</string>
+
+    <!-- My Rooms list -->
+    <string name="my_rooms_title">Phòng của tôi</string>
+    <string name="my_rooms_tab_active">Đang thuê</string>
+    <string name="my_rooms_tab_ended">Đã kết thúc</string>
+    <string name="my_rooms_empty_active_title">Bạn chưa thuê phòng nào</string>
+    <string name="my_rooms_empty_active_desc">Phòng bạn thuê sẽ hiện ở đây.</string>
+    <string name="my_rooms_empty_ended_title">Chưa có phòng đã kết thúc</string>
+    <string name="my_rooms_empty_ended_desc">Phòng bạn từng thuê sẽ được lưu ở đây.</string>
+    <string name="my_rooms_find_room">Tìm phòng</string>
+    <string name="my_rooms_footer_no_invoice">Chưa có hóa đơn tháng %1$d</string>
+    <string name="my_rooms_footer_pending">Hóa đơn tháng %1$d chờ thanh toán</string>
+    <plurals name="my_rooms_footer_overdue">
+        <item quantity="other">Hóa đơn tháng %1$d quá hạn %2$d ngày</item>
+    </plurals>
+    <string name="my_rooms_footer_awaiting_confirm">Đã chuyển khoản, chờ chủ trọ xác nhận</string>
+    <string name="my_rooms_footer_paid">Đã thanh toán hóa đơn tháng %1$d</string>
+    <string name="my_rooms_footer_ended">Đã kết thúc %1$s</string>
+
+    <!-- My Room dashboard -->
+    <string name="my_room_invoice_title">Hóa đơn tháng %1$d</string>
+    <string name="my_room_invoice_due">Hạn %1$s</string>
+    <string name="my_room_invoice_paid">Đã thanh toán hóa đơn tháng %1$d</string>
+    <string name="my_room_invoice_none">Chưa có hóa đơn</string>
+    <string name="my_room_pay_qr">Thanh toán QR</string>
+    <string name="my_room_invoice_history">Lịch sử hóa đơn</string>
+    <string name="my_room_action_contract">Hợp đồng</string>
+    <string name="my_room_action_issues">Báo sự cố</string>
+    <string name="my_room_action_invoices">Hóa đơn</string>
+    <string name="my_room_people_title">Mọi người</string>
+    <string name="my_room_role_landlord">Chủ trọ</string>
+    <string name="my_room_role_roommate">Bạn cùng phòng</string>
+    <string name="my_room_representative">Người đại diện</string>
+    <string name="my_room_call">Gọi điện</string>
+    <string name="my_room_chat">Nhắn tin</string>
+    <string name="my_room_all_rooms">Danh sách phòng</string>
 </resources>

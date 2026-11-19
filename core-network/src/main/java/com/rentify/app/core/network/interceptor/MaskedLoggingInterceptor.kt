@@ -28,10 +28,25 @@ class MaskedLoggingInterceptor(
         if (message.startsWith("Authorization:", ignoreCase = true)) {
             return "Authorization: Bearer ***MASKED***"
         }
-        return message
+        if (message.startsWith("Cookie:", ignoreCase = true) || message.startsWith("Set-Cookie:", ignoreCase = true)) {
+            return message.substringBefore(":") + ": ***MASKED***"
+        }
+        return SENSITIVE_JSON_VALUE.replace(message) { match ->
+            "\"${match.groupValues[1]}\":\"$MASK\""
+        }
     }
 
     companion object {
         private const val TAG = "NetworkLog"
+        private const val MASK = "***MASKED***"
+        private val SENSITIVE_JSON_VALUE = Regex(
+            "\"(password|currentPassword|newPassword|confirmPassword|accessToken|refreshToken|token|" +
+                "accountNumber|tenantCccd|cccd)\"" +
+                """\s*:\s*""" +
+                "\"" +
+                """(?:\\.|[^"\\])*""" +
+                "\"",
+            RegexOption.IGNORE_CASE
+        )
     }
 }

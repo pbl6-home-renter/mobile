@@ -49,8 +49,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(Fragm
     }
 
     override fun initView() {
-        binding.etIdentifier.doOnTextChanged { _, _, _, _ ->
-            binding.tilIdentifier.error = null
+        binding.tilIdentifier.editText.doOnTextChanged { _, _, _, _ ->
+            binding.tilIdentifier.setError(null)
             hideInlineError()
         }
 
@@ -68,19 +68,19 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(Fragm
     }
 
     private fun performSendRequest() {
-        val email = binding.etIdentifier.text?.toString().orEmpty().trim()
+        val email = binding.tilIdentifier.text.trim()
 
         if (email.isBlank()) {
-            binding.tilIdentifier.error = getString(R.string.auth_forgot_password_error_empty)
+            binding.tilIdentifier.setError(getString(R.string.auth_forgot_password_error_empty))
             return
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.tilIdentifier.error = getString(R.string.auth_forgot_password_error_invalid_email)
+            binding.tilIdentifier.setError(getString(R.string.auth_forgot_password_error_invalid_email))
             return
         }
 
-        binding.tilIdentifier.error = null
+        binding.tilIdentifier.setError(null)
         hideInlineError()
         viewModel.requestPasswordReset(email)
     }
@@ -98,7 +98,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(Fragm
                 }
                 is UiState.Success -> {
                     showLoadingState(false)
-                    val email = binding.etIdentifier.text?.toString().orEmpty().trim()
+                    val email = binding.tilIdentifier.text.trim()
                     listener?.onRequestResetSuccess(email)
                     viewModel.resetRequestState()
                 }

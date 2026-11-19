@@ -10,6 +10,22 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+fun Int.toViFormatted(): String {
+    val symbols = DecimalFormatSymbols(Locale.forLanguageTag("vi-VN")).apply {
+        groupingSeparator = '.'
+    }
+    val formatter = DecimalFormat("#,##0", symbols)
+    return formatter.format(this)
+}
+
+fun Long.toViFormatted(): String {
+    val symbols = DecimalFormatSymbols(Locale.forLanguageTag("vi-VN")).apply {
+        groupingSeparator = '.'
+    }
+    val formatter = DecimalFormat("#,##0", symbols)
+    return formatter.format(this)
+}
+
 fun Long.toVnd(): String {
     val symbols = DecimalFormatSymbols(Locale.US).apply {
         groupingSeparator = '.'

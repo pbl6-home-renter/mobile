@@ -1,92 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="10dp">
+    android:background="?attr/selectableItemBackground"
+    android:minHeight="56dp"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="8dp">
 
-    <FrameLayout
+    <!-- RentifyAvatarView 40dp -->
+    <com.rentify.app.core.ui.view.RentifyAvatarView
+        android:id="@+id/memberAvatarView"
         android:layout_width="40dp"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        app:avatarSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txtMemberAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_avatar_gradient"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="N" />
-    </FrameLayout>
-
-    <LinearLayout
+    <!-- Cụm Tên + (Bạn) + Nhãn vai trò -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutNameAndRole"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txtMemberName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:text="Nguyễn Văn A" />
-
-            <TextView
-                android:id="@+id/txtYouBadge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/bg_pill_badge_role"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="1dp"
-                android:text="Bạn"
-                android:textColor="@color/rentify_primary_gradient_start"
-                android:textSize="10sp"
-                android:visibility="gone"
-                tools:visibility="visible" />
-        </LinearLayout>
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnMessageMember"
+        app:layout_constraintStart_toEndOf="@+id/memberAvatarView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginEnd="0dp">
 
         <TextView
-            android:id="@+id/txtMemberRole"
+            android:id="@+id/txtMemberName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:textColor="@color/rentify_text_secondary"
-            android:textSize="12sp"
-            tools:text="Trưởng nhóm" />
-    </LinearLayout>
+            android:ellipsize="end"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/rentify_text"
+            android:textSize="14sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtRoleBadge"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nguyễn Văn A (Bạn)" />
 
+        <!-- Nhãn vai trò đặc biệt (Trưởng nhóm): 10sp medium, chữ rentify_teal, nền rentify_teal_surface, viền 1dp rentify_teal_border -->
+        <TextView
+            android:id="@+id/txtRoleBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_landlord_role_badge"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="2dp"
+            android:text="Trưởng nhóm"
+            android:textColor="@color/rentify_teal"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtMemberName"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Nút nhắn tin: tròn 40dp, nền rentify_field_bg, icon bong bóng chat 19dp màu #334155, luôn sát mép phải -->
     <ImageButton
-        android:id="@+id/btnMemberMenu"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Tùy chọn thành viên"
-        android:src="@drawable/ic_more_vert"
-        android:visibility="gone"
-        app:tint="@color/rentify_neutral"
-        tools:visibility="visible" />
+        android:id="@+id/btnMessageMember"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_chat_header_icon_btn"
+        android:contentDescription="Nhắn tin"
+        android:padding="10.5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_nav_chat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/rentify_icon_action_slate" />
 
-</LinearLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>

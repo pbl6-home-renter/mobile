@@ -14,7 +14,7 @@ import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.core.ui.R
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.databinding.FragmentVerifyOtpBinding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showSuccess
 
 class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyOtpBinding::inflate) {
 
@@ -58,8 +58,8 @@ class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyO
     override fun initView() {
         binding.tvSubtitle.text = getString(R.string.auth_verify_otp_subtitle, targetEmail)
 
-        binding.etOtp.doOnTextChanged { _, _, _, _ ->
-            binding.tilOtp.error = null
+        binding.etOtp.editText.doOnTextChanged { _, _, _, _ ->
+            binding.etOtp.setError(null)
             hideInlineError()
         }
 
@@ -77,14 +77,14 @@ class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyO
     }
 
     private fun performVerify() {
-        val token = binding.etOtp.text?.toString().orEmpty().trim()
+        val token = binding.etOtp.text.trim()
 
         if (token.isBlank()) {
-            binding.tilOtp.error = getString(R.string.auth_verify_otp_error_empty)
+            binding.etOtp.setError(getString(R.string.auth_verify_otp_error_empty))
             return
         }
 
-        binding.tilOtp.error = null
+        binding.etOtp.setError(null)
         hideInlineError()
         listener?.onVerifyOtpSuccess(token)
     }
@@ -92,7 +92,7 @@ class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyO
     private fun performResendCode() {
         if (targetEmail.isNotBlank()) {
             viewModel.requestPasswordReset(targetEmail)
-            toast(getString(R.string.auth_verify_otp_resend_success))
+            showSuccess(getString(R.string.auth_verify_otp_resend_success))
             startCountDownTimer()
         }
     }

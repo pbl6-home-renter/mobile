@@ -7,58 +7,171 @@
     android:background="@color/rentify_surface"
     android:orientation="vertical">
 
-    <!-- Header bar -->
+    <!-- 1. Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
-        android:elevation="1dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="12dp">
+        android:paddingHorizontal="18dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvHeaderTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Tin nhắn"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Trò chuyện với chủ trọ &amp; cư dân"
-                android:textColor="@color/rentify_text_secondary"
-                android:textSize="13sp" />
-        </LinearLayout>
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:text="Tin nhắn"
+            android:textColor="@color/rentify_text"
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/btnCreateGroup"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_chat_header_icon_btn"
             android:contentDescription="Tạo nhóm trò chuyện"
-            android:src="@drawable/ic_group_add"
-            app:tint="@color/rentify_primary_gradient_start" />
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_compose_message"
+            app:tint="@color/rentify_icon_action_slate" />
     </LinearLayout>
 
+    <!-- 2. Ô tìm kiếm (44dp, bo 14dp, nền rentify_field_bg) -->
+    <LinearLayout
+        android:id="@+id/layoutSearchContainer"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/bg_chat_search_box"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="14dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_search"
+            app:tint="@color/rentify_text_muted" />
+
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:hint="Tìm theo tên, nội dung"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/rentify_text"
+            android:textColorHint="@color/rentify_text_muted"
+            android:textCursorDrawable="@drawable/bg_cursor_primary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- 3. Hàng chip lọc -->
+    <HorizontalScrollView
+        android:id="@+id/scrollFilterChips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="18dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/chipFilterAll"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_chat_filter_chip_selected"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="14dp"
+                android:text="Tất cả"
+                android:textColor="@color/rentify_text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/chipFilterUnread"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chat_filter_chip_normal"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="14dp"
+                android:text="Chưa đọc"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp" />
+
+            <!-- Ẩn chip Chủ trọ vì API GET /conversations chưa trả về vai trò người đối diện -->
+            <TextView
+                android:id="@+id/chipFilterLandlord"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chat_filter_chip_normal"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="14dp"
+                android:text="Chủ trọ"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/chipFilterGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_chat_filter_chip_normal"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="14dp"
+                android:text="Nhóm"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Body container -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <!-- Logged In Content -->
+        <!-- Danh sách hội thoại -->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
@@ -69,70 +182,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
-                android:paddingTop="8dp"
-                android:paddingBottom="24dp"
+                android:paddingBottom="@dimen/spacing_lg"
                 tools:listitem="@layout/item_conversation" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <!-- Loading indicator -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <!-- Empty State -->
+        <!-- 5.1 Đang tải: 5 item skeleton nhấp nháy -->
         <LinearLayout
-            android:id="@+id/layoutEmptyState"
+            android:id="@+id/layoutSkeletonLoading"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="@color/rentify_surface"
             android:orientation="vertical"
-            android:padding="24dp"
             android:visibility="gone"
             tools:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                app:cardBackgroundColor="#102563EB"
-                app:cardCornerRadius="36dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/rentify_primary_gradient_start"
-                app:strokeWidth="1.5dp">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_nav_chat"
-                    app:tint="@color/rentify_primary_gradient_start" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Chưa có cuộc trò chuyện nào"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Khi bạn liên hệ với chủ trọ hoặc tham gia nhóm phòng, các tin nhắn sẽ xuất hiện tại đây."
-                android:textColor="@color/rentify_text_secondary"
-                android:textSize="13sp" />
+            <include layout="@layout/item_conversation_skeleton" />
+            <include layout="@layout/item_conversation_skeleton" />
+            <include layout="@layout/item_conversation_skeleton" />
+            <include layout="@layout/item_conversation_skeleton" />
+            <include layout="@layout/item_conversation_skeleton" />
         </LinearLayout>
+
+        <!-- 5.2 Trống / Tìm kiếm không ra kết quả (dùng lại component dùng chung) -->
+        <include
+            android:id="@+id/layoutEmptyState"
+            layout="@layout/view_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+        <!-- 5.3 Lỗi tải (dùng lại component dùng chung RentifyErrorState) -->
+        <include
+            android:id="@+id/layoutErrorState"
+            layout="@layout/view_error_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="gone" />
 
         <!-- Guest state (Not Logged In) -->
         <LinearLayout
@@ -142,20 +232,21 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="24dp"
+            android:padding="@dimen/spacing_lg"
             android:visibility="gone"
             tools:visibility="gone">
 
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_user_circle"
                 app:tint="@color/rentify_primary_gradient_start" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:text="Đăng nhập để xem tin nhắn"
                 android:textColor="@color/rentify_text_primary"
@@ -165,22 +256,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
                 android:text="Vui lòng đăng nhập vào tài khoản người thuê để liên hệ với chủ trọ và cập nhật thông báo trao đổi."
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="13sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"
+                style="@style/Widget.Rentify.PillButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="32dp"
-                android:text="Đăng nhập ngay"
-                app:cornerRadius="24dp" />
+                android:layout_marginTop="@dimen/spacing_ml"
+                android:paddingHorizontal="@dimen/spacing_xl"
+                android:text="Đăng nhập ngay" />
         </LinearLayout>
 
     </FrameLayout>

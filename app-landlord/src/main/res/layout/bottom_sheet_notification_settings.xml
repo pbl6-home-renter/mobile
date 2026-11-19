@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_ml">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:background="@drawable/bg_bottom_sheet_drag_handle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Cài đặt thông báo đẩy"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_2xs"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Tùy chỉnh nhận thông báo đẩy (Push) theo từng nhóm sự kiện. Tắt thông báo đẩy không làm ẩn thông báo trong hộp thư."
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="13sp" />
+
+    <!-- Chat Preference -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchPrefChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:checked="true"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:paddingVertical="@dimen/spacing_xs"
+        android:text="Tin nhắn &amp; Trò chuyện (Chat)"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rentify_divider" />
+
+    <!-- Invoice Preference -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchPrefInvoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:paddingVertical="@dimen/spacing_xs"
+        android:text="Hóa đơn &amp; Thanh toán (Invoice)"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rentify_divider" />
+
+    <!-- Issue Preference -->
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switchPrefIssue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:paddingVertical="@dimen/spacing_xs"
+        android:text="Sự cố &amp; Bảo trì (Issue)"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="14sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSavePreferences"
+        style="@style/Widget.Rentify.PillButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:text="Lưu cài đặt"
+        app:cornerRadius="24dp" />
+
+</LinearLayout>

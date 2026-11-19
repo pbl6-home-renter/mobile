@@ -16,6 +16,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+data class DirectChatNavigationTarget(
+    val conversationId: String,
+    val recipientUserId: String,
+    val recipientName: String,
+    val recipientAvatarUrl: String?
+)
+
 class GroupInfoViewModel(
     val conversationId: String,
     private val chatRepository: TenantChatRepository,
@@ -43,6 +50,12 @@ class GroupInfoViewModel(
     private val _leaveSuccessEvent = MutableSharedFlow<Unit>()
     val leaveSuccessEvent: SharedFlow<Unit> = _leaveSuccessEvent.asSharedFlow()
 
+    private val _openDirectChatEvent = MutableSharedFlow<DirectChatNavigationTarget>()
+    val openDirectChatEvent: SharedFlow<DirectChatNavigationTarget> = _openDirectChatEvent.asSharedFlow()
+
+    private val _groupMetadataUpdatedEvent = MutableSharedFlow<Unit>()
+    val groupMetadataUpdatedEvent: SharedFlow<Unit> = _groupMetadataUpdatedEvent.asSharedFlow()
+
     init {
         loadData()
     }
@@ -55,7 +68,13 @@ class GroupInfoViewModel(
 
             val detailResult = chatRepository.getConversationDetail(conversationId)
             if (detailResult is NetworkResult.Success) {
-                _conversationDetail.value = detailResult.data.data
+                val detail = detailResult.data.data
+                _conversationDetail.value = detail
+                if (detail != null && detail.members.isNotEmpty()) {
+                    _members.value = detail.members
+                    val me = detail.members.firstOrNull { it.userId == myId }
+                    _isCurrentUserAdmin.value = me?.role.equals("admin", ignoreCase = true)
+                }
             }
 
             val membersResult = chatRepository.getConversationMembers(conversationId)
@@ -67,9 +86,39 @@ class GroupInfoViewModel(
 
                 val me = memberList.firstOrNull { it.userId == myId }
                 _isCurrentUserAdmin.value = me?.role.equals("admin", ignoreCase = true)
-            } else if (membersResult is NetworkResult.ApiError) {
+            } else if (membersResult is NetworkResult.ApiError && _members.value.isEmpty()) {
                 _toastEvents.emit(membersResult.error?.message ?: "Không thể tải danh sách thành viên")
             }
+        }
+    }
+
+    /**
+     * Tra cứu hội thoại 1-1 đã có giữa người dùng và member:
+     * - Nếu đã có (GET /conversations?kind=direct&otherUserId=<id> trả về 1 kết quả): mở đúng hội thoại đó.
+     * - Nếu chưa có: mở màn chat 1-1 trống (conversationId = "") và chỉ tạo trên server khi gửi tin đầu tiên.
+     */
+    fun lookupAndOpenDirectChat(member: ConversationMemberDto) {
+        val targetUserId = member.userId?.takeIf { it.isNotBlank() } ?: return
+        val targetName = member.displayName.ifBlank { "Người dùng" }
+        val targetAvatarUrl = member.avatarUrl
+
+        viewModelScope.launch {
+            val lookupResult = chatRepository.getConversations(
+                pageNo = 1,
+                pageSize = 1,
+                kind = "direct",
+                otherUserId = targetUserId
+            )
+
+            val existingConv = (lookupResult as? NetworkResult.Success)?.data?.data?.firstOrNull()
+            _openDirectChatEvent.emit(
+                DirectChatNavigationTarget(
+                    conversationId = existingConv?.id.orEmpty(),
+                    recipientUserId = targetUserId,
+                    recipientName = existingConv?.displayName?.takeIf { it.isNotBlank() } ?: targetName,
+                    recipientAvatarUrl = existingConv?.avatarUrl ?: targetAvatarUrl
+                )
+            )
         }
     }
 
@@ -87,9 +136,11 @@ class GroupInfoViewModel(
                     val updatedMeta = result.data.data
                     if (updatedMeta != null) {
                         _conversationDetail.value = _conversationDetail.value?.copy(
-                            title = updatedMeta.title
+                            title = updatedMeta.title,
+                            displayName = updatedMeta.title ?: _conversationDetail.value?.displayName
                         )
                     }
+                    _groupMetadataUpdatedEvent.emit(Unit)
                     _toastEvents.emit("Đã cập nhật tên nhóm")
                 }
                 is NetworkResult.ApiError -> {
@@ -112,6 +163,7 @@ class GroupInfoViewModel(
 
             when (result) {
                 is NetworkResult.Success -> {
+                    _groupMetadataUpdatedEvent.emit(Unit)
                     _toastEvents.emit("Đã thêm thành viên")
                     loadData()
                 }
@@ -133,6 +185,7 @@ class GroupInfoViewModel(
 
             when (result) {
                 is NetworkResult.Success -> {
+                    _groupMetadataUpdatedEvent.emit(Unit)
                     _toastEvents.emit("Đã xóa thành viên khỏi nhóm")
                     loadData()
                 }

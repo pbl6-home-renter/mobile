@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="6dp"
+    android:layout_marginHorizontal="@dimen/spacing_md"
+    android:layout_marginVertical="@dimen/spacing_sm"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="1dp"
     app:strokeColor="@color/rentify_divider"
     app:strokeWidth="1dp">
@@ -16,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Header: Contract Code + Status Badge -->
         <LinearLayout
@@ -36,7 +39,7 @@
                 android:id="@+id/tvContractCode"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:textColor="@color/rentify_text_primary"
                 android:textSize="14sp"
@@ -48,8 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_pill_badge_role"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -61,7 +64,7 @@
             android:id="@+id/tvRoomLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/rentify_text_primary"
@@ -73,7 +76,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -98,7 +101,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="@dimen/spacing_smd"
             android:background="@color/rentify_divider" />
 
         <!-- Financial row: Rent Price + Deposit + Chevron -->
@@ -127,7 +130,7 @@
                     android:id="@+id/tvDepositAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:textColor="@color/rentify_text_secondary"
                     android:textSize="12sp"
                     tools:text="Tiền cọc: 7.000.000 ₫" />

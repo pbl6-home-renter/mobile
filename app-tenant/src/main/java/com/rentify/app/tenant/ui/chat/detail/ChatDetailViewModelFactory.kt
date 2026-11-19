@@ -14,7 +14,8 @@ import kotlinx.coroutines.runBlocking
 
 class ChatDetailViewModelFactory(
     private val context: Context,
-    private val conversationId: String
+    private val conversationId: String,
+    private val recipientUserId: String? = null
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -32,7 +33,8 @@ class ChatDetailViewModelFactory(
             val mediaRepository = TenantMediaRepositoryImpl(mediaApiService)
 
             return ChatDetailViewModel(
-                conversationId = conversationId,
+                initialConversationId = conversationId,
+                recipientUserId = recipientUserId,
                 chatRepository = chatRepository,
                 mediaRepository = mediaRepository,
                 tokenDataStore = tokenDataStore

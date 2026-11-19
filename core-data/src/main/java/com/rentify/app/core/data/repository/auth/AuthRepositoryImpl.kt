@@ -3,6 +3,9 @@ package com.rentify.app.core.data.repository.auth
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.data.repository.BaseRepository
 import com.rentify.app.core.network.adapter.NetworkResult
+import kotlinx.coroutines.flow.first
+import com.rentify.app.core.network.dto.auth.AuthLogoutRequestDto
+import com.rentify.app.core.network.dto.auth.AuthRefreshRequestDto
 import com.rentify.app.core.network.api.AuthApiService
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.auth.AuthLoginRequestDto
@@ -42,7 +45,10 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun refreshToken(): NetworkResult<ApiSingleResponse<AuthRefreshResponseDto>> {
-        val result = safeApiCall { authApiService.refreshToken() }
+        val storedRefreshToken = tokenDataStore.refreshToken.first()
+        if (storedRefreshToken.isNullOrBlank()) return NetworkResult.ApiError(401, null)
+
+        val result = safeApiCall { authApiService.refreshToken(AuthRefreshRequestDto(storedRefreshToken)) }
         if (result is NetworkResult.Success) {
             result.data.data?.let { refreshData ->
                 tokenDataStore.saveTokens(
@@ -57,7 +63,12 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun logout(): NetworkResult<Unit> {
-        val result = safeApiCall { authApiService.logout() }
+        val storedRefreshToken = tokenDataStore.refreshToken.first()
+        val result = if (storedRefreshToken.isNullOrBlank()) {
+            NetworkResult.Success(Unit)
+        } else {
+            safeApiCall { authApiService.logout(AuthLogoutRequestDto(storedRefreshToken)) }
+        }
         tokenDataStore.clearTokens()
         return result
     }

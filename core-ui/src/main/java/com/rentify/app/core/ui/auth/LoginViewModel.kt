@@ -17,10 +17,14 @@ class LoginViewModel(
     private val _loginState = MutableStateFlow<UiState<AuthLoginResponseDto>>(UiState.Idle)
     val loginState: StateFlow<UiState<AuthLoginResponseDto>> = _loginState.asStateFlow()
 
+    private val _needsEmailVerification = MutableStateFlow(false)
+    val needsEmailVerification: StateFlow<Boolean> = _needsEmailVerification.asStateFlow()
+
     fun login(identifier: String, password: String, rememberMe: Boolean = true) {
         if (identifier.isBlank() || password.isBlank()) return
 
         _loginState.value = UiState.Loading
+        _needsEmailVerification.value = false
         launchSafe(
             onError = { throwable ->
                 _loginState.value = UiState.Error(throwable.message ?: "Đã có lỗi xảy ra")
@@ -42,11 +46,16 @@ class LoginViewModel(
                 }
                 is NetworkResult.ApiError -> {
                     val errorCode = result.error?.code ?: result.code.toString()
+                    _needsEmailVerification.value = result.code == 403 || errorCode == "EMAIL_NOT_VERIFIED"
                     val errorMessage = when (errorCode) {
                         "AUTH_LOGIN_INVALID_CREDENTIALS", "INVALID_CREDENTIALS" -> "Email hoặc mật khẩu không chính xác"
                         "ACCOUNT_LOCKED" -> "Tài khoản của bạn đã bị khóa"
                         "EMAIL_NOT_VERIFIED" -> "Email chưa được xác minh. Vui lòng kiểm tra hộp thư email để kích hoạt tài khoản."
-                        else -> result.error?.message ?: "Đăng nhập thất bại (Mã $errorCode)"
+                        else -> if (result.code == 403) {
+                            "Email chưa được xác minh. Vui lòng kiểm tra hộp thư email để kích hoạt tài khoản."
+                        } else {
+                            result.error?.message ?: "Đăng nhập thất bại (Mã $errorCode)"
+                        }
                     }
                     _loginState.value = UiState.Error(errorMessage)
                 }

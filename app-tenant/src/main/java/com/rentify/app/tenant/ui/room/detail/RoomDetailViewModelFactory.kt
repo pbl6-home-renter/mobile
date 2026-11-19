@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.data.local.session.SessionManager
 import com.rentify.app.core.network.api.ChatApiService
+import com.rentify.app.core.network.api.BuildingApiService
 import com.rentify.app.core.network.api.RoomApiService
 import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.tenant.data.repository.TenantChatRepositoryImpl
+import com.rentify.app.tenant.data.repository.BuildingWardResolver
 import com.rentify.app.tenant.data.repository.TenantRoomRepositoryImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -30,7 +32,7 @@ class RoomDetailViewModelFactory(
             val roomApiService = NetworkClient.createService<RoomApiService>(tokenProvider = tokenProvider)
             val chatApiService = NetworkClient.createService<ChatApiService>(tokenProvider = tokenProvider)
 
-            val roomRepository = TenantRoomRepositoryImpl(roomApiService)
+            val roomRepository = TenantRoomRepositoryImpl(roomApiService, BuildingWardResolver(NetworkClient.createService<BuildingApiService>()))
             val chatRepository = TenantChatRepositoryImpl(chatApiService)
             val sessionManager = SessionManager(tokenDataStore)
 

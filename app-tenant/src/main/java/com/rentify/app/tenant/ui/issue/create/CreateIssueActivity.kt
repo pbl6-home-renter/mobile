@@ -3,6 +3,7 @@ package com.rentify.app.tenant.ui.issue.create
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.text.InputFilter
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -10,7 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivityCreateIssueBinding
 import com.rentify.app.tenant.ui.issue.detail.IssueDetailActivity
@@ -72,9 +74,10 @@ class CreateIssueActivity : BaseActivity<ActivityCreateIssueBinding>(ActivityCre
     }
 
     private fun setupListeners() {
+        binding.etTitle.editText.filters = arrayOf(InputFilter.LengthFilter(TITLE_MAX_LENGTH))
         binding.btnSubmitIssue.setOnSingleClickListener {
-            binding.tilTitle.error = null
-            val title = binding.etTitle.text?.toString().orEmpty()
+            binding.etTitle.setError(null)
+            val title = binding.etTitle.text
             val description = binding.etDescription.text?.toString().orEmpty()
             viewModel.submitIssue(title, description)
         }
@@ -85,6 +88,7 @@ class CreateIssueActivity : BaseActivity<ActivityCreateIssueBinding>(ActivityCre
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.isLoading.collect { isLoading ->
+                        binding.pbLoading.visibility = if (isLoading) android.view.View.VISIBLE else android.view.View.GONE
                         binding.btnSubmitIssue.isEnabled = !isLoading
                         binding.btnSubmitIssue.text = if (isLoading) "Đang gửi báo cáo..." else "Gửi báo cáo sự cố"
                     }
@@ -94,14 +98,14 @@ class CreateIssueActivity : BaseActivity<ActivityCreateIssueBinding>(ActivityCre
                     viewModel.uiEvent.collect { event ->
                         when (event) {
                             is CreateIssueUiEvent.ValidationError -> {
-                                binding.tilTitle.error = event.message
-                                toast(event.message)
+                                binding.etTitle.setError(event.message)
+                                showError(event.message)
                             }
                             is CreateIssueUiEvent.ShowError -> {
-                                toast(event.message)
+                                showError(event.message)
                             }
                             is CreateIssueUiEvent.Success -> {
-                                toast(event.message)
+                                showSuccess(event.message)
                                 setResult(Activity.RESULT_OK)
                                 if (event.issueId.isNotEmpty()) {
                                     IssueDetailActivity.start(this@CreateIssueActivity, event.issueId)
@@ -116,6 +120,7 @@ class CreateIssueActivity : BaseActivity<ActivityCreateIssueBinding>(ActivityCre
     }
 
     companion object {
+        private const val TITLE_MAX_LENGTH = 255
         private const val EXTRA_ROOM_ID = "EXTRA_ROOM_ID"
         private const val EXTRA_ROOM_NAME = "EXTRA_ROOM_NAME"
 

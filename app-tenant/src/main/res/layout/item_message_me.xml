@@ -5,37 +5,40 @@
     android:layout_height="wrap_content"
     android:gravity="end"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="4dp">
+    android:paddingHorizontal="14dp">
+
+    <include
+        android:id="@+id/layoutDateSeparator"
+        layout="@layout/layout_message_date_separator" />
 
     <LinearLayout
         android:id="@+id/bubbleMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:background="@drawable/bg_message_me"
+        android:background="@drawable/bg_pill_gradient"
         android:orientation="vertical"
-        android:paddingHorizontal="14dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="8dp">
+        android:paddingHorizontal="13dp"
+        android:paddingVertical="9dp">
 
-        <!-- Quoted message box (hidden by default) -->
+        <!-- 3.8 Trích dẫn khi trả lời (nằm TRONG bong bóng, phía trên nội dung) -->
         <LinearLayout
             android:id="@+id/layoutReplyQuote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:background="#20FFFFFF"
+            android:background="@drawable/bg_quote_sent"
             android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
-            android:visibility="gone">
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="6dp"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <View
-                android:layout_width="2dp"
+                android:layout_width="3dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="6dp"
-                android:background="#FFFFFF" />
+                android:layout_marginEnd="8dp"
+                android:background="@color/rentify_on_primary"
+                android:importantForAccessibility="no" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -46,21 +49,25 @@
                     android:id="@+id/txtReplySender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="#E0E7FF"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/rentify_on_primary"
+                    android:textSize="12sp"
                     tools:text="Nguyễn Văn A" />
 
                 <TextView
                     android:id="@+id/txtReplyContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
+                    android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:textColor="#F3F4F6"
-                    android:textSize="11sp"
+                    android:textColor="@color/rentify_on_primary"
+                    android:textSize="12sp"
                     tools:text="Vòi xịt nhà tắm bị rỉ" />
             </LinearLayout>
         </LinearLayout>
@@ -70,21 +77,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/plus_jakarta_sans"
-            android:textColor="@android:color/white"
+            android:includeFontPadding="false"
+            android:textColor="@color/rentify_on_primary"
             android:textSize="14sp"
             tools:text="Dạ em gửi ảnh vòi xịt ạ" />
-
-        <TextView
-            android:id="@+id/txtTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="3dp"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:textColor="#D1E0FF"
-            android:textSize="10sp"
-            tools:text="11:30" />
     </LinearLayout>
 
-</LinearLayout>
+    <!-- 3.4 Giờ gửi và trạng thái đã xem (NGAY DƯỚI tin cuối của nhóm hoặc khi chạm vào tin) -->
+    <TextView
+        android:id="@+id/txtTimeStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:includeFontPadding="false"
+        android:textColor="@color/rentify_text_faint"
+        android:textSize="11sp"
+        android:visibility="gone"
+        tools:text="09:46, đã xem"
+        tools:visibility="visible" />
 
+</LinearLayout>

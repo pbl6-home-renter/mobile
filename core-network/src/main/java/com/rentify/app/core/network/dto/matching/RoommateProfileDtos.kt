@@ -67,7 +67,7 @@ data class RoommateProfileMyResponseDto(
     @field:Json(name = "budgetMax") val budgetMax: Long? = null,
     @field:Json(name = "moveInOn") val moveInOn: String? = null,
     @field:Json(name = "bio") val bio: String? = null,
-    @field:Json(name = "lifestyle") val lifestyle: LifestyleDto? = null,
+    @field:Json(name = "lifestyle") val lifestyle: Map<String, Any>? = null,
     @field:Json(name = "personality") val personality: Map<String, Any>? = null,
     @field:Json(name = "isVisible") val isVisible: Boolean
 )
@@ -84,7 +84,7 @@ data class RoommateProfileSaveRequestDto(
     @field:Json(name = "budgetMax") val budgetMax: Long? = null,
     @field:Json(name = "moveInOn") val moveInOn: String? = null,
     @field:Json(name = "bio") val bio: String? = null,
-    @field:Json(name = "lifestyle") val lifestyle: LifestyleDto? = null,
+    @field:Json(name = "lifestyle") val lifestyle: Map<String, Any>? = null,
     @field:Json(name = "personality") val personality: Map<String, Any>? = null,
     @field:Json(name = "isVisible") val isVisible: Boolean
 )

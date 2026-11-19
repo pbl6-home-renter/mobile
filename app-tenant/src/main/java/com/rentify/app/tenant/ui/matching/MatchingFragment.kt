@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -17,11 +18,13 @@ import com.google.android.material.tabs.TabLayout
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.core.ui.R as CoreR
 import com.rentify.app.tenant.databinding.FragmentMatchingBinding
 import com.rentify.app.tenant.ui.chat.detail.ChatDetailActivity
+import com.rentify.app.tenant.ui.dialog.LoginFeature
+import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
 import com.rentify.app.tenant.ui.matching.detail.RoommateDetailActivity
 import com.rentify.app.tenant.ui.matching.profile.EditRoommateProfileActivity
 import kotlinx.coroutines.launch
@@ -65,7 +68,19 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
 
     override fun onResume() {
         super.onResume()
+        setLightStatusBarIcons(true)
         viewModel.checkAuthAndLoad()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        setLightStatusBarIcons(!hidden)
+    }
+
+    private fun setLightStatusBarIcons(light: Boolean) {
+        activity?.window?.let { window ->
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = light
+        }
     }
 
     private fun setupTabs() {
@@ -125,8 +140,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
             onRejectClick = { item -> viewModel.rejectRequest(item) },
             onWithdrawClick = { item -> viewModel.withdrawRequest(item) },
             onChatClick = { item ->
-                val user = if (binding.chipIncoming.isChecked) item.requester else item.target
-                viewModel.contactUser(user)
+                viewModel.contactUser(item.counterpart)
             }
         )
 
@@ -181,7 +195,9 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
         }
 
         binding.btnGuestLogin.setOnSingleClickListener {
-            listener?.onNavigateToLoginRequested()
+            showLoginRequiredSheet(LoginFeature.ROOMMATE) {
+                listener?.onNavigateToLoginRequested()
+            }
         }
     }
 
@@ -271,7 +287,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
                             is UiState.Error -> {
                                 binding.pbFeedLoading.isVisible = false
                                 binding.layoutEmptyFeed.isVisible = feedAdapter.itemCount == 0
-                                toast(state.message)
+                                showError(state.message)
                             }
                             is UiState.Idle -> {
                                 binding.pbFeedLoading.isVisible = false
@@ -296,7 +312,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
                             is UiState.Error -> {
                                 binding.pbRequestsLoading.isVisible = false
                                 binding.layoutEmptyRequests.isVisible = requestsAdapter.itemCount == 0
-                                toast(state.message)
+                                showError(state.message)
                             }
                             is UiState.Idle -> {
                                 binding.pbRequestsLoading.isVisible = false
@@ -308,7 +324,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
                 launch {
                     viewModel.uiEvent.collect { event ->
                         when (event) {
-                            is MatchingUiEvent.ShowToast -> toast(event.message)
+                            is MatchingUiEvent.ShowToast -> showError(event.message)
                             is MatchingUiEvent.OpenChat -> {
                                 val intent = ChatDetailActivity.createIntent(
                                     context = requireContext(),

@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="14dp"
+    android:layout_marginBottom="@dimen/spacing_smd"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/rentify_divider"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/rentify_border_soft"
     app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Top Header: Avatar + Info + AI Match Badge -->
         <LinearLayout
@@ -24,19 +27,16 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <com.rentify.app.core.ui.view.RentifyAvatarView
                 android:id="@+id/ivAvatar"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
-                android:background="#E2E8F0"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_user_circle"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                app:avatarSize="54dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="@dimen/spacing_smd"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -47,7 +47,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
-                    android:textColor="@color/rentify_text_primary"
+                    android:textColor="@color/rentify_text"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     tools:text="Nguyễn Thu Hà, 22 tuổi" />
@@ -56,11 +56,11 @@
                     android:id="@+id/tvOccupation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="12sp"
                     tools:text="Sinh viên ĐH Bách Khoa" />
             </LinearLayout>
@@ -73,8 +73,8 @@
                 android:background="@drawable/bg_pill_badge_role"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="5dp">
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs">
 
                 <ImageView
                     android:layout_width="14dp"
@@ -86,7 +86,7 @@
                     android:id="@+id/tvMatchScore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_primary_gradient_start"
                     android:textSize="12sp"
@@ -99,8 +99,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="12dp"
-            android:background="@color/rentify_divider" />
+            android:layout_marginVertical="@dimen/spacing_smd"
+            android:background="@color/rentify_border_soft" />
 
         <!-- Preferred Info: Budget & Area -->
         <LinearLayout
@@ -119,14 +119,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Ngân sách tìm phòng"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/tvBudget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_primary_gradient_start"
                     android:textSize="14sp"
@@ -137,7 +137,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -146,14 +146,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Khu vực mong muốn"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/tvArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
@@ -169,18 +169,18 @@
             android:id="@+id/layoutTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/spacing_smd"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvTag1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="11sp"
                 android:visibility="gone"
@@ -191,11 +191,11 @@
                 android:id="@+id/tvTag2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="11sp"
                 android:visibility="gone"
@@ -208,8 +208,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_pill_badge_role"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="3dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="11sp"
                 android:visibility="gone"
@@ -222,7 +222,7 @@
             android:id="@+id/tvBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:ellipsize="end"
             android:fontFamily="@font/plus_jakarta_sans"
             android:maxLines="2"
@@ -234,7 +234,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="@dimen/spacing_md"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -242,22 +242,22 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="42dp"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="Xem chi tiết"
-                android:textColor="@color/rentify_text_primary"
+                android:textColor="@color/rentify_text"
                 android:textSize="13sp"
-                app:cornerRadius="10dp"
-                app:strokeColor="@color/rentify_divider" />
+                app:cornerRadius="21dp"
+                app:strokeColor="@color/rentify_border" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSendRequest"
                 android:layout_width="0dp"
                 android:layout_height="42dp"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:layout_weight="1"
                 android:backgroundTint="@color/rentify_primary_gradient_start"
                 android:fontFamily="@font/plus_jakarta_sans"
@@ -266,7 +266,7 @@
                 android:text="Mời ghép đôi"
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="13sp"
-                app:cornerRadius="10dp"
+                app:cornerRadius="21dp"
                 app:iconGravity="textStart"
                 app:iconSize="14dp"
                 app:iconTint="@color/rentify_on_primary" />

@@ -7,6 +7,7 @@ import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.network.api.ChatApiService
 import com.rentify.app.core.network.api.MatchingApiService
 import com.rentify.app.core.network.client.NetworkClient
+import com.rentify.app.tenant.data.repository.RoommateProfileResolver
 import com.rentify.app.tenant.data.repository.TenantChatRepositoryImpl
 import com.rentify.app.tenant.data.repository.TenantMatchingRepositoryImpl
 import kotlinx.coroutines.flow.first
@@ -33,6 +34,7 @@ class MatchingViewModelFactory(
 
             return MatchingViewModel(
                 matchingRepository = matchingRepository,
+                profileResolver = RoommateProfileResolver(matchingRepository),
                 chatRepository = chatRepository,
                 tokenDataStore = tokenDataStore
             ) as T

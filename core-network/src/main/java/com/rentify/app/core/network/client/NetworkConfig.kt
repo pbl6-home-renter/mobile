@@ -6,6 +6,6 @@ data class NetworkConfig(
     val readTimeoutSeconds: Long = 30L
 ) {
     companion object {
-        const val DEFAULT_BASE_URL = "https://mock.apidog.com/m1/1370283-1374978-1459060/"
+        const val DEFAULT_BASE_URL = "http://3.26.114.197/api/v1/"
     }
 }

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginBottom="16dp"
+    android:layout_marginStart="@dimen/spacing_md"
+    android:layout_marginEnd="@dimen/spacing_md"
+    android:layout_marginBottom="@dimen/spacing_md"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="@color/rentify_divider"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
+    app:strokeColor="#DDE1F9"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -31,33 +34,17 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_image_placeholder" />
 
-            <TextView
-                android:id="@+id/tvRoomType"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:layout_gravity="top|start"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_pill_login"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:paddingHorizontal="10dp"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                tools:text="Phòng thường" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnFavorite"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="top|end"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginTop="@dimen/spacing_smd"
+                android:layout_marginEnd="@dimen/spacing_smd"
                 app:cardBackgroundColor="@color/rentify_surface"
                 app:cardCornerRadius="18dp"
-                app:cardElevation="2dp"
+                app:cardElevation="0dp"
                 app:strokeWidth="0dp">
 
                 <ImageView
@@ -75,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:padding="@dimen/spacing_md">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="@color/rentify_primary_gradient_start"
+                    android:textColor="#006876"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="1.800.000 đ" />
@@ -96,10 +83,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="/tháng"
-                    android:textColor="@color/rentify_text_secondary"
+                    android:textColor="#595E72"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -107,11 +94,11 @@
                 android:id="@+id/tvRoomName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/spacing_xs"
                 android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:maxLines="1"
-                android:textColor="@color/rentify_text_primary"
+                android:textColor="#161B2C"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="Phòng 201" />
@@ -120,11 +107,11 @@
                 android:id="@+id/tvRoomDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:maxLines="1"
-                android:textColor="@color/rentify_text_secondary"
+                android:textColor="#595E72"
                 android:textSize="13sp"
                 tools:text="18 m² · P. Hòa Khánh" />
         </LinearLayout>

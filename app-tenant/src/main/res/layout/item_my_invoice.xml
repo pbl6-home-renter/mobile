@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="@dimen/spacing_smd"
+    
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="1dp"
     app:strokeColor="@color/rentify_divider"
     app:strokeWidth="1dp">
@@ -18,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Top Row: Period & Status Badge -->
         <RelativeLayout
@@ -53,8 +54,8 @@
                 android:background="@drawable/bg_pill_badge_role"
                 android:backgroundTint="#1510B981"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs"
                 android:textColor="@color/rentify_success"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -65,40 +66,37 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvRoomName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
+                android:maxLines="1"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="13sp"
-                tools:text="Phòng: P.305" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
-                android:text="•"
-                android:textColor="@color/rentify_neutral" />
+                tools:text="Phòng P.305" />
 
             <TextView
                 android:id="@+id/tvInvoiceCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_neutral"
-                android:textSize="13sp"
-                tools:text="INV-2026-10-001" />
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp"
+                tools:text="Mã HĐ INV-2026-10-001" />
         </LinearLayout>
 
         <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginVertical="12dp"
+            android:layout_marginVertical="@dimen/spacing_smd"
             android:background="@color/rentify_divider" />
 
         <!-- Bottom Row: Due date & Amount -->
@@ -118,14 +116,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Hạn nộp"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/tvDueDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_text_primary"
                     android:textSize="13sp"
@@ -147,14 +145,14 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="Tổng tiền"
-                    android:textColor="@color/rentify_neutral"
+                    android:textColor="@color/rentify_text_muted"
                     android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/tvTotalAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/spacing_2xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:textColor="@color/rentify_primary_gradient_start"
                     android:textSize="16sp"

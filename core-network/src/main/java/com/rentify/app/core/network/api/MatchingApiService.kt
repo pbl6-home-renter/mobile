@@ -16,6 +16,7 @@ import com.rentify.app.core.network.dto.matching.RoommateProfileSaveResponseDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -27,8 +28,7 @@ interface MatchingApiService {
     suspend fun getRoommateProfiles(
         @Query("filter[preferredArea]") preferredArea: String? = null,
         @Query("pageNo") pageNo: Int = 1,
-        @Query("pageSize") pageSize: Int = 20,
-        @Query("format") format: String = "json"
+        @Query("pageSize") pageSize: Int = 20
     ): Response<ApiListResponse<RoommateProfileListResponseDto>>
 
     @GET("roommate-profiles/{roommateProfileId}")
@@ -49,12 +49,12 @@ interface MatchingApiService {
         @Query("filter[direction]") direction: String? = null,
         @Query("filter[status]") status: String? = null,
         @Query("pageNo") pageNo: Int = 1,
-        @Query("pageSize") pageSize: Int = 20,
-        @Query("format") format: String = "json"
+        @Query("pageSize") pageSize: Int = 20
     ): Response<ApiListResponse<MatchRequestListResponseDto>>
 
     @POST("match-requests")
     suspend fun createMatchRequest(
+        @Header("Idempotency-Key") idempotencyKey: String,
         @Body request: MatchRequestCreateRequestDto
     ): Response<ApiSingleResponse<MatchRequestCreateResponseDto>>
 

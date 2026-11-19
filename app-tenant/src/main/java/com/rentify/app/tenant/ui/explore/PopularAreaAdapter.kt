@@ -11,7 +11,7 @@ data class PopularAreaItem(
     val name: String,
     val type: String = "Quận",
     val province: String = "Đà Nẵng",
-    val bgColorRes: Int = CoreUiR.color.rentify_card_near_bg
+    val bgColorRes: Int = CoreUiR.color.rentify_slate_surface
 )
 
 class PopularAreaAdapter(

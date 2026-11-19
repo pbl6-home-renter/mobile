@@ -10,8 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.rentify.app.core.network.dto.contract.ContractDetailResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.extension.toVnd
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.databinding.ActivityContractDetailBinding
 import com.rentify.app.tenant.ui.contract.ContractUiHelper
@@ -51,7 +51,7 @@ class ContractDetailActivity : BaseActivity<ActivityContractDetailBinding>(Activ
                         }
                         is UiState.Error -> {
                             binding.progressBar.isVisible = false
-                            toast(state.message)
+                            showError(state.message)
                         }
                         is UiState.Idle -> {
                             binding.progressBar.isVisible = false

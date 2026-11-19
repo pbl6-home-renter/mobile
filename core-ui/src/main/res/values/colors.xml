@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="rentify_primary">#4F46E5</color>
+    <color name="rentify_primary">#2563EB</color>
+    <color name="rentify_primary_light">#4A86F7</color>
     <color name="rentify_primary_gradient_start">#2563EB</color>
     <color name="rentify_primary_gradient_end">#7C3AED</color>
     <color name="rentify_on_primary">#FFFFFF</color>
@@ -8,9 +9,26 @@
     <color name="rentify_on_primary_container">#1E1B4B</color>
     <color name="rentify_background">#F8FAFC</color>
     <color name="rentify_surface">#FFFFFF</color>
+    <color name="rentify_field_bg">#F1F5F9</color>
+    <color name="rentify_field_focus_bg">#FFFFFF</color>
+    <color name="rentify_text">#161B2C</color>
     <color name="rentify_text_primary">#0F172A</color>
     <color name="rentify_text_secondary">#475569</color>
-    <color name="rentify_divider">#E2E8F0</color>
+    <color name="rentify_text_muted">#64748B</color>
+    <color name="rentify_text_faint">#94A3B8</color>
+    <color name="rentify_text_body">#374151</color>
+    <color name="rentify_soft_surface">#F5F6FB</color>
+    <color name="rentify_soft_divider">#E8EBF5</color>
+    <color name="rentify_warning_text">#C2410C</color>
+    <color name="rentify_warning_surface">#FFF7ED</color>
+    <color name="rentify_warning_border">#FED7AA</color>
+    <color name="rentify_overlay_btn_bg">#EBFFFFFF</color>
+    <color name="rentify_dot_inactive">#99FFFFFF</color>
+    <color name="rentify_disabled_bg">#E2E8F0</color>
+    <color name="rentify_disabled_text">#94A3B8</color>
+    <color name="rentify_quote_sent_bg">#29FFFFFF</color>
+    <color name="rentify_divider">#F1F5F9</color>
+    <color name="rentify_border">#E2E8F0</color>
     <color name="rentify_success">#16A34A</color>
     <color name="rentify_warning">#F59E0B</color>
     <color name="rentify_error">#DC2626</color>
@@ -55,4 +73,63 @@
     <color name="profile_logout_bg">#FEF2F2</color>
     <color name="profile_logout_stroke">#FECDD3</color>
     <color name="profile_logout_text">#DC2626</color>
+
+    <!-- PHỤ 1 – Xanh ngọc (Teal / Cyan) -->
+    <color name="rentify_teal_darkest">#001F24</color>
+    <color name="rentify_teal">#006876</color>
+    <color name="rentify_teal_primary">#006876</color>
+    <color name="rentify_teal_accent">#008394</color>
+    <color name="rentify_teal_light">#9FEFFF</color>
+    <color name="rentify_teal_surface">#F2FBFD</color>
+    <color name="rentify_teal_border">#E1F3F6</color>
+
+    <!-- PHỤ 2 – Xanh xám (Slate Blue / Cool Grey) -->
+    <color name="rentify_slate_darkest">#161B2C</color>
+    <color name="rentify_slate_primary">#414659</color>
+    <color name="rentify_slate_medium">#595E72</color>
+    <color name="rentify_slate_border">#DDE1F9</color>
+    <color name="rentify_slate_surface">#EEF0FF</color>
+
+    <!-- Search Screen UI Tokens -->
+    <color name="rentify_divider_search">#F0F2F5</color>
+    <color name="rentify_chip_border">#E6E9EF</color>
+    <color name="rentify_chip_text">#14161B</color>
+    <color name="rentify_chip_active_bg">#EEF0FF</color>
+    <color name="rentify_chip_active_border">#C9D3FB</color>
+    <color name="rentify_chip_active_text">#2A55C9</color>
+    <color name="rentify_chip_meta_bg">#F3F5F9</color>
+    <color name="rentify_chip_meta_text">#4B5563</color>
+    <color name="rentify_icon_gray">#9AA1AE</color>
+    <color name="rentify_heart_saved">#EF4444</color>
+    <color name="rentify_border_card">#EEF0F3</color>
+    <color name="rentify_icon_slate">#595E72</color>
+    <color name="rentify_icon_action_slate">#334155</color>
+
+    <!-- Chat Avatar Deterministic Palette -->
+    <color name="rentify_avatar_bg_1">#DBE1FF</color>
+    <color name="rentify_avatar_text_1">#1E3A8A</color>
+    <color name="rentify_avatar_bg_2">#E9E4DC</color>
+    <color name="rentify_avatar_text_2">#5B4A36</color>
+    <color name="rentify_avatar_bg_3">#E1EFE9</color>
+    <color name="rentify_avatar_text_3">#1F5135</color>
+    <color name="rentify_avatar_bg_4">#EDE4F3</color>
+    <color name="rentify_avatar_text_4">#4C2C63</color>
+
+    <color name="rentify_border_soft">#EEF1F5</color>
+
+    <!-- Skeleton Colors -->
+    <color name="rentify_skeleton_dark">#CBD5E1</color>
+    <color name="rentify_skeleton_light">#E2E8F0</color>
+
+    <!-- Message Bar -->
+    <color name="rentify_message_success_bg">#F0FDF4</color>
+    <color name="rentify_message_success_border">#86EFAC</color>
+    <color name="rentify_message_success_text">#14532D</color>
+    <color name="rentify_message_error_bg">#FEF2F2</color>
+    <color name="rentify_message_error_border">#FECACA</color>
+    <color name="rentify_message_error_text">#7F1D1D</color>
+    <color name="rentify_message_info_bg">#EEF2FF</color>
+    <color name="rentify_message_info_border">#818CF8</color>
+    <color name="rentify_message_info_accent">#4F46E5</color>
+    <color name="rentify_message_info_text">#3730A3</color>
 </resources>

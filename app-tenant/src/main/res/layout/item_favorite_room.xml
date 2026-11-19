@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="@dimen/spacing_smd"
     android:clickable="true"
     android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="1dp"
-    app:strokeColor="@color/rentify_divider"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/rentify_border_soft"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -19,13 +19,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="@dimen/spacing_smd">
 
-        <!-- Room Image Container -->
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:cardCornerRadius="12dp"
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            app:cardBackgroundColor="@color/rentify_soft_surface"
+            app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
@@ -38,11 +38,10 @@
                 android:src="@drawable/ic_image_placeholder" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Room Info Column -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="@dimen/spacing_md"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -51,49 +50,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:maxLines="2"
-                android:textColor="@color/rentify_text_primary"
+                android:fontFamily="@font/plus_jakarta_sans_medium"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text"
                 android:textSize="15sp"
-                android:textStyle="bold"
                 tools:text="Phòng trọ cao cấp full nội thất gần ĐH Bách Khoa" />
 
             <TextView
                 android:id="@+id/tvRoomPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_primary_gradient_start"
+                android:textColor="@color/rentify_teal"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                tools:text="3.500.000 đ/tháng" />
+                tools:text="3.500.000 đ" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="#1510B981"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="2dp"
-                android:text="Đã lưu"
-                android:textColor="#059669"
-                android:textSize="11sp"
-                android:textStyle="bold" />
+                android:text="/tháng"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Remove Favorite Heart Button -->
         <ImageView
             android:id="@+id/btnRemoveFavorite"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_circle_icon_button"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="Bỏ lưu phòng"
             android:focusable="true"
-            android:padding="9dp"
+            android:padding="10dp"
             android:src="@drawable/ic_heart_filled"
             app:tint="#EF4444" />
 

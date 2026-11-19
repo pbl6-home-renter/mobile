@@ -1,334 +1,395 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_rounded_surface"
-    android:fillViewport="true">
+    android:background="@drawable/bg_bottom_sheet_filter_rounded"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Drag Handle Indicator -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_bottom_sheet_drag_handle" />
+
+    <!-- Header: Title Only -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:paddingHorizontal="20dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="28dp">
+        android:paddingBottom="8dp">
 
-        <!-- Drag Handle Indicator -->
-        <View
-            android:layout_width="40dp"
-            android:layout_height="4dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="14dp"
-            android:background="#D1D5DB" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Bộ lọc tìm kiếm"
+            android:textColor="@color/rentify_chip_text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-        <!-- Header: Title & Reset/Clear Button -->
-        <RelativeLayout
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp">
 
+            <!-- 1. KHU VỰC -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Bộ lọc tìm kiếm"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="18sp"
+                android:text="Khu vực"
+                android:textColor="@color/rentify_chip_text"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <!-- Province Dropdown Pill Container -->
+                <LinearLayout
+                    android:id="@+id/layoutProvinceContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvProvince"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:cursorVisible="false"
+                        android:dropDownHeight="240dp"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:hint="Tỉnh / Thành phố"
+                        android:inputType="none"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/rentify_chip_text"
+                        android:textColorHint="@color/rentify_icon_gray"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_chevron_down"
+                        app:tint="@color/rentify_icon_gray" />
+                </LinearLayout>
+
+                <!-- Ward Dropdown Pill Container -->
+                <LinearLayout
+                    android:id="@+id/layoutWardContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/actvWard"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:cursorVisible="false"
+                        android:dropDownHeight="240dp"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:hint="Xã / Phường"
+                        android:inputType="none"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/rentify_chip_text"
+                        android:textColorHint="@color/rentify_icon_gray"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_chevron_down"
+                        app:tint="@color/rentify_icon_gray" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 2. KHOẢNG GIÁ THUÊ -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Khoảng giá thuê"
+                    android:textColor="@color/rentify_chip_text"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPriceRangeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_header_blue"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="2tr - 4tr" />
+            </RelativeLayout>
+
+            <!-- Range Slider (Hollow circular thumb with border and continuous track) -->
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/sliderPriceRange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:stepSize="0.5"
+                android:valueFrom="0.0"
+                android:valueTo="15.0"
+                app:haloColor="#1A2563EB"
+                app:haloRadius="16dp"
+                app:thumbColor="@android:color/white"
+                app:thumbElevation="1dp"
+                app:thumbHeight="18dp"
+                app:thumbRadius="9dp"
+                app:thumbStrokeColor="@color/rentify_header_blue"
+                app:thumbStrokeWidth="2.5dp"
+                app:thumbTrackGapSize="0dp"
+                app:thumbWidth="18dp"
+                app:tickColor="@android:color/transparent"
+                app:trackColorActive="@color/rentify_header_blue"
+                app:trackColorInactive="#E5E7EB"
+                app:trackHeight="5dp"
+                app:trackStopIndicatorSize="0dp"
+                app:values="@array/initial_price_range" />
+
+            <!-- Quick Price Chips -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chipPriceUnder2m"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="Dưới 2tr"
+                    android:textColor="@color/rentify_chip_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/chipPrice2to4m"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="2 - 4tr"
+                    android:textColor="@color/rentify_chip_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/chipPrice4to7m"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="4 - 7tr"
+                    android:textColor="@color/rentify_chip_text"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/chipPriceAbove7m"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="Trên 7tr"
+                    android:textColor="@color/rentify_chip_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 3. QUY ĐỊNH GIỚI TÍNH -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Quy định giới tính"
+                android:textColor="@color/rentify_chip_text"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chipGenderAll"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_active"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="Tất cả"
+                    android:textColor="@color/rentify_chip_active_text"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chipGenderMale"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="Nam"
+                    android:textColor="@color/rentify_text_secondary"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/chipGenderFemale"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_chip_pill_default"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:text="Nữ"
+                    android:textColor="@color/rentify_text_secondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Sticky Footer: Reset Text Button & Apply CTA Button -->
+    <LinearLayout
+        android:id="@+id/layoutApplyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_surface"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="16dp">
+
+            <!-- Reset as Flat Text Action -->
+            <TextView
                 android:id="@+id/btnResetFilter"
-                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:layout_height="54dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:paddingHorizontal="8dp"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
                 android:text="Đặt lại"
-                android:textColor="@color/rentify_primary_gradient_start"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <!-- 1. KHU VỰC -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Khu vực"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <!-- Province Dropdown -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="6dp"
-                android:layout_weight="1"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp">
-
-                <AutoCompleteTextView
-                    android:id="@+id/actvProvince"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:hint="Tỉnh / Thành"
-                    android:inputType="none"
-                    android:maxLines="1"
-                    android:textSize="13sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Ward Dropdown -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:layout_weight="1"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp">
-
-                <AutoCompleteTextView
-                    android:id="@+id/actvWard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:hint="Phường / Xã"
-                    android:inputType="none"
-                    android:maxLines="1"
-                    android:textSize="13sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <!-- 2. KHOẢNG GIÁ THUÊ -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Khoảng giá thuê"
                 android:textColor="@color/rentify_text_primary"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvPriceRangeValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+            <!-- Main CTA Button with 16dp rounded corner (Distinct from Chips) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnApplyFilter"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/rentify_header_blue"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_primary_gradient_start"
-                android:textSize="13sp"
+                android:text="Áp dụng"
+                android:textColor="@color/rentify_on_primary"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="2tr - 4tr" />
-        </RelativeLayout>
-
-        <!-- Range Slider -->
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/sliderPriceRange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:stepSize="0.5"
-            android:valueFrom="0.0"
-            android:valueTo="15.0"
-            app:thumbColor="@color/rentify_primary_gradient_start"
-            app:trackColorActive="@color/rentify_primary_gradient_start"
-            app:trackColorInactive="#E5E7EB"
-            app:values="@array/initial_price_range" />
-
-        <!-- Quick Price Chips -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriceUnder2m"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:text="Dưới 2tr"
-                android:textAlignment="center"
-                android:textSize="11sp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPrice2to4m"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:layout_weight="1"
-                android:text="2 - 4tr"
-                android:textAlignment="center"
-                android:textSize="11sp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPrice4to7m"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:layout_weight="1"
-                android:text="4 - 7tr"
-                android:textAlignment="center"
-                android:textSize="11sp" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPriceAbove7m"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:text="Trên 7tr"
-                android:textAlignment="center"
-                android:textSize="11sp" />
+                app:cornerRadius="16dp"
+                app:elevation="0dp" />
         </LinearLayout>
-
-        <!-- 3. QUY ĐỊNH GIỚI TÍNH -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Quy định giới tính"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleGender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:checkedButton="@id/btnGenderAll"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGenderAll"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Tất cả"
-                android:textSize="13sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGenderMale"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Nam"
-                android:textSize="13sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGenderFemale"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Nữ"
-                android:textSize="13sp" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        <!-- 4. SẮP XẾP THEO -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Sắp xếp theo"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleSort"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:checkedButton="@id/btnSortNewest"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSortNewest"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Mới nhất"
-                android:textSize="13sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSortPriceAsc"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Giá tăng"
-                android:textSize="13sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSortPriceDesc"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Giá giảm"
-                android:textSize="13sp" />
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
-        <!-- 5. NÚT ÁP DỤNG -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnApplyFilter"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="28dp"
-            android:backgroundTint="@color/rentify_primary_gradient_start"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Áp dụng"
-            android:textColor="@color/rentify_on_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:cornerRadius="14dp" />
-
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

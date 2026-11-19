@@ -3,17 +3,22 @@ package com.rentify.app.landlord
 import androidx.lifecycle.lifecycleScope
 import com.rentify.app.core.data.local.datastore.AppDataStore
 import com.rentify.app.core.data.local.datastore.TokenDataStore
+import com.rentify.app.core.data.repository.auth.AuthRepositoryImpl
+import com.rentify.app.core.network.api.AuthApiService
+import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.core.network.dto.auth.AuthLoginResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterResponseDto
 import com.rentify.app.core.ui.auth.ForgotPasswordFragment
 import com.rentify.app.core.ui.auth.LoginFragment
 import com.rentify.app.core.ui.auth.RegisterFragment
 import com.rentify.app.core.ui.auth.ResetPasswordFragment
+import com.rentify.app.core.ui.auth.VerifyEmailFragment
 import com.rentify.app.core.ui.auth.VerifyOtpFragment
 import com.rentify.app.core.ui.base.BaseActivity
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.home.HomePlaceholderFragment
 import com.rentify.app.landlord.databinding.ActivityMainBinding
+import com.rentify.app.landlord.ui.main.LandlordMainFragment
 import com.rentify.app.landlord.ui.onboarding.OnboardingFragment
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -24,9 +29,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     LoginFragment.LoginListener,
     RegisterFragment.RegisterListener,
     ForgotPasswordFragment.ForgotPasswordListener,
+    VerifyEmailFragment.VerifyEmailListener,
     VerifyOtpFragment.VerifyOtpListener,
     ResetPasswordFragment.ResetPasswordListener,
-    HomePlaceholderFragment.HomePlaceholderListener {
+    HomePlaceholderFragment.HomePlaceholderListener,
+    LandlordMainFragment.LandlordMainListener {
 
     private val tokenDataStore by lazy { TokenDataStore(applicationContext) }
     private val appDataStore by lazy { AppDataStore(applicationContext) }
@@ -64,16 +71,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onLoginSuccess(response: AuthLoginResponseDto) {
-        toast("Đăng nhập thành công! Chào mừng ${response.profile.name}")
+        showSuccess("Đăng nhập thành công! Chào mừng ${response.profile.name}")
         showHomeScreen()
     }
 
     override fun onLogoutClicked() {
-        lifecycleScope.launch {
-            tokenDataStore.clearTokens()
-            toast("Đã đăng xuất thành công")
-            showLoginScreen()
-        }
+        performLogout()
     }
 
     override fun onNavigateToRegister() {
@@ -86,15 +89,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     override fun onRegisterSuccess(response: AuthRegisterResponseDto) {
         if (response.verificationRequired) {
-            toast("Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản.")
+            showVerifyEmailScreen(response.email, justSent = true)
         } else {
-            toast("Đăng ký thành công! Vui lòng đăng nhập")
+            showSuccess("Đăng ký thành công! Vui lòng đăng nhập")
+            showLoginScreen()
         }
+    }
+
+    override fun onNavigateToVerifyEmail(email: String) {
+        showVerifyEmailScreen(email, justSent = false)
+    }
+
+    override fun onVerifyEmailLoginRequested() {
         showLoginScreen()
     }
 
     override fun onRequestResetSuccess(email: String) {
-        toast("Đã gửi yêu cầu cho $email! Vui lòng kiểm tra mã xác thực")
+        showSuccess("Đã gửi yêu cầu cho $email! Vui lòng kiểm tra mã xác thực")
         showVerifyOtpScreen(email)
     }
 
@@ -103,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onResetPasswordSuccess() {
-        toast("Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại")
+        showSuccess("Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại")
         supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
         showLoginScreen()
     }
@@ -121,15 +132,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             .commit()
     }
 
+    override fun onLandlordLogoutRequested() {
+        performLogout()
+    }
+
+    private fun performLogout() {
+        lifecycleScope.launch {
+            val token = tokenDataStore.accessToken.first()
+            val authApi = NetworkClient.createService<AuthApiService>(
+                tokenProvider = { token }
+            )
+            val authRepo = AuthRepositoryImpl(authApi, tokenDataStore)
+            authRepo.logout()
+            showSuccess("Đã đăng xuất thành công")
+            showLoginScreen()
+        }
+    }
+
     private fun showHomeScreen() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, HomePlaceholderFragment.newInstance())
+            .replace(R.id.fragmentContainer, LandlordMainFragment.newInstance())
             .commit()
     }
 
     private fun showRegisterScreen() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, RegisterFragment.newInstance(role = "LANDLORD"))
+            .commit()
+    }
+
+    private fun showVerifyEmailScreen(email: String, justSent: Boolean) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, VerifyEmailFragment.newInstance(email, justSent))
             .commit()
     }
 

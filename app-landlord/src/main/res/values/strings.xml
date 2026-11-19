@@ -20,4 +20,9 @@
 
     <!-- Auth -->
     <string name="auth_login_subtitle">Chào mừng chủ trọ quay trở lại!</string>
+    <string name="nav_landlord_dashboard">Tổng quan</string>
+    <string name="nav_landlord_properties">Nhà &amp; Phòng</string>
+    <string name="nav_landlord_operations">Vận hành</string>
+    <string name="nav_landlord_chat">Tin nhắn</string>
+    <string name="nav_landlord_profile">Cá nhân</string>
 </resources>

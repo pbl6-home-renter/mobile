@@ -1,9 +1,15 @@
 package com.rentify.app.core.ui.auth
 
 import android.content.Context
+import android.graphics.Color
+import android.util.Patterns
 import android.view.View
-import androidx.core.widget.doOnTextChanged
+import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
+import com.google.android.material.progressindicator.IndeterminateDrawable
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.data.repository.auth.AuthRepositoryImpl
 import com.rentify.app.core.network.api.AuthApiService
@@ -20,6 +26,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         fun onLoginSuccess(response: AuthLoginResponseDto)
         fun onNavigateToRegister()
         fun onNavigateToForgotPassword()
+        fun onNavigateToVerifyEmail(email: String)
     }
 
     private var listener: LoginListener? = null
@@ -33,6 +40,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             val factory = LoginViewModelFactory(authRepository)
             ViewModelProvider(this, factory)[LoginViewModel::class.java]
         }
+    }
+
+    private val loadingDrawable: IndeterminateDrawable<CircularProgressIndicatorSpec> by lazy {
+        val ctx = requireContext()
+        val density = ctx.resources.displayMetrics.density
+        val spec = CircularProgressIndicatorSpec(ctx, null).apply {
+            indicatorSize = (20f * density + 0.5f).toInt()
+            trackThickness = (2.2f * density + 0.5f).toInt()
+            indicatorColors = intArrayOf(ContextCompat.getColor(ctx, R.color.rentify_on_primary))
+            trackColor = Color.TRANSPARENT
+        }
+        IndeterminateDrawable.createCircularDrawable(ctx, spec)
     }
 
     fun setViewModel(viewModel: LoginViewModel) {
@@ -50,16 +69,25 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun initView() {
-        binding.etIdentifier.doOnTextChanged { _, _, _, _ ->
-            binding.tilIdentifier.error = null
-            hideInlineError()
+        binding.tilIdentifier.editText.doAfterTextChanged {
+            clearFieldErrors()
             updateButtonState()
         }
 
-        binding.etPassword.doOnTextChanged { _, _, _, _ ->
-            binding.tilPassword.error = null
-            hideInlineError()
+        binding.tilPassword.editText.doAfterTextChanged {
+            clearFieldErrors()
             updateButtonState()
+        }
+
+        binding.tilPassword.editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (binding.btnLogin.isEnabled && binding.btnLogin.isClickable) {
+                    performLogin()
+                }
+                true
+            } else {
+                false
+            }
         }
 
         updateButtonState()
@@ -82,32 +110,34 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun isFormValid(): Boolean {
-        val identifier = binding.etIdentifier.text?.toString().orEmpty().trim()
-        val password = binding.etPassword.text?.toString().orEmpty()
+        val identifier = binding.tilIdentifier.text.trim()
+        val password = binding.tilPassword.text
         return identifier.isNotEmpty() && password.isNotEmpty()
     }
 
     private fun updateButtonState() {
-        binding.btnLogin.isEnabled = isFormValid()
+        val enabled = isFormValid()
+        binding.btnLogin.isEnabled = enabled
+        binding.btnLogin.elevation = if (enabled) 6f * resources.displayMetrics.density else 0f
     }
 
     private fun performLogin() {
-        val identifier = binding.etIdentifier.text?.toString().orEmpty()
-        val password = binding.etPassword.text?.toString().orEmpty()
+        val identifier = binding.tilIdentifier.text
+        val password = binding.tilPassword.text
 
         var hasError = false
         if (identifier.isBlank()) {
-            binding.tilIdentifier.error = getString(R.string.auth_login_error_empty_identifier)
+            binding.tilIdentifier.setError(getString(R.string.auth_login_error_empty_identifier))
             hasError = true
         } else {
-            binding.tilIdentifier.error = null
+            binding.tilIdentifier.setError(null)
         }
 
         if (password.isBlank()) {
-            binding.tilPassword.error = getString(R.string.auth_login_error_empty_password)
+            binding.tilPassword.setError(getString(R.string.auth_login_error_empty_password))
             hasError = true
         } else {
-            binding.tilPassword.error = null
+            binding.tilPassword.setError(null)
         }
 
         if (hasError) return
@@ -141,17 +171,48 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun showLoadingState(isLoading: Boolean) {
-        binding.btnLogin.isEnabled = !isLoading && isFormValid()
-        binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.btnLogin.text = if (isLoading) "" else getString(R.string.auth_login_button)
+        val density = resources.displayMetrics.density
+        if (isLoading) {
+            binding.btnLogin.isEnabled = true
+            binding.btnLogin.elevation = 6f * density
+            binding.btnLogin.isClickable = false
+            binding.btnLogin.text = ""
+            binding.btnLogin.iconPadding = 0
+            binding.btnLogin.icon = loadingDrawable
+            loadingDrawable.setVisible(true, true)
+        } else {
+            loadingDrawable.setVisible(false, false)
+            binding.btnLogin.icon = null
+            binding.btnLogin.iconPadding = (8f * density + 0.5f).toInt()
+            binding.btnLogin.text = getString(R.string.auth_login_button)
+            binding.btnLogin.isClickable = true
+            updateButtonState()
+        }
     }
 
     private fun showInlineError(message: String) {
-        binding.tvError.text = message
-        binding.tvError.visibility = View.VISIBLE
+        binding.tilIdentifier.setErrorHighlight()
+        binding.tilPassword.setError(message)
+        binding.tvError.visibility = View.GONE
+
+        val identifier = binding.tilIdentifier.text.trim()
+        if (viewModel.needsEmailVerification.value && Patterns.EMAIL_ADDRESS.matcher(identifier).matches()) {
+            binding.tvError.text = getString(R.string.auth_login_resend_verification)
+            binding.tvError.setTextColor(ContextCompat.getColor(requireContext(), R.color.rentify_primary))
+            binding.tvError.setOnClickListener { listener?.onNavigateToVerifyEmail(identifier) }
+            binding.tvError.visibility = View.VISIBLE
+        }
+    }
+
+    private fun clearFieldErrors() {
+        binding.tilIdentifier.setError(null)
+        binding.tilPassword.setError(null)
+        hideInlineError()
     }
 
     private fun hideInlineError() {
+        binding.tvError.setOnClickListener(null)
+        binding.tvError.setTextColor(ContextCompat.getColor(requireContext(), R.color.rentify_error))
         binding.tvError.visibility = View.GONE
     }
 

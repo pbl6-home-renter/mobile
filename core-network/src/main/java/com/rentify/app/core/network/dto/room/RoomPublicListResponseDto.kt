@@ -10,11 +10,15 @@ data class RoomPublicListResponseDto(
     @field:Json(name = "name") val name: String,
     @field:Json(name = "roomType") val roomType: String? = null,
     @field:Json(name = "thumbnailUrl") val thumbnailUrl: String? = null,
+    @field:Json(name = "photoUrls") val photoUrls: List<String> = emptyList(),
     @field:Json(name = "area") val area: String,
     @field:Json(name = "rentPrice") val rentPrice: Long,
     @field:Json(name = "genderPolicy") val genderPolicy: String,
     @field:Json(name = "address") val address: String,
-    @field:Json(name = "district") val district: String,
+    @field:Json(name = "ward") val ward: String = "",
     @field:Json(name = "province") val province: String,
     @field:Json(name = "isFavorited") val isFavorited: Boolean = false
-)
+) {
+    val coverUrl: String?
+        get() = thumbnailUrl?.takeIf { it.isNotBlank() } ?: photoUrls.firstOrNull { it.isNotBlank() }
+}

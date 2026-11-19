@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rentify.app.core.data.local.datastore.TokenDataStore
+import com.rentify.app.core.network.api.BuildingApiService
 import com.rentify.app.core.network.api.RoomApiService
 import com.rentify.app.core.network.client.NetworkClient
+import com.rentify.app.tenant.data.repository.BuildingWardResolver
 import com.rentify.app.tenant.data.repository.TenantRoomRepositoryImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -24,7 +26,7 @@ class SearchResultViewModelFactory(
             }
 
             val roomApiService = NetworkClient.createService<RoomApiService>(tokenProvider = tokenProvider)
-            val roomRepository = TenantRoomRepositoryImpl(roomApiService)
+            val roomRepository = TenantRoomRepositoryImpl(roomApiService, BuildingWardResolver(NetworkClient.createService<BuildingApiService>()))
 
             return SearchResultViewModel(
                 roomRepository = roomRepository,

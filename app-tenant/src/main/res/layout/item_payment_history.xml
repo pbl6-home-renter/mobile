@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="@dimen/spacing_smd"
     app:cardBackgroundColor="@color/rentify_surface"
-    app:cardCornerRadius="14dp"
+    app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="1dp"
     app:strokeColor="@color/rentify_divider"
     app:strokeWidth="1dp">
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="14dp">
+        android:padding="@dimen/spacing_md">
 
         <!-- Method Icon squircle -->
         <FrameLayout
@@ -38,7 +38,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/spacing_smd"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -56,9 +56,9 @@
                 android:id="@+id/tvTransactionId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_neutral"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="12sp"
                 tools:text="Mã GD: TXN-202610-098" />
         </LinearLayout>
@@ -84,7 +84,7 @@
                 android:id="@+id/tvPaymentStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/spacing_2xs"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:textColor="@color/rentify_success"
                 android:textSize="12sp"

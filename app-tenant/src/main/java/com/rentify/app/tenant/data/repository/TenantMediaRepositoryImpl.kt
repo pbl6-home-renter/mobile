@@ -84,7 +84,7 @@ class TenantMediaRepositoryImpl(
         }
         return when (result) {
             is NetworkResult.Success -> {
-                val url = result.data.data?.downloadUrl
+                val url = result.data.data?.url
                 if (!url.isNullOrBlank()) {
                     NetworkResult.Success(url)
                 } else {

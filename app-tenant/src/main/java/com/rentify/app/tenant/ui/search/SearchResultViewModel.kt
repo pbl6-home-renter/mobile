@@ -3,6 +3,7 @@ package com.rentify.app.tenant.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rentify.app.core.data.local.datastore.TokenDataStore
+import com.rentify.app.tenant.data.repository.FavoriteResultMessages
 import com.rentify.app.tenant.data.repository.TenantRoomRepository
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
@@ -51,7 +52,7 @@ class SearchResultViewModel(
         loadInitial()
     }
 
-    private fun checkAuth() {
+    fun checkAuth() {
         viewModelScope.launch {
             val token = tokenDataStore.accessToken.first()
             _uiState.update { it.copy(isLoggedIn = !token.isNullOrBlank()) }
@@ -88,22 +89,23 @@ class SearchResultViewModel(
             }
 
             val filter = _uiState.value.filter
-            val genderQuery = if (filter.genderPolicy != "any") filter.genderPolicy else null
+            if (filter.needsLocalFiltering()) {
+                loadAllAndFilterLocally(filter)
+                return@launch
+            }
 
             when (val result = roomRepository.getPublicRooms(
                 province = filter.province,
                 ward = filter.ward,
                 minPrice = filter.minPrice,
                 maxPrice = filter.maxPrice,
-                genderPolicy = genderQuery,
                 sort = filter.sort,
                 order = filter.order,
                 pageNo = 1,
-                pageSize = 20
+                pageSize = PAGE_SIZE
             )) {
                 is NetworkResult.Success -> {
-                    val rawList = result.data.data ?: emptyList()
-                    val filteredList = filterByKeyword(rawList, filter.keyword)
+                    val filteredList = result.data.data ?: emptyList()
                     val pagination = result.data.pagination
 
                     _uiState.update {
@@ -148,22 +150,19 @@ class SearchResultViewModel(
             _uiState.update { it.copy(isLoadingMore = true) }
 
             val filter = currentState.filter
-            val genderQuery = if (filter.genderPolicy != "any") filter.genderPolicy else null
 
             when (val result = roomRepository.getPublicRooms(
                 province = filter.province,
                 ward = filter.ward,
                 minPrice = filter.minPrice,
                 maxPrice = filter.maxPrice,
-                genderPolicy = genderQuery,
                 sort = filter.sort,
                 order = filter.order,
                 pageNo = nextPage,
-                pageSize = 20
+                pageSize = PAGE_SIZE
             )) {
                 is NetworkResult.Success -> {
-                    val newRawList = result.data.data ?: emptyList()
-                    val newFilteredList = filterByKeyword(newRawList, filter.keyword)
+                    val newFilteredList = result.data.data ?: emptyList()
                     val pagination = result.data.pagination
 
                     _uiState.update { current ->
@@ -211,12 +210,13 @@ class SearchResultViewModel(
                 roomRepository.removeFavoriteRoom(room.id)
             }
 
-            when (result) {
-                is NetworkResult.Success -> {
+            val keepsFavorite = targetFavorited && FavoriteResultMessages.isAlreadyFavorited(result)
+            when {
+                result is NetworkResult.Success || keepsFavorite -> {
                     val message = if (targetFavorited) "Đã lưu phòng ${room.name}" else "Đã bỏ lưu phòng ${room.name}"
                     _events.emit(SearchResultEvent.ShowToast(message))
                 }
-                is NetworkResult.ApiError, is NetworkResult.NetworkError, is NetworkResult.UnknownError -> {
+                else -> {
                     // Rollback
                     _uiState.update { current ->
                         current.copy(
@@ -225,20 +225,78 @@ class SearchResultViewModel(
                             }
                         )
                     }
-                    _events.emit(SearchResultEvent.ShowError("Thao tác thất bại, vui lòng thử lại"))
+                    _events.emit(SearchResultEvent.ShowError(FavoriteResultMessages.failureMessage(result, adding = targetFavorited)))
                 }
             }
         }
     }
 
-    private fun filterByKeyword(list: List<RoomPublicListResponseDto>, keyword: String?): List<RoomPublicListResponseDto> {
-        if (keyword.isNullOrBlank()) return list
-        val kw = keyword.lowercase()
-        return list.filter {
-            it.name.lowercase().contains(kw) ||
-                    it.address?.lowercase()?.contains(kw) == true ||
-                    it.district.lowercase().contains(kw) ||
-                    it.province.lowercase().contains(kw)
+    private fun RoomFilter.needsLocalFiltering(): Boolean {
+        return !keyword.isNullOrBlank() || genderPolicy != GENDER_ANY
+    }
+
+    private suspend fun loadAllAndFilterLocally(filter: RoomFilter) {
+        val allRooms = mutableListOf<RoomPublicListResponseDto>()
+        var pageNo = 1
+        while (pageNo <= MAX_LOCAL_PAGES) {
+            val result = roomRepository.getPublicRooms(
+                province = filter.province,
+                ward = filter.ward,
+                minPrice = filter.minPrice,
+                maxPrice = filter.maxPrice,
+                sort = filter.sort,
+                order = filter.order,
+                pageNo = pageNo,
+                pageSize = LOCAL_PAGE_SIZE
+            )
+            if (result !is NetworkResult.Success) {
+                val message = when (result) {
+                    is NetworkResult.ApiError -> result.error?.message ?: "Lỗi tải kết quả tìm kiếm"
+                    is NetworkResult.NetworkError -> "Lỗi kết nối mạng, vui lòng kiểm tra lại"
+                    else -> "Có lỗi xảy ra"
+                }
+                _uiState.update { it.copy(isLoading = false, isRefreshing = false, errorMessage = message) }
+                _events.emit(SearchResultEvent.ShowError(message))
+                return
+            }
+            allRooms += result.data.data ?: emptyList()
+            if (result.data.pagination?.hasNextPage != true) break
+            pageNo++
         }
+
+        val matched = allRooms.filter { matchesGender(it, filter.genderPolicy) && matchesKeyword(it, filter.keyword) }
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                isRefreshing = false,
+                rooms = matched,
+                pageNo = 1,
+                hasNextPage = false,
+                totalItems = matched.size,
+                errorMessage = null
+            )
+        }
+    }
+
+    private fun matchesGender(room: RoomPublicListResponseDto, genderPolicy: String): Boolean {
+        return genderPolicy == GENDER_ANY ||
+                room.genderPolicy == GENDER_ANY ||
+                room.genderPolicy == genderPolicy
+    }
+
+    private fun matchesKeyword(room: RoomPublicListResponseDto, keyword: String?): Boolean {
+        if (keyword.isNullOrBlank()) return true
+        val kw = keyword.lowercase()
+        return room.name.lowercase().contains(kw) ||
+                room.address?.lowercase()?.contains(kw) == true ||
+                room.ward.lowercase().contains(kw) ||
+                room.province.lowercase().contains(kw)
+    }
+
+    private companion object {
+        const val GENDER_ANY = "any"
+        const val PAGE_SIZE = 20
+        const val LOCAL_PAGE_SIZE = 100
+        const val MAX_LOCAL_PAGES = 20
     }
 }

@@ -1,12 +1,17 @@
 package com.rentify.app.core.ui.auth
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
+import com.google.android.material.progressindicator.IndeterminateDrawable
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.data.repository.auth.AuthRepositoryImpl
 import com.rentify.app.core.network.api.AuthApiService
@@ -38,6 +43,18 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             val factory = RegisterViewModelFactory(authRepository)
             ViewModelProvider(this, factory)[RegisterViewModel::class.java]
         }
+    }
+
+    private val loadingDrawable: IndeterminateDrawable<CircularProgressIndicatorSpec> by lazy {
+        val ctx = requireContext()
+        val density = ctx.resources.displayMetrics.density
+        val spec = CircularProgressIndicatorSpec(ctx, null).apply {
+            indicatorSize = (20f * density + 0.5f).toInt()
+            trackThickness = (2.2f * density + 0.5f).toInt()
+            indicatorColors = intArrayOf(ContextCompat.getColor(ctx, R.color.rentify_on_primary))
+            trackColor = Color.TRANSPARENT
+        }
+        IndeterminateDrawable.createCircularDrawable(ctx, spec)
     }
 
     fun setViewModel(viewModel: RegisterViewModel) {
@@ -75,34 +92,45 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
             updateButtonState()
         }
 
-        binding.etName.doOnTextChanged { _, _, _, _ ->
-            binding.tilName.error = null
+        binding.tilName.editText.doAfterTextChanged {
+            binding.tilName.setError(null)
             hideInlineError()
             updateButtonState()
         }
 
-        binding.etEmail.doOnTextChanged { _, _, _, _ ->
-            binding.tilEmail.error = null
+        binding.tilEmail.editText.doAfterTextChanged {
+            binding.tilEmail.setError(null)
             hideInlineError()
             updateButtonState()
         }
 
-        binding.etPhone.doOnTextChanged { _, _, _, _ ->
-            binding.tilPhone.error = null
+        binding.tilPhone.editText.doAfterTextChanged {
+            binding.tilPhone.setError(null)
             hideInlineError()
             updateButtonState()
         }
 
-        binding.etPassword.doOnTextChanged { _, _, _, _ ->
-            binding.tilPassword.error = null
+        binding.tilPassword.editText.doAfterTextChanged {
+            binding.tilPassword.setError(null)
             hideInlineError()
             updateButtonState()
         }
 
-        binding.etConfirmPassword.doOnTextChanged { _, _, _, _ ->
-            binding.tilConfirmPassword.error = null
+        binding.tilConfirmPassword.editText.doAfterTextChanged {
+            binding.tilConfirmPassword.setError(null)
             hideInlineError()
             updateButtonState()
+        }
+
+        binding.tilConfirmPassword.editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (binding.btnRegister.isEnabled && binding.btnRegister.isClickable) {
+                    performRegister()
+                }
+                true
+            } else {
+                false
+            }
         }
 
         updateButtonState()
@@ -121,11 +149,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun isFormValid(): Boolean {
-        val name = binding.etName.text?.toString().orEmpty().trim()
-        val email = binding.etEmail.text?.toString().orEmpty().trim()
-        val phone = binding.etPhone.text?.toString().orEmpty().trim()
-        val password = binding.etPassword.text?.toString().orEmpty()
-        val confirmPassword = binding.etConfirmPassword.text?.toString().orEmpty()
+        val name = binding.tilName.text.trim()
+        val email = binding.tilEmail.text.trim()
+        val phone = binding.tilPhone.text.trim()
+        val password = binding.tilPassword.text
+        val confirmPassword = binding.tilConfirmPassword.text
         return name.isNotEmpty() &&
             email.isNotEmpty() &&
             phone.isNotEmpty() &&
@@ -135,60 +163,62 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun updateButtonState() {
-        binding.btnRegister.isEnabled = isFormValid()
+        val enabled = isFormValid()
+        binding.btnRegister.isEnabled = enabled
+        binding.btnRegister.elevation = if (enabled) 6f * resources.displayMetrics.density else 0f
     }
 
     private fun performRegister() {
-        val name = binding.etName.text?.toString().orEmpty().trim()
-        val email = binding.etEmail.text?.toString().orEmpty().trim()
-        val phone = binding.etPhone.text?.toString().orEmpty().trim()
-        val password = binding.etPassword.text?.toString().orEmpty()
-        val confirmPassword = binding.etConfirmPassword.text?.toString().orEmpty()
+        val name = binding.tilName.text.trim()
+        val email = binding.tilEmail.text.trim()
+        val phone = binding.tilPhone.text.trim()
+        val password = binding.tilPassword.text
+        val confirmPassword = binding.tilConfirmPassword.text
 
         var hasError = false
 
         if (name.isBlank()) {
-            binding.tilName.error = getString(R.string.auth_register_error_empty_name)
+            binding.tilName.setError(getString(R.string.auth_register_error_empty_name))
             hasError = true
         } else {
-            binding.tilName.error = null
+            binding.tilName.setError(null)
         }
 
         if (email.isBlank()) {
-            binding.tilEmail.error = getString(R.string.auth_register_error_empty_email)
+            binding.tilEmail.setError(getString(R.string.auth_register_error_empty_email))
             hasError = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.tilEmail.error = getString(R.string.auth_register_error_invalid_email)
+            binding.tilEmail.setError(getString(R.string.auth_register_error_invalid_email))
             hasError = true
         } else {
-            binding.tilEmail.error = null
+            binding.tilEmail.setError(null)
         }
 
         if (phone.isBlank()) {
-            binding.tilPhone.error = getString(R.string.auth_register_error_empty_phone)
+            binding.tilPhone.setError(getString(R.string.auth_register_error_empty_phone))
             hasError = true
         } else if (phone.length < 10) {
-            binding.tilPhone.error = getString(R.string.auth_register_error_invalid_phone)
+            binding.tilPhone.setError(getString(R.string.auth_register_error_invalid_phone))
             hasError = true
         } else {
-            binding.tilPhone.error = null
+            binding.tilPhone.setError(null)
         }
 
         if (password.isBlank()) {
-            binding.tilPassword.error = getString(R.string.auth_register_error_empty_password)
+            binding.tilPassword.setError(getString(R.string.auth_register_error_empty_password))
             hasError = true
         } else if (password.length < 6) {
-            binding.tilPassword.error = getString(R.string.auth_register_error_password_length)
+            binding.tilPassword.setError(getString(R.string.auth_register_error_password_length))
             hasError = true
         } else {
-            binding.tilPassword.error = null
+            binding.tilPassword.setError(null)
         }
 
         if (confirmPassword != password) {
-            binding.tilConfirmPassword.error = getString(R.string.auth_register_error_password_mismatch)
+            binding.tilConfirmPassword.setError(getString(R.string.auth_register_error_password_mismatch))
             hasError = true
         } else {
-            binding.tilConfirmPassword.error = null
+            binding.tilConfirmPassword.setError(null)
         }
 
         if (!binding.cbTerms.isChecked) {
@@ -227,9 +257,23 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(FragmentRegisterB
     }
 
     private fun showLoadingState(isLoading: Boolean) {
-        binding.btnRegister.isEnabled = !isLoading && isFormValid()
-        binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.btnRegister.text = if (isLoading) "" else getString(R.string.auth_register_button)
+        val density = resources.displayMetrics.density
+        if (isLoading) {
+            binding.btnRegister.isEnabled = true
+            binding.btnRegister.elevation = 6f * density
+            binding.btnRegister.isClickable = false
+            binding.btnRegister.text = ""
+            binding.btnRegister.iconPadding = 0
+            binding.btnRegister.icon = loadingDrawable
+            loadingDrawable.setVisible(true, true)
+        } else {
+            loadingDrawable.setVisible(false, false)
+            binding.btnRegister.icon = null
+            binding.btnRegister.iconPadding = (8f * density + 0.5f).toInt()
+            binding.btnRegister.text = getString(R.string.auth_register_button)
+            binding.btnRegister.isClickable = true
+            updateButtonState()
+        }
     }
 
     private fun showInlineError(message: String) {

@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class MyRoomHubResponseDto(
     @field:Json(name = "room") val room: RoomHubRoomDto,
-    @field:Json(name = "landlord") val landlord: RoomHubLandlordDto,
+    @field:Json(name = "landlord") val landlord: RoomHubLandlordDto? = null,
     @field:Json(name = "contract") val contract: RoomHubContractDto,
     @field:Json(name = "currentInvoice") val currentInvoice: RoomHubInvoiceDto? = null,
     @field:Json(name = "roommates") val roommates: List<RoomHubRoommateDto> = emptyList(),
@@ -37,11 +37,11 @@ data class RoomHubLandlordDto(
 @JsonClass(generateAdapter = true)
 data class RoomHubContractDto(
     @field:Json(name = "id") val id: String,
-    @field:Json(name = "contractCode") val contractCode: String,
-    @field:Json(name = "rentalType") val rentalType: String,
+    @field:Json(name = "contractCode") val contractCode: String = "",
+    @field:Json(name = "rentalType") val rentalType: String = "",
     @field:Json(name = "startDate") val startDate: String,
     @field:Json(name = "endDate") val endDate: String,
-    @field:Json(name = "status") val status: String,
+    @field:Json(name = "status") val status: String = "active",
     @field:Json(name = "signedContractUrl") val signedContractUrl: String? = null
 )
 

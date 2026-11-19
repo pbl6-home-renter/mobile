@@ -82,36 +82,16 @@
                     app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
                 <!-- OTP / Token Input -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilOtp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.rentify.app.core.ui.component.RentifyTextField
+                    android:id="@+id/etOtp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_lg"
-                    android:hint="@string/auth_verify_otp_label"
-                    app:boxCornerRadiusBottomEnd="@dimen/radius_md"
-                    app:boxCornerRadiusBottomStart="@dimen/radius_md"
-                    app:boxCornerRadiusTopEnd="@dimen/radius_md"
-                    app:boxCornerRadiusTopStart="@dimen/radius_md"
-                    app:boxStrokeColor="@color/rentify_divider"
-                    app:cursorColor="@color/rentify_text_primary"
-                    app:hintTextColor="@color/rentify_text_primary"
+                    android:inputType="textCapCharacters"
+                    app:hint="@string/auth_verify_otp_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etOtp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/plus_jakarta_sans_regular"
-                        android:inputType="textCapCharacters"
-                        android:textColor="@color/rentify_text_primary"
-                        android:textColorHint="@color/rentify_neutral"
-                        android:textCursorDrawable="@drawable/bg_cursor_primary"
-                        android:textSize="15sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
 
                 <TextView
                     android:id="@+id/tvError"
@@ -124,7 +104,7 @@
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilOtp"
+                    app:layout_constraintTop_toBottomOf="@id/etOtp"
                     tools:text="Mã xác thực không hợp lệ"
                     tools:visibility="visible" />
 
@@ -188,7 +168,7 @@
                         android:id="@+id/tvResendAction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="@dimen/spacing_xs"
                         android:fontFamily="@font/plus_jakarta_sans_bold"
                         android:padding="@dimen/spacing_xs"
                         android:text="@string/auth_verify_otp_resend_action"

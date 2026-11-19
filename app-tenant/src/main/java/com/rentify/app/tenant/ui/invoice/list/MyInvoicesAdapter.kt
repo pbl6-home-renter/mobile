@@ -24,8 +24,8 @@ class MyInvoicesAdapter(
         val context = binding.root.context
 
         binding.tvInvoicePeriod.text = InvoiceUiHelper.formatPeriod(item.period)
-        binding.tvRoomName.text = if (item.roomName.isNotEmpty()) "Phòng: ${item.roomName}" else "Phòng trọ"
-        binding.tvInvoiceCode.text = item.code
+        binding.tvRoomName.text = if (item.roomName.isNotEmpty()) "Phòng ${item.roomName}" else "Phòng trọ"
+        binding.tvInvoiceCode.text = "Mã HĐ ${item.code}"
 
         val statusText = InvoiceUiHelper.getInvoiceStatusText(item.invoiceStatus, item.remainingAmount, item.dueDate)
         val statusColor = InvoiceUiHelper.getInvoiceStatusColor(context, item.invoiceStatus, item.remainingAmount, item.dueDate)

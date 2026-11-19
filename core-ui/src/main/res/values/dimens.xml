@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Spacing Scale (4dp multiples) -->
+    <dimen name="spacing_2xs">2dp</dimen>
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_smd">12dp</dimen>
     <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_ml">20dp</dimen>
     <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_28">28dp</dimen>
     <dimen name="spacing_xl">32dp</dimen>
-    <dimen name="spacing_2xl">44dp</dimen>
+    <dimen name="spacing_2xl">40dp</dimen>
+    <dimen name="spacing_3xl">48dp</dimen>
+    <dimen name="spacing_4xl">64dp</dimen>
+    <dimen name="spacing_hero">80dp</dimen>
+    <dimen name="spacing_bottom_clearance">88dp</dimen>
+    <dimen name="spacing_bottom_nav">96dp</dimen>
 
+    <!-- Radius Scale -->
+    <dimen name="radius_xs">4dp</dimen>
     <dimen name="radius_sm">8dp</dimen>
     <dimen name="radius_md">12dp</dimen>
     <dimen name="radius_lg">16dp</dimen>
-    <dimen name="radius_button">26dp</dimen>
+    <dimen name="radius_xl">24dp</dimen>
+    <dimen name="radius_button">28dp</dimen>
 
+    <!-- Typography Scale -->
     <dimen name="text_caption">12sp</dimen>
     <dimen name="text_body">14sp</dimen>
     <dimen name="text_title">18sp</dimen>

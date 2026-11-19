@@ -3,6 +3,8 @@ package com.rentify.app.tenant.ui.issue
 import android.content.Context
 import android.graphics.Color
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.rentify.app.core.ui.R as CoreR
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -70,6 +72,21 @@ object IssueUiHelper {
         val horizontalPadding = dpToPx(textView.context, 8)
         val verticalPadding = dpToPx(textView.context, 3)
         textView.setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+    }
+
+    fun applyNeutralStatusBadge(textView: TextView, status: String?) {
+        applyStatusBadge(textView, status)
+        textView.setTextColor(ContextCompat.getColor(textView.context, CoreR.color.rentify_text_secondary))
+    }
+
+    fun applyUrgencyText(textView: TextView, urgency: String?) {
+        val level = urgency?.uppercase()
+        val isUrgent = level == "HIGH" || level == "EMERGENCY"
+        textView.isVisible = isUrgent
+        if (!isUrgent) return
+        textView.text = getUrgencyLabel(urgency)
+        val colorRes = if (level == "EMERGENCY") CoreR.color.rentify_error else CoreR.color.rentify_warning_text
+        textView.setTextColor(ContextCompat.getColor(textView.context, colorRes))
     }
 
     fun applyStatusBadge(textView: TextView, status: String?) {

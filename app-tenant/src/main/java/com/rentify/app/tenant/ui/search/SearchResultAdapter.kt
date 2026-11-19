@@ -1,5 +1,7 @@
 package com.rentify.app.tenant.ui.search
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import coil.load
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
@@ -8,6 +10,7 @@ import com.rentify.app.core.ui.base.BaseListAdapter
 import com.rentify.app.core.ui.base.simpleDiff
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
 import com.rentify.app.core.ui.extension.toVnd
+import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ItemRoomSearchResultBinding
 import com.rentify.app.tenant.ui.explore.RoomForYouAdapter
 
@@ -20,9 +23,7 @@ class SearchResultAdapter(
 ) {
 
     override fun bind(binding: ItemRoomSearchResultBinding, item: RoomPublicListResponseDto, position: Int) {
-        val context = binding.root.context
-
-        val photoUrl = RoomForYouAdapter.resolveImageUrl(item.thumbnailUrl, position)
+        val photoUrl = RoomForYouAdapter.resolveImageUrl(item.coverUrl, position)
         binding.ivThumbnail.load(photoUrl) {
             crossfade(true)
             placeholder(CoreUiR.drawable.ic_image_placeholder)
@@ -32,26 +33,31 @@ class SearchResultAdapter(
         binding.tvRoomName.text = item.name
 
         val locationText = listOfNotNull(
-            item.district.takeIf { it.isNotBlank() },
+            item.ward.takeIf { it.isNotBlank() },
             item.province.takeIf { it.isNotBlank() }
         ).joinToString(", ").ifBlank { "Đang cập nhật địa chỉ" }
         binding.tvLocation.text = locationText
 
-        binding.tvRentPrice.text = item.rentPrice.toVnd()
         val parsedArea = item.area.trim().toDoubleOrNull()
         val areaText = if (parsedArea != null) {
             if (parsedArea % 1.0 == 0.0) "${parsedArea.toInt()}" else "$parsedArea"
         } else {
             "25"
         }
-        binding.tvArea.text = "$areaText m²"
+        binding.tvAreaTag.text = "$areaText m²"
+
+        binding.tvRentPrice.text = item.rentPrice.toVnd()
 
         if (item.isFavorited) {
-            binding.btnFavorite.setImageResource(CoreUiR.drawable.ic_heart_filled)
-            binding.btnFavorite.setColorFilter(ContextCompat.getColor(context, CoreUiR.color.rentify_card_saved_icon))
+            binding.btnFavorite.setBackgroundResource(R.drawable.bg_heart_btn_default)
+            binding.ivFavoriteIcon.setImageResource(CoreUiR.drawable.ic_heart_filled)
+            binding.ivFavoriteIcon.imageTintList = ColorStateList.valueOf(Color.parseColor("#EF4444"))
+            binding.btnFavorite.contentDescription = "Bỏ lưu phòng"
         } else {
-            binding.btnFavorite.setImageResource(CoreUiR.drawable.ic_heart_outline)
-            binding.btnFavorite.setColorFilter(ContextCompat.getColor(context, CoreUiR.color.rentify_text_secondary))
+            binding.btnFavorite.setBackgroundResource(R.drawable.bg_heart_btn_default)
+            binding.ivFavoriteIcon.setImageResource(CoreUiR.drawable.ic_heart_outline)
+            binding.ivFavoriteIcon.imageTintList = ColorStateList.valueOf(Color.parseColor("#6B7280"))
+            binding.btnFavorite.contentDescription = "Lưu phòng"
         }
 
         binding.root.setOnSingleClickListener {

@@ -65,8 +65,7 @@ class CreateIssueViewModel(
             title = trimmedTitle,
             category = _selectedCategory.value,
             urgency = _selectedUrgency.value,
-            description = description.trim().ifEmpty { null },
-            issuePhotoMediaIds = emptyList()
+            description = description.trim().ifEmpty { null }
         )
 
         _isLoading.value = true

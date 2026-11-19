@@ -3,14 +3,15 @@ package com.rentify.app.tenant.ui.matching
 import androidx.lifecycle.viewModelScope
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.network.adapter.NetworkResult
-import com.rentify.app.core.network.dto.matching.MatchRequestListResponseDto
-import com.rentify.app.core.network.dto.matching.MatchRequestUserDto
 import com.rentify.app.core.network.dto.matching.RoommateProfileListResponseDto
 import com.rentify.app.core.network.dto.matching.RoommateProfileMyResponseDto
 import com.rentify.app.core.network.dto.matching.RoommateProfileSaveRequestDto
 import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.data.repository.TenantChatRepository
+import com.rentify.app.tenant.data.repository.MatchRequestCounterpart
+import com.rentify.app.tenant.data.repository.MatchRequestItem
+import com.rentify.app.tenant.data.repository.RoommateProfileResolver
 import com.rentify.app.tenant.data.repository.TenantMatchingRepository
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,6 +39,7 @@ sealed interface MatchingUiEvent {
 
 class MatchingViewModel(
     private val matchingRepository: TenantMatchingRepository,
+    private val profileResolver: RoommateProfileResolver,
     private val chatRepository: TenantChatRepository,
     private val tokenDataStore: TokenDataStore
 ) : BaseViewModel() {
@@ -51,14 +53,14 @@ class MatchingViewModel(
     private val _feedState = MutableStateFlow<UiState<List<RoommateProfileListResponseDto>>>(UiState.Idle)
     val feedState: StateFlow<UiState<List<RoommateProfileListResponseDto>>> = _feedState.asStateFlow()
 
-    private val _requestsState = MutableStateFlow<UiState<List<MatchRequestListResponseDto>>>(UiState.Idle)
-    val requestsState: StateFlow<UiState<List<MatchRequestListResponseDto>>> = _requestsState.asStateFlow()
+    private val _requestsState = MutableStateFlow<UiState<List<MatchRequestItem>>>(UiState.Idle)
+    val requestsState: StateFlow<UiState<List<MatchRequestItem>>> = _requestsState.asStateFlow()
 
     private val _uiEvent = MutableSharedFlow<MatchingUiEvent>()
     val uiEvent: SharedFlow<MatchingUiEvent> = _uiEvent.asSharedFlow()
 
     private var currentAreaFilter: String? = null
-    private var currentDirection: String = "incoming"
+    private var currentDirection: String = DIRECTION_INCOMING
 
     init {
         checkAuthAndLoad()
@@ -181,8 +183,23 @@ class MatchingViewModel(
         viewModelScope.launch {
             when (val result = matchingRepository.getMatchRequests(direction = direction)) {
                 is NetworkResult.Success -> {
-                    val list = result.data.data ?: emptyList()
-                    _requestsState.value = UiState.Success(list)
+                    val requests = result.data.data ?: emptyList()
+                    val counterpartIds = requests.map { if (direction == DIRECTION_INCOMING) it.requesterId else it.targetId }
+                    val profiles = profileResolver.resolve(counterpartIds)
+                    _requestsState.value = UiState.Success(
+                        requests.mapIndexed { index, request ->
+                            val counterpartId = counterpartIds[index]
+                            val profile = profiles[counterpartId]
+                            MatchRequestItem(
+                                request = request,
+                                counterpart = MatchRequestCounterpart(
+                                    id = counterpartId,
+                                    name = profile?.tenantName ?: UNKNOWN_USER_NAME,
+                                    avatarUrl = profile?.avatarUrl
+                                )
+                            )
+                        }
+                    )
                 }
                 is NetworkResult.ApiError -> {
                     _requestsState.value = UiState.Error(result.error?.message ?: "Không thể tải danh sách yêu cầu")
@@ -245,22 +262,12 @@ class MatchingViewModel(
         }
     }
 
-    fun acceptRequest(request: MatchRequestListResponseDto) {
+    fun acceptRequest(item: MatchRequestItem) {
         viewModelScope.launch {
-            when (val result = matchingRepository.acceptMatchRequest(request.id)) {
+            when (val result = matchingRepository.acceptMatchRequest(item.request.id)) {
                 is NetworkResult.Success -> {
-                    val conversationId = result.data.data?.conversationId
                     _uiEvent.emit(MatchingUiEvent.ShowToast("Đã chấp nhận lời mời ghép đôi!"))
                     loadRequests(currentDirection, isRefresh = true)
-                    if (!conversationId.isNullOrBlank()) {
-                        _uiEvent.emit(
-                            MatchingUiEvent.OpenChat(
-                                conversationId = conversationId,
-                                recipientName = request.requester.name,
-                                recipientAvatarUrl = request.requester.avatarUrl
-                            )
-                        )
-                    }
                 }
                 is NetworkResult.ApiError -> {
                     _uiEvent.emit(MatchingUiEvent.ShowToast(result.error?.message ?: "Lỗi khi chấp nhận yêu cầu"))
@@ -275,9 +282,9 @@ class MatchingViewModel(
         }
     }
 
-    fun rejectRequest(request: MatchRequestListResponseDto) {
+    fun rejectRequest(item: MatchRequestItem) {
         viewModelScope.launch {
-            when (val result = matchingRepository.rejectMatchRequest(request.id)) {
+            when (val result = matchingRepository.rejectMatchRequest(item.request.id)) {
                 is NetworkResult.Success -> {
                     _uiEvent.emit(MatchingUiEvent.ShowToast("Đã từ chối lời mời ghép đôi"))
                     loadRequests(currentDirection, isRefresh = true)
@@ -295,9 +302,9 @@ class MatchingViewModel(
         }
     }
 
-    fun withdrawRequest(request: MatchRequestListResponseDto) {
+    fun withdrawRequest(item: MatchRequestItem) {
         viewModelScope.launch {
-            when (val result = matchingRepository.withdrawMatchRequest(request.id)) {
+            when (val result = matchingRepository.withdrawMatchRequest(item.request.id)) {
                 is NetworkResult.Success -> {
                     _uiEvent.emit(MatchingUiEvent.ShowToast("Đã rút lại lời mời ghép đôi"))
                     loadRequests(currentDirection, isRefresh = true)
@@ -315,7 +322,7 @@ class MatchingViewModel(
         }
     }
 
-    fun contactUser(user: MatchRequestUserDto) {
+    fun contactUser(user: MatchRequestCounterpart) {
         viewModelScope.launch {
             when (val result = chatRepository.getOrCreateDirectConversation(user.id)) {
                 is NetworkResult.Success -> {
@@ -344,5 +351,9 @@ class MatchingViewModel(
             }
         }
     }
-}
 
+    private companion object {
+        const val DIRECTION_INCOMING = "incoming"
+        const val UNKNOWN_USER_NAME = "Người dùng"
+    }
+}

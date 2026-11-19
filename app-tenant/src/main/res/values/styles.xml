@@ -1,0 +1,29 @@
+<resources>
+    <style name="ShapeAppearance.Rentify.RoomThumb" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">14dp</item>
+    </style>
+
+    <style name="TextAppearance.Rentify.ToolbarTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/plus_jakarta_sans_medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/rentify_text</item>
+    </style>
+
+    <style name="TextAppearance.Rentify.ToolbarSubtitle" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/rentify_text_muted</item>
+    </style>
+
+    <style name="Widget.Rentify.IssueChip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_issue_bg</item>
+        <item name="chipStrokeColor">@color/chip_issue_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">18dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="android:textColor">@color/chip_issue_text</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans</item>
+    </style>
+</resources>

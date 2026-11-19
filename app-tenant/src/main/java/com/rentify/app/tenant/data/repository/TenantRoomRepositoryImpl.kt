@@ -8,12 +8,13 @@ import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.room.FavoriteRoomListResponseDto
 import com.rentify.app.core.network.dto.room.FavoriteRoomToggleRequestDto
 import com.rentify.app.core.network.dto.room.FavoriteRoomToggleResponseDto
-import com.rentify.app.core.network.dto.room.MyRoomHubResponseDto
+import com.rentify.app.core.network.dto.room.MyRoomHubItemDto
 import com.rentify.app.core.network.dto.room.RoomDetailResponseDto
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
 
 class TenantRoomRepositoryImpl(
-    private val roomApiService: RoomApiService
+    private val roomApiService: RoomApiService,
+    private val buildingWardResolver: BuildingWardResolver
 ) : BaseRepository(), TenantRoomRepository {
 
     override suspend fun getPublicRooms(
@@ -39,14 +40,47 @@ class TenantRoomRepositoryImpl(
                 pageNo = pageNo,
                 pageSize = pageSize
             )
+        }.withWards()
+    }
+
+    override suspend fun getAllPublicRooms(
+        province: String?,
+        ward: String?
+    ): NetworkResult<List<RoomPublicListResponseDto>> {
+        val rooms = mutableListOf<RoomPublicListResponseDto>()
+        var pageNo = 1
+        while (pageNo <= MAX_ROOM_PAGES) {
+            when (val result = safeApiCall {
+                roomApiService.getPublicRooms(
+                    province = province,
+                    ward = ward,
+                    pageNo = pageNo,
+                    pageSize = ROOM_PAGE_SIZE
+                )
+            }) {
+                is NetworkResult.Success -> {
+                    rooms += result.data.data
+                    if (result.data.pagination?.hasNextPage != true) break
+                    pageNo++
+                }
+                is NetworkResult.ApiError -> return result
+                is NetworkResult.NetworkError -> return result
+                is NetworkResult.UnknownError -> return result
+            }
         }
+        val wards = buildingWardResolver.wardsOf(rooms.map { it.buildingId })
+        return NetworkResult.Success(
+            rooms.map { room ->
+                if (room.ward.isBlank()) room.copy(ward = wards[room.buildingId].orEmpty()) else room
+            }
+        )
     }
 
     override suspend fun getRoomDetail(roomId: String): NetworkResult<ApiSingleResponse<RoomDetailResponseDto>> {
-        return safeApiCall { roomApiService.getRoomDetail(roomId) }
+        return safeApiCall { roomApiService.getRoomDetail(roomId) }.withDetailWard()
     }
 
-    override suspend fun getMyRoomHub(): NetworkResult<ApiSingleResponse<MyRoomHubResponseDto>> {
+    override suspend fun getMyRoomHub(): NetworkResult<ApiListResponse<MyRoomHubItemDto>> {
         return safeApiCall { roomApiService.getMyRoomHub() }
     }
 
@@ -71,5 +105,28 @@ class TenantRoomRepositoryImpl(
     override suspend fun removeFavoriteRoom(roomId: String): NetworkResult<Unit> {
         return safeApiCall { roomApiService.removeFavoriteRoom(roomId) }
     }
-}
 
+    private suspend fun NetworkResult<ApiListResponse<RoomPublicListResponseDto>>.withWards():
+        NetworkResult<ApiListResponse<RoomPublicListResponseDto>> {
+        if (this !is NetworkResult.Success) return this
+        val wards = buildingWardResolver.wardsOf(data.data.map { it.buildingId })
+        val rooms = data.data.map { room ->
+            if (room.ward.isBlank()) room.copy(ward = wards[room.buildingId].orEmpty()) else room
+        }
+        return NetworkResult.Success(data.copy(data = rooms))
+    }
+
+    private suspend fun NetworkResult<ApiSingleResponse<RoomDetailResponseDto>>.withDetailWard():
+        NetworkResult<ApiSingleResponse<RoomDetailResponseDto>> {
+        if (this !is NetworkResult.Success) return this
+        val room = data.data ?: return this
+        if (room.ward.isNotBlank()) return this
+        val ward = buildingWardResolver.wardsOf(listOf(room.buildingId))[room.buildingId].orEmpty()
+        return NetworkResult.Success(data.copy(data = room.copy(ward = ward)))
+    }
+
+    private companion object {
+        const val ROOM_PAGE_SIZE = 100
+        const val MAX_ROOM_PAGES = 20
+    }
+}

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutSortPopupRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_popup_sort_menu"
+    android:minWidth="175dp"
+    android:orientation="vertical"
+    android:paddingVertical="6dp">
+
+    <!-- 1. Mới nhất -->
+    <LinearLayout
+        android:id="@+id/itemSortNewest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:id="@+id/tvTitleNewest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:text="Mới nhất"
+            android:textColor="#0F172A"
+            android:textSize="13.5sp" />
+
+        <ImageView
+            android:id="@+id/ivCheckNewest"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="Đã chọn"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"
+            app:tint="@color/rentify_header_blue"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="12dp"
+        android:background="#F1F5F9" />
+
+    <!-- 2. Giá: Thấp đến cao -->
+    <LinearLayout
+        android:id="@+id/itemSortPriceAsc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:id="@+id/tvTitlePriceAsc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:text="Giá: Thấp đến cao"
+            android:textColor="#0F172A"
+            android:textSize="13.5sp" />
+
+        <ImageView
+            android:id="@+id/ivCheckPriceAsc"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="Đã chọn"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"
+            app:tint="@color/rentify_header_blue"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="12dp"
+        android:background="#F1F5F9" />
+
+    <!-- 3. Giá: Cao đến thấp -->
+    <LinearLayout
+        android:id="@+id/itemSortPriceDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:id="@+id/tvTitlePriceDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:includeFontPadding="false"
+            android:text="Giá: Cao đến thấp"
+            android:textColor="#0F172A"
+            android:textSize="13.5sp" />
+
+        <ImageView
+            android:id="@+id/ivCheckPriceDesc"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="Đã chọn"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"
+            app:tint="@color/rentify_header_blue"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,7 +3,6 @@ package com.rentify.app.tenant.ui.chat.group
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +10,9 @@ import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.api.ChatApiService
 import com.rentify.app.core.network.client.NetworkClient
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.tenant.data.repository.TenantChatRepositoryImpl
 import com.rentify.app.tenant.databinding.DialogCreateGroupChatBinding
 import com.rentify.app.tenant.ui.chat.detail.ChatDetailActivity
@@ -39,13 +41,13 @@ class CreateGroupChatDialogFragment : DialogFragment() {
             val rawMembers = binding.edtMemberIds.text.toString().trim()
 
             if (title.isBlank()) {
-                Toast.makeText(requireContext(), "Vui lòng nhập tên nhóm", Toast.LENGTH_SHORT).show()
+                showMessage("Vui lòng nhập tên nhóm")
                 return@setOnClickListener
             }
 
             val memberIds = rawMembers.split(",").map { it.trim() }.filter { it.isNotEmpty() }
             if (memberIds.isEmpty()) {
-                Toast.makeText(requireContext(), "Vui lòng nhập ít nhất một User ID thành viên", Toast.LENGTH_SHORT).show()
+                showMessage("Vui lòng nhập ít nhất một User ID thành viên")
                 return@setOnClickListener
             }
 
@@ -73,7 +75,7 @@ class CreateGroupChatDialogFragment : DialogFragment() {
 
             when (result) {
                 is NetworkResult.Success -> {
-                    Toast.makeText(requireContext(), "Tạo nhóm thành công!", Toast.LENGTH_SHORT).show()
+                    showSuccess("Tạo nhóm thành công!")
                     val conversation = result.data.data
                     val conversationId = conversation?.id
                     if (!conversationId.isNullOrBlank()) {
@@ -88,13 +90,13 @@ class CreateGroupChatDialogFragment : DialogFragment() {
                     dismiss()
                 }
                 is NetworkResult.ApiError -> {
-                    Toast.makeText(requireContext(), result.error?.message ?: "Lỗi khi tạo nhóm", Toast.LENGTH_SHORT).show()
+                    showError(result.error?.message ?: "Lỗi khi tạo nhóm")
                 }
                 is NetworkResult.NetworkError -> {
-                    Toast.makeText(requireContext(), "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show()
+                    showError("Lỗi kết nối mạng")
                 }
                 is NetworkResult.UnknownError -> {
-                    Toast.makeText(requireContext(), "Không thể tạo nhóm trò chuyện", Toast.LENGTH_SHORT).show()
+                    showError("Không thể tạo nhóm trò chuyện")
                 }
             }
         }

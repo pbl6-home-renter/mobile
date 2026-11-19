@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_rounded_surface"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="@dimen/spacing_ml">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,62 +19,33 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/spacing_xs"
         android:fontFamily="@font/plus_jakarta_sans"
         android:text="Cập nhật họ tên và số điện thoại liên hệ"
         android:textColor="@color/rentify_text_secondary"
         android:textSize="13sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilName"
+    <com.rentify.app.core.ui.component.RentifyTextField
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Họ và tên"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:cursorColor="@color/rentify_primary_gradient_start"
-        app:errorEnabled="true">
+        android:layout_marginTop="@dimen/spacing_ml"
+        android:inputType="textPersonName"
+        app:hint="Họ và tên" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:inputType="textPersonName"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPhone"
+    <com.rentify.app.core.ui.component.RentifyTextField
+        android:id="@+id/etPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Số điện thoại"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:cursorColor="@color/rentify_primary_gradient_start"
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:inputType="phone"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="14sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="@dimen/spacing_md"
+        android:inputType="phone"
+        app:hint="Số điện thoại" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSaveProfile"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/spacing_ml"
         android:backgroundTint="@color/rentify_primary_gradient_start"
         android:fontFamily="@font/plus_jakarta_sans"
         android:text="Lưu thay đổi"
@@ -88,7 +59,7 @@
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="@dimen/spacing_sm"
         android:fontFamily="@font/plus_jakarta_sans"
         android:text="Hủy bỏ"
         android:textColor="@color/rentify_text_secondary"

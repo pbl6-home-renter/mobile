@@ -4,229 +4,128 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rentify_background">
+    android:background="@color/rentify_surface">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+        android:background="@color/rentify_surface"
         android:clipToPadding="false"
-        android:paddingBottom="32dp">
+        android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/layoutScrollInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/rentify_surface"
             android:orientation="vertical">
 
-            <!-- Image Carousel Container -->
+            <!-- 2. Ảnh (ViewPager2 cao 300dp, centerCrop) -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="290dp">
+                android:layout_height="300dp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vpImageSlider"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-                <!-- Gradient Scrim Overlay -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_image_slider_scrim" />
-
-                <!-- Bottom Indicators Container: Dots at Start, Badge at End -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <!-- Chỉ số ảnh: các chấm ở giữa, cách đáy ảnh 34dp -->
+                <LinearLayout
+                    android:id="@+id/layoutDotsIndicator"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:paddingHorizontal="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="34dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" />
 
-                    <!-- Dot Indicators -->
-                    <LinearLayout
-                        android:id="@+id/layoutDotsIndicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal" />
-
-                    <!-- Image Counter Badge -->
-                    <LinearLayout
-                        android:id="@+id/cardImageIndicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="26dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_pill_badge_role"
-                        android:backgroundTint="#80000000"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="10dp">
-
-                        <ImageView
-                            android:layout_width="13dp"
-                            android:layout_height="13dp"
-                            android:src="@drawable/ic_image_outline"
-                            app:tint="@color/rentify_on_primary" />
-
-                        <TextView
-                            android:id="@+id/tvImageIndicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/plus_jakarta_sans"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/rentify_on_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            tools:text="1 / 3" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <!-- Top Floating Action Bar -->
+                <!-- Nút trên ảnh (quay lại góc trái; chia sẻ và yêu thích góc phải, cách nhau 8dp) -->
                 <RelativeLayout
+                    android:id="@+id/layoutTopOverlayBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:paddingHorizontal="16dp"
-                    android:paddingTop="36dp">
+                    android:paddingHorizontal="14dp"
+                    android:paddingTop="34dp">
 
                     <ImageButton
                         android:id="@+id/btnBack"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
                         android:layout_alignParentStart="true"
-                        android:background="@drawable/bg_circle_icon_button"
-                        android:backgroundTint="#B3FFFFFF"
+                        android:background="@drawable/bg_room_detail_overlay_btn"
                         android:contentDescription="Quay lại"
-                        android:src="@drawable/ic_arrow_back"
-                        app:tint="@color/rentify_text_primary" />
+                        android:padding="9dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_chevron_left"
+                        app:tint="@color/rentify_text" />
 
-                    <ImageButton
-                        android:id="@+id/btnFavorite"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:background="@drawable/bg_circle_icon_button"
-                        android:backgroundTint="#B3FFFFFF"
-                        android:contentDescription="Lưu phòng"
-                        android:src="@drawable/ic_heart_outline"
-                        app:tint="@color/rentify_neutral" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/btnShare"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/bg_room_detail_overlay_btn"
+                            android:contentDescription="Chia sẻ"
+                            android:padding="9.5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_share_2"
+                            app:tint="@color/rentify_text" />
+
+                        <ImageButton
+                            android:id="@+id/btnFavorite"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/bg_room_detail_overlay_btn"
+                            android:contentDescription="Lưu phòng"
+                            android:padding="9.5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_heart_outline"
+                            app:tint="@color/rentify_text" />
+                    </LinearLayout>
                 </RelativeLayout>
             </FrameLayout>
 
-            <!-- Main Content Container -->
+            <!-- Khối nội dung bo góc trên 24dp, nền trắng, margin top -22dp, padding ngang 18dp, top 22dp, bottom 104dp -->
             <LinearLayout
                 android:id="@+id/layoutContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-22dp"
+                android:background="@drawable/bg_room_detail_content_sheet"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:paddingHorizontal="18dp"
+                android:paddingTop="22dp"
+                android:paddingBottom="104dp">
 
-                <!-- Status & Room Type -->
+                <!-- 3. Trạng thái, tên, địa chỉ -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <!-- Status Badge with Dot -->
-                    <LinearLayout
-                        android:id="@+id/layoutRoomStatusBadge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="26dp"
-                        android:background="@drawable/bg_pill_badge_role"
-                        android:backgroundTint="#E8F5E9"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="10dp">
-
-                        <ImageView
-                            android:id="@+id/ivStatusDot"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:src="@drawable/ic_dot_low" />
-
-                        <TextView
-                            android:id="@+id/tvRoomStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:fontFamily="@font/plus_jakarta_sans"
-                            android:includeFontPadding="false"
-                            android:text="Còn trống"
-                            android:textColor="#2E7D32"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- Building Name with Location Pin -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:src="@drawable/ic_location_pin"
-                            app:tint="@color/rentify_primary_gradient_start" />
-
-                        <TextView
-                            android:id="@+id/tvBuildingNameHeader"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/plus_jakarta_sans"
-                            android:maxLines="1"
-                            android:textColor="@color/rentify_text_secondary"
-                            android:textSize="13sp"
-                            tools:text="Tòa nhà Sunshine" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Room Title -->
-                <TextView
-                    android:id="@+id/tvRoomTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    tools:text="Phòng P.201" />
-
-                <!-- Price & Deposit -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
-
                     <TextView
-                        android:id="@+id/tvRentPrice"
+                        android:id="@+id/tvRoomStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/rentify_primary"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        tools:text="3.500.000 đ" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="/ tháng"
-                        android:textColor="@color/rentify_text_secondary"
-                        android:textSize="14sp" />
+                        android:background="@drawable/bg_room_status_available"
+                        android:fontFamily="@font/plus_jakarta_sans_medium"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="@string/room_status_available"
+                        android:textColor="@color/rentify_teal"
+                        android:textSize="12sp" />
 
                     <View
                         android:layout_width="0dp"
@@ -234,414 +133,427 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/tvDepositAmount"
+                        android:id="@+id/tvPostedAgo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/rentify_text_secondary"
-                        android:textSize="13sp"
-                        tools:text="Cọc: 3.500.000 đ" />
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:includeFontPadding="false"
+                        android:textColor="@color/rentify_text_muted"
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        tools:text="Đăng 3 ngày trước"
+                        tools:visibility="visible" />
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/rentify_divider" />
-
-                <!-- Quick Specs Grid (Area, Floor, Occupancy, Gender) -->
+                <!-- Tên phòng: 21sp medium, rentify_text, margin top 12dp, tối đa 2 dòng -->
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:text="Thông số căn phòng"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <GridLayout
+                    android:id="@+id/tvRoomTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:columnCount="2"
-                    android:rowCount="2">
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:textColor="@color/rentify_text"
+                    android:textSize="23sp"
+                    tools:text="Phòng P.201" />
 
-                    <!-- Spec 1: Area -->
-                    <LinearLayout
+                <!-- Địa chỉ: icon định vị 15dp + chữ 13sp rentify_text_muted, margin top 6dp -->
+                <LinearLayout
+                    android:id="@+id/layoutRoomAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_location_pin"
+                        app:tint="@color/rentify_text_muted" />
+
+                    <TextView
+                        android:id="@+id/tvRoomAddress"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_rounded_surface"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:includeFontPadding="false"
+                        android:maxLines="2"
+                        android:textColor="@color/rentify_text_muted"
+                        android:textSize="13sp"
+                        tools:text="122 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng" />
+                </LinearLayout>
 
-                        <FrameLayout
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_icon_squircle"
-                            android:backgroundTint="@color/profile_icon_blue_bg">
+                <!-- 4. Thông số (Lưới 2x2, khoảng cách 8dp, margin top 18dp) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="vertical">
+
+                    <!-- Hàng 1: Diện tích + Tầng -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <!-- Ô 1: Diện tích -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_room_spec_card"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="12dp">
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_gravity="center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
                                 android:src="@drawable/ic_spec_area"
-                                app:tint="@color/profile_icon_blue_tint" />
-                        </FrameLayout>
+                                app:tint="@color/rentify_icon_slate" />
 
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:includeFontPadding="false"
+                                    android:text="Diện tích"
+                                    android:textColor="@color/rentify_text_muted"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvSpecArea"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textStyle="bold"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="@color/rentify_text"
+                                    android:textSize="16sp"
+                                    tools:text="25 m²" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Ô 2: Tầng -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="4dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Diện tích"
-                                android:textColor="@color/rentify_text_secondary"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvSpecArea"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:textColor="@color/rentify_text_primary"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                tools:text="25.0 m²" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Spec 2: Floor -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_rounded_surface"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <FrameLayout
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_icon_squircle"
-                            android:backgroundTint="@color/profile_icon_indigo_bg">
+                            android:background="@drawable/bg_room_spec_card"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="12dp">
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_gravity="center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
                                 android:src="@drawable/ic_spec_floor"
-                                app:tint="@color/profile_icon_indigo_tint" />
-                        </FrameLayout>
+                                app:tint="@color/rentify_icon_slate" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Số tầng"
-                                android:textColor="@color/rentify_text_secondary"
-                                android:textSize="11sp" />
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvSpecFloor"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:textColor="@color/rentify_text_primary"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                tools:text="Tầng 2" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:includeFontPadding="false"
+                                    android:text="Tầng"
+                                    android:textColor="@color/rentify_text_muted"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvSpecFloor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textStyle="bold"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="@color/rentify_text"
+                                    android:textSize="16sp"
+                                    tools:text="2" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Spec 3: Max Occupancy -->
+                    <!-- Hàng 2: Tối đa + Giới tính (cách hàng trên 8dp) -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_marginEnd="6dp"
-                        android:background="@drawable/bg_rounded_surface"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:layout_marginTop="8dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
 
-                        <FrameLayout
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_icon_squircle"
-                            android:backgroundTint="@color/profile_icon_teal_bg">
+                        <!-- Ô 3: Tối đa -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_room_spec_card"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="12dp">
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_gravity="center"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
                                 android:src="@drawable/ic_group"
-                                app:tint="@color/profile_icon_teal_tint" />
-                        </FrameLayout>
+                                app:tint="@color/rentify_icon_slate" />
 
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:includeFontPadding="false"
+                                    android:text="Tối đa"
+                                    android:textColor="@color/rentify_text_muted"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvSpecOccupancy"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textStyle="bold"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="@color/rentify_text"
+                                    android:textSize="16sp"
+                                    tools:text="2 người" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Ô 4: Giới tính -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="4dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Sức chứa"
-                                android:textColor="@color/rentify_text_secondary"
-                                android:textSize="11sp" />
-
-                            <TextView
-                                android:id="@+id/tvSpecOccupancy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:textColor="@color/rentify_text_primary"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                tools:text="Tối đa 2 người" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Spec 4: Gender Policy -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
-                        android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_rounded_surface"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <FrameLayout
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:background="@drawable/bg_icon_squircle"
-                            android:backgroundTint="@color/profile_icon_amber_bg">
+                            android:background="@drawable/bg_room_spec_card"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="14dp"
+                            android:paddingVertical="12dp">
 
                             <ImageView
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_user_circle"
-                                app:tint="@color/profile_icon_amber_tint" />
-                        </FrameLayout>
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_user_outline"
+                                app:tint="@color/rentify_icon_slate" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Giới tính"
-                                android:textColor="@color/rentify_text_secondary"
-                                android:textSize="11sp" />
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvSpecGender"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:textColor="@color/rentify_text_primary"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
-                                tools:text="Nam &amp; Nữ" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:includeFontPadding="false"
+                                    android:text="Giới tính"
+                                    android:textColor="@color/rentify_text_muted"
+                                    android:textSize="12sp" />
+
+                                <TextView
+                                    android:id="@+id/tvSpecGender"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/plus_jakarta_sans"
+                                    android:textStyle="bold"
+                                    android:includeFontPadding="false"
+                                    android:maxLines="1"
+                                    android:textColor="@color/rentify_text"
+                                    android:textSize="16sp"
+                                    tools:text="Nam, Nữ" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </GridLayout>
+                </LinearLayout>
 
-                <View
+                <!-- 5. Tiện nghi (ẩn cả mục nếu không có tiện nghi nào) -->
+                <LinearLayout
+                    android:id="@+id/layoutAmenitiesSection"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/rentify_divider" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <!-- Amenities Section -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:textStyle="bold"
+                        android:includeFontPadding="false"
+                        android:text="Tiện nghi"
+                        android:textColor="@color/rentify_text"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupAmenities"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="8dp" />
+                </LinearLayout>
+
+                <!-- 6. Điện và nước -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:text="Tiện nghi căn phòng"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chipGroupAmenities"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:chipSpacing="8dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/rentify_divider" />
-
-                <!-- Rates and Utility Section -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/plus_jakarta_sans"
-                    android:text="Chính sách điện &amp; nước"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:text="Điện và nước"
+                    android:textColor="@color/rentify_text"
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_rounded_surface"
+                    android:background="@drawable/bg_room_spec_card"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:paddingHorizontal="14dp">
 
-                    <!-- Electricity Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:background="@drawable/bg_icon_squircle"
-                            android:backgroundTint="@color/profile_icon_amber_bg">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_issue_electrical"
-                                app:tint="@color/profile_icon_amber_tint" />
-                        </FrameLayout>
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/plus_jakarta_sans"
+                            android:includeFontPadding="false"
                             android:text="Tiền điện"
-                            android:textColor="@color/rentify_text_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/rentify_text_secondary"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvElectricityPolicy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/plus_jakarta_sans"
-                            android:textColor="@color/rentify_text_secondary"
-                            android:textSize="13sp"
-                            tools:text="Giá cố định (flat)" />
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/rentify_text"
+                            android:textSize="14sp"
+                            tools:text="Theo công tơ" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="10dp"
-                        android:background="@color/rentify_divider" />
+                        android:background="@color/rentify_soft_divider"
+                        android:importantForAccessibility="no" />
 
-                    <!-- Water Row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:background="@drawable/bg_icon_squircle"
-                            android:backgroundTint="@color/profile_icon_blue_bg">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_issue_plumbing"
-                                app:tint="@color/profile_icon_blue_tint" />
-                        </FrameLayout>
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/plus_jakarta_sans"
+                            android:includeFontPadding="false"
                             android:text="Tiền nước"
-                            android:textColor="@color/rentify_text_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/rentify_text_secondary"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvWaterPolicy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/plus_jakarta_sans"
-                            android:textColor="@color/rentify_text_secondary"
-                            android:textSize="13sp"
-                            tools:text="Giá cố định (flat)" />
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/rentify_text"
+                            android:textSize="14sp"
+                            tools:text="Theo khối tiêu thụ" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/rentify_divider" />
-
-                <!-- Description Section -->
+                <!-- 7. Mô tả -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Mô tả chi tiết"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:text="Mô tả"
+                    android:textColor="@color/rentify_text"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:ellipsize="end"
-                    android:lineSpacingExtra="4dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:lineSpacingMultiplier="1.4"
                     android:maxLines="4"
-                    android:textColor="@color/rentify_text_secondary"
+                    android:textColor="@color/rentify_text_body"
                     android:textSize="14sp"
                     tools:text="Phòng trọ rộng rãi, thoáng mát, ban công hướng đông đón nắng sớm. Đầy đủ tiện nghi cơ bản, an ninh 24/7, camera giám sát toàn khu vực tòa nhà." />
 
@@ -650,128 +562,192 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:includeFontPadding="false"
                     android:paddingVertical="4dp"
                     android:text="Xem thêm"
                     android:textColor="@color/rentify_primary"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/rentify_divider" />
-
-                <!-- Landlord Info Card -->
+                <!-- 7b. Chủ trọ -->
                 <TextView
+                    android:id="@+id/tvLandlordSectionTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thông tin chủ trọ"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="28dp"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:text="Chủ trọ"
+                    android:textColor="@color/rentify_text"
+                    android:textSize="18sp" />
 
                 <LinearLayout
+                    android:id="@+id/layoutLandlordCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_rounded_surface"
+                    android:background="@drawable/bg_room_landlord_card"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:paddingStart="14dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="12dp">
 
-                    <TextView
-                        android:id="@+id/tvLandlordAvatar"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/bg_avatar_gradient"
-                        android:gravity="center"
-                        android:textColor="@color/rentify_on_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        tools:text="N" />
+                    <com.rentify.app.core.ui.view.RentifyAvatarView
+                        android:id="@+id/landlordAvatarView"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        app:avatarSize="46dp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_marginHorizontal="12dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvLandlordName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:textStyle="bold"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:textColor="@color/rentify_text"
+                            android:textSize="16sp"
+                            tools:text="Nguyễn Văn A" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
                             android:fontFamily="@font/plus_jakarta_sans"
-                            android:textColor="@color/rentify_text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            tools:text="Nguyễn Văn A" />
+                            android:includeFontPadding="false"
+                            android:text="Chủ trọ"
+                            android:textColor="@color/rentify_text_muted"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnChatLandlord"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/bg_button_gradient"
-                        android:fontFamily="@font/plus_jakarta_sans"
-                        android:paddingHorizontal="16dp"
-                        android:text="Nhắn tin"
-                        android:textColor="@color/rentify_on_primary"
-                        android:textSize="13sp"
-                        app:backgroundTint="@null"
-                        app:cornerRadius="20dp"
-                        app:icon="@drawable/ic_nav_chat"
-                        app:iconSize="16dp"
-                        app:iconTint="@color/rentify_on_primary" />
+                    <ImageButton
+                        android:id="@+id/btnCallLandlord"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:background="@drawable/bg_room_landlord_call_btn"
+                        android:contentDescription="Gọi chủ trọ"
+                        android:padding="11.5dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_phone_outline"
+                        app:tint="@color/rentify_icon_action_slate" />
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- 8. Thanh nổi dưới cùng (cố định ở đáy, margin trái/phải 12dp, đáy 14dp, cao 64dp) -->
+    <LinearLayout
+        android:id="@+id/layoutBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/bg_chat_input_bar_pill"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="8dp">
+
+        <!-- Trái: Giá /tháng + Cọc -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvBottomRentPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/rentify_teal"
+                    android:textSize="18sp"
+                    tools:text="2.400.000 đ" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=" /tháng"
+                    android:textColor="@color/rentify_text_muted"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvBottomDepositAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="11sp"
+                tools:text="Cọc 2.400.000 đ" />
+        </LinearLayout>
+
+        <!-- Phải: Nút "Nhắn tin" dùng style Widget.Rentify.PillButton, cao 48dp -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBottomChatLandlord"
+            style="@style/Widget.Rentify.PillButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:paddingHorizontal="20dp"
+            android:text="Nhắn tin"
+            app:icon="@drawable/ic_nav_chat" />
+    </LinearLayout>
+
     <!-- Loading Indicator -->
-    <ProgressBar
+    <com.rentify.app.tenant.ui.component.TenantLoadingView
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:visibility="gone" />
 
     <!-- Error Layout -->
-    <LinearLayout
+    <include
         android:id="@+id/layoutError"
+        layout="@layout/view_error_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/ic_error_state"
-            android:contentDescription="Lỗi" />
-
-        <TextView
-            android:id="@+id/tvErrorMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:textColor="@color/rentify_text_secondary"
-            android:textSize="14sp"
-            tools:text="Không tìm thấy thông tin phòng" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRetry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Thử lại" />
-    </LinearLayout>
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

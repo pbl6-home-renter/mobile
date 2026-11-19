@@ -14,8 +14,8 @@ import com.rentify.app.core.network.dto.invoice.InvoiceDetailResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.extension.toDisplayDate
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.extension.toVnd
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.core.ui.R as CoreR
@@ -38,7 +38,7 @@ class InvoiceDetailActivity : BaseActivity<ActivityInvoiceDetailBinding>(Activit
 
         currentInvoiceId = intent.getStringExtra(EXTRA_INVOICE_ID).orEmpty()
         if (currentInvoiceId.isBlank()) {
-            toast("Không tìm thấy mã hóa đơn")
+            showError("Không tìm thấy mã hóa đơn")
             finish()
             return
         }
@@ -77,7 +77,7 @@ class InvoiceDetailActivity : BaseActivity<ActivityInvoiceDetailBinding>(Activit
                         }
                         is UiState.Error -> {
                             binding.pbLoading.isVisible = false
-                            toast(state.message)
+                            showError(state.message)
                         }
                         is UiState.Success -> {
                             binding.pbLoading.isVisible = false

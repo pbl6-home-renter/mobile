@@ -37,7 +37,8 @@ data class MediaCompleteUploadResponseDto(
 
 @JsonClass(generateAdapter = true)
 data class MediaDownloadUrlResponseDto(
-    @field:Json(name = "downloadUrl") val downloadUrl: String,
-    @field:Json(name = "expiresInSeconds") val expiresInSeconds: Int = 300
+    @field:Json(name = "url") val url: String,
+    @field:Json(name = "fileName") val fileName: String = "",
+    @field:Json(name = "contentType") val contentType: String = ""
 )
 

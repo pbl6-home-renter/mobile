@@ -20,14 +20,14 @@ class MyIssuesAdapter(
     }
 
     override fun bind(binding: ItemMyIssueBinding, item: IssueReportMyListResponseDto, position: Int) {
-        IssueUiHelper.applyStatusBadge(binding.tvStatusBadge, item.status)
-        IssueUiHelper.applyUrgencyBadge(binding.tvUrgencyBadge, item.urgency)
+        IssueUiHelper.applyNeutralStatusBadge(binding.tvStatusBadge, item.status)
+        IssueUiHelper.applyUrgencyText(binding.tvUrgencyBadge, item.urgency)
         binding.tvTitle.text = item.title
         binding.tvCategory.text = IssueUiHelper.getCategoryLabel(item.category)
         binding.ivCategoryIcon.setImageResource(IssueUiHelper.getCategoryIconResId(item.category))
         
         binding.tvRoomName.text = if (!item.roomName.isNullOrBlank()) item.roomName else "Phòng của bạn"
-        binding.tvCreatedAt.text = IssueUiHelper.formatDate(item.createdAt)
+        binding.tvCreatedAt.text = IssueUiHelper.formatDate(item.createdAt).replaceFirst(" ", ", ")
         binding.tvAssignedTo.isVisible = false
 
         binding.root.setOnSingleClickListener {

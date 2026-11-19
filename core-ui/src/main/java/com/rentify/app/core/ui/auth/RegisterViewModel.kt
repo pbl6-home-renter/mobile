@@ -44,11 +44,9 @@ class RegisterViewModel(
                 }
                 is NetworkResult.ApiError -> {
                     val errorCode = result.error?.code ?: result.code.toString()
-                    val errorMessage = when (errorCode) {
-                        "EMAIL_ALREADY_EXISTS" -> "Email này đã được sử dụng"
-                        "PHONE_ALREADY_EXISTS" -> "Số điện thoại này đã được sử dụng"
-                        else -> result.error?.message ?: "Đăng ký thất bại (Mã $errorCode)"
-                    }
+                    val errorMessage = registerErrorMessage(errorCode)
+                        ?: result.error?.message
+                        ?: "Đăng ký thất bại (Mã $errorCode)"
                     _registerState.value = UiState.Error(errorMessage)
                 }
                 is NetworkResult.NetworkError -> {
@@ -63,5 +61,27 @@ class RegisterViewModel(
 
     fun resetState() {
         _registerState.value = UiState.Idle
+    }
+
+    private fun registerErrorMessage(code: String): String? = when (code) {
+        "DUPLICATE_EMAIL" -> "Email này đã được sử dụng"
+        "DUPLICATE_PHONE" -> "Số điện thoại này đã được sử dụng"
+        "PASSWORD_REQUIRED", "PASSWORD_NOT_EMPTY" -> "Vui lòng nhập mật khẩu"
+        "PASSWORD_MUST_BE_STRING" -> "Mật khẩu không hợp lệ"
+        "PASSWORD_INVALID_LENGTH" -> "Mật khẩu phải có từ 8 đến 255 ký tự"
+        "PASSWORD_INVALID_FORMAT" -> "Mật khẩu cần có chữ thường, chữ hoa và chữ số"
+        "EMAIL_REQUIRED", "EMAIL_NOT_EMPTY" -> "Vui lòng nhập email"
+        "EMAIL_INVALID_LENGTH" -> "Email phải có từ 5 đến 254 ký tự"
+        "EMAIL_MUST_BE_STRING", "EMAIL_INVALID_FORMAT" -> "Email không đúng định dạng"
+        "PHONE_REQUIRED", "PHONE_NOT_EMPTY" -> "Vui lòng nhập số điện thoại"
+        "PHONE_MUST_BE_STRING", "PHONE_INVALID_FORMAT" -> "Số điện thoại không hợp lệ (ví dụ: 0901234567)"
+        "NAME_REQUIRED", "NAME_NOT_EMPTY" -> "Vui lòng nhập họ và tên"
+        "NAME_MUST_BE_STRING" -> "Họ và tên không hợp lệ"
+        "NAME_INVALID_LENGTH" -> "Họ và tên tối đa 254 ký tự"
+        "ROLE_REQUIRED", "ROLE_INVALID" -> "Loại tài khoản không hợp lệ"
+        "AUTH_REGISTER_ROLE_NOT_ALLOWED" -> "Không thể đăng ký loại tài khoản này"
+        "INVALID_JSON", "INVALID_REQUEST_BODY", "BAD_REQUEST", "UNEXPECTED_FIELD", "VALIDATION_FAILED" ->
+            "Thông tin đăng ký chưa hợp lệ, vui lòng kiểm tra lại"
+        else -> null
     }
 }

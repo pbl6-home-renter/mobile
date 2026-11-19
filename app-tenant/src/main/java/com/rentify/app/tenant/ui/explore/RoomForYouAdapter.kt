@@ -21,14 +21,13 @@ class RoomForYouAdapter(
     override fun bind(binding: ItemRoomForYouBinding, item: RoomPublicListResponseDto, position: Int) {
         val context = binding.root.context
 
-        val photoUrl = resolveImageUrl(item.thumbnailUrl, position)
+        val photoUrl = resolveImageUrl(item.coverUrl, position)
         binding.ivThumbnail.load(photoUrl) {
             crossfade(true)
             placeholder(CoreUiR.drawable.ic_image_placeholder)
             error(CoreUiR.drawable.ic_image_placeholder)
         }
 
-        binding.tvRoomType.text = item.roomType?.ifBlank { "Phòng thường" } ?: "Phòng thường"
         binding.tvRentPrice.text = item.rentPrice.toVnd()
         binding.tvRoomName.text = item.name
 
@@ -38,7 +37,7 @@ class RoomForYouAdapter(
         } else {
             "20"
         }
-        val locationText = if (item.district.isNotBlank()) "P. ${item.district}" else item.province
+        val locationText = item.ward.ifBlank { item.province }
         binding.tvRoomDetails.text = "$areaText m² · $locationText"
 
         if (item.isFavorited) {

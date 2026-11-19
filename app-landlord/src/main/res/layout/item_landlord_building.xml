@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/spacing_md"
+    android:layout_marginVertical="@dimen/spacing_sm"
+    app:cardBackgroundColor="@color/rentify_surface"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/rentify_divider"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <!-- Header: Building Name + Status Badge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBuildingName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Tòa nhà Rentify Central Park" />
+
+            <TextView
+                android:id="@+id/tvStatusBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:paddingHorizontal="@dimen/spacing_smd"
+                android:paddingVertical="@dimen/spacing_xs"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Đã duyệt" />
+        </LinearLayout>
+
+        <!-- Address -->
+        <TextView
+            android:id="@+id/tvBuildingAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:ellipsize="end"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:maxLines="2"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="13sp"
+            tools:text="123 Nguyễn Thị Minh Khai, Phường Bến Nghé, TP. Hồ Chí Minh" />
+
+        <!-- Metrics Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_smd"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvOccupiedRooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="15 phòng đang thuê" />
+
+                <TextView
+                    android:id="@+id/tvOccupancyRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_2xs"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_primary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="Tỷ lệ lấp đầy: 75%" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCreatedAt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="11sp"
+                tools:text="23/09/2026" />
+        </LinearLayout>
+
+        <!-- Rejection Note (visible only if rejected) -->
+        <LinearLayout
+            android:id="@+id/layoutRejection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_smd"
+            android:background="#FEE2E2"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_sm"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Lý do từ chối từ quản trị viên:"
+                android:textColor="#DC2626"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRejectionReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_2xs"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="#B91C1C"
+                android:textSize="12sp"
+                tools:text="Địa chỉ không tồn tại trên bản đồ quy hoạch." />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+

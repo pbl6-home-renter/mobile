@@ -8,6 +8,10 @@ data class RoomDetailResponseDto(
     @field:Json(name = "id") val id: String,
     @field:Json(name = "buildingId") val buildingId: String,
     @field:Json(name = "buildingName") val buildingName: String = "",
+    @field:Json(name = "address") val address: String? = null,
+    @field:Json(name = "ward") val ward: String = "",
+    @field:Json(name = "province") val province: String? = null,
+    @field:Json(name = "createdAt") val createdAt: String? = null,
     @field:Json(name = "name") val name: String = "",
     @field:Json(name = "description") val description: String? = null,
     @field:Json(name = "area") val area: String? = null,
@@ -18,8 +22,9 @@ data class RoomDetailResponseDto(
     @field:Json(name = "maxOccupancy") val maxOccupancy: Int? = null,
     @field:Json(name = "genderPolicy") val genderPolicy: String? = null,
     @field:Json(name = "amenities") val amenities: RoomAmenitiesDto? = null,
+    @field:Json(name = "photoMediaIds") val photoMediaIds: List<String> = emptyList(),
     @field:Json(name = "photoUrls") val photoUrls: List<String> = emptyList(),
-    @field:Json(name = "landlord") val landlord: RoomLandlordDto,
+    @field:Json(name = "landlord") val landlord: RoomLandlordDto? = null,
     @field:Json(name = "currentContract") val currentContract: RoomContractSummaryDto? = null,
     @field:Json(name = "currentMembers") val currentMembers: List<RoomMemberDto> = emptyList(),
     @field:Json(name = "latestMeterReadings") val latestMeterReadings: RoomMeterReadingsDto? = null,
@@ -41,12 +46,13 @@ data class RoomAmenitiesDto(
 data class RoomLandlordDto(
     @field:Json(name = "id") val id: String,
     @field:Json(name = "name") val name: String = "",
-    @field:Json(name = "phone") val phone: String = ""
+    @field:Json(name = "phone") val phone: String = "",
+    @field:Json(name = "avatarUrl") val avatarUrl: String? = null
 )
 
 @JsonClass(generateAdapter = true)
 data class RoomContractSummaryDto(
-    @field:Json(name = "id") val id: String,
+    @field:Json(name = "id") val id: String = "",
     @field:Json(name = "contractCode") val contractCode: String? = null,
     @field:Json(name = "startDate") val startDate: String? = null,
     @field:Json(name = "endDate") val endDate: String? = null,
@@ -55,7 +61,7 @@ data class RoomContractSummaryDto(
 
 @JsonClass(generateAdapter = true)
 data class RoomMemberDto(
-    @field:Json(name = "id") val id: String,
+    @field:Json(name = "id") val id: String = "",
     @field:Json(name = "name") val name: String = "",
     @field:Json(name = "phone") val phone: String? = null,
     @field:Json(name = "avatarUrl") val avatarUrl: String? = null,

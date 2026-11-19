@@ -19,6 +19,7 @@ data class MessageListResponseDto(
     @field:Json(name = "conversationId") val conversationId: String,
     @field:Json(name = "senderUserId") val senderUserId: String? = null,
     @field:Json(name = "senderName") val senderName: String = "",
+    @field:Json(name = "senderAvatarUrl") val senderAvatarUrl: String? = null,
     @field:Json(name = "senderType") val senderType: String = "user",
     @field:Json(name = "sequence") val sequence: String = "0",
     @field:Json(name = "clientMessageId") val clientMessageId: String? = null,

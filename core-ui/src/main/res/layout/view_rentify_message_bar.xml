@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/messageRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    android:gravity="center_vertical"
+    android:minHeight="52dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/spacing_md"
+    android:paddingEnd="@dimen/spacing_md">
+
+    <ImageView
+        android:id="@+id/messageIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_smd"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/plus_jakarta_sans_medium"
+        android:maxWidth="280dp"
+        android:maxLines="2"
+        android:textSize="@dimen/text_body" />
+
+    <TextView
+        android:id="@+id/messageAction"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:fontFamily="@font/plus_jakarta_sans_bold"
+        android:gravity="center"
+        android:minWidth="48dp"
+        android:paddingStart="@dimen/spacing_sm"
+        android:paddingEnd="@dimen/spacing_sm"
+        android:textSize="@dimen/text_body"
+        android:visibility="gone" />
+</LinearLayout>

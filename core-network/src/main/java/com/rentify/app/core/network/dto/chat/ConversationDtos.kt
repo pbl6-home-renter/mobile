@@ -12,6 +12,7 @@ data class ConversationListResponseDto(
     @field:Json(name = "title") val title: String? = null,
     @field:Json(name = "displayName") val displayName: String? = null,
     @field:Json(name = "avatarMediaId") val avatarMediaId: String? = null,
+    @field:Json(name = "avatarUrl") val avatarUrl: String? = null,
     @field:Json(name = "unreadCount") val unreadCount: Int = 0,
     @field:Json(name = "lastMessage") val lastMessage: ConversationLastMessageDto? = null
 )
@@ -20,6 +21,7 @@ data class ConversationListResponseDto(
 data class ConversationLastMessageDto(
     @field:Json(name = "id") val id: String? = null,
     @field:Json(name = "sequence") val sequence: String? = null,
+    @field:Json(name = "senderUserId") val senderUserId: String? = null,
     @field:Json(name = "senderName") val senderName: String? = null,
     @field:Json(name = "contentPreview") val contentPreview: String? = null,
     @field:Json(name = "type") val type: String? = null,
@@ -36,6 +38,7 @@ data class ConversationDetailResponseDto(
     @field:Json(name = "title") val title: String? = null,
     @field:Json(name = "displayName") val displayName: String? = null,
     @field:Json(name = "avatarMediaId") val avatarMediaId: String? = null,
+    @field:Json(name = "avatarUrl") val avatarUrl: String? = null,
     @field:Json(name = "unreadCount") val unreadCount: Int = 0,
     @field:Json(name = "members") val members: List<ConversationMemberDto> = emptyList()
 )
@@ -45,6 +48,7 @@ data class ConversationMemberDto(
     @field:Json(name = "conversationId") val conversationId: String? = null,
     @field:Json(name = "userId") val userId: String? = null,
     @field:Json(name = "displayName") val displayName: String = "",
+    @field:Json(name = "avatarUrl") val avatarUrl: String? = null,
     @field:Json(name = "participantType") val participantType: String = "user",
     @field:Json(name = "role") val role: String = "member",
     @field:Json(name = "status") val status: String = "active",

@@ -6,8 +6,10 @@ import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.room.RoomDetailResponseDto
 import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.core.ui.state.UiState
+import com.rentify.app.tenant.data.repository.FavoriteResultMessages
 import com.rentify.app.tenant.data.repository.TenantChatRepository
 import com.rentify.app.tenant.data.repository.TenantRoomRepository
+import com.rentify.app.tenant.ui.dialog.LoginFeature
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -20,7 +22,7 @@ import kotlinx.coroutines.launch
 sealed interface RoomDetailUiEvent {
     data class NavigateToChat(val conversationId: String, val recipientName: String) : RoomDetailUiEvent
     data class CallPhone(val phone: String) : RoomDetailUiEvent
-    data object ShowLoginRequired : RoomDetailUiEvent
+    data class ShowLoginRequired(val feature: LoginFeature) : RoomDetailUiEvent
     data class ShowToast(val message: String) : RoomDetailUiEvent
 }
 
@@ -86,36 +88,26 @@ class RoomDetailViewModel(
     fun toggleFavorite() {
         viewModelScope.launch {
             if (!sessionManager.isLoggedIn.first()) {
-                _uiEvent.emit(RoomDetailUiEvent.ShowLoginRequired)
+                _uiEvent.emit(RoomDetailUiEvent.ShowLoginRequired(LoginFeature.PROFILE))
                 return@launch
             }
 
             val currentFav = _isFavorited.value
             if (currentFav) {
-                when (val result = roomRepository.removeFavoriteRoom(roomId)) {
-                    is NetworkResult.Success -> {
-                        _isFavorited.value = false
-                        _uiEvent.emit(RoomDetailUiEvent.ShowToast("Đã bỏ lưu phòng"))
-                    }
-                    is NetworkResult.ApiError -> {
-                        _uiEvent.emit(RoomDetailUiEvent.ShowToast(result.error?.message ?: "Không thể bỏ lưu phòng"))
-                    }
-                    else -> {
-                        _uiEvent.emit(RoomDetailUiEvent.ShowToast("Lỗi kết nối khi cập nhật lưu phòng"))
-                    }
+                val result = roomRepository.removeFavoriteRoom(roomId)
+                if (result is NetworkResult.Success) {
+                    _isFavorited.value = false
+                    _uiEvent.emit(RoomDetailUiEvent.ShowToast("Đã bỏ lưu phòng"))
+                } else {
+                    _uiEvent.emit(RoomDetailUiEvent.ShowToast(FavoriteResultMessages.failureMessage(result, adding = false)))
                 }
             } else {
-                when (val result = roomRepository.addFavoriteRoom(roomId)) {
-                    is NetworkResult.Success -> {
-                        _isFavorited.value = true
-                        _uiEvent.emit(RoomDetailUiEvent.ShowToast("Đã lưu phòng vào danh sách yêu thích"))
-                    }
-                    is NetworkResult.ApiError -> {
-                        _uiEvent.emit(RoomDetailUiEvent.ShowToast(result.error?.message ?: "Không thể lưu phòng"))
-                    }
-                    else -> {
-                        _uiEvent.emit(RoomDetailUiEvent.ShowToast("Lỗi kết nối khi cập nhật lưu phòng"))
-                    }
+                val result = roomRepository.addFavoriteRoom(roomId)
+                if (result is NetworkResult.Success || FavoriteResultMessages.isAlreadyFavorited(result)) {
+                    _isFavorited.value = true
+                    _uiEvent.emit(RoomDetailUiEvent.ShowToast("Đã lưu phòng vào danh sách yêu thích"))
+                } else {
+                    _uiEvent.emit(RoomDetailUiEvent.ShowToast(FavoriteResultMessages.failureMessage(result, adding = true)))
                 }
             }
         }
@@ -124,7 +116,7 @@ class RoomDetailViewModel(
     fun contactLandlord() {
         val currentData = (_uiState.value as? UiState.Success)?.data ?: return
         val landlord = currentData.landlord
-        if (landlord.id.isBlank()) {
+        if (landlord == null || landlord.id.isBlank()) {
             viewModelScope.launch {
                 _uiEvent.emit(RoomDetailUiEvent.ShowToast("Không tìm thấy thông tin liên hệ của chủ trọ"))
             }
@@ -133,7 +125,7 @@ class RoomDetailViewModel(
 
         viewModelScope.launch {
             if (!sessionManager.isLoggedIn.first()) {
-                _uiEvent.emit(RoomDetailUiEvent.ShowLoginRequired)
+                _uiEvent.emit(RoomDetailUiEvent.ShowLoginRequired(LoginFeature.MESSAGES))
                 return@launch
             }
 
@@ -169,7 +161,7 @@ class RoomDetailViewModel(
 
     fun callLandlord() {
         val currentData = (_uiState.value as? UiState.Success)?.data ?: return
-        val phone = currentData.landlord.phone
+        val phone = currentData.landlord?.phone.orEmpty()
         if (phone.isNotBlank()) {
             viewModelScope.launch {
                 _uiEvent.emit(RoomDetailUiEvent.CallPhone(phone))

@@ -22,10 +22,7 @@ data class IssueReportCreateRequestDto(
     @field:Json(name = "title") val title: String,
     @field:Json(name = "category") val category: String,
     @field:Json(name = "urgency") val urgency: String,
-    @field:Json(name = "description") val description: String? = null,
-    @field:Json(name = "issuePhotoMediaIds") val issuePhotoMediaIds: List<String> = emptyList(),
-    @field:Json(name = "taggedUserId") val taggedUserId: String? = null,
-    @field:Json(name = "taggedRoomId") val taggedRoomId: String? = null
+    @field:Json(name = "description") val description: String? = null
 )
 
 @JsonClass(generateAdapter = true)
@@ -63,5 +60,35 @@ data class IssueReportDetailResponseDto(
 data class IssueReportCancelResponseDto(
     @field:Json(name = "id") val id: String,
     @field:Json(name = "status") val status: String = "cancelled"
+)
+
+@JsonClass(generateAdapter = true)
+data class IssueReportListResponseDto(
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "roomId") val roomId: String,
+    @field:Json(name = "title") val title: String = "",
+    @field:Json(name = "status") val status: String = "open",
+    @field:Json(name = "description") val description: String? = null,
+    @field:Json(name = "roomName") val roomName: String = "",
+    @field:Json(name = "buildingName") val buildingName: String = "",
+    @field:Json(name = "reporterName") val reporterName: String = "",
+    @field:Json(name = "category") val category: String = "OTHER",
+    @field:Json(name = "urgency") val urgency: String = "MEDIUM",
+    @field:Json(name = "createdAt") val createdAt: String = ""
+)
+
+@JsonClass(generateAdapter = true)
+data class IssueReportUpdateRequestDto(
+    @field:Json(name = "status") val status: String? = null,
+    @field:Json(name = "assignedTo") val assignedTo: String? = null,
+    @field:Json(name = "repairCost") val repairCost: Long? = null,
+    @field:Json(name = "resolutionNote") val resolutionNote: String? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class IssueReportUpdateResponseDto(
+    @field:Json(name = "id") val id: String,
+    @field:Json(name = "status") val status: String = "resolved",
+    @field:Json(name = "closedAt") val closedAt: String? = null
 )
 

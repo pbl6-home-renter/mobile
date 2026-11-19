@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardMyRoomRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:contentDescription="Mở chi tiết phòng"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="22dp"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="false"
+    app:strokeColor="#EEF0F3"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 2) DẢI GRADIENT Ở ĐẦU CARD -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_room_card_header">
+
+            <!-- Nội dung Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivRoomThumbnail"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_image_placeholder"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                    app:strokeColor="#DDE1F9"
+                    app:strokeWidth="1dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- Dòng 1: Tên phòng (15sp, medium, đen xanh xám #161B2C, tối đa 2 dòng) -->
+                    <TextView
+                        android:id="@+id/tvRoomName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/plus_jakarta_sans_medium"
+                        android:maxLines="1"
+                        android:textColor="#161B2C"
+                        android:textSize="15sp"
+                        tools:text="Phòng 305 · Nhà trọ An Bình" />
+
+                    <!-- Dòng 2: Icon địa chỉ + địa chỉ phòng (12sp, #595E72, 1 dòng, ellipsis) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginEnd="4dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_location_pin"
+                            app:tint="#006876" />
+
+                        <TextView
+                            android:id="@+id/tvRoomAddress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:maxLines="1"
+                            android:textColor="#595E72"
+                            android:textSize="12sp"
+                            tools:text="K82/12 Hà Huy Tập, P. Thanh Khê" />
+                    </LinearLayout>
+
+                    <!-- Dòng 3: Chủ trọ xuống hàng riêng (12sp, #595E72, 1 dòng, ellipsis) -->
+                    <TextView
+                        android:id="@+id/tvRoomLandlord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:maxLines="1"
+                        android:textColor="#595E72"
+                        android:textSize="12sp"
+                        tools:text="Chủ trọ: Nguyễn Văn Chủ" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- 3) HÀNG HÓA ĐƠN (padding: 16dp horizontal, 16dp top, 12dp bottom) -->
+        <LinearLayout
+            android:id="@+id/layoutInvoiceSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp">
+
+            <!-- Cột trái: Nhãn, số tiền, dòng phụ -->
+            <LinearLayout
+                android:id="@+id/layoutInvoiceInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvInvoiceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#595E72"
+                    android:textSize="12sp"
+                    tools:text="Hóa đơn tháng 10" />
+
+                <TextView
+                    android:id="@+id/tvInvoiceAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:maxLines="1"
+                    android:textColor="#161B2C"
+                    android:textSize="20sp"
+                    app:autoSizeMaxTextSize="20sp"
+                    app:autoSizeMinTextSize="14sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    tools:text="3.850.000 đ" />
+
+                <!-- Dòng phụ (icon + text) -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivInvoiceStatusIcon"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="4dp"
+                        android:visibility="gone"
+                        tools:src="@drawable/ic_check_circle"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tvInvoiceSub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:textColor="#595E72"
+                        android:textSize="12sp"
+                        tools:text="Hạn đóng 05/11" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Cột phải: Nút thanh toán gradient hoặc nút text -->
+            <FrameLayout
+                android:id="@+id/containerInvoiceAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp">
+
+                <!-- Nút Thanh toán (gradient 135°, bóng nhẹ) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPayInvoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_btn_pay_gradient"
+                    android:contentDescription="Thanh toán hóa đơn"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:paddingHorizontal="18dp"
+                    android:stateListAnimator="@null"
+                    android:text="Thanh toán"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:backgroundTint="@null"
+                    app:cornerRadius="12dp"
+                    app:elevation="2dp" />
+
+                <!-- Nút dạng chữ (Xem giao dịch / Xem biên lai) -->
+                <TextView
+                    android:id="@+id/btnInvoiceActionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:textColor="#006876"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    tools:text="Xem biên lai" />
+            </FrameLayout>
+
+            <!-- Trạng thái Chưa có hóa đơn tháng này -->
+            <LinearLayout
+                android:id="@+id/layoutNoInvoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvNoInvoiceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:text="Chưa có hóa đơn tháng này"
+                    android:textColor="#161B2C"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvNoInvoiceSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Chủ trọ thường gửi trước ngày 28."
+                    android:textColor="#595E72"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 4) DÒNG HỢP ĐỒNG (padding: 16dp horizontal, 0 top, 12dp bottom) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="12dp">
+
+            <ProgressBar
+                android:id="@+id/progressContract"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="65"
+                android:progressDrawable="@drawable/bg_contract_progress" />
+
+            <TextView
+                android:id="@+id/tvContractEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:textColor="#595E72"
+                android:textSize="12sp"
+                tools:text="Hợp đồng đến 01/01/2027" />
+        </LinearLayout>
+
+        <!-- 5) HAI NÚT DƯỚI (padding: 16dp horizontal, 0 top, 16dp bottom, gap 10dp) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="16dp">
+
+            <!-- Nút Nhắn chủ trọ -->
+            <LinearLayout
+                android:id="@+id/btnContactLandlord"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_action_neutral"
+                android:clickable="true"
+                android:contentDescription="Nhắn tin cho chủ trọ"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:text="Nhắn chủ trọ"
+                    android:textColor="#006876"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Nút Báo sự cố -->
+            <LinearLayout
+                android:id="@+id/btnReportIssue"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_action_neutral"
+                android:clickable="true"
+                android:contentDescription="Báo cáo sự cố phòng trọ"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans_medium"
+                    android:text="Báo sự cố"
+                    android:textColor="#006876"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
