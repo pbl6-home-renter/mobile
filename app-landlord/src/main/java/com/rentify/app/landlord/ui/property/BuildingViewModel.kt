@@ -4,6 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.administrative.AdministrativeProvinceDto
 import com.rentify.app.core.network.dto.administrative.AdministrativeWardDto
+import com.rentify.app.core.network.dto.billing.BillingSettingCreateRequestDto
+import com.rentify.app.core.network.dto.billing.BillingSettingResponseDto
+import com.rentify.app.core.network.dto.billing.BillingSettingUpdateRequestDto
+import com.rentify.app.core.network.dto.billing.RateItemDto
+import com.rentify.app.core.network.dto.billing.RatePolicyResponseDto
+import com.rentify.app.core.network.dto.billing.RatePolicyUpdateRequestDto
 import com.rentify.app.core.network.dto.building.BuildingCreateRequestDto
 import com.rentify.app.core.network.dto.building.BuildingMyDetailResponseDto
 import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
@@ -12,6 +18,8 @@ import com.rentify.app.core.network.dto.building.BuildingVietQrConfigRequestDto
 import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.core.data.repository.administrative.AdministrativeUnitsRepository
 import com.rentify.app.landlord.data.repository.LandlordBuildingRepository
+import com.rentify.app.landlord.data.repository.LandlordMediaRepository
+import com.rentify.app.landlord.data.repository.LandlordPolicySettingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,7 +47,9 @@ sealed interface BuildingActionUiState {
 
 class BuildingViewModel(
     private val buildingRepository: LandlordBuildingRepository,
-    private val administrativeUnitsRepository: AdministrativeUnitsRepository
+    private val administrativeUnitsRepository: AdministrativeUnitsRepository,
+    private val mediaRepository: LandlordMediaRepository? = null,
+    private val policySettingRepository: LandlordPolicySettingRepository? = null
 ) : BaseViewModel() {
 
     private val _buildingListState = MutableStateFlow<BuildingListUiState>(BuildingListUiState.Loading)
@@ -47,6 +57,12 @@ class BuildingViewModel(
 
     private val _buildingDetailState = MutableStateFlow<BuildingDetailUiState>(BuildingDetailUiState.Idle)
     val buildingDetailState: StateFlow<BuildingDetailUiState> = _buildingDetailState.asStateFlow()
+
+    private val _ratePolicyState = MutableStateFlow<RatePolicyResponseDto?>(null)
+    val ratePolicyState: StateFlow<RatePolicyResponseDto?> = _ratePolicyState.asStateFlow()
+
+    private val _billingSettingState = MutableStateFlow<BillingSettingResponseDto?>(null)
+    val billingSettingState: StateFlow<BillingSettingResponseDto?> = _billingSettingState.asStateFlow()
 
     private val _provincesState = MutableStateFlow<List<AdministrativeProvinceDto>>(emptyList())
     val provincesState: StateFlow<List<AdministrativeProvinceDto>> = _provincesState.asStateFlow()
@@ -223,6 +239,136 @@ class BuildingViewModel(
                 }
                 is NetworkResult.UnknownError -> {
                     _actionState.value = BuildingActionUiState.Error("Đã xảy ra lỗi khi cấu hình VietQR")
+                }
+            }
+        }
+    }
+
+    fun uploadOwnershipProof(buildingId: String, fileBytes: ByteArray, fileName: String, contentType: String) {
+        val repo = mediaRepository ?: return
+        _actionState.value = BuildingActionUiState.Loading
+        viewModelScope.launch {
+            val result = repo.uploadMedia(
+                ownerType = "building",
+                ownerId = buildingId,
+                purpose = "ownership_proof",
+                fileBytes = fileBytes,
+                fileName = fileName,
+                contentType = contentType
+            )
+            when (result) {
+                is NetworkResult.Success -> {
+                    _actionState.value = BuildingActionUiState.Success("Đăng ảnh minh chứng sở hữu thành công!", result.data)
+                    loadBuildingDetail(buildingId)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = BuildingActionUiState.Error(result.error?.message ?: "Tải ảnh minh chứng thất bại")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = BuildingActionUiState.Error("Lỗi kết nối mạng khi tải ảnh")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = BuildingActionUiState.Error("Đã xảy ra lỗi khi tải ảnh minh chứng")
+                }
+            }
+        }
+    }
+
+    fun loadBuildingPoliciesAndSettings(buildingId: String) {
+        val repo = policySettingRepository ?: return
+        viewModelScope.launch {
+            when (val rateRes = repo.getRatePolicies(scope = "building", buildingId = buildingId)) {
+                is NetworkResult.Success -> {
+                    _ratePolicyState.value = rateRes.data.data.firstOrNull { it.isActive }
+                        ?: rateRes.data.data.firstOrNull()
+                }
+                else -> _ratePolicyState.value = null
+            }
+            when (val billRes = repo.getBillingSettings(scope = "building", buildingId = buildingId)) {
+                is NetworkResult.Success -> {
+                    _billingSettingState.value = billRes.data.data.firstOrNull { it.isActive }
+                        ?: billRes.data.data.firstOrNull()
+                }
+                else -> _billingSettingState.value = null
+            }
+        }
+    }
+
+    fun saveBuildingRatePolicies(buildingId: String, rates: List<RateItemDto>) {
+        val repo = policySettingRepository ?: return
+        _actionState.value = BuildingActionUiState.Loading
+        viewModelScope.launch {
+            val existing = _ratePolicyState.value
+            val result = if (existing != null) {
+                repo.updateRatePolicy(existing.id, RatePolicyUpdateRequestDto(rates = rates, isActive = true))
+            } else {
+                repo.saveBuildingRatePoliciesBatch(buildingId, rates)
+            }
+            when (result) {
+                is NetworkResult.Success -> {
+                    _ratePolicyState.value = result.data.data
+                    _actionState.value = BuildingActionUiState.Success("Thiết lập biểu giá dịch vụ thành công!")
+                    loadBuildingDetail(buildingId)
+                    loadBuildingPoliciesAndSettings(buildingId)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = BuildingActionUiState.Error(result.error?.message ?: "Lưu biểu giá thất bại")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = BuildingActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = BuildingActionUiState.Error("Đã xảy ra lỗi khi lưu biểu giá dịch vụ")
+                }
+            }
+        }
+    }
+
+    fun saveBuildingBillingSetting(
+        buildingId: String,
+        paymentDueDay: Int,
+        remindDay: Int?,
+        botEnabled: Boolean
+    ) {
+        val repo = policySettingRepository ?: return
+        _actionState.value = BuildingActionUiState.Loading
+        viewModelScope.launch {
+            val existing = _billingSettingState.value
+            val result = if (existing != null) {
+                repo.updateBillingSetting(
+                    billingSettingId = existing.id,
+                    request = BillingSettingUpdateRequestDto(
+                        paymentDueDay = paymentDueDay,
+                        remindDay = remindDay,
+                        botEnabled = botEnabled,
+                        isActive = true
+                    )
+                )
+            } else {
+                repo.createBillingSetting(
+                    request = BillingSettingCreateRequestDto(
+                        scope = "building",
+                        buildingId = buildingId,
+                        paymentDueDay = paymentDueDay,
+                        remindDay = remindDay,
+                        botEnabled = botEnabled
+                    )
+                )
+            }
+            when (result) {
+                is NetworkResult.Success -> {
+                    _billingSettingState.value = result.data.data
+                    _actionState.value = BuildingActionUiState.Success("Thiết lập thanh toán & nhắc nợ thành công!")
+                    loadBuildingPoliciesAndSettings(buildingId)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = BuildingActionUiState.Error(result.error?.message ?: "Lưu cài đặt thanh toán thất bại")
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = BuildingActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = BuildingActionUiState.Error("Đã xảy ra lỗi khi lưu cài đặt thanh toán")
                 }
             }
         }

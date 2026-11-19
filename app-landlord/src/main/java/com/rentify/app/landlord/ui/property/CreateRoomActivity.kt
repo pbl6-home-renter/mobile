@@ -1,5 +1,7 @@
 package com.rentify.app.landlord.ui.property
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -20,22 +22,38 @@ class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
 
     private var buildingsList: List<BuildingMyListResponseDto> = emptyList()
     private var selectedBuildingId: String? = null
+    private var preselectedBuildingId: String? = null
 
     private val genderPolicyOptions = listOf(
-        "Tất cả (Không giới tính)" to "any",
-        "Chỉ cho Nam thuê" to "male",
-        "Chỉ cho Nữ thuê" to "female"
+        "Tất cả (Không giới hạn)" to "any",
+        "Nam" to "male",
+        "Nữ" to "female"
     )
     private var selectedGenderPolicy: String = "any"
 
     override fun initView() {
         binding.rootLayout.applySystemBarsPadding(top = true, bottom = true)
 
+        preselectedBuildingId = intent.getStringExtra(EXTRA_BUILDING_ID)
+
         binding.toolbar.setNavigationOnClickListener {
             finish()
         }
 
+        binding.etFloorNumber.setText("1")
+        binding.etRentPrice.setText("0")
+
         setupDropdowns()
+
+        binding.btnQuickFillDeposit.setOnClickListener {
+            val rentText = binding.etRentPrice.text?.toString()?.trim().orEmpty()
+            if (rentText.isNotEmpty()) {
+                binding.etDepositAmount.setText(rentText)
+                binding.tilDepositAmount.error = null
+            } else {
+                Toast.makeText(this, "Vui lòng nhập giá thuê trước", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         binding.btnSubmitRoom.setOnClickListener {
             submitRoom()
@@ -71,8 +89,11 @@ class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
             )
             binding.actvBuilding.setAdapter(adapter)
             if (buildings.isNotEmpty() && selectedBuildingId == null) {
-                binding.actvBuilding.setText(buildings[0].name, false)
-                selectedBuildingId = buildings[0].id
+                val target = preselectedBuildingId?.let { id ->
+                    buildings.firstOrNull { it.id == id }
+                } ?: buildings[0]
+                binding.actvBuilding.setText(target.name, false)
+                selectedBuildingId = target.id
             }
         }
 
@@ -182,6 +203,18 @@ class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
         )
 
         viewModel.createRoom(request)
+    }
+
+    companion object {
+        const val EXTRA_BUILDING_ID = "extra_building_id"
+
+        fun newIntent(context: Context, buildingId: String? = null): Intent {
+            return Intent(context, CreateRoomActivity::class.java).apply {
+                if (!buildingId.isNullOrBlank()) {
+                    putExtra(EXTRA_BUILDING_ID, buildingId)
+                }
+            }
+        }
     }
 }
 

@@ -179,6 +179,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnQuickFillDeposit"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="-8dp"
+                android:layout_marginBottom="@dimen/spacing_sm"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:text="⚡ Bằng 1 tháng tiền thuê"
+                android:textColor="@color/rentify_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <!-- Row: Max Occupancy & Gender Policy -->
             <LinearLayout
                 android:layout_width="match_parent"
