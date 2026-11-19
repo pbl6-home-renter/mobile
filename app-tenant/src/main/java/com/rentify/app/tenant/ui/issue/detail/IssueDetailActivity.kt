@@ -99,10 +99,10 @@ class IssueDetailActivity : BaseActivity<ActivityIssueDetailBinding>(ActivityIss
     }
 
     private fun bindDetail(detail: IssueReportDetailResponseDto) {
-        IssueUiHelper.applyStatusBadge(binding.tvStatusBadge, detail.status)
-        IssueUiHelper.applyUrgencyBadge(binding.tvUrgencyBadge, detail.urgency)
+        IssueUiHelper.applyNeutralStatusBadge(binding.tvStatusBadge, detail.status)
+        IssueUiHelper.applyUrgencyText(binding.tvUrgencyBadge, detail.urgency)
         binding.tvTitle.text = detail.title
-        binding.tvCreatedAt.text = "Gửi lúc: ${IssueUiHelper.formatDate(detail.createdAt)}"
+        binding.tvCreatedAt.text = "Gửi lúc: ${IssueUiHelper.formatDate(detail.createdAt).replaceFirst(" ", ", ")}"
 
         val location = buildString {
             if (!detail.roomName.isNullOrBlank()) append(detail.roomName)

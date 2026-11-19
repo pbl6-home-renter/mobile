@@ -125,10 +125,10 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_image_placeholder" />
 
-            <ProgressBar
+            <com.rentify.app.tenant.ui.component.TenantLoadingView
                 android:id="@+id/pbQrLoading"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:visibility="gone" />
         </FrameLayout>
@@ -157,25 +157,24 @@
             android:layout_height="48dp"
             android:layout_marginEnd="@dimen/spacing_sm"
             android:layout_weight="1"
-            android:fontFamily="@font/plus_jakarta_sans"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="Mở liên kết"
-            android:textColor="@color/rentify_text_primary"
+            android:textColor="@color/rentify_text"
             android:textSize="14sp"
-            app:cornerRadius="12dp"
-            app:strokeColor="@color/rentify_divider" />
+            app:cornerRadius="24dp"
+            app:strokeColor="@color/rentify_border" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDonePayment"
+            style="@style/Widget.Rentify.PillButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="@dimen/spacing_sm"
             android:layout_weight="1"
-            android:backgroundTint="@color/rentify_primary_gradient_start"
-            android:fontFamily="@font/plus_jakarta_sans"
-            android:text="Xong"
-            android:textColor="@color/rentify_on_primary"
-            android:textSize="14sp"
-            app:cornerRadius="12dp" />
+            android:minHeight="48dp"
+            android:text="Xong" />
     </LinearLayout>
 
 </LinearLayout>

@@ -11,8 +11,8 @@
     android:layout_marginVertical="@dimen/spacing_sm"
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="@dimen/radius_lg"
-    app:cardElevation="1dp"
-    app:strokeColor="@color/rentify_divider"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/rentify_border_soft"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -32,12 +32,12 @@
                 android:id="@+id/tvStatusBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_pill_badge_role"
+                android:background="@drawable/bg_issue_status_badge"
+                android:fontFamily="@font/plus_jakarta_sans"
                 android:paddingHorizontal="@dimen/spacing_smd"
                 android:paddingVertical="@dimen/spacing_xs"
-                android:textColor="@color/rentify_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="11sp"
                 tools:text="Chờ tiếp nhận" />
 
             <View
@@ -64,8 +64,8 @@
             android:ellipsize="end"
             android:fontFamily="@font/plus_jakarta_sans"
             android:maxLines="2"
-            android:textColor="@color/rentify_text_primary"
-            android:textSize="15sp"
+            android:textColor="@color/rentify_text"
+            android:textSize="16sp"
             android:textStyle="bold"
             tools:text="Vòi xịt bồn cầu bị rò rỉ nước liên tục" />
 
@@ -83,7 +83,7 @@
                 android:layout_height="14dp"
                 android:contentDescription="Danh mục"
                 android:src="@drawable/ic_issue_other"
-                app:tint="@color/rentify_primary_gradient_start" />
+                app:tint="@color/rentify_text_muted" />
 
             <TextView
                 android:id="@+id/tvCategory"
@@ -91,16 +91,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_xs"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_text_secondary"
-                android:textSize="13sp"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp"
                 tools:text="Đường nước" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/spacing_sm"
-                android:text="•"
-                android:textColor="@color/rentify_text_muted" />
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:text=","
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvRoomName"
@@ -110,8 +111,8 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:singleLine="true"
-                android:textColor="@color/rentify_text_secondary"
-                android:textSize="13sp"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="12sp"
                 tools:text="Phòng P.201 - Nhà Trọ Hòa Khánh" />
         </LinearLayout>
 
@@ -120,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="@dimen/spacing_smd"
-            android:background="@color/rentify_divider" />
+            android:background="@color/rentify_border_soft" />
 
         <!-- Footer: Date + Assigned Repairer + Chevron -->
         <LinearLayout
@@ -134,9 +135,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/rentify_text_secondary"
+                android:textColor="@color/rentify_text_muted"
                 android:textSize="12sp"
-                tools:text="14:30 02/11/2026" />
+                tools:text="14:30, 02/11/2026" />
 
             <TextView
                 android:id="@+id/tvAssignedTo"
@@ -154,7 +155,7 @@
                 android:layout_height="16dp"
                 android:contentDescription="Xem chi tiết"
                 android:src="@drawable/ic_chevron_right"
-                app:tint="@color/rentify_text_secondary" />
+                app:tint="@color/rentify_text_muted" />
         </LinearLayout>
 
     </LinearLayout>

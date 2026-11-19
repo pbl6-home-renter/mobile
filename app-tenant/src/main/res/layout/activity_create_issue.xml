@@ -76,39 +76,14 @@
             </LinearLayout>
 
             <!-- Issue Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_ml"
-                android:text="Tiêu đề sự cố *"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilTitle"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.rentify.app.core.ui.component.RentifyTextField
+                android:id="@+id/etTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxStrokeColor="@color/rentify_primary"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="VD: Vòi xịt bồn cầu bị rò rỉ nước liên tục"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:maxLength="255"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="14sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/spacing_ml"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
+                app:hint="Tiêu đề sự cố *" />
 
             <!-- Category Selector -->
             <TextView
@@ -253,42 +228,47 @@
             </com.google.android.material.chip.ChipGroup>
 
             <!-- Description -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_ml"
-                android:text="Mô tả chi tiết"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilDescription"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxStrokeColor="@color/rentify_primary"
-                app:counterEnabled="true"
-                app:counterMaxLength="500"
-                app:hintEnabled="false">
+                android:layout_marginTop="@dimen/spacing_ml"
+                app:cardBackgroundColor="@color/sl_textfield_card_bg"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/sl_textfield_card_stroke"
+                app:strokeWidth="1.5dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDescription"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:hint="Mô tả cụ thể vị trí hư hỏng, biểu hiện và thời gian bạn có thể ở nhà để thợ kiểm tra..."
-                    android:inputType="textMultiLine"
-                    android:lines="4"
-                    android:maxLength="500"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="14sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Mô tả chi tiết"
+                    android:textColorHint="@color/rentify_text_muted"
+                    app:boxBackgroundColor="@android:color/transparent"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="500"
+                    app:cursorColor="@color/rentify_primary"
+                    app:hintTextColor="@color/rentify_primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/plus_jakarta_sans_regular"
+                        android:gravity="top"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:maxLength="500"
+                        android:minLines="4"
+                        android:paddingTop="26dp"
+                        android:paddingBottom="12dp"
+                        android:textColor="@color/rentify_text"
+                        android:textCursorDrawable="@drawable/bg_cursor_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -313,6 +293,12 @@
             app:backgroundTint="@null"
             app:cornerRadius="25dp" />
     </LinearLayout>
+
+    <com.rentify.app.tenant.ui.component.TenantLoadingView
+        android:id="@+id/pbLoading"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:visibility="gone" />
 
 </LinearLayout>
 

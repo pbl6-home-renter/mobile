@@ -71,28 +71,25 @@
 
             <TextView
                 android:id="@+id/tvRoomName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
+                android:maxLines="1"
                 android:textColor="@color/rentify_text_secondary"
                 android:textSize="13sp"
-                tools:text="Phòng: P.305" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/spacing_sm"
-                android:text="•"
-                android:textColor="@color/rentify_text_muted" />
+                tools:text="Phòng P.305" />
 
             <TextView
                 android:id="@+id/tvInvoiceCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:textColor="@color/rentify_text_muted"
-                android:textSize="13sp"
-                tools:text="INV-2026-10-001" />
+                android:textSize="12sp"
+                tools:text="Mã HĐ INV-2026-10-001" />
         </LinearLayout>
 
         <!-- Divider -->

@@ -225,10 +225,10 @@
             </LinearLayout>
 
             <!-- Loading Indicator -->
-            <ProgressBar
+            <com.rentify.app.tenant.ui.component.TenantLoadingView
                 android:id="@+id/pbLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:visibility="gone" />
         </FrameLayout>

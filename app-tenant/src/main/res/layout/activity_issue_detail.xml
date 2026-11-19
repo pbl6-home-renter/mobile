@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rentify_background"
+    android:background="@color/rentify_surface"
     android:orientation="vertical">
 
     <!-- Toolbar -->
@@ -13,11 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/rentify_surface"
-        android:elevation="2dp"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:navigationIconTint="@color/rentify_text_primary"
+        app:navigationIconTint="@color/rentify_text"
         app:title="Chi tiết sự cố"
-        app:titleTextColor="@color/rentify_text_primary" />
+        app:titleTextAppearance="@style/TextAppearance.Rentify.ToolbarTitle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rentify_divider" />
 
     <!-- Content Area with Loading & Error States -->
     <FrameLayout
@@ -43,8 +47,8 @@
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
-                    app:cardElevation="1dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -63,12 +67,12 @@
                                 android:id="@+id/tvStatusBadge"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/bg_pill_badge_role"
+                                android:background="@drawable/bg_issue_status_badge"
+                                android:fontFamily="@font/plus_jakarta_sans"
                                 android:paddingHorizontal="@dimen/spacing_smd"
                                 android:paddingVertical="@dimen/spacing_xs"
-                                android:textColor="@color/rentify_primary"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
+                                android:textColor="@color/rentify_text_secondary"
+                                android:textSize="11sp"
                                 tools:text="Chờ tiếp nhận" />
 
                             <View
@@ -81,9 +85,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:textSize="12sp"
+                                android:textSize="11sp"
                                 android:textStyle="bold"
-                                tools:text="● Trung bình" />
+                                tools:text="Khẩn cấp" />
                         </LinearLayout>
 
                         <TextView
@@ -91,9 +95,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_smd"
-                            android:textColor="@color/rentify_text_primary"
+                            android:fontFamily="@font/plus_jakarta_sans_medium"
+                            android:textColor="@color/rentify_text"
                             android:textSize="18sp"
-                            android:textStyle="bold"
                             tools:text="Vòi xịt bồn cầu bị rò rỉ nước liên tục" />
 
                         <TextView
@@ -101,7 +105,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_sm"
-                            android:textColor="@color/rentify_text_secondary"
+                            android:textColor="@color/rentify_text_muted"
                             android:textSize="12sp"
                             tools:text="Gửi lúc: 14:30 02/11/2026" />
 
@@ -115,8 +119,8 @@
                     android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
-                    app:cardElevation="1dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -129,7 +133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Thông tin khu vực"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="@color/rentify_text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -137,7 +141,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginVertical="@dimen/spacing_smd"
-                            android:background="@color/rentify_divider" />
+                            android:background="@color/rentify_border_soft" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -149,7 +153,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:text="Phòng / Tòa nhà:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -157,7 +161,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/rentify_text_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="13sp"
                                 android:textStyle="bold"
                                 tools:text="Phòng P.201 - Nhà Trọ Hòa Khánh" />
@@ -174,7 +178,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:text="Nhóm sự cố:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <LinearLayout
@@ -190,7 +194,7 @@
                                     android:layout_height="16dp"
                                     android:contentDescription="Nhóm sự cố"
                                     android:src="@drawable/ic_issue_other"
-                                    app:tint="@color/rentify_primary_gradient_start" />
+                                    app:tint="@color/rentify_text_muted" />
 
                                 <TextView
                                     android:id="@+id/tvCategory"
@@ -198,7 +202,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/spacing_sm"
                                     android:fontFamily="@font/plus_jakarta_sans"
-                                    android:textColor="@color/rentify_text_primary"
+                                    android:textColor="@color/rentify_text"
                                     android:textSize="13sp"
                                     android:textStyle="bold"
                                     tools:text="Đường nước" />
@@ -219,7 +223,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:text="Người báo cáo:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -227,7 +231,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/rentify_text_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="13sp"
                                 tools:text="Nguyễn Văn A" />
                         </LinearLayout>
@@ -242,8 +246,8 @@
                     android:layout_marginTop="@dimen/spacing_smd"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
-                    app:cardElevation="1dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -256,7 +260,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mô tả sự cố"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="@color/rentify_text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -264,7 +268,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginVertical="@dimen/spacing_smd"
-                            android:background="@color/rentify_divider" />
+                            android:background="@color/rentify_border_soft" />
 
                         <TextView
                             android:id="@+id/tvDescription"
@@ -286,8 +290,8 @@
                     android:visibility="gone"
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
-                    app:cardElevation="1dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp"
                     tools:visibility="visible">
 
@@ -301,7 +305,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tiến độ &amp; Khắc phục"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="@color/rentify_text"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -309,7 +313,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:layout_marginVertical="@dimen/spacing_smd"
-                            android:background="@color/rentify_divider" />
+                            android:background="@color/rentify_border_soft" />
 
                         <LinearLayout
                             android:id="@+id/layoutAssignedTo"
@@ -322,7 +326,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:text="Thợ phụ trách:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -330,7 +334,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/rentify_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="13sp"
                                 android:textStyle="bold"
                                 tools:text="Bác Ba (Thợ nước)" />
@@ -350,7 +354,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:text="Chi phí sửa chữa:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -358,7 +362,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/rentify_text_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="13sp"
                                 android:textStyle="bold"
                                 tools:text="150.000 ₫" />
@@ -377,7 +381,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Ghi chú khắc phục:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -387,7 +391,7 @@
                                 android:layout_marginTop="@dimen/spacing_xs"
                                 android:background="@drawable/bg_rounded_surface"
                                 android:padding="@dimen/spacing_smd"
-                                android:textColor="@color/rentify_text_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="13sp"
                                 tools:text="Đã thay gioăng cao su và van khóa mới cho vòi xịt." />
                         </LinearLayout>
@@ -406,7 +410,7 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:text="Hoàn thành lúc:"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp" />
 
                             <TextView
@@ -414,7 +418,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:textColor="@color/rentify_text_secondary"
+                                android:textColor="@color/rentify_text_muted"
                                 android:textSize="13sp"
                                 tools:text="16:00 03/11/2026" />
                         </LinearLayout>
@@ -426,10 +430,10 @@
         </androidx.core.widget.NestedScrollView>
 
         <!-- Loading Indicator -->
-        <ProgressBar
+        <com.rentify.app.tenant.ui.component.TenantLoadingView
             android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             android:visibility="gone" />
 
@@ -441,20 +445,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
-        android:elevation="8dp"
-        android:padding="@dimen/spacing_md"
+        android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/rentify_divider" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancelIssue"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="@dimen/spacing_md"
+            android:layout_marginTop="@dimen/spacing_smd"
+            android:layout_marginBottom="@dimen/spacing_md"
+            android:fontFamily="@font/plus_jakarta_sans_medium"
             android:text="Hủy báo cáo sự cố"
             android:textColor="@color/rentify_error"
             android:textSize="15sp"
-            android:textStyle="bold"
             app:cornerRadius="25dp"
             app:strokeColor="@color/rentify_error" />
     </LinearLayout>
