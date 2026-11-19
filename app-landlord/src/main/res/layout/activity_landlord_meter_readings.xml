@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Ghi chỉ số điện nước"
+            app:title="Chỉ số điện nước"
             app:titleCentered="true"
             app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:titleTextColor="@color/rentify_text_primary" />
@@ -53,6 +53,7 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Month Selector Row: Tháng trước | Kỳ 2026-11 | Tháng sau -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,27 +61,53 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPrevMonth"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:text="Kỳ chốt số:"
-                    android:textColor="@color/rentify_text_secondary"
-                    android:textSize="14sp" />
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="@dimen/spacing_smd"
+                    android:text="‹ Tháng trước"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/rentify_border" />
 
                 <TextView
                     android:id="@+id/tvPeriod"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="@dimen/spacing_sm"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_pill_badge_role"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:paddingHorizontal="@dimen/spacing_smd"
-                    android:paddingVertical="@dimen/spacing_xs"
+                    android:gravity="center"
                     android:textColor="@color/rentify_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    tools:text="2026-11" />
+                    tools:text="Kỳ: 2026-11" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNextMonth"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="@dimen/spacing_smd"
+                    android:text="Tháng sau ›"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/rentify_border" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -134,6 +161,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
+                android:id="@+id/tvEmptyMeterMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_md"
@@ -166,7 +194,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Lưu &amp; Ghi chỉ số hàng loạt"
+                android:text="Lưu tất cả"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -175,4 +203,3 @@
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

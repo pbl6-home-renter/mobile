@@ -11,7 +11,7 @@ import com.rentify.app.landlord.ui.contract.LandlordContractsActivity
 class OperationsHubFragment : BaseFragment<FragmentOperationsHubBinding>(FragmentOperationsHubBinding::inflate) {
 
     override fun initView() {
-        binding.root.applySystemBarsPadding(top = false, bottom = false)
+        binding.root.applySystemBarsPadding(top = true, bottom = false)
 
         binding.cardHubContracts.setOnClickListener {
             startActivity(Intent(requireContext(), LandlordContractsActivity::class.java))

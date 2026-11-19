@@ -2,11 +2,14 @@ package com.rentify.app.landlord.ui.operations
 
 import androidx.lifecycle.viewModelScope
 import com.rentify.app.core.network.adapter.NetworkResult
+import com.rentify.app.core.network.dto.issue.IssueReportCreateRequestDto
 import com.rentify.app.core.network.dto.issue.IssueReportDetailResponseDto
 import com.rentify.app.core.network.dto.issue.IssueReportListResponseDto
 import com.rentify.app.core.network.dto.issue.IssueReportUpdateRequestDto
+import com.rentify.app.core.network.dto.room.RoomMyListResponseDto
 import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.landlord.data.repository.LandlordIssueRepository
+import com.rentify.app.landlord.data.repository.LandlordRoomRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,7 +35,8 @@ sealed interface IssueActionUiState {
 }
 
 class IssueViewModel(
-    private val issueRepository: LandlordIssueRepository
+    private val issueRepository: LandlordIssueRepository,
+    private val roomRepository: LandlordRoomRepository? = null
 ) : BaseViewModel() {
 
     private val _issueListState = MutableStateFlow<IssueListUiState>(IssueListUiState.Loading)
@@ -41,8 +45,61 @@ class IssueViewModel(
     private val _issueDetailState = MutableStateFlow<IssueDetailUiState>(IssueDetailUiState.Loading)
     val issueDetailState: StateFlow<IssueDetailUiState> = _issueDetailState.asStateFlow()
 
+    private val _roomsState = MutableStateFlow<List<RoomMyListResponseDto>>(emptyList())
+    val roomsState: StateFlow<List<RoomMyListResponseDto>> = _roomsState.asStateFlow()
+
     private val _actionState = MutableStateFlow<IssueActionUiState>(IssueActionUiState.Idle)
     val actionState: StateFlow<IssueActionUiState> = _actionState.asStateFlow()
+
+    fun loadLandlordRooms() {
+        val repo = roomRepository ?: return
+        viewModelScope.launch {
+            when (val result = repo.getMyRooms(pageSize = 100)) {
+                is NetworkResult.Success -> {
+                    _roomsState.value = result.data.data
+                }
+                else -> {
+                    _roomsState.value = emptyList()
+                }
+            }
+        }
+    }
+
+    fun createIssue(
+        roomId: String,
+        title: String,
+        category: String,
+        urgency: String,
+        description: String?
+    ) {
+        _actionState.value = IssueActionUiState.Loading
+        viewModelScope.launch {
+            val req = IssueReportCreateRequestDto(
+                roomId = roomId,
+                title = title,
+                category = category,
+                urgency = urgency,
+                description = description
+            )
+            when (val result = issueRepository.createIssue(req)) {
+                is NetworkResult.Success -> {
+                    _actionState.value = IssueActionUiState.Success("Đã tạo báo cáo sự cố mới thành công!")
+                    loadIssues()
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = IssueActionUiState.Error(
+                        result.error?.message ?: "Tạo báo cáo sự cố thất bại"
+                    )
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = IssueActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = IssueActionUiState.Error("Đã xảy ra lỗi khi báo sự cố")
+                }
+            }
+        }
+    }
 
     fun loadIssues(
         status: String? = null,

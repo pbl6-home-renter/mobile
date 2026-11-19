@@ -259,6 +259,24 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical" />
 
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnEditPendingExtras"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:minHeight="0dp"
+                            android:paddingHorizontal="@dimen/spacing_smd"
+                            android:text="+ Cập nhật phí khác &amp; ghi chú"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:visibility="gone"
+                            app:cornerRadius="10dp" />
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

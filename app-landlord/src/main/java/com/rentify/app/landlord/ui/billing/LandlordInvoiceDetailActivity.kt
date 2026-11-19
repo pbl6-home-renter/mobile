@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rentify.app.core.network.dto.invoice.InvoiceDetailResponseDto
+import com.rentify.app.core.network.dto.invoice.InvoiceOtherFeeItemDto
 import com.rentify.app.core.network.dto.invoice.PaymentRecordCashRequestDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
@@ -227,9 +228,13 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
                 binding.btnIssueInvoice.visibility = View.VISIBLE
                 binding.btnRecordCash.visibility = View.GONE
                 binding.btnCancelInvoice.visibility = View.GONE
+                binding.btnEditPendingExtras.visibility = View.VISIBLE
 
                 binding.btnIssueInvoice.setOnClickListener {
                     billingViewModel.issueInvoices(listOf(detail.id))
+                }
+                binding.btnEditPendingExtras.setOnClickListener {
+                    showEditPendingExtrasDialog(detail)
                 }
             }
             "issued", "partially_paid", "overdue" -> {
@@ -237,6 +242,7 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
                 binding.btnIssueInvoice.visibility = View.GONE
                 binding.btnRecordCash.visibility = View.VISIBLE
                 binding.btnCancelInvoice.visibility = View.VISIBLE
+                binding.btnEditPendingExtras.visibility = View.GONE
 
                 binding.btnRecordCash.setOnClickListener {
                     showRecordCashBottomSheet(detail)
@@ -247,8 +253,50 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
             }
             else -> {
                 binding.cardBottomActions.visibility = View.GONE
+                binding.btnEditPendingExtras.visibility = View.GONE
             }
         }
+    }
+
+    private fun showEditPendingExtrasDialog(detail: InvoiceDetailResponseDto) {
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(48, 24, 48, 16)
+        }
+        val firstFee = detail.otherFees.firstOrNull()
+        val etFeeName = EditText(this).apply {
+            hint = "Tên khoản phí phát sinh (VD: Đền bù / Phí khác)"
+            setText(firstFee?.name ?: "")
+        }
+        val etFeeAmount = EditText(this).apply {
+            hint = "Số tiền phí khác (VNĐ)"
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            setText(firstFee?.amountLong?.toString() ?: "")
+        }
+        val etNote = EditText(this).apply {
+            hint = "Ghi chú hóa đơn (tùy chọn)"
+            setText(detail.note ?: "")
+        }
+        container.addView(etFeeName)
+        container.addView(etFeeAmount)
+        container.addView(etNote)
+
+        AlertDialog.Builder(this)
+            .setTitle("Cập nhật phí khác & ghi chú")
+            .setView(container)
+            .setPositiveButton("Lưu") { _, _ ->
+                val fName = etFeeName.text?.toString()?.trim().orEmpty()
+                val fAmount = etFeeAmount.text?.toString()?.trim()?.toLongOrNull() ?: 0L
+                val note = etNote.text?.toString()?.trim()?.takeIf { it.isNotEmpty() }
+                val fees = if (fName.isNotEmpty() && fAmount > 0L) {
+                    listOf(InvoiceOtherFeeItemDto(name = fName, amount = fAmount.toString()))
+                } else {
+                    emptyList()
+                }
+                billingViewModel.updatePendingInvoiceExtras(detail.id, fees, note)
+            }
+            .setNegativeButton("Hủy", null)
+            .show()
     }
 
     private fun showRecordCashBottomSheet(detail: InvoiceDetailResponseDto) {

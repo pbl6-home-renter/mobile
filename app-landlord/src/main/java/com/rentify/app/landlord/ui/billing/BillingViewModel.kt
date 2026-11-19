@@ -6,12 +6,15 @@ import com.rentify.app.core.network.dto.invoice.InvoiceDetailResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceGenerateRequestDto
 import com.rentify.app.core.network.dto.invoice.InvoiceIssueRequestDto
 import com.rentify.app.core.network.dto.invoice.InvoiceListResponseDto
+import com.rentify.app.core.network.dto.invoice.InvoiceOtherFeeItemDto
 import com.rentify.app.core.network.dto.invoice.PaymentRecordCashRequestDto
 import com.rentify.app.core.network.dto.meter.BulkMeterReadingCreateRequestDto
 import com.rentify.app.core.network.dto.meter.BulkMeterReadingResponseDto
+import com.rentify.app.core.network.dto.meter.MeterReadingCreateRequestDto
 import com.rentify.app.core.network.dto.meter.MeterReadingListResponseDto
 import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.landlord.data.repository.LandlordInvoiceRepository
+import com.rentify.app.landlord.data.repository.LandlordMediaRepository
 import com.rentify.app.landlord.data.repository.LandlordMeterRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -52,7 +55,8 @@ sealed interface BillingActionUiState {
 
 class BillingViewModel(
     private val meterRepository: LandlordMeterRepository,
-    private val invoiceRepository: LandlordInvoiceRepository
+    private val invoiceRepository: LandlordInvoiceRepository,
+    private val mediaRepository: LandlordMediaRepository? = null
 ) : BaseViewModel() {
 
     private val _meterReadingsState = MutableStateFlow<MeterReadingsUiState>(MeterReadingsUiState.Loading)
@@ -72,7 +76,6 @@ class BillingViewModel(
 
     fun loadMeterReadings(
         roomId: String? = null,
-        buildingId: String? = null,
         period: String? = null,
         type: String? = null
     ) {
@@ -80,7 +83,6 @@ class BillingViewModel(
         viewModelScope.launch {
             when (val result = meterRepository.getMeterReadings(
                 roomId = roomId,
-                buildingId = buildingId,
                 period = period,
                 type = type
             )) {
@@ -169,10 +171,18 @@ class BillingViewModel(
             )) {
                 is NetworkResult.Success -> {
                     val data = result.data.data
-                    val count = if (data != null) (data.generated.size + data.recalculated.size) else 0
-                    _actionState.value = BillingActionUiState.Success(
-                        "Đã lập/tính toán thành công $count hóa đơn kỳ $period"
-                    )
+                    val genCount = data?.generated?.size ?: 0
+                    val recalcCount = data?.recalculated?.size ?: 0
+                    val blockedCount = data?.blocked?.size ?: 0
+                    val totalOk = genCount + recalcCount
+                    val msg = buildString {
+                        append("Đã lập/tính toán $totalOk hóa đơn kỳ $period")
+                        if (blockedCount > 0) {
+                            val reasons = data?.blocked?.map { it.reasonCode }?.distinct()?.joinToString(", ").orEmpty()
+                            append(". Có $blockedCount phòng bị chặn ($reasons)")
+                        }
+                    }
+                    _actionState.value = BillingActionUiState.Success(msg)
                     loadInvoices(buildingId = buildingId, period = period)
                 }
                 is NetworkResult.ApiError -> {
@@ -286,6 +296,88 @@ class BillingViewModel(
                 }
                 is NetworkResult.UnknownError -> {
                     _actionState.value = BillingActionUiState.Error("Lỗi không xác định")
+                }
+            }
+        }
+    }
+
+    fun saveDetailedMeterReading(
+        roomId: String,
+        type: String,
+        period: String,
+        currentReading: String,
+        previousReading: String?,
+        isBaseline: Boolean,
+        photoBytes: ByteArray?,
+        photoFileName: String?,
+        photoContentType: String?
+    ) {
+        _actionState.value = BillingActionUiState.Loading
+        viewModelScope.launch {
+            val createReq = MeterReadingCreateRequestDto(
+                roomId = roomId,
+                type = type,
+                period = period,
+                currentReading = currentReading,
+                previousReading = previousReading,
+                isBaseline = isBaseline
+            )
+            when (val result = meterRepository.createMeterReading(createReq)) {
+                is NetworkResult.Success -> {
+                    val reading = result.data.data
+                    if (reading != null && photoBytes != null && photoBytes.isNotEmpty() && mediaRepository != null) {
+                        val uploadRes = mediaRepository.uploadMedia(
+                            ownerType = "meter_reading",
+                            ownerId = reading.id,
+                            purpose = "meter_photo",
+                            fileBytes = photoBytes,
+                            fileName = photoFileName ?: "meter_${System.currentTimeMillis()}.jpg",
+                            contentType = photoContentType ?: "image/jpeg"
+                        )
+                        if (uploadRes is NetworkResult.Success) {
+                            meterRepository.attachEvidence(reading.id, listOf(uploadRes.data.id))
+                        }
+                    }
+                    _actionState.value = BillingActionUiState.Success("Đã lưu chỉ số ${if (type == "electricity") "điện" else "nước"} thành công!")
+                    loadMeterReadings(period = period)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = BillingActionUiState.Error(
+                        result.error?.message ?: "Lưu chỉ số thất bại"
+                    )
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = BillingActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = BillingActionUiState.Error("Đã xảy ra lỗi khi lưu chỉ số")
+                }
+            }
+        }
+    }
+
+    fun updatePendingInvoiceExtras(
+        invoiceId: String,
+        otherFees: List<InvoiceOtherFeeItemDto>?,
+        note: String?
+    ) {
+        _actionState.value = BillingActionUiState.Loading
+        viewModelScope.launch {
+            when (val result = invoiceRepository.updatePendingInvoiceExtras(invoiceId, otherFees, note)) {
+                is NetworkResult.Success -> {
+                    _actionState.value = BillingActionUiState.Success("Đã cập nhật phí khác & ghi chú hóa đơn!")
+                    loadInvoiceDetail(invoiceId)
+                }
+                is NetworkResult.ApiError -> {
+                    _actionState.value = BillingActionUiState.Error(
+                        result.error?.message ?: "Cập nhật hóa đơn thất bại"
+                    )
+                }
+                is NetworkResult.NetworkError -> {
+                    _actionState.value = BillingActionUiState.Error("Lỗi kết nối mạng")
+                }
+                is NetworkResult.UnknownError -> {
+                    _actionState.value = BillingActionUiState.Error("Đã xảy ra lỗi khi cập nhật hóa đơn")
                 }
             }
         }

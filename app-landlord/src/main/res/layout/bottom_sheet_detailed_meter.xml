@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet_rounded"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_ml">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:background="@color/rentify_divider" />
+
+    <TextView
+        android:id="@+id/tvDetailedMeterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Nhập chỉ số - Phòng"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Toggle Tabs: Điện | Nước -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroupMeterType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_sm"
+        android:layout_marginBottom="@dimen/spacing_sm"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTypeElectricity"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="⚡ Điện (kWh)"
+            android:textSize="13sp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTypeWater"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="💧 Nước (m³)"
+            android:textSize="13sp" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_smd"
+        android:background="@color/rentify_soft_surface"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_smd">
+
+        <TextView
+            android:id="@+id/tvMeterContextPeriod"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Kỳ ghi nhận: 2026-11"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMeterContextPrev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Chỉ số cũ: 0 (kWh)"
+            android:textColor="@color/rentify_text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDetailedCurrentReading"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_sm"
+        android:hint="Chỉ số mới (kWh) *"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDetailedCurrentReading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:inputType="numberDecimal"
+            android:textColor="@color/rentify_text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/cbIsBaseline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Chỉ số bàn giao / Thay đồng hồ mới"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="-4dp"
+        android:layout_marginBottom="@dimen/spacing_smd"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Bật tùy chọn này nếu đây là chỉ số đầu kỳ khi bàn giao phòng hoặc sau khi thay mới công tơ"
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvMeterPhotoStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="Ảnh chụp mặt công tơ (tùy chọn)"
+        android:textColor="@color/rentify_text_secondary"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSelectMeterPhoto"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:fontFamily="@font/plus_jakarta_sans"
+        android:text="📷 Chụp / Chọn ảnh công tơ"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:cornerRadius="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelDetailedMeter"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Hủy"
+            android:textColor="@color/rentify_text_secondary"
+            app:cornerRadius="12dp"
+            app:strokeColor="@color/rentify_border" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSaveDetailedMeter"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_weight="1"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:text="Lưu chỉ số"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
+</LinearLayout>

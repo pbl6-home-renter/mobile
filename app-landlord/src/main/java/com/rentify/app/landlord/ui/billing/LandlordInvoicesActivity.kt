@@ -39,7 +39,10 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
 
     private lateinit var adapter: LandlordInvoiceAdapter
     private var currentStatusFilter: String? = null
+    private var currentBuildingFilter: String? = null
+    private var currentPeriodFilter: String? = null
     private var buildingsList: List<BuildingMyListResponseDto> = emptyList()
+    private var periodsList: List<String> = emptyList()
     private var allLoadedInvoices: List<InvoiceListResponseDto> = emptyList()
 
     override fun initView() {
@@ -78,6 +81,30 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
     }
 
     private fun setupFilterChips() {
+        val cal = java.util.Calendar.getInstance()
+        val fmt = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        val pList = mutableListOf<String>()
+        for (offset in 1 downTo -5) {
+            val c = cal.clone() as java.util.Calendar
+            c.add(java.util.Calendar.MONTH, offset)
+            pList.add(fmt.format(c.time))
+        }
+        periodsList = pList
+        val periodLabels = listOf("Tất cả kỳ") + pList
+        binding.actvFilterInvoicePeriod.setAdapter(
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, periodLabels)
+        )
+        binding.actvFilterInvoicePeriod.setText("Tất cả kỳ", false)
+        binding.actvFilterInvoicePeriod.setOnItemClickListener { _, _, position, _ ->
+            currentPeriodFilter = if (position == 0) null else periodsList.getOrNull(position - 1)
+            loadInvoices()
+        }
+
+        binding.actvFilterInvoiceBuilding.setOnItemClickListener { _, _, position, _ ->
+            currentBuildingFilter = if (position == 0) null else buildingsList.getOrNull(position - 1)?.id
+            loadInvoices()
+        }
+
         binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
             val checkedId = checkedIds.firstOrNull() ?: R.id.chipAll
             currentStatusFilter = when (checkedId) {
@@ -94,7 +121,11 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
     private fun loadInvoices() {
         binding.progressBar.visibility = View.VISIBLE
         binding.emptyStateView.visibility = View.GONE
-        billingViewModel.loadInvoices(status = currentStatusFilter)
+        billingViewModel.loadInvoices(
+            status = currentStatusFilter,
+            buildingId = currentBuildingFilter,
+            period = currentPeriodFilter
+        )
     }
 
     private fun issueAllPendingInvoices() {
@@ -159,6 +190,14 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
                     buildingViewModel.buildingListState.collect { state ->
                         if (state is BuildingListUiState.Success) {
                             buildingsList = state.buildings
+                            val labels = listOf("Tất cả tòa nhà") + buildingsList.map { it.name }
+                            binding.actvFilterInvoiceBuilding.setAdapter(
+                                ArrayAdapter(
+                                    this@LandlordInvoicesActivity,
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    labels
+                                )
+                            )
                         }
                     }
                 }

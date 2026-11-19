@@ -37,6 +37,18 @@
             android:textColor="@color/rentify_text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnReportIssue"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:paddingHorizontal="@dimen/spacing_smd"
+            android:text="+ Báo sự cố"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="19dp" />
     </LinearLayout>
 
     <!-- Filter Chips -->
