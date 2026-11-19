@@ -4,6 +4,7 @@ import com.rentify.app.core.data.repository.BaseRepository
 import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.api.UserApiService
 import com.rentify.app.core.network.dto.ApiSingleResponse
+import com.rentify.app.core.network.dto.user.PayoutAccountDto
 import com.rentify.app.core.network.dto.user.UserChangePasswordRequestDto
 import com.rentify.app.core.network.dto.user.UserCurrentResponseDto
 import com.rentify.app.core.network.dto.user.UserCurrentUpdateRequestDto
@@ -17,10 +18,14 @@ class UserRepositoryImpl(
         return safeApiCall { userApiService.getCurrentUser() }
     }
 
-    override suspend fun updateCurrentUser(name: String, phone: String): NetworkResult<ApiSingleResponse<UserCurrentUpdateResponseDto>> {
+    override suspend fun updateCurrentUser(
+        name: String,
+        phone: String,
+        payoutAccount: PayoutAccountDto?
+    ): NetworkResult<ApiSingleResponse<UserCurrentUpdateResponseDto>> {
         return safeApiCall {
             userApiService.updateCurrentUser(
-                UserCurrentUpdateRequestDto(name = name, phone = phone, payoutAccount = null)
+                UserCurrentUpdateRequestDto(name = name, phone = phone, payoutAccount = payoutAccount)
             )
         }
     }

@@ -1,11 +1,15 @@
 package com.rentify.app.core.data.repository
 
 import com.rentify.app.core.network.adapter.NetworkResult
+import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.core.network.dto.ApiErrorResponse
-import com.squareup.moshi.Moshi
 import retrofit2.Response
 
 abstract class BaseRepository {
+
+    private val errorAdapter by lazy {
+        NetworkClient.createMoshi().adapter(ApiErrorResponse::class.java)
+    }
 
     protected suspend fun <T> safeApiCall(
         apiCall: suspend () -> Response<T>
@@ -37,9 +41,7 @@ abstract class BaseRepository {
     private fun parseErrorBody(errorBody: String?): ApiErrorResponse? {
         if (errorBody.isNullOrBlank()) return null
         return try {
-            val moshi = Moshi.Builder().build()
-            val adapter = moshi.adapter(ApiErrorResponse::class.java)
-            adapter.fromJson(errorBody)
+            errorAdapter.fromJson(errorBody)
         } catch (e: Exception) {
             null
         }
