@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/spacing_xl">
@@ -18,33 +20,46 @@
 
         <ImageView
             android:id="@+id/ivErrorIcon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:layout_gravity="center"
             android:contentDescription="@null"
-            android:src="@drawable/ic_shield_info"
+            android:src="@drawable/ic_cloud_off"
             app:tint="@color/rentify_error" />
     </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvErrorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:fontFamily="@font/plus_jakarta_sans_semibold"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:text="@string/rentify_error_title"
+        android:textColor="@color/rentify_text_primary"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_md"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/plus_jakarta_sans"
         android:gravity="center"
         android:paddingHorizontal="@dimen/spacing_lg"
         android:text="@string/rentify_error_unknown"
-        android:textColor="@color/rentify_text_primary"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textColor="@color/rentify_text_muted"
+        android:textSize="14sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRetry"
+        style="@style/Widget.Rentify.PillButton"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
-        android:layout_marginTop="@dimen/spacing_md"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
+        android:layout_marginTop="@dimen/spacing_ml"
+        android:minHeight="44dp"
+        android:paddingHorizontal="28dp"
         android:text="@string/rentify_retry" />
 
 </LinearLayout>

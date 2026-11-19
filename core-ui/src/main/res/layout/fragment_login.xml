@@ -71,68 +71,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <com.rentify.app.core.ui.component.RentifyTextField
                     android:id="@+id/tilIdentifier"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_lg"
-                    android:hint="@string/auth_login_identifier_label"
-                    app:boxCornerRadiusBottomEnd="@dimen/radius_md"
-                    app:boxCornerRadiusBottomStart="@dimen/radius_md"
-                    app:boxCornerRadiusTopEnd="@dimen/radius_md"
-                    app:boxCornerRadiusTopStart="@dimen/radius_md"
-                    app:boxStrokeColor="@color/rentify_divider"
-                    app:cursorColor="@color/rentify_text_primary"
-                    app:hintTextColor="@color/rentify_text_primary"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    app:hint="@string/auth_login_identifier_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+                    app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+                    app:startIcon="@drawable/ic_user_outline" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etIdentifier"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/plus_jakarta_sans_regular"
-                        android:inputType="textEmailAddress"
-                        android:textColor="@color/rentify_text_primary"
-                        android:textColorHint="@color/rentify_neutral"
-                        android:textCursorDrawable="@drawable/bg_cursor_primary"
-                        android:textSize="15sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <com.rentify.app.core.ui.component.RentifyTextField
                     android:id="@+id/tilPassword"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_md"
-                    android:hint="@string/auth_login_password_label"
-                    app:boxCornerRadiusBottomEnd="@dimen/radius_md"
-                    app:boxCornerRadiusBottomStart="@dimen/radius_md"
-                    app:boxCornerRadiusTopEnd="@dimen/radius_md"
-                    app:boxCornerRadiusTopStart="@dimen/radius_md"
-                    app:boxStrokeColor="@color/rentify_divider"
-                    app:cursorColor="@color/rentify_text_primary"
-                    app:endIconMode="password_toggle"
-                    app:hintTextColor="@color/rentify_text_primary"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    app:hint="@string/auth_login_password_label"
+                    app:isPassword="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tilIdentifier">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/plus_jakarta_sans_regular"
-                        android:inputType="textPassword"
-                        android:textColor="@color/rentify_text_primary"
-                        android:textColorHint="@color/rentify_neutral"
-                        android:textCursorDrawable="@drawable/bg_cursor_primary"
-                        android:textSize="15sp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    app:layout_constraintTop_toBottomOf="@id/tilIdentifier"
+                    app:startIcon="@drawable/ic_lock_closed" />
 
                 <TextView
                     android:id="@+id/tvForgotPassword"
@@ -168,35 +132,15 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLogin"
+                    style="@style/Widget.Rentify.PillButton"
                     android:layout_width="0dp"
-                    android:layout_height="52dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="@dimen/spacing_lg"
-                    android:background="@drawable/bg_button_gradient"
                     android:enabled="false"
-                    android:fontFamily="@font/plus_jakarta_sans_semibold"
                     android:text="@string/auth_login_button"
-                    android:textColor="@color/sl_button_primary_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@null"
-                    app:cornerRadius="@dimen/radius_button"
-                    app:elevation="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvError"
-                    app:rippleColor="#30FFFFFF" />
-
-                <ProgressBar
-                    android:id="@+id/pbLoading"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:elevation="4dp"
-                    android:indeterminateTint="@color/rentify_on_primary"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@id/btnLogin"
-                    app:layout_constraintEnd_toEndOf="@id/btnLogin"
-                    app:layout_constraintStart_toStartOf="@id/btnLogin"
-                    app:layout_constraintTop_toTopOf="@id/btnLogin" />
+                    app:layout_constraintTop_toBottomOf="@id/tvError" />
 
                 <LinearLayout
                     android:id="@+id/llFooter"

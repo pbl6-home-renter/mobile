@@ -58,8 +58,8 @@ class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyO
     override fun initView() {
         binding.tvSubtitle.text = getString(R.string.auth_verify_otp_subtitle, targetEmail)
 
-        binding.etOtp.doOnTextChanged { _, _, _, _ ->
-            binding.tilOtp.error = null
+        binding.etOtp.editText.doOnTextChanged { _, _, _, _ ->
+            binding.etOtp.setError(null)
             hideInlineError()
         }
 
@@ -77,14 +77,14 @@ class VerifyOtpFragment : BaseFragment<FragmentVerifyOtpBinding>(FragmentVerifyO
     }
 
     private fun performVerify() {
-        val token = binding.etOtp.text?.toString().orEmpty().trim()
+        val token = binding.etOtp.text.trim()
 
         if (token.isBlank()) {
-            binding.tilOtp.error = getString(R.string.auth_verify_otp_error_empty)
+            binding.etOtp.setError(getString(R.string.auth_verify_otp_error_empty))
             return
         }
 
-        binding.tilOtp.error = null
+        binding.etOtp.setError(null)
         hideInlineError()
         listener?.onVerifyOtpSuccess(token)
     }

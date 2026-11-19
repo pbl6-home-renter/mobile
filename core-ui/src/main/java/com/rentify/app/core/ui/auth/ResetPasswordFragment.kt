@@ -52,14 +52,14 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>(Fragmen
     }
 
     override fun initView() {
-        binding.etNewPassword.doOnTextChanged { _, _, _, _ ->
-            binding.tilNewPassword.error = null
+        binding.etNewPassword.editText.doOnTextChanged { _, _, _, _ ->
+            binding.etNewPassword.setError(null)
             hideInlineError()
             updateButtonState()
         }
 
-        binding.etConfirmPassword.doOnTextChanged { _, _, _, _ ->
-            binding.tilConfirmPassword.error = null
+        binding.etConfirmPassword.editText.doOnTextChanged { _, _, _, _ ->
+            binding.etConfirmPassword.setError(null)
             hideInlineError()
             updateButtonState()
         }
@@ -80,8 +80,8 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>(Fragmen
     }
 
     private fun isFormValid(): Boolean {
-        val newPassword = binding.etNewPassword.text?.toString().orEmpty()
-        val confirmPassword = binding.etConfirmPassword.text?.toString().orEmpty()
+        val newPassword = binding.etNewPassword.text
+        val confirmPassword = binding.etConfirmPassword.text
         return newPassword.isNotEmpty() && confirmPassword.isNotEmpty()
     }
 
@@ -90,28 +90,28 @@ class ResetPasswordFragment : BaseFragment<FragmentResetPasswordBinding>(Fragmen
     }
 
     private fun performResetPassword() {
-        val newPassword = binding.etNewPassword.text?.toString().orEmpty()
-        val confirmPassword = binding.etConfirmPassword.text?.toString().orEmpty()
+        val newPassword = binding.etNewPassword.text
+        val confirmPassword = binding.etConfirmPassword.text
 
         var hasError = false
         if (newPassword.isBlank()) {
-            binding.tilNewPassword.error = getString(R.string.auth_reset_password_error_empty)
+            binding.etNewPassword.setError(getString(R.string.auth_reset_password_error_empty))
             hasError = true
         } else if (newPassword.length < 6) {
-            binding.tilNewPassword.error = getString(R.string.auth_reset_password_error_length)
+            binding.etNewPassword.setError(getString(R.string.auth_reset_password_error_length))
             hasError = true
         } else {
-            binding.tilNewPassword.error = null
+            binding.etNewPassword.setError(null)
         }
 
         if (confirmPassword.isBlank()) {
-            binding.tilConfirmPassword.error = getString(R.string.auth_reset_password_error_empty)
+            binding.etConfirmPassword.setError(getString(R.string.auth_reset_password_error_empty))
             hasError = true
         } else if (confirmPassword != newPassword) {
-            binding.tilConfirmPassword.error = getString(R.string.auth_reset_password_error_mismatch)
+            binding.etConfirmPassword.setError(getString(R.string.auth_reset_password_error_mismatch))
             hasError = true
         } else {
-            binding.tilConfirmPassword.error = null
+            binding.etConfirmPassword.setError(null)
         }
 
         if (hasError) return
