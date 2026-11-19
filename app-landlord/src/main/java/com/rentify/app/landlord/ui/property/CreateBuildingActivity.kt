@@ -1,12 +1,13 @@
 package com.rentify.app.landlord.ui.property
 
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.rentify.app.core.network.dto.administrative.AdministrativeProvinceDto
 import com.rentify.app.core.network.dto.administrative.AdministrativeWardDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.databinding.ActivityCreateBuildingBinding
 
 class CreateBuildingActivity : BaseActivity<ActivityCreateBuildingBinding>(
@@ -79,7 +80,7 @@ class CreateBuildingActivity : BaseActivity<ActivityCreateBuildingBinding>(
                 is BuildingActionUiState.Success -> {
                     binding.btnSubmit.isEnabled = true
                     binding.progressBar.visibility = android.view.View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showSuccess(state.message)
                     viewModel.resetActionState()
                     setResult(RESULT_OK)
                     finish()
@@ -87,7 +88,7 @@ class CreateBuildingActivity : BaseActivity<ActivityCreateBuildingBinding>(
                 is BuildingActionUiState.Error -> {
                     binding.btnSubmit.isEnabled = true
                     binding.progressBar.visibility = android.view.View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     viewModel.resetActionState()
                 }
                 is BuildingActionUiState.Idle -> {

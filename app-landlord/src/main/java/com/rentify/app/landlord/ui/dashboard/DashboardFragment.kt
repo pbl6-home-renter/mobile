@@ -17,7 +17,7 @@ import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.landlord.databinding.FragmentDashboardBinding
 import com.rentify.app.landlord.ui.billing.LandlordInvoiceDetailActivity
 import com.rentify.app.landlord.ui.billing.LandlordInvoicesActivity
@@ -117,7 +117,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
                         }
                         is DashboardUiState.Error -> {
                             binding.swipeRefresh.isRefreshing = false
-                            toast(state.message)
+                            showError(state.message)
                         }
                     }
                 }

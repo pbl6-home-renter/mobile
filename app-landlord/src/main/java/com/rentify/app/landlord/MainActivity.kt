@@ -15,7 +15,7 @@ import com.rentify.app.core.ui.auth.ResetPasswordFragment
 import com.rentify.app.core.ui.auth.VerifyEmailFragment
 import com.rentify.app.core.ui.auth.VerifyOtpFragment
 import com.rentify.app.core.ui.base.BaseActivity
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.home.HomePlaceholderFragment
 import com.rentify.app.landlord.databinding.ActivityMainBinding
 import com.rentify.app.landlord.ui.main.LandlordMainFragment
@@ -71,7 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onLoginSuccess(response: AuthLoginResponseDto) {
-        toast("Đăng nhập thành công! Chào mừng ${response.profile.name}")
+        showSuccess("Đăng nhập thành công! Chào mừng ${response.profile.name}")
         showHomeScreen()
     }
 
@@ -91,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         if (response.verificationRequired) {
             showVerifyEmailScreen(response.email, justSent = true)
         } else {
-            toast("Đăng ký thành công! Vui lòng đăng nhập")
+            showSuccess("Đăng ký thành công! Vui lòng đăng nhập")
             showLoginScreen()
         }
     }
@@ -105,7 +105,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onRequestResetSuccess(email: String) {
-        toast("Đã gửi yêu cầu cho $email! Vui lòng kiểm tra mã xác thực")
+        showSuccess("Đã gửi yêu cầu cho $email! Vui lòng kiểm tra mã xác thực")
         showVerifyOtpScreen(email)
     }
 
@@ -114,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onResetPasswordSuccess() {
-        toast("Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại")
+        showSuccess("Đặt lại mật khẩu thành công! Vui lòng đăng nhập lại")
         supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
         showLoginScreen()
     }
@@ -144,7 +144,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             )
             val authRepo = AuthRepositoryImpl(authApi, tokenDataStore)
             authRepo.logout()
-            toast("Đã đăng xuất thành công")
+            showSuccess("Đã đăng xuất thành công")
             showLoginScreen()
         }
     }

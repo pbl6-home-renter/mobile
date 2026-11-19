@@ -4,13 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.room.RoomAmenitiesDto
 import com.rentify.app.core.network.dto.room.RoomCreateRequestDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.databinding.ActivityCreateRoomBinding
 
 class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
@@ -51,7 +53,7 @@ class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
                 binding.etDepositAmount.setText(rentText)
                 binding.tilDepositAmount.error = null
             } else {
-                Toast.makeText(this, "Vui lòng nhập giá thuê trước", Toast.LENGTH_SHORT).show()
+                showMessage("Vui lòng nhập giá thuê trước")
             }
         }
 
@@ -106,7 +108,7 @@ class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
                 is RoomActionUiState.Success -> {
                     binding.btnSubmitRoom.isEnabled = true
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showSuccess(state.message)
                     viewModel.resetActionState()
                     setResult(RESULT_OK)
                     finish()
@@ -114,7 +116,7 @@ class CreateRoomActivity : BaseActivity<ActivityCreateRoomBinding>(
                 is RoomActionUiState.Error -> {
                     binding.btnSubmitRoom.isEnabled = true
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     viewModel.resetActionState()
                 }
                 is RoomActionUiState.Idle -> {

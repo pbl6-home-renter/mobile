@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -16,6 +15,8 @@ import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.room.RoomMyListResponseDto
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.FragmentPropertiesBinding
 import com.rentify.app.landlord.ui.notification.LandlordNotificationsActivity
@@ -338,7 +339,7 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
                         binding.tvEmptyTitle.text = "Không thể tải danh sách"
                         binding.tvEmptySubtitle.text = state.message
                     }
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                 }
             }
         }
@@ -366,7 +367,7 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
                         binding.tvEmptyTitle.text = "Không thể tải danh sách"
                         binding.tvEmptySubtitle.text = state.message
                     }
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                 }
             }
         }
@@ -378,12 +379,12 @@ class PropertiesFragment : BaseFragment<FragmentPropertiesBinding>(FragmentPrope
                 }
                 is RoomActionUiState.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    showSuccess(state.message)
                     roomViewModel.resetActionState()
                 }
                 is RoomActionUiState.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                     roomViewModel.resetActionState()
                 }
                 is RoomActionUiState.Idle -> {

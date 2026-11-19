@@ -15,7 +15,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -36,6 +35,9 @@ import com.rentify.app.core.network.dto.room.RoomMyListResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityBuildingDetailBinding
 import kotlin.math.roundToInt
@@ -95,7 +97,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
 
         buildingId = intent.getStringExtra(EXTRA_BUILDING_ID) ?: ""
         if (buildingId.isEmpty()) {
-            Toast.makeText(this, "Không tìm thấy mã tòa nhà", Toast.LENGTH_SHORT).show()
+            showError("Không tìm thấy mã tòa nhà")
             finish()
             return
         }
@@ -166,11 +168,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
         binding.btnAddRoomInBuilding.setOnClickListener {
             val detail = currentDetail
             if (detail != null && !detail.status.equals("approved", ignoreCase = true)) {
-                Toast.makeText(
-                    this,
-                    "Tòa nhà cần được phê duyệt trước khi thêm phòng mới.",
-                    Toast.LENGTH_LONG
-                ).show()
+                showMessage("Tòa nhà cần được phê duyệt trước khi thêm phòng mới.")
                 return@setOnClickListener
             }
             val intent = CreateRoomActivity.newIntent(this, buildingId)
@@ -224,7 +222,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
                 }
                 is BuildingDetailUiState.Error -> {
                     binding.detailProgressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                 }
                 is BuildingDetailUiState.Idle -> {
                     binding.detailProgressBar.visibility = View.GONE
@@ -250,7 +248,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
                     binding.detailProgressBar.visibility = View.GONE
                     hasMutated = true
                     setResult(RESULT_OK)
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showSuccess(state.message)
                     viewModel.resetActionState()
                     if (state.message.contains("Xóa")) {
                         finish()
@@ -258,7 +256,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
                 }
                 is BuildingActionUiState.Error -> {
                     binding.detailProgressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     viewModel.resetActionState()
                 }
                 is BuildingActionUiState.Idle -> {
@@ -289,14 +287,14 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
                 }
                 is RoomActionUiState.Success -> {
                     binding.detailProgressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showSuccess(state.message)
                     roomViewModel.resetActionState()
                     viewModel.loadBuildingDetail(buildingId)
                     roomViewModel.loadRooms(buildingId = buildingId, status = selectedRoomStatus)
                 }
                 is RoomActionUiState.Error -> {
                     binding.detailProgressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     roomViewModel.resetActionState()
                 }
                 is RoomActionUiState.Idle -> Unit
@@ -564,7 +562,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
             val branch = etBranch.text?.toString()?.trim()
 
             if (bankCode.isEmpty() || bankName.isEmpty() || accountNumber.isEmpty() || accountHolderName.isEmpty()) {
-                Toast.makeText(this, "Vui lòng điền đủ các trường bắt buộc (*)", Toast.LENGTH_SHORT).show()
+                dialog.showMessage("Vui lòng điền đủ các trường bắt buộc (*)")
                 return@setOnClickListener
             }
 
@@ -650,7 +648,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
             val contentType = contentResolver.getType(uri) ?: "image/jpeg"
             val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
             if (bytes == null || bytes.isEmpty()) {
-                Toast.makeText(this, "Không thể đọc tệp ảnh minh chứng", Toast.LENGTH_SHORT).show()
+                showError("Không thể đọc tệp ảnh minh chứng")
                 return
             }
             val ext = when {
@@ -661,7 +659,7 @@ class BuildingDetailActivity : BaseActivity<ActivityBuildingDetailBinding>(
             val fileName = "ownership_${buildingId.take(6)}_${System.currentTimeMillis()}.$ext"
             viewModel.uploadOwnershipProof(buildingId, bytes, fileName, contentType)
         } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi đọc tệp: ${e.message}", Toast.LENGTH_SHORT).show()
+            showError("Lỗi đọc tệp: ${e.message}")
         }
     }
 

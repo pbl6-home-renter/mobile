@@ -7,7 +7,6 @@ import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
@@ -17,6 +16,8 @@ import com.rentify.app.core.network.dto.issue.IssueReportDetailResponseDto
 import com.rentify.app.core.ui.R as CoreR
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.databinding.ActivityLandlordIssueDetailBinding
 import com.rentify.app.landlord.databinding.DialogUpdateIssueBinding
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class LandlordIssueDetailActivity : BaseActivity<ActivityLandlordIssueDetailBind
 
         issueId = intent.getStringExtra(EXTRA_ISSUE_ID)
         if (issueId.isNullOrBlank()) {
-            Toast.makeText(this, "Không tìm thấy mã sự cố", Toast.LENGTH_SHORT).show()
+            showError("Không tìm thấy mã sự cố")
             finish()
             return
         }
@@ -272,7 +273,7 @@ class LandlordIssueDetailActivity : BaseActivity<ActivityLandlordIssueDetailBind
                                 renderDetail(state.detail)
                             }
                             is IssueDetailUiState.Error -> {
-                                Toast.makeText(this@LandlordIssueDetailActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                             }
                             IssueDetailUiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
@@ -289,12 +290,12 @@ class LandlordIssueDetailActivity : BaseActivity<ActivityLandlordIssueDetailBind
                             }
                             is IssueActionUiState.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordIssueDetailActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showSuccess(state.message)
                                 issueViewModel.resetActionState()
                             }
                             is IssueActionUiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordIssueDetailActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                                 issueViewModel.resetActionState()
                             }
                             IssueActionUiState.Idle -> {}

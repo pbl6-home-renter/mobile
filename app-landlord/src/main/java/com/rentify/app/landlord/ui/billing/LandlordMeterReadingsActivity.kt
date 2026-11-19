@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -25,6 +24,9 @@ import com.rentify.app.core.network.dto.meter.BulkMeterReadingCreateRequestDto
 import com.rentify.app.core.network.dto.meter.BulkMeterReadingItemDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordMeterReadingsBinding
 import com.rentify.app.landlord.ui.property.BuildingListUiState
@@ -86,7 +88,7 @@ class LandlordMeterReadingsActivity : BaseActivity<ActivityLandlordMeterReadings
                     onPhotoPickedCallback?.invoke(fileName)
                 }
             } catch (e: Exception) {
-                Toast.makeText(this, "Lỗi đọc ảnh: ${e.message}", Toast.LENGTH_SHORT).show()
+                showError("Lỗi đọc ảnh: ${e.message}")
             }
         }
     }
@@ -263,7 +265,7 @@ class LandlordMeterReadingsActivity : BaseActivity<ActivityLandlordMeterReadings
     private fun submitBulkMeters() {
         val buildingId = selectedBuildingId
         if (buildingId.isNullOrBlank()) {
-            Toast.makeText(this, "Vui lòng chọn tòa nhà", Toast.LENGTH_SHORT).show()
+            showMessage("Vui lòng chọn tòa nhà")
             return
         }
 
@@ -292,7 +294,7 @@ class LandlordMeterReadingsActivity : BaseActivity<ActivityLandlordMeterReadings
         }
 
         if (readings.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập ít nhất một chỉ số điện hoặc nước", Toast.LENGTH_SHORT).show()
+            showMessage("Vui lòng nhập ít nhất một chỉ số điện hoặc nước")
             return
         }
 
@@ -349,7 +351,7 @@ class LandlordMeterReadingsActivity : BaseActivity<ActivityLandlordMeterReadings
                             }
                             is RoomListUiState.Error -> {
                                 showEmptyState(true, state.message)
-                                Toast.makeText(this@LandlordMeterReadingsActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showError(state.message)
                             }
                             RoomListUiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
@@ -374,12 +376,12 @@ class LandlordMeterReadingsActivity : BaseActivity<ActivityLandlordMeterReadings
                             }
                             is BillingActionUiState.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordMeterReadingsActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showSuccess(state.message)
                                 billingViewModel.resetActionState()
                             }
                             is BillingActionUiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordMeterReadingsActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                                 billingViewModel.resetActionState()
                             }
                             BillingActionUiState.Idle -> {}
@@ -410,7 +412,7 @@ class LandlordMeterReadingsActivity : BaseActivity<ActivityLandlordMeterReadings
                             is BulkMeterUiState.Error -> {
                                 binding.btnSubmitBulkMeters.isEnabled = true
                                 binding.btnSubmitBulkMeters.text = "Lưu tất cả"
-                                Toast.makeText(this@LandlordMeterReadingsActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                             }
                             BulkMeterUiState.Idle -> {
                                 binding.btnSubmitBulkMeters.isEnabled = true

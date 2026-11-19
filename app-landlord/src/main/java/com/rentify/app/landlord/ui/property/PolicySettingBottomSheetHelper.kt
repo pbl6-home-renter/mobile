@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.checkbox.MaterialCheckBox
@@ -15,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rentify.app.core.network.dto.billing.BillingSettingResponseDto
 import com.rentify.app.core.network.dto.billing.RateItemDto
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.landlord.R
 import java.text.NumberFormat
 import java.util.Locale
@@ -295,7 +295,7 @@ object PolicySettingBottomSheetHelper {
             }
 
             if (collected.isEmpty()) {
-                Toast.makeText(context, "Vui lòng thêm ít nhất 1 dịch vụ", Toast.LENGTH_SHORT).show()
+                dialog.showMessage("Vui lòng thêm ít nhất 1 dịch vụ")
                 return@setOnClickListener
             }
 

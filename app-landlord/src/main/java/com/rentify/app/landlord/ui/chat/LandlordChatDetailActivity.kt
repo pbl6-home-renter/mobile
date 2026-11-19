@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -26,6 +25,9 @@ import com.rentify.app.core.network.dto.chat.MessageListResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.view.RentifyAvatarView
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordChatDetailBinding
@@ -63,7 +65,7 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
         conversationKind = intent.getStringExtra(EXTRA_CONVERSATION_KIND)
 
         if (conversationId.isNullOrBlank()) {
-            Toast.makeText(this, "Không tìm thấy cuộc trò chuyện", Toast.LENGTH_SHORT).show()
+            showError("Không tìm thấy cuộc trò chuyện")
             finish()
             return
         }
@@ -183,7 +185,7 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
             val contentType = contentResolver.getType(uri) ?: "image/jpeg"
             val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
             if (bytes == null || bytes.isEmpty()) {
-                Toast.makeText(this, "Không thể đọc ảnh đã chọn", Toast.LENGTH_SHORT).show()
+                showError("Không thể đọc ảnh đã chọn")
                 return
             }
             val ext = when {
@@ -202,7 +204,7 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
                 replyToMessageId = replyId
             )
         } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi đọc ảnh: ${e.message}", Toast.LENGTH_SHORT).show()
+            showError("Lỗi đọc ảnh: ${e.message}")
         }
     }
 
@@ -377,7 +379,7 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
                 val resourceId = selectedResourceId
                     ?: dialogBinding.actvResourcePicker.text?.toString()?.trim().orEmpty()
                 if (resourceId.isBlank()) {
-                    Toast.makeText(this, "Vui lòng chọn Hóa đơn hoặc Hợp đồng cần nhắc", Toast.LENGTH_SHORT).show()
+                    showMessage("Vui lòng chọn Hóa đơn hoặc Hợp đồng cần nhắc")
                     return@setPositiveButton
                 }
                 viewModel.sendBotReminder(conversationId!!, selectedTemplate, resourceId)
@@ -415,7 +417,7 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
                                 }
                             }
                             is MessageListUiState.Error -> {
-                                Toast.makeText(this@LandlordChatDetailActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showError(state.message)
                             }
                             MessageListUiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
@@ -428,7 +430,7 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
                     viewModel.sendState.collect { state ->
                         when (state) {
                             is SendMessageUiState.Error -> {
-                                Toast.makeText(this@LandlordChatDetailActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showError(state.message)
                                 viewModel.resetSendState()
                             }
                             SendMessageUiState.Sent -> {
@@ -447,12 +449,12 @@ class LandlordChatDetailActivity : BaseActivity<ActivityLandlordChatDetailBindin
                             }
                             is BotReminderUiState.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordChatDetailActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showSuccess(state.message)
                                 viewModel.resetBotReminderState()
                             }
                             is BotReminderUiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordChatDetailActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                                 viewModel.resetBotReminderState()
                             }
                             BotReminderUiState.Idle -> {}

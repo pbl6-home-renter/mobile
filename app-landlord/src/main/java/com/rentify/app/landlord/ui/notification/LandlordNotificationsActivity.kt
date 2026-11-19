@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -12,6 +11,8 @@ import com.rentify.app.core.network.dto.notification.NotificationListResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordNotificationsBinding
 import com.rentify.app.landlord.databinding.BottomSheetNotificationSettingsBinding
@@ -139,7 +140,7 @@ class LandlordNotificationsActivity : BaseActivity<ActivityLandlordNotifications
                         binding.tvEmptyTitle.text = "Không tải được thông báo"
                         binding.tvEmptySubtitle.text = state.message
                     }
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                 }
             }
         }
@@ -151,12 +152,12 @@ class LandlordNotificationsActivity : BaseActivity<ActivityLandlordNotifications
                 }
                 is NotificationActionState.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showSuccess(state.message)
                     viewModel.resetActionState()
                 }
                 is NotificationActionState.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                     viewModel.resetActionState()
                 }
                 is NotificationActionState.Idle -> {}

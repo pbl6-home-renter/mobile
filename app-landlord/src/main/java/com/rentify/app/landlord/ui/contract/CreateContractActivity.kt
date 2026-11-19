@@ -3,13 +3,14 @@ package com.rentify.app.landlord.ui.contract
 import android.app.DatePickerDialog
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractCreateRequestDto
 import com.rentify.app.core.network.dto.room.RoomMyListResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.databinding.ActivityCreateContractBinding
 import com.rentify.app.landlord.ui.property.BuildingViewModel
 import com.rentify.app.landlord.ui.property.BuildingViewModelFactory
@@ -127,7 +128,7 @@ class CreateContractActivity : BaseActivity<ActivityCreateContractBinding>(
                 is ContractActionUiState.Success -> {
                     binding.btnSubmitContract.isEnabled = true
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showSuccess(state.message)
                     contractViewModel.resetActionState()
                     setResult(RESULT_OK)
                     finish()
@@ -135,7 +136,7 @@ class CreateContractActivity : BaseActivity<ActivityCreateContractBinding>(
                 is ContractActionUiState.Error -> {
                     binding.btnSubmitContract.isEnabled = true
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     contractViewModel.resetActionState()
                 }
                 is ContractActionUiState.Idle -> {

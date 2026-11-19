@@ -13,7 +13,6 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +29,9 @@ import com.rentify.app.core.network.dto.contract.DepositSettlementPayoutAccountD
 import com.rentify.app.core.network.dto.contract.DepositSettlementRequestDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.extension.toDisplayDate
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordContractDetailBinding
@@ -73,9 +75,9 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
                 contentResolver.openOutputStream(uri)?.use { out ->
                     out.write(bytes)
                 }
-                Toast.makeText(this, "Đã lưu file bản nháp PDF thành công!", Toast.LENGTH_LONG).show()
+                showSuccess("Đã lưu file bản nháp PDF thành công!")
             } catch (e: Exception) {
-                Toast.makeText(this, "Lỗi lưu file PDF: ${e.message}", Toast.LENGTH_SHORT).show()
+                showError("Lỗi lưu file PDF: ${e.message}")
             }
         }
         pendingDraftPdfBytes = null
@@ -87,7 +89,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
         contractId = intent.getStringExtra(EXTRA_CONTRACT_ID) ?: ""
         roomName = intent.getStringExtra(EXTRA_ROOM_NAME).orEmpty()
         if (contractId.isEmpty()) {
-            Toast.makeText(this, "Không tìm thấy mã hợp đồng", Toast.LENGTH_SHORT).show()
+            showError("Không tìm thấy mã hợp đồng")
             finish()
             return
         }
@@ -131,11 +133,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
         binding.btnApplyTemplate.setOnClickListener {
             val key = selectedTemplateKey
             if (key.isNullOrBlank()) {
-                Toast.makeText(
-                    this,
-                    if (templatesList.isEmpty()) "Chưa có mẫu hợp đồng nào trên hệ thống" else "Vui lòng chọn một mẫu hợp đồng",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showMessage(if (templatesList.isEmpty()) "Chưa có mẫu hợp đồng nào trên hệ thống" else "Vui lòng chọn một mẫu hợp đồng")
                 return@setOnClickListener
             }
             viewModel.applyContractTemplate(contractId, key)
@@ -144,7 +142,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
         binding.btnGenerateDraftPdf.setOnClickListener {
             val appliedKey = currentContract?.templateKey
             if (appliedKey.isNullOrBlank()) {
-                Toast.makeText(this, "Hãy áp dụng mẫu trước khi tạo bản nháp.", Toast.LENGTH_SHORT).show()
+                showMessage("Hãy áp dụng mẫu trước khi tạo bản nháp.")
                 return@setOnClickListener
             }
             viewModel.generateDraftDocumentPdf(contractId) { pdfBytes ->
@@ -162,11 +160,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
         binding.btnActivateContract.setOnClickListener {
             val mediaId = uploadedSignedContractMediaId
             if (mediaId.isNullOrBlank()) {
-                Toast.makeText(
-                    this,
-                    "Vui lòng chọn và tải lên bản hợp đồng đã ký trước khi kích hoạt.",
-                    Toast.LENGTH_LONG
-                ).show()
+                showMessage("Vui lòng chọn và tải lên bản hợp đồng đã ký trước khi kích hoạt.")
                 return@setOnClickListener
             }
             showActivateConfirmDialog(mediaId)
@@ -177,11 +171,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
         memberAdapter = ContractMemberAdapter { member ->
             val tenantId = member.tenantId
             if (tenantId.isNullOrBlank()) {
-                Toast.makeText(
-                    this,
-                    "Thành viên chưa liên kết tài khoản hệ thống; vui lòng cập nhật qua ghi chú hợp đồng.",
-                    Toast.LENGTH_LONG
-                ).show()
+                showMessage("Thành viên chưa liên kết tài khoản hệ thống; vui lòng cập nhật qua ghi chú hợp đồng.")
                 return@ContractMemberAdapter
             }
             showConfirmLeaveDialog(tenantId, member.tenantName ?: "thành viên")
@@ -233,7 +223,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
                 }
                 is ContractDetailUiState.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                 }
                 is ContractDetailUiState.Idle -> {
                     binding.progressBar.visibility = View.GONE
@@ -262,12 +252,12 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
                     binding.progressBar.visibility = View.GONE
                     hasMutated = true
                     setResult(RESULT_OK)
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showSuccess(state.message)
                     viewModel.resetActionState()
                 }
                 is ContractActionUiState.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     viewModel.resetActionState()
                 }
                 is ContractActionUiState.Idle -> {
@@ -378,11 +368,11 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
             val contentType = contentResolver.getType(uri) ?: "application/pdf"
             val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
             if (bytes == null || bytes.isEmpty()) {
-                Toast.makeText(this, "Không thể đọc tệp hợp đồng đã chọn", Toast.LENGTH_SHORT).show()
+                showError("Không thể đọc tệp hợp đồng đã chọn")
                 return
             }
             if (bytes.size > 10 * 1024 * 1024) {
-                Toast.makeText(this, "Tệp vượt quá giới hạn 10 MB", Toast.LENGTH_LONG).show()
+                showError("Tệp vượt quá giới hạn 10 MB")
                 return
             }
             val ext = when {
@@ -404,7 +394,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
                 binding.btnSelectSignedFile.text = "Đổi file bản ký khác"
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi đọc tệp: ${e.message}", Toast.LENGTH_SHORT).show()
+            showError("Lỗi đọc tệp: ${e.message}")
         }
     }
 
@@ -439,7 +429,7 @@ class LandlordContractDetailActivity : BaseActivity<ActivityLandlordContractDeta
             val joinedAt = etJoinedAt.text?.toString()?.trim() ?: ""
 
             if (name.isEmpty() || joinedAt.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập họ tên và ngày vào ở", Toast.LENGTH_SHORT).show()
+                dialog.showMessage("Vui lòng nhập họ tên và ngày vào ở")
                 return@setOnClickListener
             }
 

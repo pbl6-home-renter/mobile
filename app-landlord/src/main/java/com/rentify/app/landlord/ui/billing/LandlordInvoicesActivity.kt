@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
@@ -15,6 +14,9 @@ import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.invoice.InvoiceListResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordInvoicesBinding
 import com.rentify.app.landlord.databinding.DialogGenerateInvoicesBinding
@@ -131,7 +133,7 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
     private fun issueAllPendingInvoices() {
         val pendingInvoices = allLoadedInvoices.filter { it.invoiceStatus == "pending" }
         if (pendingInvoices.isEmpty()) {
-            Toast.makeText(this, "Không có hóa đơn nào đang chờ phát hành", Toast.LENGTH_SHORT).show()
+            showMessage("Không có hóa đơn nào đang chờ phát hành")
             return
         }
 
@@ -169,11 +171,11 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
                 val period = dialogBinding.etDialogPeriod.text?.toString()?.trim() ?: ""
 
                 if (buildingId.isNullOrBlank()) {
-                    Toast.makeText(this, "Vui lòng chọn tòa nhà", Toast.LENGTH_SHORT).show()
+                    showMessage("Vui lòng chọn tòa nhà")
                     return@setPositiveButton
                 }
                 if (period.isBlank()) {
-                    Toast.makeText(this, "Vui lòng nhập kỳ lập hóa đơn", Toast.LENGTH_SHORT).show()
+                    showMessage("Vui lòng nhập kỳ lập hóa đơn")
                     return@setPositiveButton
                 }
 
@@ -227,7 +229,7 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
                                 binding.emptyStateView.visibility = View.VISIBLE
                                 binding.rvInvoices.visibility = View.GONE
                                 binding.tvEmptyMessage.text = state.message
-                                Toast.makeText(this@LandlordInvoicesActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showError(state.message)
                             }
                             InvoicesUiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
@@ -244,13 +246,13 @@ class LandlordInvoicesActivity : BaseActivity<ActivityLandlordInvoicesBinding>(
                             }
                             is BillingActionUiState.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordInvoicesActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showSuccess(state.message)
                                 billingViewModel.resetActionState()
                                 loadInvoices()
                             }
                             is BillingActionUiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordInvoicesActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                                 billingViewModel.resetActionState()
                             }
                             BillingActionUiState.Idle -> {}

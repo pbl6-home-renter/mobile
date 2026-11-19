@@ -3,7 +3,6 @@ package com.rentify.app.landlord.ui.profile
 import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +19,9 @@ import com.rentify.app.core.network.dto.user.UserCurrentResponseDto
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.data.repository.LandlordMediaRepositoryImpl
 import com.rentify.app.landlord.databinding.BottomSheetEditLandlordProfileBinding
 import com.rentify.app.landlord.databinding.DialogChangePasswordBinding
@@ -150,7 +152,7 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
             if (token.isNullOrBlank()) return@launch
             val userId = user?.id?.takeIf { it.isNotBlank() } ?: tokenDataStore.userId.first().orEmpty()
             if (userId.isBlank()) {
-                Toast.makeText(requireContext(), "Không xác định được tài khoản người dùng", Toast.LENGTH_SHORT).show()
+                showError("Không xác định được tài khoản người dùng")
                 return@launch
             }
 
@@ -160,12 +162,12 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
                 null
             }
             if (bytes == null || bytes.isEmpty()) {
-                Toast.makeText(requireContext(), "Không thể đọc tệp ảnh", Toast.LENGTH_SHORT).show()
+                showError("Không thể đọc tệp ảnh")
                 return@launch
             }
             val mimeType = requireContext().contentResolver.getType(uri) ?: "image/jpeg"
 
-            Toast.makeText(requireContext(), "Đang tải ảnh đại diện...", Toast.LENGTH_SHORT).show()
+            showMessage("Đang tải ảnh đại diện...")
             val mediaApi = NetworkClient.createService<MediaApiService>(tokenProvider = { token })
             val rawMediaApi = NetworkClient.createService<MediaApiService>(tokenProvider = { null })
             val mediaRepo = LandlordMediaRepositoryImpl(mediaApi, rawMediaApi)
@@ -179,18 +181,14 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
                 contentType = mimeType
             )) {
                 is NetworkResult.Success -> {
-                    Toast.makeText(requireContext(), "Đã cập nhật ảnh đại diện!", Toast.LENGTH_SHORT).show()
+                    showSuccess("Đã cập nhật ảnh đại diện!")
                     loadProfile()
                 }
                 is NetworkResult.ApiError -> {
-                    Toast.makeText(
-                        requireContext(),
-                        res.error?.message ?: "Không thể tải lên ảnh đại diện",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showError(res.error?.message ?: "Không thể tải lên ảnh đại diện")
                 }
                 else -> {
-                    Toast.makeText(requireContext(), "Lỗi kết nối khi tải ảnh đại diện", Toast.LENGTH_SHORT).show()
+                    showError("Lỗi kết nối khi tải ảnh đại diện")
                 }
             }
         }
@@ -217,18 +215,14 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
             val accountName = sheetBinding.etAccountName.text?.toString()?.trim()?.uppercase().orEmpty()
 
             if (name.isBlank() || phone.isBlank()) {
-                Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ Họ tên và Số điện thoại", Toast.LENGTH_SHORT).show()
+                dialog.showMessage("Vui lòng nhập đầy đủ Họ tên và Số điện thoại")
                 return@setOnSingleClickListener
             }
 
             val hasAnyBankField = bankCode.isNotBlank() || accountNumber.isNotBlank() || accountName.isNotBlank()
             val payoutDto = if (hasAnyBankField) {
                 if (bankCode.isBlank() || accountNumber.isBlank() || accountName.isBlank()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Vui lòng nhập đủ Mã ngân hàng, Số tài khoản và Tên chủ tài khoản",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    dialog.showMessage("Vui lòng nhập đủ Mã ngân hàng, Số tài khoản và Tên chủ tài khoản")
                     return@setOnSingleClickListener
                 }
                 PayoutAccountDto(
@@ -251,19 +245,15 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
                         payoutAccount = payoutDto
                     )) {
                         is NetworkResult.Success -> {
-                            Toast.makeText(requireContext(), "Cập nhật hồ sơ thành công", Toast.LENGTH_SHORT).show()
+                            showSuccess("Cập nhật hồ sơ thành công")
                             dialog.dismiss()
                             loadProfile()
                         }
                         is NetworkResult.ApiError -> {
-                            Toast.makeText(
-                                requireContext(),
-                                res.error?.message ?: "Không thể cập nhật hồ sơ",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            dialog.showError(res.error?.message ?: "Không thể cập nhật hồ sơ")
                         }
                         else -> {
-                            Toast.makeText(requireContext(), "Lỗi kết nối khi cập nhật hồ sơ", Toast.LENGTH_SHORT).show()
+                            dialog.showError("Lỗi kết nối khi cập nhật hồ sơ")
                         }
                     }
                 }
@@ -284,15 +274,15 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
                 val confirmPassword = dialogBinding.etConfirmPassword.text?.toString() ?: ""
 
                 if (currentPassword.isBlank() || newPassword.isBlank() || confirmPassword.isBlank()) {
-                    Toast.makeText(requireContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                    showMessage("Vui lòng nhập đầy đủ thông tin")
                     return@setPositiveButton
                 }
                 if (newPassword != confirmPassword) {
-                    Toast.makeText(requireContext(), "Mật khẩu xác nhận không trùng khớp", Toast.LENGTH_SHORT).show()
+                    showMessage("Mật khẩu xác nhận không trùng khớp")
                     return@setPositiveButton
                 }
                 if (newPassword.length < 8) {
-                    Toast.makeText(requireContext(), "Mật khẩu mới phải có tối thiểu 8 ký tự", Toast.LENGTH_SHORT).show()
+                    showMessage("Mật khẩu mới phải có tối thiểu 8 ký tự")
                     return@setPositiveButton
                 }
 
@@ -311,13 +301,13 @@ class LandlordProfileFragment : BaseFragment<FragmentLandlordProfileBinding>(Fra
                             )
                         )) {
                             is NetworkResult.Success -> {
-                                Toast.makeText(requireContext(), "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show()
+                                showSuccess("Đổi mật khẩu thành công")
                             }
                             is NetworkResult.ApiError -> {
-                                Toast.makeText(requireContext(), res.error?.message ?: "Lỗi đổi mật khẩu", Toast.LENGTH_LONG).show()
+                                showError(res.error?.message ?: "Lỗi đổi mật khẩu")
                             }
                             else -> {
-                                Toast.makeText(requireContext(), "Lỗi kết nối khi đổi mật khẩu", Toast.LENGTH_SHORT).show()
+                                showError("Lỗi kết nối khi đổi mật khẩu")
                             }
                         }
                     }

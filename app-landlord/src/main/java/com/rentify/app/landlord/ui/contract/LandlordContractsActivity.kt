@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
@@ -13,6 +12,7 @@ import com.rentify.app.core.network.dto.building.BuildingMyListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractListResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordContractsBinding
 
@@ -169,7 +169,7 @@ class LandlordContractsActivity : BaseActivity<ActivityLandlordContractsBinding>
                         binding.tvEmptyTitle.text = "Không thể tải danh sách"
                         binding.tvEmptySubtitle.text = state.message
                     }
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showError(state.message)
                 }
             }
         }

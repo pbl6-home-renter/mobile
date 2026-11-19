@@ -16,7 +16,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -39,6 +38,9 @@ import com.rentify.app.core.network.dto.room.RoomUpdateRequestDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.view.RentifyAvatarView
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.ActivityLandlordRoomDetailBinding
@@ -77,7 +79,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
 
         roomId = intent.getStringExtra(EXTRA_ROOM_ID) ?: ""
         if (roomId.isEmpty()) {
-            Toast.makeText(this, "Không tìm thấy mã phòng", Toast.LENGTH_SHORT).show()
+            showError("Không tìm thấy mã phòng")
             finish()
             return
         }
@@ -174,7 +176,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
                 }
                 is RoomDetailUiState.Error -> {
                     binding.roomDetailProgressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                 }
                 is RoomDetailUiState.Idle -> {
                     binding.roomDetailProgressBar.visibility = View.GONE
@@ -207,7 +209,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
                     binding.roomDetailProgressBar.visibility = View.GONE
                     hasMutated = true
                     setResult(RESULT_OK)
-                    Toast.makeText(this, state.message, Toast.LENGTH_SHORT).show()
+                    showSuccess(state.message)
                     viewModel.resetActionState()
                     if (state.message.contains("Xóa")) {
                         finish()
@@ -215,7 +217,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
                 }
                 is RoomActionUiState.Error -> {
                     binding.roomDetailProgressBar.visibility = View.GONE
-                    Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                    showError(state.message)
                     viewModel.resetActionState()
                 }
                 is RoomActionUiState.Idle -> {
@@ -742,11 +744,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
     private fun showDeleteRoomDialog() {
         val room = currentRoom
         if (room != null && room.status.equals("occupied", ignoreCase = true)) {
-            Toast.makeText(
-                this,
-                "Phòng đang có khách thuê / hợp đồng hiệu lực, không thể xóa.",
-                Toast.LENGTH_LONG
-            ).show()
+            showMessage("Phòng đang có khách thuê / hợp đồng hiệu lực, không thể xóa.")
             return
         }
 
@@ -765,7 +763,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
             val contentType = contentResolver.getType(uri) ?: "image/jpeg"
             val bytes = contentResolver.openInputStream(uri)?.use { it.readBytes() }
             if (bytes == null || bytes.isEmpty()) {
-                Toast.makeText(this, "Không thể đọc tệp ảnh đã chọn", Toast.LENGTH_SHORT).show()
+                showError("Không thể đọc tệp ảnh đã chọn")
                 return
             }
             val ext = when {
@@ -776,7 +774,7 @@ class LandlordRoomDetailActivity : BaseActivity<ActivityLandlordRoomDetailBindin
             val fileName = "room_${roomId.take(6)}_${System.currentTimeMillis()}.$ext"
             viewModel.uploadRoomPhoto(roomId, bytes, fileName, contentType)
         } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi đọc ảnh: ${e.message}", Toast.LENGTH_SHORT).show()
+            showError("Lỗi đọc ảnh: ${e.message}")
         }
     }
 

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
@@ -19,6 +18,9 @@ import com.rentify.app.core.network.dto.invoice.InvoiceOtherFeeItemDto
 import com.rentify.app.core.network.dto.invoice.PaymentRecordCashRequestDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.landlord.databinding.ActivityLandlordInvoiceDetailBinding
 import com.rentify.app.landlord.databinding.BottomSheetRecordCashBinding
 import kotlinx.coroutines.launch
@@ -43,7 +45,7 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
 
         invoiceId = intent.getStringExtra(EXTRA_INVOICE_ID)
         if (invoiceId.isNullOrBlank()) {
-            Toast.makeText(this, "Không tìm thấy mã hóa đơn", Toast.LENGTH_SHORT).show()
+            showError("Không tìm thấy mã hóa đơn")
             finish()
             return
         }
@@ -317,15 +319,15 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
             val note = sheetBinding.etCashNote.text?.toString()?.trim()
 
             if (amount <= 0) {
-                Toast.makeText(this, "Số tiền thanh toán phải lớn hơn 0", Toast.LENGTH_SHORT).show()
+                bottomSheet.showMessage("Số tiền thanh toán phải lớn hơn 0")
                 return@setOnClickListener
             }
             if (payerName.isBlank()) {
-                Toast.makeText(this, "Vui lòng nhập tên người nộp", Toast.LENGTH_SHORT).show()
+                bottomSheet.showMessage("Vui lòng nhập tên người nộp")
                 return@setOnClickListener
             }
             if (paymentDate.isBlank()) {
-                Toast.makeText(this, "Vui lòng nhập ngày thu tiền", Toast.LENGTH_SHORT).show()
+                bottomSheet.showMessage("Vui lòng nhập ngày thu tiền")
                 return@setOnClickListener
             }
 
@@ -358,7 +360,7 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
             .setPositiveButton("Hủy hóa đơn") { _, _ ->
                 val reason = input.text.toString().trim()
                 if (reason.isBlank()) {
-                    Toast.makeText(this, "Vui lòng nhập lý do hủy", Toast.LENGTH_SHORT).show()
+                    showMessage("Vui lòng nhập lý do hủy")
                     return@setPositiveButton
                 }
                 billingViewModel.cancelInvoice(invoiceId, reason)
@@ -378,7 +380,7 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
                                 renderDetail(state.detail)
                             }
                             is InvoiceDetailUiState.Error -> {
-                                Toast.makeText(this@LandlordInvoiceDetailActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                             }
                             InvoiceDetailUiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
@@ -395,13 +397,13 @@ class LandlordInvoiceDetailActivity : BaseActivity<ActivityLandlordInvoiceDetail
                             }
                             is BillingActionUiState.Success -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordInvoiceDetailActivity, state.message, Toast.LENGTH_SHORT).show()
+                                showSuccess(state.message)
                                 billingViewModel.resetActionState()
                                 invoiceId?.let { billingViewModel.loadInvoiceDetail(it) }
                             }
                             is BillingActionUiState.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(this@LandlordInvoiceDetailActivity, state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                                 billingViewModel.resetActionState()
                             }
                             BillingActionUiState.Idle -> {}

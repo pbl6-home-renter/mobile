@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doAfterTextChanged
@@ -26,6 +25,8 @@ import com.rentify.app.core.network.dto.user.UserDirectoryResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.view.RentifyAvatarView
 import com.rentify.app.landlord.R
 import com.rentify.app.landlord.databinding.FragmentLandlordChatBinding
@@ -231,7 +232,7 @@ class LandlordChatFragment : BaseFragment<FragmentLandlordChatBinding>(FragmentL
 
         btnCreateGroup.setOnClickListener {
             if (selectedUserIds.size < 2) {
-                Toast.makeText(ctx, "Vui lòng chọn ít nhất 2 người khác để tạo nhóm", Toast.LENGTH_SHORT).show()
+                dialog.showMessage("Vui lòng chọn ít nhất 2 người khác để tạo nhóm")
                 return@setOnClickListener
             }
             val title = etGroupTitle.text?.toString()?.trim()
@@ -281,7 +282,7 @@ class LandlordChatFragment : BaseFragment<FragmentLandlordChatBinding>(FragmentL
                             }
                             is NewConversationActionState.Error -> {
                                 binding.progressBar.visibility = View.GONE
-                                Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
+                                showError(state.message)
                                 chatViewModel.resetNewConversationState()
                             }
                             NewConversationActionState.Idle -> {}
@@ -308,7 +309,7 @@ class LandlordChatFragment : BaseFragment<FragmentLandlordChatBinding>(FragmentL
                             is ConversationListUiState.Error -> {
                                 binding.layoutEmptyChat.visibility = View.VISIBLE
                                 binding.rvConversations.visibility = View.GONE
-                                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                                showError(state.message)
                             }
                             ConversationListUiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
