@@ -23,8 +23,9 @@ import com.rentify.app.core.network.dto.room.RoomHubInvoiceDto
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.extension.toDisplayDate
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.extension.toVnd
 import com.rentify.app.core.ui.R as CoreR
 import com.rentify.app.tenant.R
@@ -313,7 +314,7 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
                                 startActivity(intent)
                             }
                             is MyRoomUiEvent.ShowToast -> {
-                                toast(event.message)
+                                showMessage(event.message)
                             }
                         }
                     }
@@ -462,7 +463,7 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
             startActivity(intent)
         } else {
-            toast("Không có số điện thoại liên hệ")
+            showError("Không có số điện thoại liên hệ")
         }
     }
 

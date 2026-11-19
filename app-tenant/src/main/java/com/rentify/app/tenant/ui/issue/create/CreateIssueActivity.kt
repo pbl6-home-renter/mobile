@@ -11,7 +11,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivityCreateIssueBinding
 import com.rentify.app.tenant.ui.issue.detail.IssueDetailActivity
@@ -98,13 +99,13 @@ class CreateIssueActivity : BaseActivity<ActivityCreateIssueBinding>(ActivityCre
                         when (event) {
                             is CreateIssueUiEvent.ValidationError -> {
                                 binding.etTitle.setError(event.message)
-                                toast(event.message)
+                                showError(event.message)
                             }
                             is CreateIssueUiEvent.ShowError -> {
-                                toast(event.message)
+                                showError(event.message)
                             }
                             is CreateIssueUiEvent.Success -> {
-                                toast(event.message)
+                                showSuccess(event.message)
                                 setResult(Activity.RESULT_OK)
                                 if (event.issueId.isNotEmpty()) {
                                     IssueDetailActivity.start(this@CreateIssueActivity, event.issueId)

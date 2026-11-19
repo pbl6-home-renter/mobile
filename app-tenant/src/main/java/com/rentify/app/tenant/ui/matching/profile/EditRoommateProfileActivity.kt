@@ -30,7 +30,8 @@ import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.component.RentifyTextField
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivityEditRoommateProfileBinding
@@ -119,7 +120,7 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
                     provinces = result.data.data ?: emptyList()
                     restoreSavedLocation()
                 }
-                else -> toast("Không tải được danh sách tỉnh/thành phố")
+                else -> showError("Không tải được danh sách tỉnh/thành phố")
             }
         }
     }
@@ -134,7 +135,7 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
                         ?.let { name -> wards.find { it.name.equals(name, ignoreCase = true) } }
                         ?.let { selectWard(it.name) }
                 }
-                else -> toast("Không tải được danh sách phường/xã")
+                else -> showError("Không tải được danh sách phường/xã")
             }
         }
     }
@@ -163,7 +164,7 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
 
     private fun showProvinceOptions() {
         if (provinces.isEmpty()) {
-            toast("Đang tải danh sách tỉnh/thành phố")
+            showMessage("Đang tải danh sách tỉnh/thành phố")
             return
         }
         showOptions(binding.edtPreferredProvince, provinces.map { it.name }) { index ->
@@ -174,11 +175,11 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
 
     private fun showWardOptions() {
         if (selectedProvince == null) {
-            toast("Vui lòng chọn tỉnh/thành phố trước")
+            showMessage("Vui lòng chọn tỉnh/thành phố trước")
             return
         }
         if (wards.isEmpty()) {
-            toast("Đang tải danh sách phường/xã")
+            showMessage("Đang tải danh sách phường/xã")
             return
         }
         showOptions(binding.edtPreferredDistrict, wards.map { it.name }) { index ->
@@ -252,7 +253,7 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
                             }
                             is UiState.Error -> {
                                 binding.pbEditLoading.isVisible = false
-                                toast(state.message)
+                                showError(state.message)
                             }
                             is UiState.Idle -> Unit
                         }
@@ -270,7 +271,7 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
                 launch {
                     viewModel.uiEvent.collect { event ->
                         when (event) {
-                            is MyRoommateProfileUiEvent.ShowToast -> toast(event.message)
+                            is MyRoommateProfileUiEvent.ShowToast -> showError(event.message)
                             is MyRoommateProfileUiEvent.SaveSuccess -> finish()
                         }
                     }
@@ -330,7 +331,7 @@ class EditRoommateProfileActivity : BaseActivity<ActivityEditRoommateProfileBind
         val budgetMax = binding.edtBudgetMax.text.trim().toLongOrNull()
 
         if (budgetMin != null && budgetMax != null && budgetMin > budgetMax) {
-            toast("Ngân sách tối thiểu không được lớn hơn ngân sách tối đa")
+            showMessage("Ngân sách tối thiểu không được lớn hơn ngân sách tối đa")
             return
         }
 

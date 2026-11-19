@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.view.RentifyAvatarView
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivityChatDetailBinding
@@ -67,7 +67,7 @@ class ChatDetailActivity : BaseActivity<ActivityChatDetailBinding>(ActivityChatD
         binding.root.applySystemBarsPadding(top = true, bottom = true)
 
         if (initialConversationId.isBlank() && recipientUserId.isNullOrBlank()) {
-            toast("Không tìm thấy thông tin cuộc trò chuyện")
+            showError("Không tìm thấy thông tin cuộc trò chuyện")
             finish()
             return
         }
@@ -166,7 +166,7 @@ class ChatDetailActivity : BaseActivity<ActivityChatDetailBinding>(ActivityChatD
 
                 launch {
                     viewModel.errorEvents.collect { errorMessage ->
-                        toast(errorMessage)
+                        showError(errorMessage)
                     }
                 }
             }

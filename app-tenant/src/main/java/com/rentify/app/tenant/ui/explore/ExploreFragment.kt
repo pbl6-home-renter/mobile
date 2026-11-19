@@ -18,8 +18,10 @@ import coil.load
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseFragment
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.extension.showIf
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showMessage
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.extension.toVnd
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.R
@@ -196,7 +198,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
                         binding.layoutErrorState.root.visibility = View.VISIBLE
                         binding.layoutEmptyState.root.visibility = View.GONE
                     } else {
-                        toast(state.message)
+                        showError(state.message)
                     }
                 }
                 else -> Unit
@@ -204,7 +206,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
         }
 
         viewModel.favoriteError.collectWhenStarted { message ->
-            toast(message)
+            showError(message)
         }
 
         viewModel.buildings.collectWhenStarted { buildings ->
@@ -340,7 +342,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
         binding.viewHeaderContainer.setOnLongClickListener(openTweaksAction)
 
         binding.btnNotification.setOnClickListener {
-            toast("Chưa có thông báo mới")
+            showMessage("Chưa có thông báo mới")
         }
 
         binding.btnExploreFilter.setOnClickListener {
@@ -358,7 +360,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
         }
 
         binding.btnUtilNearMe.setOnClickListener {
-            toast("Tìm phòng trọ gần vị trí của bạn...")
+            showMessage("Tìm phòng trọ gần vị trí của bạn...")
         }
 
         binding.btnUtilSavedRooms.setOnClickListener {
@@ -384,7 +386,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
 
         binding.btnUtilInvoices.setOnClickListener {
             if (viewModel.isLoggedIn.value) {
-                toast("Mở hóa đơn tháng")
+                showMessage("Mở hóa đơn tháng")
             } else {
                 showLoginRequiredSheet(LoginFeature.MY_ROOM) {
                     listener?.onNavigateToLoginForTabRequested(R.id.nav_my_room)
@@ -474,7 +476,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             currentTweak = viewModel.devTweakHasRoom.value,
             onTweakChanged = { isChecked ->
                 viewModel.setDevTweakHasRoom(isChecked)
-                toast("Đã cập nhật tweak hasRoom = $isChecked")
+                showSuccess("Đã cập nhật tweak hasRoom = $isChecked")
             }
         ).show(childFragmentManager, DevTweaksDialogFragment.TAG)
     }

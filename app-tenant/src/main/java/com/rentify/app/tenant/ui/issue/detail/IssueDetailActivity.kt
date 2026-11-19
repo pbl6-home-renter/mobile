@@ -12,8 +12,9 @@ import com.rentify.app.core.network.dto.issue.IssueReportDetailResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showSuccess
 import com.rentify.app.core.ui.extension.toVnd
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.databinding.ActivityIssueDetailBinding
 import com.rentify.app.tenant.ui.issue.IssueUiHelper
@@ -70,7 +71,7 @@ class IssueDetailActivity : BaseActivity<ActivityIssueDetailBinding>(ActivityIss
                             }
                             is UiState.Error -> {
                                 binding.progressBar.isVisible = false
-                                toast(state.message)
+                                showError(state.message)
                             }
                             is UiState.Idle -> {
                                 binding.progressBar.isVisible = false
@@ -89,8 +90,8 @@ class IssueDetailActivity : BaseActivity<ActivityIssueDetailBinding>(ActivityIss
                 launch {
                     viewModel.uiEvent.collect { event ->
                         when (event) {
-                            is IssueDetailUiEvent.ShowToast -> toast(event.message)
-                            is IssueDetailUiEvent.CancelSuccess -> toast(event.message)
+                            is IssueDetailUiEvent.ShowToast -> showError(event.message)
+                            is IssueDetailUiEvent.CancelSuccess -> showSuccess(event.message)
                         }
                     }
                 }

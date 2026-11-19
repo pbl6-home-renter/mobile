@@ -15,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rentify.app.core.network.dto.chat.ConversationMemberDto
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.view.RentifyAvatarView
 import com.rentify.app.tenant.databinding.BottomSheetGroupInfoBinding
 import com.rentify.app.tenant.databinding.DialogAddGroupMemberBinding
@@ -178,7 +178,7 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
 
                 launch {
                     viewModel.toastEvents.collect { msg ->
-                        toast(msg)
+                        showMessage(msg)
                     }
                 }
 
@@ -231,10 +231,10 @@ class GroupInfoBottomSheetDialog : BottomSheetDialogFragment() {
                     viewModel.addMembers(ids)
                     dialog.dismiss()
                 } else {
-                    toast("Vui lòng nhập ít nhất 1 User ID hợp lệ")
+                    showMessage("Vui lòng nhập ít nhất 1 User ID hợp lệ")
                 }
             } else {
-                toast("Vui lòng nhập User ID")
+                showMessage("Vui lòng nhập User ID")
             }
         }
 

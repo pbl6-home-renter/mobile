@@ -26,8 +26,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.extension.toViFormatted
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.ActivitySearchResultBinding
 import com.rentify.app.tenant.databinding.LayoutPopupRoomSortBinding
@@ -446,8 +447,8 @@ class SearchResultActivity : BaseActivity<ActivitySearchResultBinding>(ActivityS
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
                     when (event) {
-                        is SearchResultEvent.ShowToast -> toast(event.message)
-                        is SearchResultEvent.ShowError -> toast(event.message)
+                        is SearchResultEvent.ShowToast -> showMessage(event.message)
+                        is SearchResultEvent.ShowError -> showError(event.message)
                     }
                 }
             }

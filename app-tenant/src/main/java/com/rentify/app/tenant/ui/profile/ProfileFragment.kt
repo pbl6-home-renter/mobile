@@ -8,7 +8,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.tenant.databinding.BottomSheetChangePasswordBinding
 import com.rentify.app.tenant.databinding.BottomSheetEditProfileBinding
 import com.rentify.app.tenant.databinding.FragmentProfileBinding
@@ -100,10 +101,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         viewModel.events.collectWhenStarted { event ->
             when (event) {
                 is ProfileEvent.ShowToast -> {
-                    toast(event.message)
+                    showMessage(event.message)
                 }
                 is ProfileEvent.ShowError -> {
-                    toast(event.message)
+                    showError(event.message)
                 }
                 is ProfileEvent.ProfileUpdated -> {
                     editProfileDialog?.dismiss()
@@ -134,11 +135,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
 
         binding.btnGuestTerms.setOnClickListener {
-            toast("Điều khoản và chính sách đang được cập nhật")
+            showMessage("Điều khoản và chính sách đang được cập nhật")
         }
 
         binding.btnTermsRow.setOnClickListener {
-            toast("Điều khoản và chính sách đang được cập nhật")
+            showMessage("Điều khoản và chính sách đang được cập nhật")
         }
 
         binding.btnFavoriteRooms.setOnClickListener {
@@ -148,7 +149,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
 
         binding.btnNotifications.setOnClickListener {
-            toast("Cài đặt thông báo đang được hoàn thiện")
+            showMessage("Cài đặt thông báo đang được hoàn thiện")
         }
 
         binding.btnQuickEditProfile.setOnClickListener {

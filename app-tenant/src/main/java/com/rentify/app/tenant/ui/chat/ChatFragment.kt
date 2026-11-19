@@ -18,7 +18,7 @@ import com.rentify.app.core.network.dto.chat.ConversationListResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentChatBinding
@@ -250,7 +250,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::infl
             if (viewModel.isLoggedIn.value) {
                 CreateGroupChatDialogFragment.newInstance().show(childFragmentManager, "CreateGroupChatDialog")
             } else {
-                toast("Vui lòng đăng nhập để tạo nhóm trò chuyện")
+                showMessage("Vui lòng đăng nhập để tạo nhóm trò chuyện")
             }
         }
     }

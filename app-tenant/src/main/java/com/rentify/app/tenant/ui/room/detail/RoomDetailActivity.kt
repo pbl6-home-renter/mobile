@@ -24,7 +24,7 @@ import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.MainActivity
 import com.rentify.app.tenant.R
@@ -550,7 +550,7 @@ class RoomDetailActivity : BaseActivity<ActivityRoomDetailBinding>(ActivityRoomD
     private fun handleUiEvent(event: RoomDetailUiEvent) {
         when (event) {
             is RoomDetailUiEvent.ShowToast -> {
-                toast(event.message)
+                showMessage(event.message)
             }
             is RoomDetailUiEvent.ShowLoginRequired -> {
                 showLoginRequiredSheet(event.feature) {

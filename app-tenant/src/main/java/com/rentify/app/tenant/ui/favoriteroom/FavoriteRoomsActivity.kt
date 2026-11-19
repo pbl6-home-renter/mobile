@@ -11,7 +11,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rentify.app.core.network.dto.room.FavoriteRoomListResponseDto
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
+import com.rentify.app.core.ui.extension.showMessage
 import com.rentify.app.tenant.databinding.ActivityFavoriteRoomsBinding
 import com.rentify.app.tenant.ui.room.detail.RoomDetailActivity
 import kotlinx.coroutines.launch
@@ -96,8 +97,8 @@ class FavoriteRoomsActivity : BaseActivity<ActivityFavoriteRoomsBinding>(Activit
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
                     when (event) {
-                        is FavoriteRoomsEvent.ShowToast -> toast(event.message)
-                        is FavoriteRoomsEvent.ShowError -> toast(event.message)
+                        is FavoriteRoomsEvent.ShowToast -> showMessage(event.message)
+                        is FavoriteRoomsEvent.ShowError -> showError(event.message)
                         is FavoriteRoomsEvent.RoomRemoved -> {}
                     }
                 }

@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.R as CoreR
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.tenant.databinding.ActivityMyInvoicesBinding
 import com.rentify.app.tenant.ui.invoice.detail.InvoiceDetailActivity
 import kotlinx.coroutines.launch
@@ -102,7 +102,7 @@ class MyInvoicesActivity : BaseActivity<ActivityMyInvoicesBinding>(ActivityMyInv
                     binding.pbLoading.isVisible = state.isLoading
 
                     state.errorMessage?.let { error ->
-                        toast(error)
+                        showError(error)
                     }
 
                     // Tab visibility

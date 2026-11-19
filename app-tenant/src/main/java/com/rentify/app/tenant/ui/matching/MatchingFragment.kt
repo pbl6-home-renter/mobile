@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabLayout
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
-import com.rentify.app.core.ui.extension.toast
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.core.ui.R as CoreR
 import com.rentify.app.tenant.databinding.FragmentMatchingBinding
@@ -287,7 +287,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
                             is UiState.Error -> {
                                 binding.pbFeedLoading.isVisible = false
                                 binding.layoutEmptyFeed.isVisible = feedAdapter.itemCount == 0
-                                toast(state.message)
+                                showError(state.message)
                             }
                             is UiState.Idle -> {
                                 binding.pbFeedLoading.isVisible = false
@@ -312,7 +312,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
                             is UiState.Error -> {
                                 binding.pbRequestsLoading.isVisible = false
                                 binding.layoutEmptyRequests.isVisible = requestsAdapter.itemCount == 0
-                                toast(state.message)
+                                showError(state.message)
                             }
                             is UiState.Idle -> {
                                 binding.pbRequestsLoading.isVisible = false
@@ -324,7 +324,7 @@ class MatchingFragment : BaseFragment<FragmentMatchingBinding>(FragmentMatchingB
                 launch {
                     viewModel.uiEvent.collect { event ->
                         when (event) {
-                            is MatchingUiEvent.ShowToast -> toast(event.message)
+                            is MatchingUiEvent.ShowToast -> showError(event.message)
                             is MatchingUiEvent.OpenChat -> {
                                 val intent = ChatDetailActivity.createIntent(
                                     context = requireContext(),

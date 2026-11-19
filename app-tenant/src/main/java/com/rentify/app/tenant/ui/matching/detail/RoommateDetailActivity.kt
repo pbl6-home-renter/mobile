@@ -12,8 +12,8 @@ import com.rentify.app.core.network.dto.matching.RoommateProfileDetailResponseDt
 import com.rentify.app.core.ui.base.BaseActivity
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
+import com.rentify.app.core.ui.extension.showError
 import com.rentify.app.core.ui.extension.toVnd
-import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.databinding.ActivityRoommateDetailBinding
 import com.rentify.app.tenant.ui.matching.profile.EditRoommateProfileActivity
@@ -34,7 +34,7 @@ class RoommateDetailActivity : BaseActivity<ActivityRoommateDetailBinding>(Activ
         binding.root.applySystemBarsPadding(top = true, bottom = true)
 
         if (profileId.isBlank()) {
-            toast("Không tìm thấy thông tin hồ sơ")
+            showError("Không tìm thấy thông tin hồ sơ")
             finish()
             return
         }
@@ -65,7 +65,7 @@ class RoommateDetailActivity : BaseActivity<ActivityRoommateDetailBinding>(Activ
                             }
                             is UiState.Error -> {
                                 binding.pbDetailLoading.isVisible = false
-                                toast(state.message)
+                                showError(state.message)
                                 finish()
                             }
                             is UiState.Idle -> Unit
@@ -76,7 +76,7 @@ class RoommateDetailActivity : BaseActivity<ActivityRoommateDetailBinding>(Activ
                 launch {
                     viewModel.uiEvent.collect { event ->
                         when (event) {
-                            is RoommateDetailUiEvent.ShowToast -> toast(event.message)
+                            is RoommateDetailUiEvent.ShowToast -> showError(event.message)
                             is RoommateDetailUiEvent.RequestSentSuccess -> {
                                 binding.btnSendMatchRequest.isEnabled = false
                                 binding.btnSendMatchRequest.text = "Đã gửi lời mời ghép đôi"
