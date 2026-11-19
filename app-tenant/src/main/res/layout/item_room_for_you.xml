@@ -13,7 +13,7 @@
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="0dp"
-    app:strokeColor="@color/rentify_divider"
+    app:strokeColor="#DDE1F9"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -34,22 +34,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_image_placeholder" />
 
-            <TextView
-                android:id="@+id/tvRoomType"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:layout_gravity="top|start"
-                android:layout_marginStart="@dimen/spacing_smd"
-                android:layout_marginTop="@dimen/spacing_smd"
-                android:background="@drawable/bg_pill_login"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:paddingHorizontal="@dimen/spacing_smd"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                tools:text="Phòng thường" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnFavorite"
@@ -91,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/plus_jakarta_sans"
-                    android:textColor="@color/rentify_primary_gradient_start"
+                    android:textColor="#006876"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="1.800.000 đ" />
@@ -102,7 +86,7 @@
                     android:layout_marginStart="@dimen/spacing_xs"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:text="/tháng"
-                    android:textColor="@color/rentify_text_secondary"
+                    android:textColor="#595E72"
                     android:textSize="13sp" />
             </LinearLayout>
 
@@ -114,7 +98,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:maxLines="1"
-                android:textColor="@color/rentify_text_primary"
+                android:textColor="#161B2C"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="Phòng 201" />
@@ -127,7 +111,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/plus_jakarta_sans"
                 android:maxLines="1"
-                android:textColor="@color/rentify_text_secondary"
+                android:textColor="#595E72"
                 android:textSize="13sp"
                 tools:text="18 m² · P. Hòa Khánh" />
         </LinearLayout>

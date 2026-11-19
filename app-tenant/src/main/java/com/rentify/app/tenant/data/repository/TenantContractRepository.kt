@@ -4,6 +4,7 @@ import com.rentify.app.core.network.adapter.NetworkResult
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.contract.ContractDetailResponseDto
+import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMyListResponseDto
 
 interface TenantContractRepository {
@@ -18,5 +19,10 @@ interface TenantContractRepository {
     suspend fun getContractDetail(
         contractId: String
     ): NetworkResult<ApiSingleResponse<ContractDetailResponseDto>>
+
+    suspend fun getContractMembers(
+        contractId: String,
+        pageSize: Int = 50
+    ): NetworkResult<ApiListResponse<ContractMemberListResponseDto>>
 }
 

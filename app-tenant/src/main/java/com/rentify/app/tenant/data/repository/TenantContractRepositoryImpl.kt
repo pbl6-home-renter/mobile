@@ -6,6 +6,7 @@ import com.rentify.app.core.network.api.ContractApiService
 import com.rentify.app.core.network.dto.ApiListResponse
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.contract.ContractDetailResponseDto
+import com.rentify.app.core.network.dto.contract.ContractMemberListResponseDto
 import com.rentify.app.core.network.dto.contract.ContractMyListResponseDto
 
 class TenantContractRepositoryImpl(
@@ -35,5 +36,13 @@ class TenantContractRepositoryImpl(
             contractApiService.getContractDetail(contractId)
         }
     }
-}
 
+    override suspend fun getContractMembers(
+        contractId: String,
+        pageSize: Int
+    ): NetworkResult<ApiListResponse<ContractMemberListResponseDto>> {
+        return safeApiCall {
+            contractApiService.getContractMembers(contractId = contractId, pageSize = pageSize)
+        }
+    }
+}

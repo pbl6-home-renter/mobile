@@ -19,48 +19,35 @@
             android:orientation="vertical"
             android:paddingBottom="@dimen/spacing_lg">
 
-            <!-- HEADER BANNER IMAGE -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- HEADER CONTAINER NỀN GRADIENT 135° VUÔNG GÓC HOÀN TOÀN -->
+            <FrameLayout
                 android:id="@+id/viewHeaderContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_explore_header">
 
+                <!-- Họa tiết đường mái nhà kiến trúc nét mảnh (đẩy lên cao tránh bị thanh search che) -->
                 <ImageView
-                    android:id="@+id/ivHeaderBanner"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="Header Banner"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_explore_banner"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/img_explore_banner" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="#2E000000"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_width="180dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="36dp"
+                    android:layout_marginBottom="16dp"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/bg_header_rooflines" />
 
                 <!-- Container chứa nội dung Text và Button của Header -->
                 <FrameLayout
                     android:id="@+id/layoutHeaderContent"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/spacing_md"
-                    android:paddingTop="@dimen/spacing_ml"
-                    android:paddingEnd="@dimen/spacing_md"
-                    android:paddingBottom="@dimen/spacing_2xl"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:paddingStart="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="@dimen/spacing_md"
+                    android:paddingEnd="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="42dp">
 
                     <!-- Header cho khách (Guest) -->
                     <RelativeLayout
@@ -70,62 +57,35 @@
                         android:visibility="gone"
                         tools:visibility="visible">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/tvGuestGreeting"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@id/btnGuestLogin"
-                            android:orientation="vertical">
+                            android:layout_marginEnd="@dimen/spacing_md"
+                            android:fontFamily="@font/plus_jakarta_sans_medium"
+                            android:text="Bạn muốn tìm phòng ở đâu?"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:maxLines="2" />
 
-                            <TextView
-                                android:id="@+id/tvGuestGreeting"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Xin chào!"
-                                android:textColor="@color/rentify_on_primary"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_2xs"
-                                android:fontFamily="@font/plus_jakarta_sans"
-                                android:text="Tìm phòng trọ ưng ý cùng Rentify"
-                                android:textColor="#DCE7FD"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <com.google.android.material.button.MaterialButton
+                        <TextView
                             android:id="@+id/btnGuestLogin"
                             android:layout_width="wrap_content"
-                            android:layout_height="38dp"
+                            android:layout_height="36dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:backgroundTint="@color/rentify_surface"
-                            android:fontFamily="@font/plus_jakarta_sans"
+                            android:background="@drawable/bg_btn_pill_glass"
+                            android:fontFamily="@font/plus_jakarta_sans_medium"
                             android:gravity="center"
-                            android:includeFontPadding="false"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:minWidth="0dp"
-                            android:minHeight="0dp"
-                            android:paddingHorizontal="@dimen/spacing_md"
-                            android:paddingTop="0dp"
-                            android:paddingBottom="0dp"
+                            android:paddingHorizontal="16dp"
                             android:text="Đăng nhập"
-                            android:textColor="@color/rentify_primary_gradient_start"
+                            android:textColor="#FFFFFF"
                             android:textSize="13sp"
-                            android:textStyle="bold"
-                            app:cornerRadius="19dp"
-                            app:elevation="2dp"
-                            app:icon="@drawable/ic_user_circle"
-                            app:iconGravity="textStart"
-                            app:iconPadding="@dimen/spacing_sm"
-                            app:iconSize="16dp"
-                            app:iconTint="@color/rentify_primary_gradient_start" />
+                            android:clickable="true"
+                            android:focusable="true" />
                     </RelativeLayout>
 
                     <!-- Header cho người dùng đã đăng nhập -->
@@ -141,62 +101,46 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@id/layoutNotificationContainer"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_marginEnd="@dimen/spacing_md"
+                            android:orientation="vertical">
 
-                            <!-- Avatar tròn (viết tắt hoặc ảnh) -->
-                            <FrameLayout
-                                android:id="@+id/btnAvatar"
-                                android:layout_width="44dp"
-                                android:layout_height="44dp"
-                                android:background="@drawable/bg_circle_icon_button">
-
-                                <TextView
-                                    android:id="@+id/tvUserAvatarLetter"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:fontFamily="@font/plus_jakarta_sans"
-                                    android:textColor="@color/rentify_on_primary"
-                                    android:textSize="16sp"
-                                    android:textStyle="bold"
-                                    tools:text="MA" />
-                            </FrameLayout>
-
-                            <LinearLayout
+                            <TextView
+                                android:id="@+id/tvGreetingPrefix"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/spacing_smd"
-                                android:orientation="vertical">
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Xin chào,"
+                                android:textColor="#CCFFFFFF"
+                                android:textSize="14sp" />
 
-                                <TextView
-                                    android:id="@+id/tvUserGreeting"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:ellipsize="end"
-                                    android:fontFamily="@font/plus_jakarta_sans"
-                                    android:maxLines="1"
-                                    android:textColor="@color/rentify_on_primary"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    tools:text="Xin chào, Minh Anh" />
+                            <TextView
+                                android:id="@+id/tvUserName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/plus_jakarta_sans_medium"
+                                android:maxLines="1"
+                                android:textColor="#FFFFFF"
+                                android:textSize="22sp"
+                                tools:text="Anh" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/spacing_2xs"
-                                    android:fontFamily="@font/plus_jakarta_sans"
-                                    android:text="Hôm nay bạn muốn tìm phòng ở đâu?"
-                                    android:textColor="#DCE7FD"
-                                    android:textSize="13sp" />
-                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/tvUserSubGreeting"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:fontFamily="@font/plus_jakarta_sans"
+                                android:text="Hôm nay của bạn thế nào?"
+                                android:textColor="#DCE7FD"
+                                android:textSize="13sp" />
                         </LinearLayout>
 
                         <!-- Nút Chuông thông báo -->
                         <FrameLayout
                             android:id="@+id/layoutNotificationContainer"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true">
 
@@ -205,40 +149,42 @@
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_gravity="center"
-                                android:background="@drawable/bg_circle_icon_button"
+                                android:background="@drawable/bg_circle_glass_button"
                                 android:contentDescription="Thông báo"
-                                android:padding="@dimen/spacing_sm"
+                                android:scaleType="centerInside"
                                 android:src="@drawable/ic_notification"
-                                app:tint="@color/rentify_on_primary" />
+                                app:tint="#FFFFFF" />
 
                             <View
                                 android:id="@+id/ivNotificationBadge"
-                                android:layout_width="10dp"
-                                android:layout_height="10dp"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
                                 android:layout_gravity="top|end"
-                                android:layout_marginTop="@dimen/spacing_xs"
-                                android:layout_marginEnd="@dimen/spacing_xs"
-                                android:background="@drawable/bg_circle_icon_badge"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/bg_notification_dot"
                                 android:visibility="gone"
                                 tools:visibility="visible" />
                         </FrameLayout>
                     </RelativeLayout>
                 </FrameLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
 
-            <!-- THANH TÌM KIẾM ĐÈ MÉP DƯỚI HEADER -->
+            <!-- THANH TÌM KIẾM ĐÈ MÉP DƯỚI HEADER (NỀN TRẮNG, BO PILL 23DP) -->
             <LinearLayout
                 android:id="@+id/layoutSearchBar"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="46dp"
                 android:layout_marginStart="@dimen/spacing_md"
-                android:layout_marginTop="-24dp"
+                android:layout_marginTop="-23dp"
                 android:layout_marginEnd="@dimen/spacing_md"
-                android:background="@drawable/bg_search_bar"
-                android:elevation="4dp"
+                android:background="@drawable/bg_search_input_pill_white"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/spacing_md">
+                android:paddingStart="16dp"
+                android:paddingEnd="6dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -246,40 +192,41 @@
                     android:layout_gravity="center_vertical"
                     android:contentDescription="Tìm kiếm"
                     android:src="@drawable/ic_search"
-                    app:tint="#94A3B8" />
+                    app:tint="#9CA3AF" />
 
                 <TextView
                     android:id="@+id/tvSearchQuery"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/spacing_smd"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
                     android:maxLines="1"
-                    android:text="Tìm phòng trọ, khu vực..."
-                    android:textColor="@color/rentify_text_muted"
+                    android:text="Tìm theo tên phòng, khu vực…"
+                    android:textColor="#9CA3AF"
                     android:textSize="14sp" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="@dimen/spacing_sm"
-                    android:background="@color/rentify_divider" />
-
-                <ImageView
+                <FrameLayout
                     android:id="@+id/btnExploreFilter"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
                     android:contentDescription="Lọc phòng"
-                    android:padding="@dimen/spacing_xs"
-                    android:src="@drawable/ic_filter"
-                    app:tint="@color/rentify_primary_gradient_start" />
+                    android:focusable="true">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Lọc phòng"
+                        android:src="@drawable/ic_filter"
+                        app:tint="#9CA3AF" />
+                </FrameLayout>
             </LinearLayout>
 
             <!-- 4 TIỆN ÍCH TRÊN KHỐI TRẮNG -->
@@ -293,7 +240,7 @@
                 app:cardBackgroundColor="@color/rentify_surface"
                 app:cardCornerRadius="@dimen/radius_lg"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/rentify_divider"
+                app:strokeColor="#EEF0F3"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -320,7 +267,7 @@
                             <com.google.android.material.card.MaterialCardView
                                 android:layout_width="46dp"
                                 android:layout_height="46dp"
-                                app:cardBackgroundColor="@color/rentify_card_near_bg"
+                                app:cardBackgroundColor="#EEF0FF"
                                 app:cardCornerRadius="23dp"
                                 app:cardElevation="0dp"
                                 app:strokeWidth="0dp">
@@ -330,8 +277,8 @@
                                     android:layout_height="22dp"
                                     android:layout_gravity="center"
                                     android:contentDescription="Tìm gần tôi"
-                                    android:src="@drawable/ic_location_pin"
-                                    app:tint="@color/rentify_primary_gradient_start" />
+                                    android:src="@drawable/ic_util_location_pin"
+                                    app:tint="#595E72" />
                             </com.google.android.material.card.MaterialCardView>
                         </FrameLayout>
 
@@ -341,7 +288,7 @@
                             android:layout_marginTop="@dimen/spacing_sm"
                             android:fontFamily="@font/plus_jakarta_sans_medium"
                             android:text="Tìm gần tôi"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="#374151"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -363,7 +310,7 @@
                             <com.google.android.material.card.MaterialCardView
                                 android:layout_width="46dp"
                                 android:layout_height="46dp"
-                                app:cardBackgroundColor="@color/rentify_card_near_bg"
+                                app:cardBackgroundColor="#EEF0FF"
                                 app:cardCornerRadius="23dp"
                                 app:cardElevation="0dp"
                                 app:strokeWidth="0dp">
@@ -373,8 +320,8 @@
                                     android:layout_height="22dp"
                                     android:layout_gravity="center"
                                     android:contentDescription="Trọ đã lưu"
-                                    android:src="@drawable/ic_heart_filled"
-                                    app:tint="@color/rentify_primary_gradient_start" />
+                                    android:src="@drawable/ic_util_heart_outline"
+                                    app:tint="#595E72" />
                             </com.google.android.material.card.MaterialCardView>
                         </FrameLayout>
 
@@ -384,7 +331,7 @@
                             android:layout_marginTop="@dimen/spacing_sm"
                             android:fontFamily="@font/plus_jakarta_sans_medium"
                             android:text="Trọ đã lưu"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="#374151"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -406,7 +353,7 @@
                             <com.google.android.material.card.MaterialCardView
                                 android:layout_width="46dp"
                                 android:layout_height="46dp"
-                                app:cardBackgroundColor="@color/rentify_card_near_bg"
+                                app:cardBackgroundColor="#EEF0FF"
                                 app:cardCornerRadius="23dp"
                                 app:cardElevation="0dp"
                                 app:strokeWidth="0dp">
@@ -416,8 +363,8 @@
                                     android:layout_height="22dp"
                                     android:layout_gravity="center"
                                     android:contentDescription="Ghép bạn"
-                                    android:src="@drawable/ic_nav_matching"
-                                    app:tint="@color/rentify_primary_gradient_start" />
+                                    android:src="@drawable/ic_util_match_friends"
+                                    app:tint="#595E72" />
                             </com.google.android.material.card.MaterialCardView>
                         </FrameLayout>
 
@@ -427,7 +374,7 @@
                             android:layout_marginTop="@dimen/spacing_sm"
                             android:fontFamily="@font/plus_jakarta_sans_medium"
                             android:text="Ghép bạn"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="#374151"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -449,7 +396,7 @@
                             <com.google.android.material.card.MaterialCardView
                                 android:layout_width="46dp"
                                 android:layout_height="46dp"
-                                app:cardBackgroundColor="@color/rentify_card_near_bg"
+                                app:cardBackgroundColor="#EEF0FF"
                                 app:cardCornerRadius="23dp"
                                 app:cardElevation="0dp"
                                 app:strokeWidth="0dp">
@@ -459,17 +406,17 @@
                                     android:layout_height="22dp"
                                     android:layout_gravity="center"
                                     android:contentDescription="Hóa đơn"
-                                    android:src="@drawable/ic_invoice_doc"
-                                    app:tint="@color/rentify_primary_gradient_start" />
+                                    android:src="@drawable/ic_util_invoice_doc"
+                                    app:tint="#595E72" />
                             </com.google.android.material.card.MaterialCardView>
 
                             <!-- Chấm đỏ khi có hóa đơn chưa thanh toán -->
                             <View
                                 android:id="@+id/viewInvoiceBadge"
-                                android:layout_width="9dp"
-                                android:layout_height="9dp"
+                                android:layout_width="11dp"
+                                android:layout_height="11dp"
                                 android:layout_gravity="top|end"
-                                android:background="@drawable/bg_circle_icon_badge"
+                                android:background="@drawable/bg_invoice_badge"
                                 android:visibility="gone"
                                 tools:visibility="visible" />
                         </FrameLayout>
@@ -480,7 +427,7 @@
                             android:layout_marginTop="@dimen/spacing_sm"
                             android:fontFamily="@font/plus_jakarta_sans_medium"
                             android:text="Hóa đơn"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="#374151"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -491,6 +438,7 @@
                 android:id="@+id/containerMyRoom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
                 android:visibility="gone"
                 tools:visibility="visible">
 
@@ -504,7 +452,7 @@
                 android:id="@+id/layoutPopularAreas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
+                android:layout_marginTop="@dimen/spacing_xl"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -520,8 +468,8 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:text="Khu vực phổ biến"
-                        android:textColor="@color/rentify_text_primary"
-                        android:textSize="17sp"
+                        android:textColor="#161B2C"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -533,7 +481,7 @@
                         android:fontFamily="@font/plus_jakarta_sans"
                         android:padding="@dimen/spacing_xs"
                         android:text="Xem tất cả"
-                        android:textColor="@color/rentify_primary_gradient_start"
+                        android:textColor="#006876"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -548,12 +496,63 @@
                     android:paddingEnd="@dimen/spacing_sm" />
             </LinearLayout>
 
+            <!-- KHỐI TÒA NHÀ NỔI BẬT -->
+            <LinearLayout
+                android:id="@+id/layoutBuildings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_smd"
+                    android:paddingHorizontal="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:text="Tòa nhà nổi bật"
+                        android:textColor="#161B2C"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnViewAllBuildings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:padding="@dimen/spacing_xs"
+                        android:text="Xem tất cả"
+                        android:textColor="#006876"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBuildings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/spacing_md"
+                    android:paddingEnd="@dimen/spacing_sm" />
+            </LinearLayout>
+
             <!-- KHỐI DÀNH CHO BẠN -->
             <LinearLayout
                 android:id="@+id/layoutForYouRooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
+                android:layout_marginTop="@dimen/spacing_xl"
                 android:orientation="vertical">
 
                 <TextView
@@ -563,8 +562,8 @@
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:paddingHorizontal="@dimen/spacing_md"
                     android:text="Dành cho bạn"
-                    android:textColor="@color/rentify_text_primary"
-                    android:textSize="17sp"
+                    android:textColor="#161B2C"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <!-- Danh sách phòng trọ -->
@@ -574,14 +573,23 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
 
-                <!-- Vòng xoay khi tải thêm trang tiếp theo -->
-                <ProgressBar
-                    android:id="@+id/pbLoadingMore"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                <!-- Vòng tải lần đầu -->
+                <com.rentify.app.tenant.ui.component.TenantLoadingView
+                    android:id="@+id/pbLoading"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginVertical="@dimen/spacing_smd"
-                    android:indeterminateTint="@color/rentify_primary_gradient_start"
+                    android:layout_marginVertical="@dimen/spacing_lg"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <!-- Vòng xoay khi tải thêm trang tiếp theo -->
+                <com.rentify.app.tenant.ui.component.TenantLoadingView
+                    android:id="@+id/pbLoadingMore"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="@dimen/spacing_xs"
                     android:visibility="gone"
                     tools:visibility="visible" />
 

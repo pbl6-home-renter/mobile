@@ -9,10 +9,10 @@
     android:layout_height="66dp"
     android:layout_marginEnd="@dimen/spacing_smd"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/rentify_card_near_bg"
+    app:cardBackgroundColor="#EEF0FF"
     app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="0dp"
-    app:strokeColor="#DBEAFE"
+    app:strokeColor="#E8ECFA"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_marginStart="@dimen/spacing_xs"
                 android:fontFamily="@font/plus_jakarta_sans_medium"
                 android:text="Quận"
-                android:textColor="@color/rentify_text_secondary"
+                android:textColor="#595E72"
                 android:textSize="11sp"
                 tools:text="Quận" />
         </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_marginTop="@dimen/spacing_2xs"
             android:fontFamily="@font/plus_jakarta_sans_bold"
             android:singleLine="true"
-            android:textColor="@color/rentify_text_primary"
+            android:textColor="#161B2C"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="Hòa Khánh" />

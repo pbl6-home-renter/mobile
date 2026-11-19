@@ -14,7 +14,7 @@ import com.rentify.app.core.ui.base.BaseViewModel
 import com.rentify.app.tenant.data.local.TenantDevPreferences
 import com.rentify.app.tenant.data.repository.TenantChatRepository
 import com.rentify.app.tenant.data.repository.TenantContractRepository
-import com.rentify.app.tenant.data.repository.TenantRoomRepository
+import com.rentify.app.tenant.data.repository.MyRoomHubLoader
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -52,7 +52,7 @@ sealed interface MyRoomUiEvent {
 }
 
 class MyRoomViewModel(
-    private val roomRepository: TenantRoomRepository,
+    private val hubLoader: MyRoomHubLoader,
     private val chatRepository: TenantChatRepository,
     private val contractRepository: TenantContractRepository,
     private val tokenDataStore: TokenDataStore,
@@ -129,7 +129,7 @@ class MyRoomViewModel(
 
             // Fetch contract list & room hub
             val contractsResult = contractRepository.getMyContracts(pageSize = 50)
-            val hubResult = roomRepository.getMyRoomHub()
+            val hubResult = hubLoader.load()
 
             val contracts: List<ContractMyListResponseDto> = when (contractsResult) {
                 is NetworkResult.Success -> contractsResult.data.data
@@ -146,14 +146,11 @@ class MyRoomViewModel(
             cachedActiveContracts = activeContracts
             cachedEndedContracts = endedContracts
 
-            var hub: MyRoomHubResponseDto? = null
+            var hubs: List<MyRoomHubResponseDto> = emptyList()
             var hubErrorMessage: String? = null
 
             when (hubResult) {
-                is NetworkResult.Success -> {
-                    hub = hubResult.data.data
-                    currentHubData = hub
-                }
+                is NetworkResult.Success -> hubs = hubResult.data
                 is NetworkResult.ApiError -> {
                     if (hubResult.code != 404 && hubResult.error?.code != "ACTIVE_CONTRACT_NOT_FOUND") {
                         hubErrorMessage = hubResult.error?.message ?: "Lỗi khi tải thông tin phòng"
@@ -167,50 +164,55 @@ class MyRoomViewModel(
                 }
             }
 
-            // Decide display state
-            if (activeContracts.size == 1 && hub != null) {
-                _uiState.value = MyRoomUiState.SingleRoom(
+            val hub = hubs.singleOrNull()
+            currentHubData = hub
+            val activeCount = if (hubs.isNotEmpty()) hubs.size else activeContracts.size
+            val displayedActive = activeContracts.ifEmpty { hubs.map { it.toContractSummary() } }
+            cachedActiveContracts = displayedActive
+
+            _uiState.value = when {
+                activeCount == 1 && hub != null -> MyRoomUiState.SingleRoom(
                     hub = hub,
                     hasEndedContracts = endedContracts.isNotEmpty(),
                     totalActiveContracts = 1
                 )
-            } else if (activeContracts.size > 1) {
-                _uiState.value = MyRoomUiState.MultiRooms(
-                    activeContracts = activeContracts,
+                activeCount > 1 -> MyRoomUiState.MultiRooms(
+                    activeContracts = displayedActive,
                     endedContracts = endedContracts,
                     selectedTab = 0,
-                    currentSingleHub = hub
+                    currentSingleHub = null
                 )
-            } else if (activeContracts.isEmpty()) {
-                if (endedContracts.isNotEmpty()) {
-                    _uiState.value = MyRoomUiState.MultiRooms(
-                        activeContracts = emptyList(),
-                        endedContracts = endedContracts,
-                        selectedTab = 1,
-                        currentSingleHub = null
-                    )
-                } else if (hub != null) {
-                    _uiState.value = MyRoomUiState.SingleRoom(
-                        hub = hub,
-                        hasEndedContracts = false,
-                        totalActiveContracts = 1
-                    )
-                } else if (hubErrorMessage != null) {
-                    _uiState.value = MyRoomUiState.Error(hubErrorMessage)
-                } else {
-                    currentHubData = null
-                    _uiState.value = MyRoomUiState.NoRoom()
-                }
-            } else {
-                // activeContracts.size == 1 but hub was null (e.g. hub 404)
-                _uiState.value = MyRoomUiState.MultiRooms(
-                    activeContracts = activeContracts,
+                activeCount == 0 && endedContracts.isNotEmpty() -> MyRoomUiState.MultiRooms(
+                    activeContracts = emptyList(),
+                    endedContracts = endedContracts,
+                    selectedTab = 1,
+                    currentSingleHub = null
+                )
+                activeCount == 0 && hubErrorMessage != null -> MyRoomUiState.Error(hubErrorMessage)
+                activeCount == 0 -> MyRoomUiState.NoRoom()
+                else -> MyRoomUiState.MultiRooms(
+                    activeContracts = displayedActive,
                     endedContracts = endedContracts,
                     selectedTab = 0,
                     currentSingleHub = null
                 )
             }
         }
+    }
+
+    private fun MyRoomHubResponseDto.toContractSummary(): ContractMyListResponseDto {
+        return ContractMyListResponseDto(
+            id = contract.id,
+            contractCode = contract.contractCode,
+            roomId = room.id,
+            roomName = room.name,
+            buildingName = room.buildingName,
+            status = "active",
+            rentalType = contract.rentalType,
+            rentPrice = room.rentPrice.toDouble(),
+            startDate = contract.startDate,
+            endDate = contract.endDate
+        )
     }
 
     fun toggleViewAllContracts() {
@@ -242,7 +244,13 @@ class MyRoomViewModel(
     }
 
     fun contactLandlord() {
-        val landlord = currentHubData?.landlord ?: return
+        val landlord = currentHubData?.landlord
+        if (landlord == null) {
+            viewModelScope.launch {
+                _uiEvent.emit(MyRoomUiEvent.ShowToast("Chưa có thông tin liên hệ của chủ trọ"))
+            }
+            return
+        }
         viewModelScope.launch {
             when (val result = chatRepository.getOrCreateDirectConversation(landlord.id)) {
                 is NetworkResult.Success -> {
@@ -273,6 +281,12 @@ class MyRoomViewModel(
     }
 
     fun contactRoommate(roommate: RoomHubRoommateDto) {
+        if (roommate.id.isBlank()) {
+            viewModelScope.launch {
+                _uiEvent.emit(MyRoomUiEvent.ShowToast("Người này chưa có tài khoản Rentify để nhắn tin"))
+            }
+            return
+        }
         viewModelScope.launch {
             when (val result = chatRepository.getOrCreateDirectConversation(roommate.id)) {
                 is NetworkResult.Success -> {

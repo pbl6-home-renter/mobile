@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rentify_surface"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/rentify_surface"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/rentify_text"
+        app:title="Chi tiết tòa nhà"
+        app:titleTextAppearance="@style/TextAppearance.Rentify.ToolbarTitle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rentify_divider" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    app:cardBackgroundColor="@color/rentify_soft_surface"
+                    app:cardCornerRadius="@dimen/radius_lg"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                    <ImageView
+                        android:id="@+id/ivBuildingCover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@null"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_image_placeholder" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/tvBuildingName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:textColor="@color/rentify_text"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="Dãy trọ số 2 của Thái Bảo" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_location_pin"
+                        app:tint="@color/rentify_text_muted" />
+
+                    <TextView
+                        android:id="@+id/tvBuildingAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:textColor="@color/rentify_text_muted"
+                        android:textSize="13sp"
+                        tools:text="19 Ngô Sĩ Liên, Phường Hòa Khánh, Thành phố Đà Nẵng" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvStatRooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_my_room_badge"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:paddingHorizontal="@dimen/spacing_smd"
+                        android:paddingVertical="@dimen/spacing_xs"
+                        android:textColor="@color/rentify_teal"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="3 phòng" />
+
+                    <TextView
+                        android:id="@+id/tvStatPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_sm"
+                        android:background="@drawable/bg_issue_status_badge"
+                        android:fontFamily="@font/plus_jakarta_sans"
+                        android:paddingHorizontal="@dimen/spacing_smd"
+                        android:paddingVertical="@dimen/spacing_xs"
+                        android:textColor="@color/rentify_text_secondary"
+                        android:textSize="12sp"
+                        tools:text="Từ 2.500.000 đ/tháng" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xl"
+                    android:layout_marginBottom="@dimen/spacing_smd"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Danh sách phòng"
+                    android:textColor="@color/rentify_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/tvNoRooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/spacing_lg"
+                    android:text="Tòa nhà chưa có phòng nào đang cho thuê"
+                    android:textColor="@color/rentify_text_muted"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.rentify.app.tenant.ui.component.TenantLoadingView
+            android:id="@+id/progressBar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layoutError"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_xl"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:gravity="center"
+                android:textColor="@color/rentify_text_muted"
+                android:textSize="14sp"
+                tools:text="Không tải được dữ liệu" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRetry"
+                style="@style/Widget.Rentify.PillButton"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:minHeight="46dp"
+                android:paddingHorizontal="@dimen/spacing_xl"
+                android:text="Thử lại" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

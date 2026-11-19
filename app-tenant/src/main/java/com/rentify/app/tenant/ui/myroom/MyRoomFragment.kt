@@ -2,8 +2,13 @@ package com.rentify.app.tenant.ui.myroom
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.net.Uri
+import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,6 +19,7 @@ import coil.load
 import com.google.android.material.tabs.TabLayout
 import com.rentify.app.core.network.dto.contract.ContractMyListResponseDto
 import com.rentify.app.core.network.dto.room.MyRoomHubResponseDto
+import com.rentify.app.core.network.dto.room.RoomHubInvoiceDto
 import com.rentify.app.core.ui.base.BaseFragment
 import com.rentify.app.core.ui.extension.applySystemBarsPadding
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
@@ -21,13 +27,16 @@ import com.rentify.app.core.ui.extension.toDisplayDate
 import com.rentify.app.core.ui.extension.toast
 import com.rentify.app.core.ui.extension.toVnd
 import com.rentify.app.core.ui.R as CoreR
+import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentMyRoomBinding
+import com.rentify.app.tenant.databinding.TabMyRoomsBinding
 import com.rentify.app.tenant.ui.chat.detail.ChatDetailActivity
+import com.rentify.app.tenant.ui.contract.ContractUiHelper
 import com.rentify.app.tenant.ui.contract.detail.ContractDetailActivity
-import com.rentify.app.tenant.ui.contract.list.MyContractsAdapter
+import com.rentify.app.tenant.ui.dialog.LoginFeature
+import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
 import com.rentify.app.tenant.ui.invoice.detail.InvoiceDetailActivity
 import com.rentify.app.tenant.ui.invoice.list.MyInvoicesActivity
-import com.rentify.app.tenant.ui.issue.create.CreateIssueActivity
 import com.rentify.app.tenant.ui.issue.list.MyIssuesActivity
 import kotlinx.coroutines.launch
 
@@ -45,9 +54,11 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
     }
 
     private lateinit var roommateAdapter: RoommateAdapter
-    private lateinit var contractsAdapter: MyContractsAdapter
+    private lateinit var contractsAdapter: MyRoomsAdapter
     private var currentRoomId: String? = null
     private var currentRoomName: String? = null
+    private var currentContractId: String? = null
+    private var hasBlueHeader = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,7 +82,27 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
 
     override fun onResume() {
         super.onResume()
+        updateStatusBarIcons()
         viewModel.loadRoomHub()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) {
+            setLightStatusBarIcons(false)
+        } else {
+            updateStatusBarIcons()
+        }
+    }
+
+    private fun updateStatusBarIcons() {
+        setLightStatusBarIcons(!hasBlueHeader)
+    }
+
+    private fun setLightStatusBarIcons(light: Boolean) {
+        activity?.window?.let { window ->
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = light
+        }
     }
 
     private fun setupSwipeRefresh() {
@@ -98,8 +129,8 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
         }
 
         // Multi contracts list
-        contractsAdapter = MyContractsAdapter(
-            onContractClick = { contract ->
+        contractsAdapter = MyRoomsAdapter(
+            onRoomClick = { contract ->
                 ContractDetailActivity.start(requireContext(), contract.id)
             }
         )
@@ -110,27 +141,55 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
     }
 
     private fun setupTabs() {
-        binding.tabLayoutContracts.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        val tabLayout = binding.tabLayoutContracts
+        listOf(R.string.my_rooms_tab_active, R.string.my_rooms_tab_ended).forEach { nameRes ->
+            val tabBinding = TabMyRoomsBinding.inflate(LayoutInflater.from(requireContext()))
+            tabBinding.tvTabName.setText(nameRes)
+            tabLayout.addTab(tabLayout.newTab().setCustomView(tabBinding.root))
+        }
+        updateTabTypeface(tabLayout.getTabAt(0), selected = true)
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val position = tab?.position ?: 0
-                viewModel.selectTab(position)
+                updateTabTypeface(tab, selected = true)
+                viewModel.selectTab(tab?.position ?: 0)
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                updateTabTypeface(tab, selected = false)
+            }
+
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
     }
 
+    private fun updateTabTypeface(tab: TabLayout.Tab?, selected: Boolean) {
+        val nameView = tab?.customView?.let { TabMyRoomsBinding.bind(it).tvTabName } ?: return
+        val fontRes = if (selected) CoreR.font.plus_jakarta_sans_medium else CoreR.font.plus_jakarta_sans
+        nameView.typeface = ResourcesCompat.getFont(requireContext(), fontRes) ?: Typeface.DEFAULT
+    }
+
+    private fun updateTabCount(position: Int, count: Int) {
+        val customView = binding.tabLayoutContracts.getTabAt(position)?.customView ?: return
+        TabMyRoomsBinding.bind(customView).tvTabCount.text = count.toString()
+    }
+
     private fun setupListeners() {
         binding.btnGuestLogin.setOnSingleClickListener {
-            listener?.onNavigateToLoginRequested()
+            showLoginRequiredSheet(LoginFeature.MY_ROOM) {
+                listener?.onNavigateToLoginRequested()
+            }
         }
 
         binding.btnExploreRooms.setOnSingleClickListener {
             listener?.onNavigateToExploreRequested()
         }
 
-        binding.btnRetry.setOnSingleClickListener {
+        binding.btnEmptyFindRoom.setOnSingleClickListener {
+            listener?.onNavigateToExploreRequested()
+        }
+
+        binding.layoutError.btnRetry.setOnSingleClickListener {
             viewModel.loadRoomHub()
         }
 
@@ -142,31 +201,26 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
             viewModel.toggleViewAllContracts()
         }
 
-        binding.btnViewAllInvoices.setOnSingleClickListener {
+        binding.btnInvoiceHistory.setOnSingleClickListener {
             MyInvoicesActivity.start(requireContext())
         }
 
-        binding.btnViewInvoiceHistorySettled.setOnSingleClickListener {
+        binding.btnInvoiceHistorySettled.setOnSingleClickListener {
             MyInvoicesActivity.start(requireContext())
         }
 
-        binding.btnBackToDashboard.setOnSingleClickListener {
-            viewModel.toggleViewAllContracts()
+        binding.actionInvoices.setOnSingleClickListener {
+            MyInvoicesActivity.start(requireContext())
         }
 
-        binding.cardIssues.setOnSingleClickListener {
+        binding.actionContract.setOnSingleClickListener {
+            currentContractId?.let { ContractDetailActivity.start(requireContext(), it) }
+        }
+
+        binding.actionIssues.setOnSingleClickListener {
             currentRoomId?.let { roomId ->
                 MyIssuesActivity.start(requireContext(), roomId, currentRoomName)
             } ?: MyIssuesActivity.start(requireContext())
-        }
-
-        binding.btnReportIssue.setOnSingleClickListener {
-            val roomId = currentRoomId
-            if (!roomId.isNullOrBlank()) {
-                CreateIssueActivity.start(requireContext(), roomId, currentRoomName.orEmpty())
-            } else {
-                toast("Không tìm thấy thông tin phòng hiện tại")
-            }
         }
     }
 
@@ -176,12 +230,26 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
                 launch {
                     viewModel.uiState.collect { state ->
                         binding.swipeRefreshLayout.isRefreshing = false
+                        val isDashboard = state is MyRoomUiState.SingleRoom
+                        val isListState = state is MyRoomUiState.MultiRooms || state is MyRoomUiState.NoRoom
+                        binding.swipeRefreshLayout.setBackgroundColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                when {
+                                    isDashboard -> CoreR.color.rentify_primary_light
+                                    isListState -> CoreR.color.rentify_surface
+                                    else -> CoreR.color.rentify_background
+                                }
+                            )
+                        )
+                        hasBlueHeader = isDashboard
+                        updateStatusBarIcons()
                         when (state) {
                             is MyRoomUiState.Loading -> {
                                 binding.pbLoading.isVisible = true
                                 binding.layoutGuest.isVisible = false
                                 binding.layoutNoRoom.isVisible = false
-                                binding.layoutError.isVisible = false
+                                binding.layoutError.root.isVisible = false
                                 binding.layoutActiveRoom.isVisible = false
                                 binding.layoutMultiRooms.isVisible = false
                             }
@@ -189,7 +257,7 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
                                 binding.pbLoading.isVisible = false
                                 binding.layoutGuest.isVisible = true
                                 binding.layoutNoRoom.isVisible = false
-                                binding.layoutError.isVisible = false
+                                binding.layoutError.root.isVisible = false
                                 binding.layoutActiveRoom.isVisible = false
                                 binding.layoutMultiRooms.isVisible = false
                             }
@@ -197,7 +265,7 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
                                 binding.pbLoading.isVisible = false
                                 binding.layoutGuest.isVisible = false
                                 binding.layoutNoRoom.isVisible = true
-                                binding.layoutError.isVisible = false
+                                binding.layoutError.root.isVisible = false
                                 binding.layoutActiveRoom.isVisible = false
                                 binding.layoutMultiRooms.isVisible = false
                             }
@@ -205,16 +273,15 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
                                 binding.pbLoading.isVisible = false
                                 binding.layoutGuest.isVisible = false
                                 binding.layoutNoRoom.isVisible = false
-                                binding.layoutError.isVisible = true
+                                binding.layoutError.root.isVisible = true
                                 binding.layoutActiveRoom.isVisible = false
                                 binding.layoutMultiRooms.isVisible = false
-                                binding.tvErrorMessage.text = state.message
                             }
                             is MyRoomUiState.SingleRoom -> {
                                 binding.pbLoading.isVisible = false
                                 binding.layoutGuest.isVisible = false
                                 binding.layoutNoRoom.isVisible = false
-                                binding.layoutError.isVisible = false
+                                binding.layoutError.root.isVisible = false
                                 binding.layoutMultiRooms.isVisible = false
                                 binding.layoutActiveRoom.isVisible = true
                                 binding.btnViewAllContracts.isVisible = true
@@ -224,7 +291,7 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
                                 binding.pbLoading.isVisible = false
                                 binding.layoutGuest.isVisible = false
                                 binding.layoutNoRoom.isVisible = false
-                                binding.layoutError.isVisible = false
+                                binding.layoutError.root.isVisible = false
                                 binding.layoutActiveRoom.isVisible = false
                                 binding.layoutMultiRooms.isVisible = true
                                 bindMultiRoomsData(state)
@@ -256,14 +323,20 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
     }
 
     private fun bindMultiRoomsData(state: MyRoomUiState.MultiRooms) {
-        binding.btnBackToDashboard.isVisible = state.currentSingleHub != null && state.activeContracts.size == 1
-
         val currentTab = binding.tabLayoutContracts.selectedTabPosition
         if (currentTab != state.selectedTab && state.selectedTab in 0..1) {
             binding.tabLayoutContracts.getTabAt(state.selectedTab)?.select()
         }
 
-        val displayList: List<ContractMyListResponseDto> = if (state.selectedTab == 0) {
+        updateTabCount(0, state.activeContracts.size)
+        updateTabCount(1, state.endedContracts.size)
+
+        val bothEmpty = state.activeContracts.isEmpty() && state.endedContracts.isEmpty()
+        binding.tabLayoutContracts.isVisible = !bothEmpty
+        binding.dividerTabs.isVisible = !bothEmpty
+
+        val showActive = bothEmpty || state.selectedTab == 0
+        val displayList: List<ContractMyListResponseDto> = if (showActive) {
             state.activeContracts
         } else {
             state.endedContracts
@@ -272,63 +345,68 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
         if (displayList.isEmpty()) {
             binding.rvContractsList.isVisible = false
             binding.layoutEmptyContracts.isVisible = true
-            if (state.selectedTab == 0) {
-                binding.tvEmptyContractsTitle.text = "Không có hợp đồng đang hiệu lực"
-                binding.tvEmptyContractsDesc.text = "Hiện tại bạn không có hợp đồng thuê nào đang có hiệu lực."
-            } else {
-                binding.tvEmptyContractsTitle.text = "Chưa có hợp đồng đã kết thúc"
-                binding.tvEmptyContractsDesc.text = "Lịch sử các hợp đồng đã hết hạn hoặc kết thúc sẽ hiển thị tại đây."
-            }
+            binding.tvEmptyContractsTitle.setText(
+                if (showActive) R.string.my_rooms_empty_active_title else R.string.my_rooms_empty_ended_title
+            )
+            binding.tvEmptyContractsDesc.setText(
+                if (showActive) R.string.my_rooms_empty_active_desc else R.string.my_rooms_empty_ended_desc
+            )
+            binding.btnEmptyFindRoom.isVisible = showActive
         } else {
             binding.layoutEmptyContracts.isVisible = false
             binding.rvContractsList.isVisible = true
-            contractsAdapter.submitList(displayList)
+            contractsAdapter.submitList(displayList.map { toCardItem(it, isEnded = !showActive) })
         }
+    }
+
+    private fun toCardItem(contract: ContractMyListResponseDto, isEnded: Boolean): MyRoomCardItem {
+        val footer = if (isEnded) {
+            MyRoomFooter.Ended(ContractUiHelper.formatDate(contract.endDate).drop(3))
+        } else {
+            null
+        }
+        return MyRoomCardItem(contract, footer)
     }
 
     private fun bindActiveRoomData(hub: MyRoomHubResponseDto) {
         val room = hub.room
         val landlord = hub.landlord
-        val contract = hub.contract
         val invoice = hub.currentInvoice
 
         currentRoomId = room.id
         currentRoomName = room.name
+        currentContractId = hub.contract.id
 
-        // 1. Room info
-        val resolvedCoverUrl = resolveRoomCoverUrl(room.photoUrls.firstOrNull(), room.id)
-        binding.ivRoomCover.load(resolvedCoverUrl) {
+        binding.ivRoomCover.load(resolveRoomCoverUrl(room.photoUrls.firstOrNull(), room.id)) {
             crossfade(true)
-            placeholder(CoreR.drawable.ic_image_outline)
-            error(CoreR.drawable.ic_image_outline)
         }
-        binding.tvRoomTitle.text = "${room.name} · ${room.buildingName}"
-        binding.tvRoomAddress.text = room.address
-        val parsedArea = room.area?.trim()?.toDoubleOrNull()
-        val displayArea = if (parsedArea != null) {
-            if (parsedArea % 1.0 == 0.0) "${parsedArea.toInt()} m²" else "$parsedArea m²"
-        } else {
-            "25 m²"
-        }
-        binding.tvRoomArea.text = displayArea
-        binding.tvRoomPrice.text = "${room.rentPrice.toVnd()}/tháng"
+        binding.tvRoomTitle.text = room.name
+        binding.tvRoomBuilding.text = room.buildingName
 
-        // 2. Landlord info
-        val resolvedLandlordAvatar = resolveLandlordAvatarUrl(landlord.avatarUrl, landlord.name)
-        binding.ivLandlordAvatar.load(resolvedLandlordAvatar) {
-            crossfade(true)
-            placeholder(CoreR.drawable.ic_user_circle)
-            error(CoreR.drawable.ic_user_circle)
-        }
-        binding.tvLandlordName.text = landlord.name
-        binding.tvLandlordPhone.text = "Chủ nhà · ${landlord.phone}"
+        bindInvoiceCard(invoice)
 
-        binding.btnCallLandlord.setOnSingleClickListener {
-            callPhoneNumber(landlord.phone)
+        val issuesCount = hub.activeIssuesCount
+        binding.tvIssuesBadge.isVisible = issuesCount > 0
+        binding.tvIssuesBadge.text = issuesCount.toString()
+
+        binding.layoutLandlordRow.isVisible = landlord != null
+        if (landlord != null) {
+            binding.landlordAvatarView.bindPersonal(landlord.id, landlord.name, landlord.avatarUrl)
+            binding.tvLandlordName.text = landlord.name
+            binding.btnCallLandlord.setOnSingleClickListener {
+                callPhoneNumber(landlord.phone)
+            }
         }
 
-        // 3. Current Invoice
+        roommateAdapter.submitList(hub.roommates)
+        binding.tvPeopleTitle.isVisible = landlord != null || hub.roommates.isNotEmpty()
+        binding.rvRoommates.isVisible = hub.roommates.isNotEmpty()
+    }
+
+    private fun bindInvoiceCard(invoice: RoomHubInvoiceDto?) {
+        val month = invoice?.period?.substringAfter('-', "")?.take(2)?.toIntOrNull()
         val isSettled = invoice == null || invoice.invoiceStatus.equals("paid", ignoreCase = true) || invoice.remainingAmount <= 0
+
         binding.cardCurrentInvoice.setOnSingleClickListener {
             if (invoice != null && !isSettled) {
                 InvoiceDetailActivity.start(requireContext(), invoice.id)
@@ -337,80 +415,45 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
             }
         }
 
-        if (isSettled) {
-            binding.layoutInvoicePending.isVisible = false
-            binding.layoutInvoiceSettled.isVisible = true
-            binding.layoutInvoiceHeaderActions.isVisible = false
-        } else {
-            binding.layoutInvoicePending.isVisible = true
-            binding.layoutInvoiceSettled.isVisible = false
-            binding.layoutInvoiceHeaderActions.isVisible = true
-            binding.tvInvoicePeriod.text = "Kỳ ${invoice.period}"
-            binding.tvInvoiceDueDate.text = "Hạn: ${invoice.dueDate.toDisplayDate()}"
-            binding.tvInvoiceAmount.text = invoice.remainingAmount.toVnd()
+        binding.layoutInvoicePending.isVisible = !isSettled
+        binding.layoutInvoiceSettled.isVisible = isSettled
 
-            val statusText = when (invoice.invoiceStatus.lowercase()) {
-                "overdue" -> "Quá hạn"
-                "partially_paid" -> "Thanh toán 1 phần"
-                else -> "Chờ thanh toán"
-            }
-            binding.tvInvoiceStatusBadge.text = statusText
-            val statusColor = if (invoice.invoiceStatus.equals("overdue", ignoreCase = true)) {
-                CoreR.color.rentify_error
+        if (invoice == null || isSettled) {
+            val settledIcon = if (invoice == null) CoreR.drawable.ic_receipt else CoreR.drawable.ic_check_circle
+            val settledColor = if (invoice == null) CoreR.color.rentify_text_muted else CoreR.color.rentify_teal
+            val color = ContextCompat.getColor(requireContext(), settledColor)
+            binding.ivInvoiceSettledIcon.setImageResource(settledIcon)
+            binding.ivInvoiceSettledIcon.imageTintList = ColorStateList.valueOf(color)
+            binding.tvInvoiceSettledText.setTextColor(color)
+            binding.tvInvoiceSettledText.text = if (invoice == null || month == null) {
+                getString(R.string.my_room_invoice_none)
             } else {
-                CoreR.color.rentify_sub_card_invoice_text
+                getString(R.string.my_room_invoice_paid, month)
             }
-            binding.tvInvoiceStatusBadge.setTextColor(ContextCompat.getColor(requireContext(), statusColor))
-
-            binding.btnPayVietQr.setOnSingleClickListener {
-                val dialog = VietQrBottomSheetDialog.newInstance(
-                    invoiceCode = invoice.code,
-                    period = invoice.period,
-                    amount = invoice.remainingAmount,
-                    qrUrl = invoice.vietQrPaymentUrl
-                )
-                dialog.show(childFragmentManager, "VietQrBottomSheet")
-            }
+            return
         }
 
-        // 4. Contract info
-        val contractCode = contract.contractCode.trim()
-        binding.tvContractCode.text = when {
-            contractCode.startsWith("HD", ignoreCase = true) -> contractCode
-            contractCode.isNotEmpty() -> "HĐ #$contractCode"
-            else -> "HĐ thuê phòng"
-        }
-        val startDateStr = contract.startDate.toDisplayDate()
-        val endDateStr = contract.endDate.toDisplayDate()
-        binding.tvContractDuration.text = "$startDateStr - $endDateStr"
-
-        binding.cardContract.setOnSingleClickListener {
-            ContractDetailActivity.start(requireContext(), contract.id)
-        }
-
-        binding.btnViewContract.isVisible = true
-        binding.btnViewContract.setOnSingleClickListener {
-            if (!contract.signedContractUrl.isNullOrBlank()) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(contract.signedContractUrl))
-                startActivity(intent)
-            } else {
-                ContractDetailActivity.start(requireContext(), contract.id)
-            }
-        }
-
-        // 5. Issues info
-        binding.tvActiveIssuesCount.text = "Hiện có ${hub.activeIssuesCount} yêu cầu đang xử lý"
-
-        // 6. Roommates
-        val roommates = hub.roommates
-        binding.tvRoommatesCountBadge.text = "${roommates.size} người"
-        if (roommates.isEmpty()) {
-            binding.tvNoRoommates.isVisible = true
-            binding.rvRoommates.isVisible = false
+        val isOverdue = invoice.invoiceStatus.equals("overdue", ignoreCase = true)
+        binding.tvInvoicePeriod.text = if (month != null) {
+            getString(R.string.my_room_invoice_title, month)
         } else {
-            binding.tvNoRoommates.isVisible = false
-            binding.rvRoommates.isVisible = true
-            roommateAdapter.submitList(roommates)
+            invoice.period
+        }
+        binding.tvInvoiceDueDate.text = getString(R.string.my_room_invoice_due, invoice.dueDate.toDisplayDate().take(5))
+        binding.tvInvoiceDueDate.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (isOverdue) CoreR.color.rentify_error else CoreR.color.rentify_warning_text
+            )
+        )
+        binding.tvInvoiceAmount.text = invoice.remainingAmount.toVnd()
+        binding.btnPayVietQr.setOnSingleClickListener {
+            VietQrBottomSheetDialog.newInstance(
+                invoiceCode = invoice.code,
+                period = invoice.period,
+                amount = invoice.remainingAmount,
+                qrUrl = invoice.vietQrPaymentUrl
+            ).show(childFragmentManager, "VietQrBottomSheet")
         }
     }
 
@@ -435,28 +478,12 @@ class MyRoomFragment : BaseFragment<FragmentMyRoomBinding>(FragmentMyRoomBinding
             "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&auto=format&fit=crop&q=80"
         )
 
-        private val MOCK_LANDLORD_AVATARS = listOf(
-            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=160&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=160&auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&auto=format&fit=crop&q=80"
-        )
-
         fun resolveRoomCoverUrl(url: String?, seedId: String): String {
             if (!url.isNullOrBlank() && (url.contains("unsplash.com") || url.contains("cloudinary.com") || url.contains("res.cloudinary.com"))) {
                 return url
             }
             val index = kotlin.math.abs(seedId.hashCode()) % MOCK_ROOM_PHOTOS.size
             return MOCK_ROOM_PHOTOS[index]
-        }
-
-        fun resolveLandlordAvatarUrl(url: String?, name: String): String {
-            if (!url.isNullOrBlank() && (url.contains("unsplash.com") || url.contains("cloudinary.com") || url.contains("res.cloudinary.com"))) {
-                return url
-            }
-            val index = kotlin.math.abs(name.hashCode()) % MOCK_LANDLORD_AVATARS.size
-            return MOCK_LANDLORD_AVATARS[index]
         }
     }
 }

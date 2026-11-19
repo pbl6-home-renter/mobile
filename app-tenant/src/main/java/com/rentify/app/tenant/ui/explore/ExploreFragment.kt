@@ -1,12 +1,19 @@
 package com.rentify.app.tenant.ui.explore
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.view.View
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.rentify.app.core.network.dto.room.RoomPublicListResponseDto
 import com.rentify.app.core.ui.R as CoreUiR
@@ -17,7 +24,13 @@ import com.rentify.app.core.ui.extension.toVnd
 import com.rentify.app.core.ui.state.UiState
 import com.rentify.app.tenant.R
 import com.rentify.app.tenant.databinding.FragmentExploreBinding
-import com.rentify.app.tenant.ui.dialog.showRequireLoginDialog
+import com.rentify.app.tenant.ui.building.BuildingCardAdapter
+import com.rentify.app.tenant.ui.building.BuildingDetailActivity
+import com.rentify.app.tenant.ui.building.BuildingListActivity
+import com.rentify.app.tenant.ui.dialog.LoginFeature
+import com.rentify.app.tenant.ui.dialog.showLoginRequiredSheet
+import com.rentify.app.tenant.ui.invoice.detail.InvoiceDetailActivity
+import com.rentify.app.tenant.ui.issue.create.CreateIssueActivity
 import com.rentify.app.tenant.ui.room.detail.RoomDetailActivity
 import com.rentify.app.tenant.ui.search.RoomFilter
 import com.rentify.app.tenant.ui.search.SearchResultActivity
@@ -26,6 +39,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
 
     interface ExploreListener {
         fun onNavigateToLoginRequested()
+        fun onNavigateToLoginForTabRequested(targetTabId: Int)
         fun onNavigateToChatRequested()
         fun onNavigateToMatchingRequested()
         fun onNavigateToMyRoomRequested()
@@ -39,6 +53,8 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
 
     private lateinit var roomAdapter: RoomForYouAdapter
     private lateinit var popularAreaAdapter: PopularAreaAdapter
+    private lateinit var buildingAdapter: BuildingCardAdapter
+    private lateinit var myRoomCardsAdapter: MyRoomCardsAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -51,20 +67,35 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
     }
 
     override fun initView() {
+        updateStatusBarIcons()
         setupStatusBarInsets()
         setupRecyclerViews()
         setupListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateStatusBarIcons()
+    }
+
+    private fun updateStatusBarIcons() {
+        activity?.window?.let { window ->
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+        }
+    }
+
     private fun setupStatusBarInsets() {
         val initialPaddingTop = binding.layoutHeaderContent.paddingTop
+        val initialPaddingStart = binding.layoutHeaderContent.paddingStart
+        val initialPaddingEnd = binding.layoutHeaderContent.paddingEnd
+        val initialPaddingBottom = binding.layoutHeaderContent.paddingBottom
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val statusBarTop = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
-            binding.layoutHeaderContent.setPadding(
-                binding.layoutHeaderContent.paddingLeft,
+            binding.layoutHeaderContent.setPaddingRelative(
+                initialPaddingStart,
                 initialPaddingTop + statusBarTop,
-                binding.layoutHeaderContent.paddingRight,
-                binding.layoutHeaderContent.paddingBottom
+                initialPaddingEnd,
+                initialPaddingBottom
             )
             insets
         }
@@ -79,11 +110,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
 
         viewModel.currentUser.collectWhenStarted { user ->
             if (user != null) {
-                binding.tvUserGreeting.text = "Xin chào, ${user.name}"
-                binding.tvUserAvatarLetter.text = extractInitials(user.name)
+                binding.tvUserName.text = extractCallingName(user.name)
             } else {
-                binding.tvUserGreeting.text = "Xin chào!"
-                binding.tvUserAvatarLetter.text = "RT"
+                binding.tvUserName.text = "bạn"
             }
         }
 
@@ -91,29 +120,52 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             binding.containerMyRoom.showIf(hasRoom)
         }
 
-        viewModel.myRoomHub.collectWhenStarted { hub ->
-            if (hub != null) {
-                val roomCard = binding.layoutMyRoom
-                roomCard.tvMyRoomTitle.text = "${hub.room.name} · ${hub.room.buildingName}"
-                roomCard.tvMyRoomAddress.text = hub.room.address
-                roomCard.tvMyRoomLandlord.text = "Chủ trọ: ${hub.landlord.name}"
+        viewModel.myRoomsList.collectWhenStarted { roomsList ->
+            if (roomsList.isEmpty()) {
+                binding.containerMyRoom.visibility = View.GONE
+            } else if (roomsList.size == 1) {
+                binding.containerMyRoom.visibility = View.VISIBLE
+                binding.layoutMyRoom.containerSingleRoom.visibility = View.VISIBLE
+                binding.layoutMyRoom.containerMultiRooms.visibility = View.GONE
+                binding.layoutMyRoom.containerIndicator.visibility = View.GONE
 
-                // TODO: Xóa bỏ workaround resolveImageUrl khi kết nối Backend production trả về URL ảnh thật
-                val photo = RoomForYouAdapter.resolveImageUrl(hub.room.photoUrls.firstOrNull(), 0)
-                roomCard.ivMyRoomThumbnail.load(photo) {
-                    crossfade(true)
-                    placeholder(CoreUiR.drawable.ic_image_placeholder)
-                    error(CoreUiR.drawable.ic_image_placeholder)
+                MyRoomCardBinder.bind(
+                    binding = binding.layoutMyRoom.layoutSingleCard,
+                    hub = roomsList[0],
+                    onCardClick = { listener?.onNavigateToMyRoomRequested() },
+                    onPayInvoice = { _, invoice ->
+                        InvoiceDetailActivity.start(requireContext(), invoice.id)
+                    },
+                    onContactLandlord = {
+                        if (viewModel.isLoggedIn.value) {
+                            listener?.onNavigateToChatRequested()
+                        } else {
+                            showLoginRequiredSheet(LoginFeature.MESSAGES) {
+                                listener?.onNavigateToLoginForTabRequested(R.id.nav_chat)
+                            }
+                        }
+                    },
+                    onReportIssue = { hub ->
+                        if (viewModel.isLoggedIn.value) {
+                            CreateIssueActivity.start(requireContext(), hub.room.id, hub.room.name)
+                        } else {
+                            showLoginRequiredSheet(LoginFeature.MY_ROOM) {
+                                listener?.onNavigateToLoginForTabRequested(R.id.nav_my_room)
+                            }
+                        }
+                    }
+                )
+            } else {
+                binding.containerMyRoom.visibility = View.VISIBLE
+                binding.layoutMyRoom.containerSingleRoom.visibility = View.GONE
+                binding.layoutMyRoom.containerMultiRooms.visibility = View.VISIBLE
+                binding.layoutMyRoom.containerIndicator.visibility = View.VISIBLE
+
+                myRoomCardsAdapter.submitList(roomsList) {
+                    val targetPage = viewModel.savedRoomPageIndex.coerceIn(0, roomsList.size - 1)
+                    binding.layoutMyRoom.pagerMyRooms.setCurrentItem(targetPage, false)
+                    updateRoomDots(targetPage, roomsList.size)
                 }
-
-                hub.currentInvoice?.let { inv ->
-                    roomCard.tvInvoicePeriod.text = "Hóa đơn ${inv.period}"
-                    roomCard.tvInvoiceAmount.text = inv.totalAmount.toVnd()
-                    roomCard.tvInvoiceStatusNote.text = "Chưa đóng · hạn ${inv.dueDate}"
-                }
-
-                roomCard.tvContractEndDate.text = "Đến ${hub.contract.endDate}"
-                roomCard.tvContractStatusTag.text = hub.contract.status
             }
         }
 
@@ -127,16 +179,19 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             when (state) {
                 is UiState.Loading -> {
                     if (roomAdapter.currentList.isEmpty()) {
+                        binding.pbLoading.visibility = View.VISIBLE
                         binding.layoutEmptyState.root.visibility = View.GONE
                         binding.layoutErrorState.root.visibility = View.GONE
                     }
                 }
                 is UiState.Success<List<RoomPublicListResponseDto>> -> {
+                    binding.pbLoading.visibility = View.GONE
                     roomAdapter.submitList(state.data)
                     binding.layoutEmptyState.root.showIf(state.data.isEmpty())
                     binding.layoutErrorState.root.visibility = View.GONE
                 }
                 is UiState.Error -> {
+                    binding.pbLoading.visibility = View.GONE
                     if (roomAdapter.currentList.isEmpty()) {
                         binding.layoutErrorState.root.visibility = View.VISIBLE
                         binding.layoutEmptyState.root.visibility = View.GONE
@@ -148,6 +203,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             }
         }
 
+        viewModel.favoriteError.collectWhenStarted { message ->
+            toast(message)
+        }
+
+        viewModel.buildings.collectWhenStarted { buildings ->
+            buildingAdapter.submitList(buildings)
+            binding.layoutBuildings.showIf(buildings.isNotEmpty())
+        }
+
         viewModel.isLoadingMore.collectWhenStarted { isLoadingMore ->
             binding.pbLoadingMore.showIf(isLoadingMore)
         }
@@ -156,13 +220,22 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
     private fun setupRecyclerViews() {
         roomAdapter = RoomForYouAdapter(
             onRoomClick = { room ->
-                RoomDetailActivity.start(requireContext(), room.id, isFavorited = room.isFavorited)
+                val fullAddress = listOf(room.address, room.ward, room.province)
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .joinToString(", ")
+                RoomDetailActivity.start(
+                    context = requireContext(),
+                    roomId = room.id,
+                    isFavorited = room.isFavorited,
+                    fallbackAddress = fullAddress
+                )
             },
             onFavoriteClick = { room ->
                 if (viewModel.isLoggedIn.value) {
                     viewModel.toggleFavorite(room)
                 } else {
-                    showRequireLoginDialog("Vui lòng đăng nhập để lưu phòng trọ yêu thích.") {
+                    showLoginRequiredSheet(LoginFeature.PROFILE) {
                         listener?.onNavigateToLoginRequested()
                     }
                 }
@@ -171,6 +244,55 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
         binding.rvRooms.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = roomAdapter
+        }
+
+        buildingAdapter = BuildingCardAdapter { building ->
+            BuildingDetailActivity.start(requireContext(), building.id)
+        }
+        binding.rvBuildings.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = buildingAdapter
+        }
+
+        myRoomCardsAdapter = MyRoomCardsAdapter(
+            onCardClick = { _ ->
+                listener?.onNavigateToMyRoomRequested()
+            },
+            onPayInvoice = { _, invoice ->
+                InvoiceDetailActivity.start(requireContext(), invoice.id)
+            },
+            onContactLandlord = { _ ->
+                if (viewModel.isLoggedIn.value) {
+                    listener?.onNavigateToChatRequested()
+                } else {
+                    showLoginRequiredSheet(LoginFeature.MESSAGES) {
+                        listener?.onNavigateToLoginForTabRequested(R.id.nav_chat)
+                    }
+                }
+            },
+            onReportIssue = { hub ->
+                if (viewModel.isLoggedIn.value) {
+                    CreateIssueActivity.start(requireContext(), hub.room.id, hub.room.name)
+                } else {
+                    showLoginRequiredSheet(LoginFeature.MY_ROOM) {
+                        listener?.onNavigateToLoginForTabRequested(R.id.nav_my_room)
+                    }
+                }
+            }
+        )
+
+        binding.layoutMyRoom.pagerMyRooms.apply {
+            adapter = myRoomCardsAdapter
+            offscreenPageLimit = 1
+            clipToPadding = false
+            clipChildren = false
+            setPageTransformer(MarginPageTransformer(dpToPx(12f)))
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    viewModel.savedRoomPageIndex = position
+                    updateRoomDots(position, myRoomCardsAdapter.itemCount)
+                }
+            })
         }
 
         popularAreaAdapter = PopularAreaAdapter { area ->
@@ -194,6 +316,11 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             viewModel.checkAuthAndLoadData()
         }
 
+        binding.layoutErrorState.btnRetry.setOnClickListener {
+            viewModel.loadRooms(isRefresh = true)
+            viewModel.checkAuthAndLoadData()
+        }
+
         binding.nestedScrollView.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
                 if (scrollY >= (v.getChildAt(0).measuredHeight - v.measuredHeight - 400)) {
@@ -210,7 +337,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             openDevTweaksDialog()
             true
         }
-        binding.btnAvatar.setOnLongClickListener(openTweaksAction)
         binding.viewHeaderContainer.setOnLongClickListener(openTweaksAction)
 
         binding.btnNotification.setOnClickListener {
@@ -240,8 +366,8 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
                 val intent = android.content.Intent(requireContext(), com.rentify.app.tenant.ui.favoriteroom.FavoriteRoomsActivity::class.java)
                 startActivity(intent)
             } else {
-                showRequireLoginDialog("Vui lòng đăng nhập để xem danh sách phòng trọ đã lưu.") {
-                    listener?.onNavigateToLoginRequested()
+                showLoginRequiredSheet(LoginFeature.PROFILE) {
+                    listener?.onNavigateToLoginForTabRequested(R.id.nav_profile)
                 }
             }
         }
@@ -250,8 +376,8 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             if (viewModel.isLoggedIn.value) {
                 listener?.onNavigateToMatchingRequested()
             } else {
-                showRequireLoginDialog("Vui lòng đăng nhập để tạo hồ sơ và kết nối bạn ở ghép.") {
-                    listener?.onNavigateToLoginRequested()
+                showLoginRequiredSheet(LoginFeature.ROOMMATE) {
+                    listener?.onNavigateToLoginForTabRequested(R.id.nav_matching)
                 }
             }
         }
@@ -260,10 +386,14 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
             if (viewModel.isLoggedIn.value) {
                 toast("Mở hóa đơn tháng")
             } else {
-                showRequireLoginDialog("Vui lòng đăng nhập để xem hợp đồng và hóa đơn thuê phòng.") {
-                    listener?.onNavigateToLoginRequested()
+                showLoginRequiredSheet(LoginFeature.MY_ROOM) {
+                    listener?.onNavigateToLoginForTabRequested(R.id.nav_my_room)
                 }
             }
+        }
+
+        binding.btnViewAllBuildings.setOnClickListener {
+            BuildingListActivity.start(requireContext())
         }
 
         binding.btnViewAllAreas.setOnClickListener {
@@ -272,29 +402,71 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
                 RoomFilter(province = "Thành phố Đà Nẵng")
             )
         }
+    }
 
-        val roomCard = binding.layoutMyRoom
-        roomCard.btnRoomDetails.setOnClickListener {
-            listener?.onNavigateToMyRoomRequested()
+    private fun updateRoomDots(selectedIndex: Int, totalCount: Int) {
+        if (totalCount <= 1) {
+            binding.layoutMyRoom.containerIndicator.visibility = View.GONE
+            return
         }
-        roomCard.btnReportIssue.setOnClickListener {
-            if (viewModel.isLoggedIn.value) {
-                toast("Mở biểu mẫu báo sự cố")
+
+        binding.layoutMyRoom.containerIndicator.visibility = View.VISIBLE
+        binding.layoutMyRoom.pagerMyRooms.contentDescription = "Phòng ${selectedIndex + 1} trên $totalCount"
+
+        if (totalCount > 5) {
+            binding.layoutMyRoom.layoutDotsIndicator.visibility = View.GONE
+            binding.layoutMyRoom.tvRoomPageCounter.visibility = View.VISIBLE
+            binding.layoutMyRoom.tvRoomPageCounter.text = "${selectedIndex + 1}/$totalCount"
+        } else {
+            binding.layoutMyRoom.layoutDotsIndicator.visibility = View.VISIBLE
+            binding.layoutMyRoom.tvRoomPageCounter.visibility = View.GONE
+
+            val dotsContainer = binding.layoutMyRoom.layoutDotsIndicator
+            if (dotsContainer.childCount != totalCount) {
+                dotsContainer.removeAllViews()
+                for (i in 0 until totalCount) {
+                    val dot = View(requireContext()).apply {
+                        val isCurrent = i == selectedIndex
+                        background = ContextCompat.getDrawable(
+                            requireContext(),
+                            if (isCurrent) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
+                        )
+                        val w = if (isCurrent) dpToPx(18f) else dpToPx(6f)
+                        val h = dpToPx(6f)
+                        val lp = LinearLayout.LayoutParams(w, h).apply {
+                            marginEnd = if (i < totalCount - 1) dpToPx(6f) else 0
+                        }
+                        layoutParams = lp
+                    }
+                    dotsContainer.addView(dot)
+                }
             } else {
-                showRequireLoginDialog("Vui lòng đăng nhập để gửi báo cáo sự cố phòng trọ.") {
-                    listener?.onNavigateToLoginRequested()
+                for (i in 0 until totalCount) {
+                    val dot = dotsContainer.getChildAt(i)
+                    val isCurrent = i == selectedIndex
+                    val targetWidth = if (isCurrent) dpToPx(18f) else dpToPx(6f)
+                    val targetBg = if (isCurrent) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
+
+                    dot.background = ContextCompat.getDrawable(requireContext(), targetBg)
+
+                    if (dot.layoutParams.width != targetWidth) {
+                        val anim = ValueAnimator.ofInt(dot.layoutParams.width, targetWidth).apply {
+                            duration = 200L
+                            interpolator = FastOutSlowInInterpolator()
+                            addUpdateListener { animator ->
+                                dot.layoutParams.width = animator.animatedValue as Int
+                                dot.requestLayout()
+                            }
+                        }
+                        anim.start()
+                    }
                 }
             }
         }
-        roomCard.btnContactLandlord.setOnClickListener {
-            if (viewModel.isLoggedIn.value) {
-                listener?.onNavigateToChatRequested()
-            } else {
-                showRequireLoginDialog("Vui lòng đăng nhập để trò chuyện với chủ nhà trọ.") {
-                    listener?.onNavigateToLoginRequested()
-                }
-            }
-        }
+    }
+
+    private fun dpToPx(dp: Float): Int {
+        return (dp * resources.displayMetrics.density + 0.5f).toInt()
     }
 
     private fun openDevTweaksDialog() {
@@ -307,13 +479,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding>(FragmentExploreBind
         ).show(childFragmentManager, DevTweaksDialogFragment.TAG)
     }
 
-    private fun extractInitials(name: String): String {
-        val words = name.trim().split("\\s+".toRegex())
-        return when {
-            words.size >= 2 -> "${words[0].take(1)}${words.last().take(1)}".uppercase()
-            words.isNotEmpty() && words[0].isNotEmpty() -> words[0].take(2).uppercase()
-            else -> "RT"
-        }
+    private fun extractCallingName(fullName: String?): String {
+        if (fullName.isNullOrBlank()) return "bạn"
+        val words = fullName.trim().split("\\s+".toRegex())
+        return words.lastOrNull()?.takeIf { it.isNotBlank() } ?: "bạn"
     }
 
     private fun getSamplePopularAreas(): List<PopularAreaItem> {
