@@ -12,18 +12,11 @@
     android:paddingHorizontal="@dimen/spacing_md"
     android:paddingVertical="@dimen/spacing_smd">
 
-    <!-- Avatar Initial -->
-    <TextView
-        android:id="@+id/tvAvatarInitial"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/bg_avatar_gradient"
-        android:fontFamily="@font/plus_jakarta_sans"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:text="A" />
+    <com.rentify.app.core.ui.view.RentifyAvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        app:avatarSize="52dp" />
 
     <!-- Content -->
     <LinearLayout
@@ -94,4 +87,3 @@
     </LinearLayout>
 
 </LinearLayout>
-

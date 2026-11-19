@@ -34,8 +34,19 @@ class LandlordConversationAdapter(
             val title = item.displayName ?: item.title ?: "Cuộc trò chuyện"
             binding.tvConversationTitle.text = title
 
-            val initial = title.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "C"
-            binding.tvAvatarInitial.text = initial
+            if (item.kind.equals("group", ignoreCase = true)) {
+                binding.avatarView.bindGroup(
+                    groupId = item.id,
+                    groupName = title,
+                    avatarUrl = item.avatarUrl
+                )
+            } else {
+                binding.avatarView.bindPersonal(
+                    userId = item.id,
+                    displayName = title,
+                    avatarUrl = item.avatarUrl
+                )
+            }
 
             val lastMsg = item.lastMessage?.contentPreview
                 ?: if (item.lastMessage?.type == "image") "[Hình ảnh]" else "Chưa có tin nhắn"
@@ -73,4 +84,3 @@ class LandlordConversationAdapter(
         ): Boolean = oldItem == newItem
     }
 }
-

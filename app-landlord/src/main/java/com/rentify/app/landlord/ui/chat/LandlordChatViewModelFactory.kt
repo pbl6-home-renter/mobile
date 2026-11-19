@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.rentify.app.core.data.local.datastore.TokenDataStore
 import com.rentify.app.core.network.api.ChatApiService
+import com.rentify.app.core.network.api.UserApiService
 import com.rentify.app.core.network.client.NetworkClient
 import com.rentify.app.landlord.data.repository.LandlordChatRepositoryImpl
 import kotlinx.coroutines.flow.first
@@ -16,11 +17,15 @@ class LandlordChatViewModelFactory(private val context: Context) : ViewModelProv
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LandlordChatViewModel::class.java)) {
             val tokenDataStore = TokenDataStore(context.applicationContext)
+            val tokenProvider = { runBlocking { tokenDataStore.accessToken.first() } }
             val chatApiService = NetworkClient.createService<ChatApiService>(
-                tokenProvider = { runBlocking { tokenDataStore.accessToken.first() } }
+                tokenProvider = tokenProvider
             )
-            val repository = LandlordChatRepositoryImpl(chatApiService)
-            return LandlordChatViewModel(repository) as T
+            val userApiService = NetworkClient.createService<UserApiService>(
+                tokenProvider = tokenProvider
+            )
+            val repository = LandlordChatRepositoryImpl(chatApiService, userApiService)
+            return LandlordChatViewModel(repository, tokenDataStore) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

@@ -12,17 +12,32 @@
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
         android:elevation="2dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="@dimen/spacing_md"
         android:paddingVertical="@dimen/spacing_md">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:fontFamily="@font/plus_jakarta_sans"
             android:text="Tin nhắn"
             android:textColor="@color/rentify_text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNewChat"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:paddingHorizontal="@dimen/spacing_smd"
+            android:text="+ Chat mới"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="19dp" />
     </LinearLayout>
 
     <!-- Search Input -->

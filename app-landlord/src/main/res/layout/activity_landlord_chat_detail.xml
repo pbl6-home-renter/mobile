@@ -28,32 +28,52 @@
             app:tint="@color/rentify_text_primary" />
 
         <LinearLayout
+            android:id="@+id/layoutHeaderTitleClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginStart="@dimen/spacing_xs"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/spacing_2xs">
 
-            <TextView
-                android:id="@+id/tvConversationTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:maxLines="1"
-                android:textColor="@color/rentify_text_primary"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="Nguyễn Văn A (P.101)" />
+            <com.rentify.app.core.ui.view.RentifyAvatarView
+                android:id="@+id/headerAvatarView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:avatarSize="40dp" />
 
-            <TextView
-                android:id="@+id/tvConversationSubtitle"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:textColor="@color/rentify_success"
-                android:textSize="12sp"
-                tools:text="Đang hoạt động" />
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvConversationTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:maxLines="1"
+                    android:textColor="@color/rentify_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Nguyễn Văn A (P.101)" />
+
+                <TextView
+                    android:id="@+id/tvConversationSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/plus_jakarta_sans"
+                    android:text="Đang hoạt động"
+                    android:textColor="@color/rentify_success"
+                    android:textSize="12sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Bot Reminder Quick Action -->
@@ -64,7 +84,7 @@
             android:layout_height="36dp"
             android:fontFamily="@font/plus_jakarta_sans"
             android:paddingHorizontal="@dimen/spacing_smd"
-            android:text="Bot nhắc nhở"
+            android:text="Bot nhắc"
             android:textSize="11sp"
             android:textStyle="bold"
             app:cornerRadius="18dp"
@@ -93,6 +113,61 @@
             android:visibility="gone" />
     </FrameLayout>
 
+    <!-- Reply Quote Preview Bar -->
+    <LinearLayout
+        android:id="@+id/layoutReplyPreviewBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/rentify_soft_surface"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_xs"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvReplyPreviewSender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:text="Đang trả lời..."
+                android:textColor="@color/rentify_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvReplyPreviewText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/plus_jakarta_sans"
+                android:maxLines="1"
+                android:textColor="@color/rentify_text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelReply"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:fontFamily="@font/plus_jakarta_sans"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingHorizontal="@dimen/spacing_sm"
+            android:text="✕"
+            android:textColor="@color/rentify_text_secondary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
     <!-- Bottom Input Bar -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,6 +178,16 @@
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/spacing_smd"
         android:paddingVertical="@dimen/spacing_sm">
+
+        <ImageButton
+            android:id="@+id/btnAttachImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Đính kèm ảnh"
+            android:src="@drawable/ic_plus"
+            app:tint="@color/rentify_primary" />
 
         <EditText
             android:id="@+id/etMessage"
@@ -129,4 +214,3 @@
     </LinearLayout>
 
 </LinearLayout>
-

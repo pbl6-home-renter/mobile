@@ -48,28 +48,28 @@
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Resource ID Input -->
+    <!-- Resource Picker Dropdown -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilResourceId"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_smd"
-        android:hint="Mã đối tượng (Mã hóa đơn / Mã hợp đồng)"
+        android:hint="Chọn Hóa đơn / Hợp đồng *"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="@color/rentify_primary">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etResourceId"
+        <AutoCompleteTextView
+            android:id="@+id/actvResourcePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/plus_jakarta_sans"
+            android:inputType="none"
             android:textColor="@color/rentify_text_primary"
             android:textSize="14sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
-

@@ -1,24 +1,36 @@
 package com.rentify.app.landlord.ui.chat
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.rentify.app.core.network.client.NetworkConfig
 import com.rentify.app.core.network.dto.chat.MessageListResponseDto
+import com.rentify.app.core.ui.R as CoreUiR
 import com.rentify.app.landlord.databinding.ItemLandlordMessageBotBinding
 import com.rentify.app.landlord.databinding.ItemLandlordMessageReceivedBinding
 import com.rentify.app.landlord.databinding.ItemLandlordMessageSentBinding
 
 class LandlordMessageAdapter(
-    private val currentUserId: String?
+    private var currentUserId: String? = null,
+    private val onMessageLongClick: ((MessageListResponseDto) -> Unit)? = null
 ) : ListAdapter<MessageListResponseDto, RecyclerView.ViewHolder>(DiffCallback) {
+
+    fun setCurrentUserId(userId: String?) {
+        if (currentUserId != userId) {
+            currentUserId = userId
+            notifyDataSetChanged()
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         val message = getItem(position)
         return when {
             message.senderType == "bot" || message.type == "bot" -> VIEW_TYPE_BOT
-            message.senderUserId != null && message.senderUserId == currentUserId -> VIEW_TYPE_SENT
+            !currentUserId.isNullOrBlank() && message.senderUserId == currentUserId -> VIEW_TYPE_SENT
             else -> VIEW_TYPE_RECEIVED
         }
     }
@@ -54,8 +66,45 @@ class LandlordMessageAdapter(
         private val binding: ItemLandlordMessageSentBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MessageListResponseDto) {
-            binding.tvMessageContent.text = item.content ?: ""
+            val reply = item.replyTo
+            if (reply != null) {
+                binding.layoutReplyQuote.visibility = View.VISIBLE
+                binding.tvReplySender.text = reply.senderName?.ifBlank { "Tin nhắn" } ?: "Tin nhắn"
+                binding.tvReplyContent.text = when {
+                    reply.isUnavailable -> "Tin nhắn đã được thu hồi"
+                    reply.type == "image" -> "[Hình ảnh]"
+                    else -> reply.contentPreview ?: ""
+                }
+            } else {
+                binding.layoutReplyQuote.visibility = View.GONE
+            }
+
+            if (item.type == "image" && !item.mediaId.isNullOrBlank()) {
+                binding.cardMessageImage.visibility = View.VISIBLE
+                val mediaUrl = "${NetworkConfig.DEFAULT_BASE_URL}media/${item.mediaId}"
+                binding.ivMessageImage.load(mediaUrl) {
+                    crossfade(true)
+                    placeholder(CoreUiR.drawable.ic_nav_properties)
+                    error(CoreUiR.drawable.ic_nav_properties)
+                }
+            } else {
+                binding.cardMessageImage.visibility = View.GONE
+            }
+
+            val textContent = item.content?.trim().orEmpty()
+            if (textContent.isEmpty() && item.type == "image") {
+                binding.tvMessageContent.visibility = View.GONE
+            } else {
+                binding.tvMessageContent.visibility = View.VISIBLE
+                binding.tvMessageContent.text = textContent
+            }
+
             binding.tvMessageTime.text = formatTime(item.createdAt)
+
+            binding.root.setOnLongClickListener {
+                onMessageLongClick?.invoke(item)
+                true
+            }
         }
     }
 
@@ -63,9 +112,53 @@ class LandlordMessageAdapter(
         private val binding: ItemLandlordMessageReceivedBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MessageListResponseDto) {
-            binding.tvSenderName.text = item.senderName.ifBlank { "Khách thuê" }
-            binding.tvMessageContent.text = item.content ?: ""
+            val senderName = item.senderName.ifBlank { "Khách thuê" }
+            binding.tvSenderName.text = senderName
+            binding.senderAvatarView.bindPersonal(
+                userId = item.senderUserId ?: senderName,
+                displayName = senderName,
+                avatarUrl = item.senderAvatarUrl
+            )
+
+            val reply = item.replyTo
+            if (reply != null) {
+                binding.layoutReplyQuote.visibility = View.VISIBLE
+                binding.tvReplySender.text = reply.senderName?.ifBlank { "Tin nhắn" } ?: "Tin nhắn"
+                binding.tvReplyContent.text = when {
+                    reply.isUnavailable -> "Tin nhắn đã được thu hồi"
+                    reply.type == "image" -> "[Hình ảnh]"
+                    else -> reply.contentPreview ?: ""
+                }
+            } else {
+                binding.layoutReplyQuote.visibility = View.GONE
+            }
+
+            if (item.type == "image" && !item.mediaId.isNullOrBlank()) {
+                binding.cardMessageImage.visibility = View.VISIBLE
+                val mediaUrl = "${NetworkConfig.DEFAULT_BASE_URL}media/${item.mediaId}"
+                binding.ivMessageImage.load(mediaUrl) {
+                    crossfade(true)
+                    placeholder(CoreUiR.drawable.ic_nav_properties)
+                    error(CoreUiR.drawable.ic_nav_properties)
+                }
+            } else {
+                binding.cardMessageImage.visibility = View.GONE
+            }
+
+            val textContent = item.content?.trim().orEmpty()
+            if (textContent.isEmpty() && item.type == "image") {
+                binding.tvMessageContent.visibility = View.GONE
+            } else {
+                binding.tvMessageContent.visibility = View.VISIBLE
+                binding.tvMessageContent.text = textContent
+            }
+
             binding.tvMessageTime.text = formatTime(item.createdAt)
+
+            binding.root.setOnLongClickListener {
+                onMessageLongClick?.invoke(item)
+                true
+            }
         }
     }
 
@@ -104,4 +197,3 @@ class LandlordMessageAdapter(
         }
     }
 }
-
