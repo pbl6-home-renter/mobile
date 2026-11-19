@@ -2,6 +2,8 @@ package com.rentify.app.core.network.api
 
 import com.rentify.app.core.network.dto.ApiSingleResponse
 import com.rentify.app.core.network.dto.auth.AuthLoginRequestDto
+import com.rentify.app.core.network.dto.auth.AuthLogoutRequestDto
+import com.rentify.app.core.network.dto.auth.AuthRefreshRequestDto
 import com.rentify.app.core.network.dto.auth.AuthLoginResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRefreshResponseDto
 import com.rentify.app.core.network.dto.auth.AuthRegisterRequestDto
@@ -29,10 +31,14 @@ interface AuthApiService {
     ): Response<ApiSingleResponse<AuthLoginResponseDto>>
 
     @POST("auth/refresh")
-    suspend fun refreshToken(): Response<ApiSingleResponse<AuthRefreshResponseDto>>
+    suspend fun refreshToken(
+        @Body request: AuthRefreshRequestDto
+    ): Response<ApiSingleResponse<AuthRefreshResponseDto>>
 
     @POST("auth/logout")
-    suspend fun logout(): Response<Unit>
+    suspend fun logout(
+        @Body request: AuthLogoutRequestDto
+    ): Response<Unit>
 
     @POST("auth/password-reset-requests")
     suspend fun requestPasswordReset(

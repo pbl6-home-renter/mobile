@@ -2,14 +2,20 @@ package com.rentify.app.core.network.client
 
 import com.rentify.app.core.network.interceptor.AuthInterceptor
 import com.rentify.app.core.network.interceptor.MaskedLoggingInterceptor
+import com.rentify.app.core.network.interceptor.TokenAuthenticator
+import com.rentify.app.core.network.interceptor.TokenRefresher
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object NetworkClient {
+
+    @Volatile
+    var tokenRefresher: TokenRefresher? = null
 
     fun createMoshi(): Moshi {
         return Moshi.Builder()
@@ -26,7 +32,8 @@ object NetworkClient {
             .readTimeout(networkConfig.readTimeoutSeconds, TimeUnit.SECONDS)
 
         if (tokenProvider != null) {
-            builder.addInterceptor(AuthInterceptor(tokenProvider))
+            builder.addInterceptor(AuthInterceptor(networkConfig.baseUrl.toHttpUrl().host, tokenProvider))
+            builder.authenticator(TokenAuthenticator { tokenRefresher })
         }
 
         builder.addInterceptor(MaskedLoggingInterceptor())
