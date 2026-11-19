@@ -73,10 +73,10 @@ class MyRoommateProfileViewModel(
                 }
                 is NetworkResult.ApiError -> {
                     _saveLoading.value = false
-                    val msg = if (result.error?.code == "BUDGET_RANGE_INVALID") {
-                        "Khoảng ngân sách không hợp lệ (tối thiểu không được lớn hơn tối đa)"
-                    } else {
-                        result.error?.message ?: "Lỗi khi lưu hồ sơ"
+                    val msg = when (result.error?.code) {
+                        "BUDGET_RANGE_INVALID" -> "Khoảng ngân sách không hợp lệ (tối thiểu không được lớn hơn tối đa)"
+                        "VALIDATION_FAILED" -> "Thông tin chưa hợp lệ, vui lòng kiểm tra lại các trường đã nhập"
+                        else -> result.error?.message ?: "Lỗi khi lưu hồ sơ"
                     }
                     _uiEvent.emit(MyRoommateProfileUiEvent.ShowToast(msg))
                 }

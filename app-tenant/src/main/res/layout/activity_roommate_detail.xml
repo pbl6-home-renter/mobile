@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/rentify_background">
+    android:background="@color/rentify_surface">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/rentify_surface"
-        app:elevation="1dp">
+        app:elevation="0dp"
+        app:liftOnScroll="false">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbarDetail"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_arrow_back"
-            app:navigationIconTint="@color/rentify_text_primary"
+            app:navigationIconTint="@color/rentify_text"
             app:title="Hồ sơ bạn ở ghép"
-            app:titleTextAppearance="@style/RentifyToolbarTitleText" />
+            app:titleTextAppearance="@style/TextAppearance.Rentify.ToolbarTitle" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
@@ -48,7 +49,7 @@
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -58,24 +59,20 @@
                         android:orientation="vertical"
                         android:padding="@dimen/spacing_ml">
 
-                        <com.google.android.material.imageview.ShapeableImageView
+                        <com.rentify.app.core.ui.view.RentifyAvatarView
                             android:id="@+id/ivDetailAvatar"
                             android:layout_width="76dp"
                             android:layout_height="76dp"
-                            android:background="#E2E8F0"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_user_circle"
-                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                            app:avatarSize="76dp" />
 
                         <TextView
                             android:id="@+id/tvDetailName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_smd"
-                            android:fontFamily="@font/plus_jakarta_sans"
-                            android:textColor="@color/rentify_text_primary"
+                            android:fontFamily="@font/plus_jakarta_sans_medium"
+                            android:textColor="@color/rentify_text"
                             android:textSize="18sp"
-                            android:textStyle="bold"
                             tools:text="Nguyễn Thu Hà" />
 
                         <TextView
@@ -127,7 +124,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="@font/plus_jakarta_sans"
                                 android:text="Phân tích tương thích AI"
-                                android:textColor="@color/rentify_text_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
 
@@ -166,7 +163,7 @@
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -180,7 +177,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Tiêu chí tìm phòng"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="@color/rentify_text"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -228,7 +225,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/plus_jakarta_sans"
-                                android:textColor="@color/rentify_text_primary"
+                                android:textColor="@color/rentify_text"
                                 android:textSize="13sp"
                                 tools:text="Liên Chiểu · Gần ĐH Bách Khoa" />
                         </LinearLayout>
@@ -243,7 +240,7 @@
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -257,7 +254,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Lối sống và thói quen"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="@color/rentify_text"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -275,6 +272,7 @@
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitClean"
+                                    android:textColor="@color/rentify_text_primary"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:gravity="end"
                                     android:textStyle="bold"
@@ -290,6 +288,7 @@
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitSleep"
+                                    android:textColor="@color/rentify_text_primary"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:gravity="end"
                                     android:textStyle="bold"
@@ -305,6 +304,7 @@
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitCooking"
+                                    android:textColor="@color/rentify_text_primary"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:gravity="end"
                                     android:textStyle="bold"
@@ -320,6 +320,7 @@
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitPet"
+                                    android:textColor="@color/rentify_text_primary"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:gravity="end"
                                     android:textStyle="bold"
@@ -335,6 +336,7 @@
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitSmoking"
+                                    android:textColor="@color/rentify_text_primary"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:gravity="end"
                                     android:textStyle="bold"
@@ -350,6 +352,7 @@
                                     android:textSize="13sp" />
                                 <TextView
                                     android:id="@+id/tvHabitGuests"
+                                    android:textColor="@color/rentify_text_primary"
                                     android:fontFamily="@font/plus_jakarta_sans"
                                     android:gravity="end"
                                     android:textStyle="bold"
@@ -368,7 +371,7 @@
                     app:cardBackgroundColor="@color/rentify_surface"
                     app:cardCornerRadius="@dimen/radius_lg"
                     app:cardElevation="0dp"
-                    app:strokeColor="@color/rentify_divider"
+                    app:strokeColor="@color/rentify_border_soft"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -382,7 +385,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/plus_jakarta_sans"
                             android:text="Giới thiệu bản thân"
-                            android:textColor="@color/rentify_text_primary"
+                            android:textColor="@color/rentify_text"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -403,38 +406,36 @@
         </androidx.core.widget.NestedScrollView>
 
         <!-- Loading indicator -->
-        <ProgressBar
+        <com.rentify.app.tenant.ui.component.TenantLoadingView
             android:id="@+id/pbDetailLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             android:visibility="gone" />
 
         <!-- Bottom Fixed Action Bar -->
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/rentify_surface"
-            android:elevation="8dp"
-            android:paddingHorizontal="@dimen/spacing_md"
-            android:paddingTop="@dimen/spacing_smd"
-            android:paddingBottom="@dimen/spacing_md">
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/rentify_divider" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSendMatchRequest"
+                style="@style/Widget.Rentify.PillButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:backgroundTint="@color/rentify_primary_gradient_start"
-                android:fontFamily="@font/plus_jakarta_sans"
-                android:text="Gửi lời mời ghép đôi"
-                android:textColor="@color/rentify_on_primary"
-                android:textSize="15sp"
-                app:cornerRadius="12dp"
-                app:iconGravity="textStart"
-                app:iconSize="18dp"
-                app:iconTint="@color/rentify_on_primary" />
-        </FrameLayout>
+                android:layout_marginHorizontal="@dimen/spacing_md"
+                android:layout_marginTop="@dimen/spacing_smd"
+                android:layout_marginBottom="@dimen/spacing_md"
+                android:text="Gửi lời mời ghép đôi" />
+        </LinearLayout>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

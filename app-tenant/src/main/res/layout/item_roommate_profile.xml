@@ -7,11 +7,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/spacing_md"
+    android:layout_marginBottom="@dimen/spacing_smd"
     app:cardBackgroundColor="@color/rentify_surface"
     app:cardCornerRadius="@dimen/radius_lg"
     app:cardElevation="0dp"
-    app:strokeColor="@color/rentify_divider"
+    app:strokeColor="@color/rentify_border_soft"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -27,14 +27,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <com.rentify.app.core.ui.view.RentifyAvatarView
                 android:id="@+id/ivAvatar"
                 android:layout_width="54dp"
                 android:layout_height="54dp"
-                android:background="#E2E8F0"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_user_circle"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full" />
+                app:avatarSize="54dp" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -50,7 +47,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/plus_jakarta_sans"
                     android:maxLines="1"
-                    android:textColor="@color/rentify_text_primary"
+                    android:textColor="@color/rentify_text"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     tools:text="Nguyễn Thu Hà, 22 tuổi" />
@@ -103,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="@dimen/spacing_smd"
-            android:background="@color/rentify_divider" />
+            android:background="@color/rentify_border_soft" />
 
         <!-- Preferred Info: Budget & Area -->
         <LinearLayout
@@ -251,10 +248,10 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="Xem chi tiết"
-                android:textColor="@color/rentify_text_primary"
+                android:textColor="@color/rentify_text"
                 android:textSize="13sp"
-                app:cornerRadius="10dp"
-                app:strokeColor="@color/rentify_divider" />
+                app:cornerRadius="21dp"
+                app:strokeColor="@color/rentify_border" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSendRequest"
@@ -269,7 +266,7 @@
                 android:text="Mời ghép đôi"
                 android:textColor="@color/rentify_on_primary"
                 android:textSize="13sp"
-                app:cornerRadius="10dp"
+                app:cornerRadius="21dp"
                 app:iconGravity="textStart"
                 app:iconSize="14dp"
                 app:iconTint="@color/rentify_on_primary" />

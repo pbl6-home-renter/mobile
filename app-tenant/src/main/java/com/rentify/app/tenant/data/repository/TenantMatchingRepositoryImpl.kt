@@ -16,6 +16,7 @@ import com.rentify.app.core.network.dto.matching.RoommateProfileListResponseDto
 import com.rentify.app.core.network.dto.matching.RoommateProfileMyResponseDto
 import com.rentify.app.core.network.dto.matching.RoommateProfileSaveRequestDto
 import com.rentify.app.core.network.dto.matching.RoommateProfileSaveResponseDto
+import java.util.UUID
 
 class TenantMatchingRepositoryImpl(
     private val matchingApiService: MatchingApiService
@@ -78,7 +79,8 @@ class TenantMatchingRepositoryImpl(
     ): NetworkResult<ApiSingleResponse<MatchRequestCreateResponseDto>> {
         return safeApiCall {
             matchingApiService.createMatchRequest(
-                MatchRequestCreateRequestDto(targetId = targetId)
+                idempotencyKey = UUID.randomUUID().toString(),
+                request = MatchRequestCreateRequestDto(targetId = targetId)
             )
         }
     }

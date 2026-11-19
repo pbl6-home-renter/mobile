@@ -1,13 +1,11 @@
 package com.rentify.app.tenant.ui.matching
 
 import androidx.core.view.isVisible
-import coil.load
 import com.rentify.app.core.network.dto.matching.RoommateProfileListResponseDto
 import com.rentify.app.core.ui.base.BaseListAdapter
 import com.rentify.app.core.ui.base.simpleDiff
 import com.rentify.app.core.ui.extension.setOnSingleClickListener
 import com.rentify.app.core.ui.extension.toVnd
-import com.rentify.app.core.ui.R as CoreR
 import com.rentify.app.tenant.databinding.ItemRoommateProfileBinding
 import java.time.Year
 
@@ -20,15 +18,7 @@ class RoommateFeedAdapter(
 ) {
 
     override fun bind(binding: ItemRoommateProfileBinding, item: RoommateProfileListResponseDto, position: Int) {
-        if (!item.avatarUrl.isNullOrBlank()) {
-            binding.ivAvatar.load(item.avatarUrl) {
-                crossfade(true)
-                placeholder(CoreR.drawable.ic_user_circle)
-                error(CoreR.drawable.ic_user_circle)
-            }
-        } else {
-            binding.ivAvatar.setImageResource(CoreR.drawable.ic_user_circle)
-        }
+        binding.ivAvatar.bindPersonal(item.tenantId, item.tenantName, item.avatarUrl)
 
         val ageStr = item.birthYear?.let { ", ${Year.now().value - it} tuổi" } ?: ""
         val genderStr = when (item.gender.lowercase()) {
